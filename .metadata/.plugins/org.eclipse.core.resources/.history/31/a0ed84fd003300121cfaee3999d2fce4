@@ -1,0 +1,14 @@
+package datos;
+
+import ij.ImagePlus;
+import ij.io.Opener;
+
+
+public class FileOpener {
+
+	public void abrirImagen(String url){
+		Opener opener = new Opener();
+		ImagePlus ip = opener.openImage(url);
+		
+	}
+}
