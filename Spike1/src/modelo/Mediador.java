@@ -2,14 +2,15 @@ package modelo;
 
 
 
-import datos.FileOpener;
+import datos.FileReader;
 
 public class Mediador {
 	
 	private static Mediador INSTANCE = null;
+	private FileReader fr;
 	
 	private Mediador() {
-		
+		fr = new FileReader();
 	}
 	
 	public static Mediador getInstance(){	//Singleton
@@ -21,9 +22,13 @@ public class Mediador {
 		}
 	}
 
-	public String cargaImagen(String img){
-		FileOpener fo = new FileOpener();
-		int i = fo.abrirImagen(img);
+	public String cargaImagen(String img){		
+		int i = fr.abrirImagen(img);
 		return new String("Imagen abierta correctamente. Bytes por pixel: " + i);
+	}
+	
+	public void ejecutaVentana(){
+		Ventana v = new Ventana(fr);
+		v.run();
 	}
 }

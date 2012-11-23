@@ -15,6 +15,7 @@ public class tui {
 		mediador = Mediador.getInstance();
 		try{
 			System.out.println(mediador.cargaImagen(img));
+			mediador.ejecutaVentana();
 		}
 		catch(Exception ex){
 			System.out.println("Error: " + ex.getMessage());
