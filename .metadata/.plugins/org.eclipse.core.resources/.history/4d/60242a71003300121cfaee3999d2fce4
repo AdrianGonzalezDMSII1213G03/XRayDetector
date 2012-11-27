@@ -1,8 +1,0 @@
-package datos;
-
-public class FileOpener {
-
-	public void abrirImagen(String url){
-		
-	}
-}
