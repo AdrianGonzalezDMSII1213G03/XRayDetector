@@ -36,13 +36,12 @@ public class Mediador {
 		ImagePlus[] imagenes = new ImagePlus[processors];
 		ImagePlus img = fr.getImagen();		
 		int tam = img.getHeight()/processors;
-		//System.out.println("Proc: " + processors + "\tTam: " + tam);
-		//System.out.println("Width: " + img.getWidth());
+		System.out.println("Proc: " + processors + "\tTam: " + tam);
+		System.out.println("Width: " + img.getWidth());
 		for(int i=0; i < processors; i++) {
-			ImageProcessor ip =	img.duplicate().getProcessor();
-			ip.setRoi(0, i*tam, img.getWidth(), tam);
-			//System.out.println("Vuelta"+i+": " + ip.getRoi().getHeight() + ", " + ip.getRoi().getWidth());
-			//System.out.println("Vuelta"+i+": "+i*tam+", "+img.getWidth());
+			ImageProcessor ip =	img.getProcessor();
+			ip.setRoi(i*tam, 0, img.getWidth(), tam);
+			System.out.println("Vuelta"+i+": "+i*tam+", "+img.getWidth());
 			ip = ip.crop();
 			BufferedImage croppedImage = ip.getBufferedImage();
 			imagenes[i] = new ImagePlus("croppedImage" + i, croppedImage);

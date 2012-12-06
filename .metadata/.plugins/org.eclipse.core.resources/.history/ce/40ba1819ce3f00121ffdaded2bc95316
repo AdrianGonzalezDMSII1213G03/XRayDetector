@@ -60,7 +60,6 @@ public class Ventana extends Thread{
 		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - altura; coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - anchura; coordenadaX += salto) {
 				ip.setRoi(coordenadaX, coordenadaY, anchura, altura);
-				copiaImagen.setRoi(coordenadaX, coordenadaY, anchura, altura);
 				switch(color){
 					case 0:
 						c = c.BLUE;

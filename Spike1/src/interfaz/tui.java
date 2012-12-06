@@ -19,6 +19,7 @@ public class tui {
 		}
 		catch(Exception ex){
 			System.out.println("Error: " + ex.getMessage());
+			ex.printStackTrace();
 		}
 	}
 

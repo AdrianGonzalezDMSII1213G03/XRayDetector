@@ -62,4 +62,8 @@ public class FileReader {
 		System.out.println(ip.getPixel((int)imagen.getRoi().getBounds().getCenterX(), (int)imagen.getRoi().getBounds().getCenterY()));
 		copiaImagen.getProcessor().putPixel((int)imagen.getRoi().getBounds().getCenterX(), (int)imagen.getRoi().getBounds().getCenterY(), 0);
 	}
+	
+	public ImagePlus getImagen(){
+		return imagen;
+	}
 }

@@ -34,19 +34,14 @@ public class Mediador {
 	public ImagePlus[] divideImagen(){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = new ImagePlus[processors];
-		ImagePlus img = fr.getImagen();		
+		ImagePlus img = fr.getImagen();
 		int tam = img.getHeight()/processors;
-		//System.out.println("Proc: " + processors + "\tTam: " + tam);
-		//System.out.println("Width: " + img.getWidth());
 		for(int i=0; i < processors; i++) {
-			ImageProcessor ip =	img.duplicate().getProcessor();
-			ip.setRoi(0, i*tam, img.getWidth(), tam);
-			//System.out.println("Vuelta"+i+": " + ip.getRoi().getHeight() + ", " + ip.getRoi().getWidth());
-			//System.out.println("Vuelta"+i+": "+i*tam+", "+img.getWidth());
+			ImageProcessor ip =	img.getProcessor();
+			ip.setRoi(i*tam, img.getWidth(), tam, img.getWidth());
 			ip = ip.crop();
 			BufferedImage croppedImage = ip.getBufferedImage();
 			imagenes[i] = new ImagePlus("croppedImage" + i, croppedImage);
-			ip.resetRoi();
 		}
 		return imagenes;
 	}
@@ -54,6 +49,7 @@ public class Mediador {
 	public void ejecutaVentana(){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen();
+		System.out.println("ssdfsd");
 		Thread[] t = new Ventana[processors];
 		
 		for (int ithread = 0; ithread < t.length; ++ithread){    
