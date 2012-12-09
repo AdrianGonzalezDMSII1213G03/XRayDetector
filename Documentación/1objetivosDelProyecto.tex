@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Objetivos del proyecto}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Los objetivos principales del proyecto son principalmente tres:
+\begin{enumerate}
+ \item Diseñar y desarrollar una aplicación capaz de detectar y aprender defectos en imágenes radiográficas de piezas metálicas.
+ \item Construcción de una \gui{} (\textit{Intefaz Gráfica de Usuario}) que permita trabajar con las radiografías y sus características de una forma clara y sencilla y que sea capaz de representar las características analizadas.
+ \item Construcción de una \cli{} (\textit{Command Line Interface}) que permita trabajar de una forma rápida y directa con las principales órdenes de la aplicación, de cara a una posible ejecución en supercomputadores.
+\end{enumerate}
+
+En el proyecto se van a implementar los algoritmos de selección de características más relevantes o significativos que hemos encontrado, prestando especial atención al diseño para que sea fácil la inclusión de nuevos algoritmos en el futuro. Esto posibilitará que el proyecto crezca en el tiempo y amplíe su capacidad.
+
+La estructura modular que se va a seguir en el desarrollo posibilitará el acceso al \textit{core} desde línea de comandos y desde la interfaz gráfica. En cada uno de los modos se priorizarán una serie de objetivos; así desde la consola la aplicación deberá ser cómoda y, además, el acceso a los distintos algoritmos deberá ser rápido. Por otra parte, desde la interfaz gráfica, se dará mayor importancia a la visualización de las características analizadas y de los defectos encontrados.
+
+\section{Objetivos Técnicos}
+Este proyecto se va a desarrollar utilizando el paradigma de la \textit{Orientacion a Objetos} el cual nos permitirá un diseño fácilmente comprensible por futuros desarrolladores que deseen proseguir con el presente trabajo. 
+
+El lenguaje de programación escogido para el proyecto es \javaversion{}. El motivo de su elección ha sido el conocimiento del mismo, su sencillez, portabilidad, extensa documentación y la posibilidad de utilizar la librería de \weka{}. La completa \textit{API (Application Programming Interface)} con la que cuenta y los conocimientos adquiridos durante la carrera sobre este lenguaje de programación harán posible que el desarrollo se base en el estudio e implementación de los algoritmos evitando retrasos por tener que aprender un nuevo lenguaje de programación
+
+El lenguaje de modelado escogido ha sido \uml{} (\textit{Unified Modeling Language}) que se trata de un lenguaje unificado y muy extendido en el diseño de aplicaciones Orientadas a Objetos (OO).
+
+Para la creación de los diagramas se utilizará \jude{}, se trata de una herramienta para el modelado de diagramas \uml{}. Al estar enfocado a la OO posibilita todo tipo de diagramas de una forma cómoda y rápida. Todos los diagramas creados a lo largo del proyecto se realizarán con dicho programa.
+
+Para resolver algunos de los problemas comunes a los que habrá que enfrentarse se utilizarán diversos patrones de diseño \cite{patrones} estudiados que posibilitarán ofrecer una solución única estándar sobre problemas comunes que puedan surgir. La aplicación de patrones consigue diseños de calidad y, en consecuencia, mejores resultados en la fase de implementación.
+
+Para la memoria se va a utilizar \LaTeX{} \citeotras{definicion_latex}. Las ventajas que ofrece respecto a otros sistemas de composición de textos (como los clásicos \textit{WYSIWYG} \citeotras{wysiwyg}) son muchas, entre ellas nos permitirá la creación de una documentación uniforme, es decir, la salida que se obtenga será la misma con independencia del dispositivo o sistema operativo empleado para su visualización o impresión.
+
+Dado que nunca se ha trabajado con \LaTeX{} ha sido necesaria la utilización de documentación \citeotras{cervantex}, manuales \citeotras{introduccion_latex} y \citeotras{latex_wikibook} que han facilitado el aprendizaje del mismo. Como plantilla para la memoria se utilizará la de la Universidad de Deusto \citeotras{plantilla_deusto} modificándola para adaptarla a la Universidad de Burgos.
+
+Para trabajar con las radiografías se ha elegido la librería de ImageJ. Se trata de un programa de procesamiento de imagen digital desarrollado en Java que permite analizar y procesar imágenes, mediante la utilización de diversas técnicas como filtros e histogramas.
+

@@ -1,0 +1,109 @@
+% Fuentes de la documentación del proyecto 
+
+\documentclass{memoriaPFC}
+
+% Incluir el estilo definido para la Universidad de Burgos por Álvar Arnáiz 2009/12/20.
+\usepackage{ubupro}
+
+%\usepackage{cgotest}
+
+%
+% Incluir los comandos para las palabras t'ecnicas.
+\input{comandosIS}
+
+%
+% DATOS DEL DOCUMENTO
+%\autores{Nombre1 Apellidos1}{Nombre2 Apellidos2}
+\title{Detección automática de defectos en piezas
+metálicas mediante análisis de radiografías}
+\autores{Adrián González Duarte}{Joaquín Bravo Panadero}
+% Modificado por C´esar Garc´ia Osorio 6/12/2012
+%\director{César I. García Osorio, Juan José Rodríguez Díez}
+\directores{Dr. César I. García Osorio}{José Francisco Díez Pastor}
+
+\date{julio de 2012}
+\titulacion{ii}
+
+\resumen{%
+Aquí va el resumen del proyecto
+}
+\descriptores{Detección de defectos, minería de datos, procesamiento digital de la imagen, visión artificial, aprendizaje automático, radiografías}
+
+\abstract{%
+Lo mismo que el resumen, pero en inglés.
+}
+\keywords{Defect detection, Data Mining, digital image processing, computer vision, Machine Learning, radiography}
+
+
+%
+% COMIENZO DEL DOCUMENTO
+\begin{document}
+
+%
+% Portada, resumen, indices
+\frontmatter
+\ubuportada
+\hacerresumen
+\tableofcontents
+\listoffigures % Opcional
+\listoftables % Opcional
+%\lstlistoflistings % Opcional
+
+%
+% Contenidos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+\subsection*{Agradecimientos}
+\input{0agradecimientos}
+
+
+\include{0introduccion}
+%\include{1objetivosDelProyecto}
+%\include{2conceptosTeoricos}
+%\include{3tecnicasYherramientas}
+%\include{4aspectosRelevantes}
+%\include{5trabajosRelacionados}
+%\include{6conclusionesYfuturo}
+
+% APÉNDICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\appendix
+
+\portadasAuxiliares{Anexo I - Plan del proyecto software}
+\include{anexo1PlanDeProyectoSoftware}
+
+\portadasAuxiliares{Anexo II - Especificación de requisitos}
+\include{anexo2EspecificacionDeRequisitos}
+
+\portadasAuxiliares{Anexo III - Especificación de diseño}
+\include{anexo3EspecificacionDeDisenno}
+
+\portadasAuxiliares{Anexo IV - Manual del programador}
+\include{anexo4ManualDelProgramador}
+
+\portadasAuxiliares{Anexo V - Manual del usuario}
+\include{anexo5ManualDelUsuario}
+
+%
+% APÉNDICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\appendix
+
+% Añadir entrada en el índice: Apéndices
+\addcontentsline{toc}{chapter}{Apéndices}
+
+\portadasAuxiliares{Apéndice A - Guía rápida de Version One}
+\include{apendiceA}
+
+\portadasAuxiliares{Apéndice B - Licencia GNU GPL}
+\include{apendiceB}
+
+%
+%Bibliografía
+\bibliografia{referencias}
+
+%
+% Otras referencias
+\bibliografiaOtras{otrasreferencias}
+
+\end{document}

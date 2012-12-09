@@ -1,0 +1,118 @@
+% Estas instrucciones son las estándar para definir la versión de LaTeX que
+% se necesita y para informar de la versión del paquete implementada.
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{cgotest}[2011/12/24 v1.0 A test to check how to set an abstract environment]
+
+% Author: César García Osorio (cgosorio@ubu.es)
+
+% Necesario para el uso de los comandos de color
+\RequirePackage{xcolor} 
+% Este será el color por defecto
+\definecolor{myCertificateColor}{HTML}{FCF5BA}
+
+% Estos pueden ser otros colores que el usuario pase como opciones
+\DeclareOption{red}{\definecolor{myCertificateColor}{HTML}{FFB1B1}}
+\DeclareOption{green}{\definecolor{myCertificateColor}{HTML}{97FF97}}
+\DeclareOption{blue}{\definecolor{myCertificateColor}{HTML}{A1A3FF}}
+\DeclareOption{yellow}{\definecolor{myCertificateColor}{HTML}{FCF5BA}}
+\ProcessOptions\relax
+
+% Otros paquetes que pueden ser necesarios (si queremos escribir en español)
+\RequirePackage[spanish]{babel} 	
+\RequirePackage[utf8]{inputenc} 	
+\RequirePackage[T1]{fontenc} 		
+
+% Normalmente el caracter @ no es legal en un documento LaTeX, por esa razón se suele
+% incluir en los nombres de variables y comandos 'internos' a los paquetes para evitar
+% conflictos con los nombres de variables y comandos del usuario del paquete.
+\makeatletter % <=== este comando permite la utilización del carácter @
+
+
+% Además del uso del carácter @ en el nombre,  podemos usar como sufijo de las variables
+% y comandos internos el nombre del paquete, de este modo minimizamos incluso más los posibles
+% conflictos.
+\newsavebox{\namebox@certificate} % <=== declaro un nombre de caja (para el nombre del profesor)
+\newsavebox{\tempbox@certificate} % <=== declaro un nombre de caja (para el contenido del certificado)
+
+\newenvironment{certificate}[2]
+{
+% Lor valores de los argumentos solo se pueden acceder en esta parte.
+% Si necesito algo en la parte de cierre, tengo que guardarlo primero.
+\savebox{\namebox@certificate}{\sffamily #2} % <=== guardo el nombre en \nambebox@certificate
+% Ahora inicio un entorno cuyo contenido guardaré en \tempbox@certificate
+\begin{lrbox}{\tempbox@certificate}  % <=== inicio del entorno «lrbox»
+  \hspace{5mm}
+  \begin{minipage}{.9\linewidth}
+  \vspace{5mm}
+  \begin{center}
+    {\bfseries\huge #1}\\[.3cm]
+    {\scshape\LARGE Certificado} 
+  \end{center}
+}{
+  \begin{flushright}
+    {\sffamily El profesor\\
+    \usebox{\namebox@certificate}} % <=== uso \namebox@certificate
+  \end{flushright}
+  \vspace{5mm}
+  \end{minipage}
+  \hspace{5mm}
+\end{lrbox} % <=== fin del entorno «lrbox»
+\begin{center}
+\colorbox{myCertificateColor}{\usebox{\tempbox@certificate}} % <=== uso \tempbox@certificate
+\end{center}
+}
+\makeatother
+
+%Packages
+%A package needn't have any special code, but usually it starts with some special package commands
+%
+%    * \NeedsTeXFormat{LaTeX2e}[1994/12/01] - means that the package requires a version of LaTeX2e dating no further back than 1994/12/01.
+%    * \ProvidesPackage{amsmath}[2000/07/18 v2.13 AMS math features] - defines the package name (in this case amsmath) and a string to be printed out when the package is used.
+%    * \RequirePackage{amssymb,mathptm} - tries to load in any prerequisite packages if they haven't been loaded in already
+%    * \DeclareOption{intlimits}{\let\ilimits@\displaylimits} - creates and defines an option for the package
+%    * \DeclareOption{nonamelimits}{\PassOptionsToPackage{nonamelimits}{amsopn}} - creates an option, in this case passing the option onto another package (but you have to load the package later)
+%    * \ExecuteOptions{nointlimits,sumlimits,namelimits,centertags} - executes some default options
+%    * \ProcessOptions - processes the code of each option that was both specified and declared
+%
+%When writing a package you should try to minimize name-clashes
+%
+%    * Prefix each variable and command name by the package name
+%    * Use @ in the name of internal variables so that users can't access them directly
+%
+%Useful utilities from builting packages include
+%
+%    * ifthen
+%    * calc
+%    * keyval
+%    * somedefs
+%
+%
+
+
+% MORE INFO AT: 
+% http://www.latex-project.org/guides/clsguide.pdf
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/extending_latex.html
+% http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#Creating_your_own_package
+% 
+
+
+
+
+\makeatletter % <=== este comando permite la utilización del carácter @
+
+
+
+\newsavebox{\tempbox@abstract} %
+
+\newenvironment{abstract}
+{
+
+% Ahora inicio un entorno cuyo contenido guardaré en \tempbox@certificate
+\begin{lrbox}{\tempbox@abstract}  % <=== inicio del entorno «lrbox»
+  
+  \begin{quote}
+}{
+  \end{quote}
+\end{lrbox} % <=== fin del entorno «lrbox»
+}
+\makeatother

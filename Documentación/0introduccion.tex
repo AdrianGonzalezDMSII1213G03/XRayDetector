@@ -1,0 +1,17 @@
+Esto hay que cambiarlo. Meter nuestros objetivos y tal.
+
+El objetivo principal de este proyecto consiste en el desarrollo de una aplicación de escritorio que implemente y facilite la comprensión de los algoritmos de \textit{Selección de Instancias clásicos}.
+
+La selección de instancias tiene como objetivo disminuir el tamaño de las muestras para posibilitar su uso posterior. Los algoritmos de selección de instancias pretenden disminuir la complejidad mediante la reducción del número de instancias, extrayendo así las más significativas y desechando las que no aporten información al conjunto.
+
+La necesidad de la selección de instancias se hace patente cuando se examinan los conjuntos de datos que se manejan en la vida real. Intentar entrenar un clasificador, por ejemplo, a partir de mil millones de instancias puede ser una tarea difícil e, incluso, imposible. Por ello la selección de instancias se presenta como una buena alternativa para reducir la complejidad de la muestra posibilitando su posterior tratamiento.
+
+Actualmente los algoritmos de selección de instancias que se manejan tienen un gran inconveniente y es su complejidad. Si utilizamos la notación de Landau, el mejor de los algoritmos clásicos de selección de instancias es de complejidad $ O(n^{2}) $ por lo que la simple tarea de seleccionar las instancias puede ser inabordable.
+
+En este proyecto se va a implementar el algoritmo \demois{} \cite{democratic_instance_selection}, \dis{} a partir de ahora, el cual es un nuevo algoritmo de selección de instancias basado en la técnica \textit{divide y vencerás} y cuya complejidad es $ O(n \log(n)) $. Este algoritmo ha sido creado por César Ignacio García Osorio, tutor de este proyecto, y Nicolás Pedrajas García.
+
+Con todo lo anteriormente expuesto, el desarrollo de este proyecto se presenta interesante desde dos puntos de vista: el primero es la poca orientación pedagógica de la información existente sobre los algoritmos de selección de instancias, y el segundo el desarrollo e implementación del nuevo algoritmo \dis{}. Del primer punto se extrae que el desarrollo del software debe estar diseñado para el aprendizaje de dichos algoritmos, facilitando la comprensión de los mismos y posibilitando su seguimiento. Del segundo punto se extrae que la herramienta debe tener una arquitectura pensada para ser extensible, es decir, puedan añadirse nuevos algoritmos que sigan una interfaz común.
+
+El desarrollo se implementará sobre el lenguaje de programación \javaversion{} y será capaz de ejecutar los algoritmos paso a paso, facilitando la información de las estructuras de datos que éste maneje durante su funcionamiento. Tras un análisis de alternativas, se utilizará la librería \weka{} (Waikato Environment for Knowledge Analysis) para el tratamiento y manejo de las instancias y muestras debido a su versatilidad y potencia.
+
+Durante el desarrollo, se utilizará la metodología ágil \scrum{}. El principal motivo de escoger una metodología ágil es el desconocimiento por parte del equipo de desarrollo del entorno, haciendo imposible una planificación estructurada del mismo desde el momento del inicio del proyecto. Gracias a \scrum{} el proyecto avanzará planificándose, en cada \sprint{}, las tareas que se vayan extrayendo del \productbacklog{}.
