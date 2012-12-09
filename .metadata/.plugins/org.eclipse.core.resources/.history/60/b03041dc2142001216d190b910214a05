@@ -1,0 +1,11 @@
+package modelo;
+
+public class Lbp extends Feature {
+
+	@Override
+	public void calcular() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

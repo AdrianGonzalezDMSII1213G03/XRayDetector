@@ -1,0 +1,16 @@
+package modelo;
+
+import ij.gui.Roi;
+
+public class Lbp extends Feature {
+
+	public Lbp(Roi roi) {
+		super(roi);
+	}
+
+	@Override
+	public void calcular() {
+
+	}
+
+}
