@@ -1,17 +1,18 @@
 package modelo;
 
-import ij.gui.Roi;
+import ij.ImagePlus;
+
 
 public abstract class Feature {
 	
-	private Roi roi;
+	private ImagePlus image;
 
-	public Feature(Roi roi){
-		this.roi = roi;
+	public Feature(ImagePlus image){
+		this.image = image;
 	}
 	
-	public Roi getRoi(){
-		return roi;
+	public ImagePlus getImage(){
+		return image;
 	}
 	
 	public abstract void calcular();

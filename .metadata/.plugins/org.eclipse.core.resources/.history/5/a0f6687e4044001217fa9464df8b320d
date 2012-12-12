@@ -1,0 +1,16 @@
+package modelo;
+
+import ij.ImagePlus;
+
+public class Standard extends Feature {
+
+	public Standard(ImagePlus image) {
+		super(image);
+	}
+
+	@Override
+	public void calcular() {
+
+	}
+
+}

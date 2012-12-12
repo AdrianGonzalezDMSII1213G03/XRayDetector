@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.List;
+
 import ij.ImagePlus;
 
 public class Standard extends Feature {
@@ -7,8 +9,8 @@ public class Standard extends Feature {
 	private double[] standardVector;
 	private String[] headVector;
 	private int count = 0;
-	//private List<String> features;
-	//private int numStandard;
+	private List<String> features;
+	private int numStandard;
 	
 	public Standard(ImagePlus image) {
 		super(image);
@@ -23,18 +25,8 @@ public class Standard extends Feature {
 		standardVector[count] = standardDeviation();
 		standardVector[count] = firstDerivative();
 		standardVector[count] = secondDerivative();
-		
-		//para probar
-		imprimeResultados();
 	}
 	
-	//sólo para probar que hace algo
-	private void imprimeResultados() {
-		for(int i = 0; i < standardVector.length; i++){
-			System.out.println("Valor de " + headVector[i] + ": " + standardVector[i]);
-		}
-	}
-
 	/**
 	 * Calculates the mean of all pixel values of the ROI.
 	 * 

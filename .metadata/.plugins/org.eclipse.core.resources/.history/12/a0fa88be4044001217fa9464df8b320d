@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.List;
+
 import ij.ImagePlus;
 
 public class Standard extends Feature {
@@ -7,8 +9,8 @@ public class Standard extends Feature {
 	private double[] standardVector;
 	private String[] headVector;
 	private int count = 0;
-	//private List<String> features;
-	//private int numStandard;
+	private List<String> features;
+	private int numStandard;
 	
 	public Standard(ImagePlus image) {
 		super(image);
@@ -23,18 +25,8 @@ public class Standard extends Feature {
 		standardVector[count] = standardDeviation();
 		standardVector[count] = firstDerivative();
 		standardVector[count] = secondDerivative();
-		
-		//para probar
-		imprimeResultados();
 	}
 	
-	//sólo para probar que hace algo
-	private void imprimeResultados() {
-		for(int i = 0; i < standardVector.length; i++){
-			System.out.println("Valor de " + headVector[i] + ": " + standardVector[i]);
-		}
-	}
-
 	/**
 	 * Calculates the mean of all pixel values of the ROI.
 	 * 
@@ -43,9 +35,9 @@ public class Standard extends Feature {
 	public double mean() {
 		double sum = 0, total = 0;
 
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
-				sum = sum + getImage().getProcessor().getPixel(x, y);
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
+				sum = sum + image.getProcessor().getPixel(x, y);
 				total++;
 			}
 		}
@@ -65,9 +57,9 @@ public class Standard extends Feature {
 		int total = 0;
 		double sum = 0, power = 0, mean = 0;
 
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
-				sum = sum + getImage().getProcessor().getPixel(x, y);
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
+				sum = sum + image.getProcessor().getPixel(x, y);
 				total++;
 			}
 		}
@@ -75,12 +67,12 @@ public class Standard extends Feature {
 		mean = sum / total;
 
 		total = 0;
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
 
 				power = power
 						+ Math.pow(
-								(getImage().getProcessor().getPixel(x, y) - mean), 2);
+								(image.getProcessor().getPixel(x, y) - mean), 2);
 
 				total++;
 			}
@@ -104,8 +96,8 @@ public class Standard extends Feature {
 		double sigma = m / 8.5;
 		double gx[][] = new double[m][m];
 		double gy[][] = new double[m][m];
-		double y0[][] = new double[getImage().getHeight()][getImage().getWidth()];
-		double y1[][] = new double[getImage().getHeight()][getImage().getWidth()];
+		double y0[][] = new double[image.getHeight()][image.getWidth()];
+		double y1[][] = new double[image.getHeight()][image.getWidth()];
 		float conv1[] = new float[m * m];
 		float conv2[] = new float[m * m];
 		int k = 0, total = 0;
@@ -144,8 +136,8 @@ public class Standard extends Feature {
 			}
 		}
 
-		ImagePlus copy1 = getImage().duplicate();
-		ImagePlus copy2 = getImage().duplicate();
+		ImagePlus copy1 = image.duplicate();
+		ImagePlus copy2 = image.duplicate();
 
 		// Al hacer estos convolve luego con el getPixel de abajo salen valores
 		// entre 0 y 255
@@ -164,15 +156,15 @@ public class Standard extends Feature {
 			}
 		}
 
-		for (int i = (int) c; i < getImage().getHeight() - c; i++) {
-			for (int j = (int) c; j < getImage().getWidth() - c; j++) {
+		for (int i = (int) c; i < image.getHeight() - c; i++) {
+			for (int j = (int) c; j < image.getWidth() - c; j++) {
 				y1[i][j] = y0[i][j];
 			}
 		}
 
 		sum = 0;
-		for (int i = 0; i < getImage().getHeight(); i++) {
-			for (int j = 0; j < getImage().getWidth(); j++) {
+		for (int i = 0; i < image.getHeight(); i++) {
+			for (int j = 0; j < image.getWidth(); j++) {
 				sum = sum + Math.abs(y1[i][j]);
 				total++;
 			}
@@ -195,7 +187,7 @@ public class Standard extends Feature {
 		int[] kernel = { 0, 1, 0, 1, -4, 1, 0, 1, 0 };
 		double sum = 0, total = 0;
 
-		ImagePlus copy = getImage().duplicate();
+		ImagePlus copy = image.duplicate();
 		copy.getProcessor().convolve3x3(kernel);
 
 		for (int y = 0; y < copy.getHeight(); y++) {

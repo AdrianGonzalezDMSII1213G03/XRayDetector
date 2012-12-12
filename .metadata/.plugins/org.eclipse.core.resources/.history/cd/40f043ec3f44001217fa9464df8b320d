@@ -40,8 +40,8 @@ public class Lbp extends Feature {
 		double decimal;
 		boolean found;
 
-		for (int y = 1; y < getImage().getHeight() - 1; y++) {
-			for (int x = 1; x < getImage().getWidth() - 1; x++) {
+		for (int y = 1; y < getRoi().getImage().getHeight() - 1; y++) {
+			for (int x = 1; x < getRoi().getImage().getWidth() - 1; x++) {
 				// Vector con las posiciones vecinas
 				int[] positions = { x, y - 1, x + 1, y - 1, x + 1, y, x + 1,
 						y + 1, x, y + 1, x - 1, y + 1, x - 1, y, x - 1, y - 1 };
@@ -50,8 +50,8 @@ public class Lbp extends Feature {
 				found = false;
 
 				for (int i = 0; i < positions.length; i = i + 2) {
-					if (getImage().getProcessor().getPixel(positions[i],
-							positions[i + 1]) >= getImage().getProcessor().getPixel(
+					if (getRoi().getImage().getProcessor().getPixel(positions[i],
+							positions[i + 1]) >= getRoi().getImage().getProcessor().getPixel(
 							x, y)) {
 						pattern[count] = 1;
 					} else

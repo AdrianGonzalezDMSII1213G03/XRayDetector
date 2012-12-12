@@ -78,7 +78,7 @@ public class Ventana extends Thread{
 				cambiaColor(c);
 				dibujaRoi();
 				Feature ft = new Standard(img);
-				ft.calcular();
+				
 			}
 		}
 		guardaCopia();
