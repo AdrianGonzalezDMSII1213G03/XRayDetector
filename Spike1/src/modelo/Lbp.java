@@ -1,7 +1,6 @@
 package modelo;
 
 import ij.ImagePlus;
-import ij.gui.Roi;
 
 public class Lbp extends Feature {
 
@@ -11,9 +10,18 @@ public class Lbp extends Feature {
 
 	@Override
 	public void calcular() {
-
+		int[] hist = getHistogram();
+		
+		//para probar
+		//imprimeVector(hist);
 	}
 	
+	private void imprimeVector(int[] hist) {
+		for(int i=0; i<hist.length; i++){
+			System.out.print(hist[i] + ", ");
+		}
+	}
+
 	/**
 	 * This method gets the header of lbp.
 	 * 
@@ -39,9 +47,13 @@ public class Lbp extends Feature {
 		int count;
 		double decimal;
 		boolean found;
+		
+		int coordX = getImage().getRoi().getBounds().x;
+		int coordY = getImage().getRoi().getBounds().y;
 
-		for (int y = 1; y < getImage().getHeight() - 1; y++) {
-			for (int x = 1; x < getImage().getWidth() - 1; x++) {
+		for (int y = coordY + 1; y < coordY + getImage().getRoi().getBounds().height - 1; y++) {
+			for (int x = coordX + 1; x < coordX + getImage().getRoi().getBounds().width -1; x++) {
+				
 				// Vector con las posiciones vecinas
 				int[] positions = { x, y - 1, x + 1, y - 1, x + 1, y, x + 1,
 						y + 1, x, y + 1, x - 1, y + 1, x - 1, y, x - 1, y - 1 };

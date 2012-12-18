@@ -6,8 +6,6 @@ import ij.process.ImageProcessor;
 
 import java.awt.Color;
 
-import datos.FileReader;
-
 public class Ventana extends Thread{
 
 	private int altura = 8;
@@ -77,8 +75,14 @@ public class Ventana extends Thread{
 				}
 				cambiaColor(c);
 				dibujaRoi();
+				
 				Feature ft = new Standard(img);
+				ft.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
 				ft.calcular();
+				
+				Feature ft2 = new Lbp(img);
+				ft2.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
+				ft2.calcular();
 			}
 		}
 		guardaCopia();

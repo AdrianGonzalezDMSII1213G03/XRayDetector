@@ -1,5 +1,8 @@
 package modelo;
 
+import java.io.IOException;
+
+import ij.IJ;
 import ij.ImagePlus;
 
 public class Standard extends Feature {
@@ -7,6 +10,8 @@ public class Standard extends Feature {
 	private double[] standardVector;
 	private String[] headVector;
 	private int count = 0;
+	private int coordX;
+	private int coordY;
 	//private List<String> features;
 	//private int numStandard;
 	
@@ -19,6 +24,10 @@ public class Standard extends Feature {
 		//de momento, se calculan todos
 		standardVector = new double[4];
 		headVector = new String[4];
+		
+		coordX = getImage().getRoi().getBounds().x;
+		coordY = getImage().getRoi().getBounds().y;
+		
 		standardVector[count] = mean();
 		standardVector[count] = standardDeviation();
 		standardVector[count] = firstDerivative();
@@ -43,8 +52,8 @@ public class Standard extends Feature {
 	public double mean() {
 		double sum = 0, total = 0;
 
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
+		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
 				sum = sum + getImage().getProcessor().getPixel(x, y);
 				total++;
 			}
@@ -65,8 +74,8 @@ public class Standard extends Feature {
 		int total = 0;
 		double sum = 0, power = 0, mean = 0;
 
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
+		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
 				sum = sum + getImage().getProcessor().getPixel(x, y);
 				total++;
 			}
@@ -75,8 +84,8 @@ public class Standard extends Feature {
 		mean = sum / total;
 
 		total = 0;
-		for (int y = 0; y < getImage().getHeight(); y++) {
-			for (int x = 0; x < getImage().getWidth(); x++) {
+		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
 
 				power = power
 						+ Math.pow(
@@ -104,8 +113,8 @@ public class Standard extends Feature {
 		double sigma = m / 8.5;
 		double gx[][] = new double[m][m];
 		double gy[][] = new double[m][m];
-		double y0[][] = new double[getImage().getHeight()][getImage().getWidth()];
-		double y1[][] = new double[getImage().getHeight()][getImage().getWidth()];
+		double y0[][] = new double[getImage().getRoi().getBounds().height][getImage().getRoi().getBounds().height];
+		double y1[][] = new double[getImage().getRoi().getBounds().width][getImage().getRoi().getBounds().width];
 		float conv1[] = new float[m * m];
 		float conv2[] = new float[m * m];
 		int k = 0, total = 0;
@@ -154,26 +163,29 @@ public class Standard extends Feature {
 		copy1.getProcessor().convolve(conv1, m, m);
 		copy2.getProcessor().convolve(conv2, m, m);
 
-		for (int i = 0; i < copy1.getHeight(); i++) {
-			for (int j = 0; j < copy2.getWidth(); j++) {
-				y0[i][j] = Math
-						.sqrt((copy1.getProcessor().getPixel(i, j) * copy1
-								.getProcessor().getPixel(i, j))
-								+ (copy2.getProcessor().getPixel(i, j) * copy2
-										.getProcessor().getPixel(i, j)));
+		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
+			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
+				//System.out.println("Copy1: " + copy1.getProcessor().get(j-coordX, i-coordY));
+				//System.out.println("Copy2: " + copy2.getProcessor().get(j-coordX, i-coordY));
+				y0[i-coordY][j-coordX] = Math
+						.sqrt((copy1.getProcessor().getPixel(j-coordX, i-coordY) * copy1
+								.getProcessor().getPixel(j-coordX, i-coordY))
+								+ (copy2.getProcessor().getPixel(j-coordX, i-coordY) * copy2
+										.getProcessor().getPixel(j-coordX, i-coordY)));
 			}
 		}
 
-		for (int i = (int) c; i < getImage().getHeight() - c; i++) {
-			for (int j = (int) c; j < getImage().getWidth() - c; j++) {
+		for (int i = (int) c; i < getImage().getRoi().getBounds().height; i++) {
+			for (int j = (int) c; j < getImage().getRoi().getBounds().width; j++) {
 				y1[i][j] = y0[i][j];
+				//System.out.println("y1: " + y1[i][j]);
 			}
 		}
 
 		sum = 0;
-		for (int i = 0; i < getImage().getHeight(); i++) {
-			for (int j = 0; j < getImage().getWidth(); j++) {
-				sum = sum + Math.abs(y1[i][j]);
+		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
+			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
+				sum = sum + Math.abs(y1[i-coordY][j-coordX]);
 				total++;
 			}
 		}
@@ -197,10 +209,21 @@ public class Standard extends Feature {
 
 		ImagePlus copy = getImage().duplicate();
 		copy.getProcessor().convolve3x3(kernel);
+		IJ.saveAs(copy, "BMP", "./res/img/" + "convolve");
+		//System.out.println("hhhhhh: " + copy.getProcessor().get(16, 6));
 
-		for (int y = 0; y < copy.getHeight(); y++) {
-			for (int x = 0; x < copy.getWidth(); x++) {
-				sum = sum + copy.getProcessor().getPixel(x, y);
+		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
+				sum = sum + copy.getProcessor().getPixel(x-coordX, y-coordY);
+				//System.out.println("Pos: " + x + ", " + y);
+				//System.out.println("hhhhhh: " + copy.getProcessor().get(x-coordX, y-coordY));
+				/*try {
+					System.in.read();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+				//System.out.println("sum: " + sum);
 				total++;
 			}
 		}
