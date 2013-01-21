@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Conceptos teóricos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este apartado se estudiarán de manera superficial los conceptos teóricos fundamentales para
+la correcta comprensión del proyecto.
+La visión por computador, también llamada visión artificial o visión técnica, es un subcampo de
+la inteligencia artificial. Su propósito es programar un computador para que pueda «entender» las características de una imagen.
+Entre sus objetivos se encuentra la detección, segmentación, localización y reconocimiento de
+ciertos objetos en imágenes (en nuestro caso serían defectos). Para lograrlo se utilizan diversas técnicas como el reconocimiento de patrones, aprendizaje estadístico, geometría de proyección, etc.
+
+
+\section{Adquisición de la imagen}
+La primera etapa del proceso es la adquisición de la imagen. Para ello se necesitarán dos elementos:
+
+\begin{itemize}
+
+\item Un sensor de imágenes, es decir, un dispositivo físico sensible a una determinada banda del espectro de energía electromagnética (como las bandas de rayos X, ultravioleta, visible o
+infrarrojo). En nuestro caso será un sistema de rayos X.
+
+\item Un digitalizador, dispositivo que permitirá convertir la señal de salida del sensor a forma digital.
+
+\end{itemize}
+%Figura de Adquisicón de imágenes
+\figura{1}{imgs/adquisicion_imagen.png}{Proceso de adquisición de imágenes de radiografía}{}
+
+
+\section{Preprocesamiento}
+El preprocesamiento de la imagen es una etapa que consiste en reducir la información de la
+misma, de forma que pueda ser interpretada por una computadora, facilitando así la posterior fase de análisis.
+Se utiliza un conjunto de técnicas que, aplicadas a las imágenes digitales, mejoran su calidad o facilitan la búsqueda de información. A partir de una imagen origen, se obtiene otra imagen final cuyo resultado sea más adecuado para una aplicación específica, optimizando ciertas características de la misma que hagan posible realizar operaciones de procesado sobre ella.
+A continuación se explican algunas de las técnicas que comprenden esta etapa.
+
+
+\subsection*{Binarización}
+La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos: verdadero y falso. En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
+Para hacer esto, primero se debe convertir la imagen a escala de grises. Después hay que fijar
+un valor umbral entre 0 y 255. Una vez que se tenga dicho umbral, se convertirán a 255 todos
+los valores de la imagen superiores al umbral, mientras que los inferiores se convertirán a 0. El resultado será una imagen en blanco y negro que permitirá realizar tareas como la detección de contornos, separar regiones u objetos de interés del resto de la imagen, etc.
+
+\subsection*{Filtros de detección de bordes}
+HAY QUE VER CUÁLES DE ESTAS METEMOS, SI METEMOS ALGUNA
+
+\subsection*{Realzado de la imagen}
+El realzado de imágenes es una técnica de preprocesado cuyo objetivo principal es el de destacar los detalles finos de una imagen o intensificar detalles que han sido difuminados, bien sea por error o bien por efecto natural del método de adquisición de la imagen. De esta manera, se obtiene una imagen de salida que será más fácil de interpretar, haciendo la información relevante más visible.
+Mediante el realzado se intenta acentuar las aristas de la imagen, obteniendo así una imagen con más contraste, es decir, con una mayor variabilidad entre los tonos de gris de sus diferentes píxeles. Con ello se consigue una mejora de la imagen, ya que los objetos aparecerán más resaltados, haciendo más fácil su diferenciación.
+Las utilidades del realce de las imágenes son variadas e incluyen aplicaciones que van desde
+la impresión electrónica y las imágenes médicas hasta las inspecciones industriales e incluso la detección autónoma de objetivos en las armas inteligentes.
+
+\subsection*{Saliency}
+El «Saliency Map» o «Mapa de Prominencia» [43] es un mapa topográfico que permite representar
+la prominencia visual de una determinada imagen.
+Uno de los mayores problemas de la percepción es la sobrecarga de información. Se hace necesario identificar qué partes de la información disponible merecen ser seleccionadas para ser analizadas y qué partes deben descartarse. Este algoritmo busca solucionar este problema.
+Koch y Ulman propusieron en 1985 [29] que las diferentes características visuales que contribuyen a la selección de atención ante un estímulo (color, orientación, movimiento, etc.) fueran combinadas en un único mapa topográfico, el Saliency Map, que integraría la información normalizada de los mapas de características individuales en una medida global de visibilidad.
+La saliencia de una posición dada es determinada principalmente por cómo de diferente es dicha
+localización de las que la rodean, en color, orientación, movimiento, profundidad, etc.
+La implementación del mapa de saliencia usada en este proyecto está basada en la variante
+descrita en el artículo Human Detection Using a Mobile Platform and Novel Features Derived
+From a Visual Saliency Mechanism [40].
+%Figura de Saliency Map
+\figura{1}{imgs/saliency.png}{Ejemplo de Saliency Map. La imagen original a la izquierda,
+con el correspondiente saliency map a la derecha}{}
+
+
+\section{Descriptores de regiones}
+Una vez realizada la etapa de preprocesamiento, la imagen ya estará lista para ser analizada.
+Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferencia de otros métodos de análisis, que extraen otros tipos de atributos. Para analizar las características de la imagen, se utilizarán los siguientes descriptores:
+
+\subsection{Descriptores simples}
+También se les conoce como características estándar o de primer orden [46]. Son medidas que
+se calculan a partir de los valores de gris originales de la imagen y su frecuencia, como la media, varianza, desviación estándar, etc. En estas medidas no se considera la relación de co-ocurrencia entre los píxeles.
+Las características más comunes y que se han usado en este proyecto son:

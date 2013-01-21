@@ -4,11 +4,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Los objetivos principales del proyecto son principalmente tres:
+Los objetivos principales del proyecto son principalmente cuatro:
 \begin{enumerate}
- \item Diseñar y desarrollar una aplicación capaz de detectar y aprender defectos en imágenes radiográficas de piezas metálicas.
- \item Construcción de una \gui{} (\textit{Intefaz Gráfica de Usuario}) que permita trabajar con las radiografías y sus características de una forma clara y sencilla y que sea capaz de representar las características analizadas.
- \item Construcción de una \cli{} (\textit{Command Line Interface}) que permita trabajar de una forma rápida y directa con las principales órdenes de la aplicación, de cara a una posible ejecución en supercomputadores.
+ \item Rediseñar completamente la aplicación que presentaron los alumnos del año pasado, buscando un diseño mucho más modular y reutilizable.
+ \item Refactorizar todo el código que reutilicemos, buscando un mejor estilo para favorecer su comprensión y reutilización.
+ \item Mejorar el rendimiento de la aplicación anterior, buscando que la misma se pueda aprovechar de los procesadores actuales de más de un núcleo de proceso.
+ \item Ampliación de la funcionalidad de la aplicación anterior en diversos aspectos, como la construcción de una \cli{} (\textit{Command Line Interface}) que permita trabajar de una forma rápida y directa con las principales órdenes de la aplicación, de cara a una posible ejecución en supercomputadores, o la implementación de algoritmos de segmentación que permitan obtener un resumen de las características de los defectos encontrados.
 \end{enumerate}
 
 En el proyecto se van a implementar los algoritmos de selección de características más relevantes o significativos que hemos encontrado, prestando especial atención al diseño para que sea fácil la inclusión de nuevos algoritmos en el futuro. Esto posibilitará que el proyecto crezca en el tiempo y amplíe su capacidad.
@@ -26,9 +27,16 @@ Para la creación de los diagramas se utilizará \jude{}, se trata de una herram
 
 Para resolver algunos de los problemas comunes a los que habrá que enfrentarse se utilizarán diversos patrones de diseño \cite{patrones} estudiados que posibilitarán ofrecer una solución única estándar sobre problemas comunes que puedan surgir. La aplicación de patrones consigue diseños de calidad y, en consecuencia, mejores resultados en la fase de implementación.
 
+También, trabajaremos con programación multihilo, buscando el poder aprovecharnos de las posibilidades que ofrecen los procesadores actuales, con más de un núcleo de proceso. Con esto, aumentaremos notablemente el rendimiento.
+
 Para la memoria se va a utilizar \LaTeX{} \citeotras{definicion_latex}. Las ventajas que ofrece respecto a otros sistemas de composición de textos (como los clásicos \textit{WYSIWYG} \citeotras{wysiwyg}) son muchas, entre ellas nos permitirá la creación de una documentación uniforme, es decir, la salida que se obtenga será la misma con independencia del dispositivo o sistema operativo empleado para su visualización o impresión.
 
 Dado que nunca se ha trabajado con \LaTeX{} ha sido necesaria la utilización de documentación \citeotras{cervantex}, manuales \citeotras{introduccion_latex} y \citeotras{latex_wikibook} que han facilitado el aprendizaje del mismo. Como plantilla para la memoria se utilizará la de la Universidad de Deusto \citeotras{plantilla_deusto} modificándola para adaptarla a la Universidad de Burgos.
 
 Para trabajar con las radiografías se ha elegido la librería de ImageJ. Se trata de un programa de procesamiento de imagen digital desarrollado en Java que permite analizar y procesar imágenes, mediante la utilización de diversas técnicas como filtros e histogramas.
+
+\section{Objetivos personales}
+Además de los objetivos propios de la realización de la aplicación, también se pretende conseguir una serie de objetivos personales.
+Nos gustaría poder poner en práctica todos los conocimientos teóricos adquiridos durante estos años de carrera. Además, con la realización de este proyecto queremos adquirir nuevos conocimientos en áreas tan diversas como la gestión de proyectos y el uso de metodologías ágiles, la inteligencia artificial y la visión por computador, la minería de datos, el uso de sistemas de control de versiones, etc.
+Por último, queremos llevar a cabo con éxito la realización de este proyecto siendo capaces de planificarnos y trabajar en equipo.
 
