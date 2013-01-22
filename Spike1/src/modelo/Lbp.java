@@ -8,6 +8,7 @@ public class Lbp extends Feature {
 		super(image);
 	}
 
+
 	@Override
 	public void calcular() {
 		int[] hist = getHistogram();

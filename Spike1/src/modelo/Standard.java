@@ -1,7 +1,5 @@
 package modelo;
 
-import java.io.IOException;
-
 import ij.IJ;
 import ij.ImagePlus;
 
@@ -209,7 +207,7 @@ public class Standard extends Feature {
 
 		ImagePlus copy = getImage().duplicate();
 		copy.getProcessor().convolve3x3(kernel);
-		IJ.saveAs(copy, "BMP", "./res/img/" + "convolve");
+		//IJ.saveAs(copy, "BMP", "./res/img/" + "convolve");
 		//System.out.println("hhhhhh: " + copy.getProcessor().get(16, 6));
 
 		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {

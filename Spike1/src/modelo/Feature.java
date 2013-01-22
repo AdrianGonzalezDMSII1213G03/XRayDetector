@@ -10,7 +10,7 @@ public abstract class Feature {
 	public Feature(ImagePlus image){
 		this.image = image;
 	}
-	
+		
 	public ImagePlus getImage(){
 		return image;
 	}

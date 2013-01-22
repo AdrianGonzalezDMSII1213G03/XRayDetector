@@ -51,6 +51,15 @@ public class Mediador {
 		return imagenes;
 	}
 	
+	public ImagePlus[] getSaliency(ImagePlus[] imagenes){
+		ImagePlus[] saliency = new ImagePlus[imagenes.length];
+		for(int i=0; i<imagenes.length; i++){
+			Preprocesamiento p = new Saliency(imagenes[i], 1);
+			saliency[i] = new ImagePlus("", p.calcular());
+		}
+		return saliency;
+	}
+	
 	public void ejecutaVentana(){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen();
@@ -58,6 +67,26 @@ public class Mediador {
 		
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new Ventana(imagenes[ithread]);
+            t[ithread].start();
+        }  
+  
+        try{     
+            for (int ithread = 0; ithread < t.length; ++ithread)  
+                t[ithread].join();  
+        }
+        catch (InterruptedException ie){  
+            throw new RuntimeException(ie);  
+        }
+	}
+	
+	public void ejecutaVentanaSaliency(){
+		int processors = Runtime.getRuntime().availableProcessors();
+		ImagePlus[] imagenes = divideImagen();
+		ImagePlus[] saliency = getSaliency(imagenes);
+		Thread[] t = new Ventana[processors];
+		
+		for (int ithread = 0; ithread < t.length; ++ithread){    
+            t[ithread] = new Ventana(saliency[ithread]);
             t[ithread].start();
         }  
   
