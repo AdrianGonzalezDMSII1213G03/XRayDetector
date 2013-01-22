@@ -6,13 +6,29 @@ import ij.ImagePlus;
 public abstract class Feature {
 	
 	private ImagePlus image;
+	private int step;
+	private String selectedStep;
 
 	public Feature(ImagePlus image){
 		this.image = image;
 	}
+	
+	public Feature(ImagePlus image, String selectedStep, int step){
+		this.image = image;
+		this.selectedStep = selectedStep;
+		this.step = step;
+	}
 		
 	public ImagePlus getImage(){
 		return image;
+	}
+	
+	public int getStep(){
+		return step;
+	}
+	
+	public String getSelectedStep(){
+		return selectedStep;
 	}
 	
 	public abstract void calcular();

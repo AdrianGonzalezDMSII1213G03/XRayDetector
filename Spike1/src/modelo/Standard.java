@@ -31,7 +31,7 @@ public class Standard extends Feature {
 		standardVector[count] = secondDerivative();
 		
 		//para probar
-		imprimeResultados();
+		//imprimeResultados();
 	}
 	
 	//sólo para probar que hace algo

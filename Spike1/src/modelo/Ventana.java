@@ -56,6 +56,10 @@ public class Ventana extends Thread{
 				Feature ft2 = new Lbp(img);
 				ft2.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
 				ft2.calcular();
+				
+				Feature ft3 = new Haralick(img, "0 degrees", 1);
+				ft3.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
+				ft3.calcular();
 			}
 		}
 		guardaCopia();
