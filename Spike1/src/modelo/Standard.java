@@ -1,6 +1,5 @@
 package modelo;
 
-import ij.IJ;
 import ij.ImagePlus;
 
 public class Standard extends Feature {

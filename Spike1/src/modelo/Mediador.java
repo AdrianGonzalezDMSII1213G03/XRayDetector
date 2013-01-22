@@ -4,6 +4,7 @@ package modelo;
 
 import java.awt.image.BufferedImage;
 
+import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import datos.FileReader;
@@ -56,6 +57,7 @@ public class Mediador {
 		for(int i=0; i<imagenes.length; i++){
 			Preprocesamiento p = new Saliency(imagenes[i], 1);
 			saliency[i] = new ImagePlus("", p.calcular());
+			IJ.saveAs(saliency[i], "BMP", "./res/img/" + "saliency_hilo_" + i);
 		}
 		return saliency;
 	}

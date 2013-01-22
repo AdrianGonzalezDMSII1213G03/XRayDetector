@@ -5,7 +5,6 @@ import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 public class Ventana extends Thread{
 
@@ -23,12 +22,12 @@ public class Ventana extends Thread{
 		IJ.setForegroundColor(0, 255, 121);
 	}
 
+	@SuppressWarnings("static-access")
 	public void run(){;
 		int salto = (int) (altura*0.8);
 		int coordenadaX, coordenadaY, color = 0;
 		Color c = null;
 		ImageProcessor ip = img.getProcessor();
-		ImageProcessor saliencyIP = null;
 		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - altura; coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - anchura; coordenadaX += salto) {
 				ip.setRoi(coordenadaX, coordenadaY, anchura, altura);
