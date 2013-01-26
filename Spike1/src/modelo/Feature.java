@@ -8,6 +8,7 @@ public abstract class Feature {
 	private ImagePlus image;
 	private int step;
 	private String selectedStep;
+	private double[] vectorResultados;
 
 	public Feature(ImagePlus image){
 		this.image = image;
@@ -29,6 +30,14 @@ public abstract class Feature {
 	
 	public String getSelectedStep(){
 		return selectedStep;
+	}
+	
+	public double[] getVectorResultados(){
+		return vectorResultados;
+	}
+	
+	public void setVectorResultados(double[] v){
+		vectorResultados = v;
 	}
 	
 	public abstract void calcular();

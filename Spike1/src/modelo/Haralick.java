@@ -568,14 +568,15 @@ public class Haralick extends Feature {
 		haralickVector[12] = imc_2();
 		haralickVector[13] = maximalCorrelationCoefficient();
 		
-		imprimeResultados();
+		setVectorResultados(haralickVector);
+		//imprimeResultados();
 	}
 	
 	//sólo para probar que hace algo
-	private void imprimeResultados() {
+	/*private void imprimeResultados() {
 		for(int i = 0; i < haralickVector.length; i++){
 			System.out.println("Valor de " + headVector[i] + ": " + haralickVector[i]);
 		}
-	}
+	}*/
 
 }

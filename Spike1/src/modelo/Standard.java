@@ -30,16 +30,18 @@ public class Standard extends Feature {
 		standardVector[count] = firstDerivative();
 		standardVector[count] = secondDerivative();
 		
+		setVectorResultados(standardVector);
+		
 		//para probar
 		//imprimeResultados();
 	}
 	
 	//sólo para probar que hace algo
-	private void imprimeResultados() {
+	/*private void imprimeResultados() {
 		for(int i = 0; i < standardVector.length; i++){
 			System.out.println("Valor de " + headVector[i] + ": " + standardVector[i]);
 		}
-	}
+	}*/
 
 	/**
 	 * Calculates the mean of all pixel values of the ROI.
