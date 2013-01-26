@@ -235,4 +235,9 @@ public class Standard extends Feature {
 
 	}
 
+	@Override
+	public String[] getHead() {
+		return headVector;
+	}
+
 }

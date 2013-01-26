@@ -3,6 +3,8 @@ package modelo;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -66,9 +68,9 @@ public class Mediador {
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen();
 		Thread[] t = new Ventana[processors];
-		
+				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new Ventana(imagenes[ithread]);
+            t[ithread] = new Ventana(imagenes[ithread], ithread);
             t[ithread].start();
         }  
   
@@ -88,7 +90,7 @@ public class Mediador {
 		Thread[] t = new Ventana[processors];
 		
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new Ventana(saliency[ithread]);
+            t[ithread] = new Ventana(saliency[ithread], ithread);
             t[ithread].start();
         }  
   

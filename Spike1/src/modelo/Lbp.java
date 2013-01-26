@@ -29,8 +29,9 @@ public class Lbp extends Feature {
 	 * 
 	 * @return header of lbp
 	 */
-	public String getHead() {
-		return "LBP";
+	public String[] getHead() {
+		String[] head = new String[]{"LBP"};
+		return head;
 	}
 
 	/**

@@ -41,5 +41,6 @@ public abstract class Feature {
 	}
 	
 	public abstract void calcular();
+	public abstract String[] getHead();
 	
 }
