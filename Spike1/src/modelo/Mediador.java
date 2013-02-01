@@ -36,22 +36,39 @@ public class Mediador {
 	
 	public ImagePlus[] divideImagen(){
 		int processors = Runtime.getRuntime().availableProcessors();
+		int offset = 10;
 		ImagePlus[] imagenes = new ImagePlus[processors];
 		ImagePlus img = fr.getImagen();		
 		int tam = img.getHeight()/processors;
 		//System.out.println("Proc: " + processors + "\tTam: " + tam);
 		//System.out.println("Width: " + img.getWidth());
-		for(int i=0; i < processors; i++) {
-			ImageProcessor ip =	img.duplicate().getProcessor();
-			ip.setRoi(0, i*tam, img.getWidth(), tam);
-			//System.out.println("Vuelta"+i+": " + ip.getRoi().getHeight() + ", " + ip.getRoi().getWidth());
-			//System.out.println("Vuelta"+i+": "+i*tam+", "+img.getWidth());
-			ip = ip.crop();
-			BufferedImage croppedImage = ip.getBufferedImage();
-			imagenes[i] = new ImagePlus("croppedImage" + i, croppedImage);
-			ip.resetRoi();
+		if(processors == 1){
+			imagenes[0] = img;
+			return imagenes;
 		}
-		return imagenes;
+		else{		
+			for(int i=0; i < processors; i++) {
+				ImageProcessor ip =	img.duplicate().getProcessor();
+				
+				if(i == 0){	//caso de primera división
+					ip.setRoi(0, (i*tam), img.getWidth(), tam + offset);
+				}
+				else if(i == processors-1){	//caso de la última división
+					ip.setRoi(0, (i*tam) - offset, img.getWidth(), tam + offset);
+				}
+				else{	//caso de divisiones intermedias
+					ip.setRoi(0, (i*tam) - offset, img.getWidth(), tam + (2*offset));
+				}
+	
+				//System.out.println("Vuelta"+i+": " + ip.getRoi().getHeight() + ", " + ip.getRoi().getWidth());
+				//System.out.println("Vuelta"+i+": "+i*tam+", "+img.getWidth());
+				ip = ip.crop();
+				BufferedImage croppedImage = ip.getBufferedImage();
+				imagenes[i] = new ImagePlus("croppedImage" + i, croppedImage);
+				ip.resetRoi();
+			}
+			return imagenes;
+		}
 	}
 	
 	public ImagePlus[] getSaliency(ImagePlus[] imagenes){
