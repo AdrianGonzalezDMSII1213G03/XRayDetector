@@ -3,10 +3,16 @@ package modelo;
 import java.awt.Rectangle;
 import java.util.Arrays;
 
-import utils.Matrix;
 
 import ij.IJ;
 import ij.ImagePlus;
+
+import weka.core.matrix.EigenvalueDecomposition;
+import weka.core.matrix.Matrix;
+//import cern.colt.matrix.linalg.EigenvalueDecomposition;
+//import cern.colt.matrix.DoubleFactory2D;
+//import cern.colt.matrix.DoubleMatrix1D;
+//import cern.colt.matrix.DoubleMatrix2D;
 
 public class Haralick extends Feature {
 	
@@ -509,14 +515,24 @@ public class Haralick extends Feature {
 				Q[x][y] = s;
 			}
 		}
-
+		
+		//WEKA
 		Matrix matrix = new Matrix(Q);
-		new Matrix(matrix.n);
-		double[] values = new double[matrix.n];
+		double[] values = new double[matrix.getColumnDimension()];
+		
+		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrix);
+		values = eigenValues.getRealEigenvalues();
+		
+		//COLT
+		/*DoubleFactory2D f = DoubleFactory2D.dense;
+		
+		DoubleMatrix2D matrix = f.make(Q);
+		
+		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrix);
+		DoubleMatrix1D values = eigenValues.getRealEigenvalues();*/
 
-		matrix.eigenvalues(values, 20);
 
-		for (int i = 0; i < matrix.n; i++) {
+		for (int i = 0; i < matrix.getColumnDimension(); i++) {
 			if (values[i] > max) {
 				secondMax = max;
 				max = values[i];

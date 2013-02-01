@@ -11,8 +11,8 @@ import java.io.IOException;
 
 public class Ventana extends Thread{
 
-	private int altura = 8;
-	private int anchura = 8;
+	private int altura = 24;
+	private int anchura = 24;
 	private int numHilo;
 	//private FileReader fileReader;
 	private ImagePlus img;
@@ -63,6 +63,8 @@ public class Ventana extends Thread{
 				cambiaColor(c);
 				dibujaRoi();
 				
+				long tiempoInicio = System.currentTimeMillis();
+				
 				ftStandard = new Standard(img);
 				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
 				ftStandard.calcular();
@@ -71,12 +73,8 @@ public class Ventana extends Thread{
 				ftLbp.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
 				ftLbp.calcular();
 				lbp = ftLbp.getVectorResultados();
-				
-				int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + numHilo*img.getHeight()};
-				crearArff(coordCentro);
-				
 							
-				/*int total = 0;
+				int total = 0;
 				for (int step = 1; step < 6; step++) {
 					for (int w = 0; w < 4; w++) {
 					
@@ -115,7 +113,15 @@ public class Ventana extends Thread{
 						rangeVector[total] = ranges[k];
 						total++;
 					}
-				}*/
+				}
+				
+					
+				int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + numHilo*img.getHeight()};
+				
+				long totalTiempo = System.currentTimeMillis() - tiempoInicio;
+				System.out.println("El tiempo de la ventana ["+ coordCentro[0]+","+coordCentro[1]+ "] es: " + totalTiempo + " miliseg");
+				
+				crearArff(coordCentro);
 			}
 		}
 		guardaCopia();
