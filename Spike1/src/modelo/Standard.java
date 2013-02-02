@@ -1,5 +1,6 @@
 package modelo;
 
+import ij.IJ;
 import ij.ImagePlus;
 
 public class Standard extends Feature {
@@ -9,6 +10,7 @@ public class Standard extends Feature {
 	private int count = 0;
 	private int coordX;
 	private int coordY;
+	
 	//private List<String> features;
 	//private int numStandard;
 	
@@ -152,8 +154,9 @@ public class Standard extends Feature {
 			}
 		}
 
-		ImagePlus copy1 = getImage().duplicate();
-		ImagePlus copy2 = getImage().duplicate();
+		ImagePlus copy1 = getImagenCompleta().duplicate();
+		ImagePlus copy2 = getImagenCompleta().duplicate();
+		IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
 
 		// Al hacer estos convolve luego con el getPixel de abajo salen valores
 		// entre 0 y 255
@@ -161,11 +164,11 @@ public class Standard extends Feature {
 		// negativos y positivos
 		copy1.getProcessor().convolve(conv1, m, m);
 		copy2.getProcessor().convolve(conv2, m, m);
+		
+		//copy1.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);
 
 		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
 			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
-				//System.out.println("Copy1: " + copy1.getProcessor().get(j-coordX, i-coordY));
-				//System.out.println("Copy2: " + copy2.getProcessor().get(j-coordX, i-coordY));
 				y0[i-coordY][j-coordX] = Math
 						.sqrt((copy1.getProcessor().getPixel(j-coordX, i-coordY) * copy1
 								.getProcessor().getPixel(j-coordX, i-coordY))
@@ -177,7 +180,6 @@ public class Standard extends Feature {
 		for (int i = (int) c; i < getImage().getRoi().getBounds().height; i++) {
 			for (int j = (int) c; j < getImage().getRoi().getBounds().width; j++) {
 				y1[i][j] = y0[i][j];
-				//System.out.println("y1: " + y1[i][j]);
 			}
 		}
 
@@ -206,23 +208,14 @@ public class Standard extends Feature {
 		int[] kernel = { 0, 1, 0, 1, -4, 1, 0, 1, 0 };
 		double sum = 0, total = 0;
 
-		ImagePlus copy = getImage().duplicate();
+		ImagePlus copy = getImagenCompleta().duplicate();
 		copy.getProcessor().convolve3x3(kernel);
-		//IJ.saveAs(copy, "BMP", "./res/img/" + "convolve");
-		//System.out.println("hhhhhh: " + copy.getProcessor().get(16, 6));
+		
+		//copy.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);
 
 		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
 			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
 				sum = sum + copy.getProcessor().getPixel(x-coordX, y-coordY);
-				//System.out.println("Pos: " + x + ", " + y);
-				//System.out.println("hhhhhh: " + copy.getProcessor().get(x-coordX, y-coordY));
-				/*try {
-					System.in.read();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				//System.out.println("sum: " + sum);
 				total++;
 			}
 		}
@@ -239,5 +232,4 @@ public class Standard extends Feature {
 	public String[] getHead() {
 		return headVector;
 	}
-
 }

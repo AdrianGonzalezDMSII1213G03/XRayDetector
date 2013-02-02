@@ -41,6 +41,7 @@ public class Ventana extends Thread{
 		ImageProcessor ip = img.getProcessor();
 		double means[], ranges[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null;
 		boolean initializedNormal = false;
+		ImagePlus copiaStandard = img.duplicate();
 		
 		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - altura; coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - anchura; coordenadaX += salto) {
@@ -66,6 +67,7 @@ public class Ventana extends Thread{
 				long tiempoInicio = System.currentTimeMillis();
 				
 				ftStandard = new Standard(img);
+				ftStandard.setImagenCompleta(copiaStandard);
 				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, anchura, altura);
 				ftStandard.calcular();
 				
