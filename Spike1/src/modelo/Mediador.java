@@ -84,10 +84,10 @@ public class Mediador {
 	public void ejecutaVentana(){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen();
-		Thread[] t = new Ventana[processors];
+		Thread[] t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new Ventana(imagenes[ithread], ithread);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread);
             t[ithread].start();
         }  
   
@@ -104,10 +104,10 @@ public class Mediador {
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen();
 		ImagePlus[] saliency = getSaliency(imagenes);
-		Thread[] t = new Ventana[processors];
+		Thread[] t = new VentanaAbstracta[processors];
 		
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new Ventana(saliency[ithread], ithread);
+            t[ithread] = new VentanaDeslizante(saliency[ithread], ithread);
             t[ithread].start();
         }  
   
