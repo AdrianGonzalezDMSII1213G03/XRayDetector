@@ -119,4 +119,23 @@ public class Mediador {
             throw new RuntimeException(ie);  
         }
 	}
+	
+	public void ejecutaEntrenamiento(){
+		int processors = Runtime.getRuntime().availableProcessors();
+		ImagePlus[] imagenes = divideImagen();
+		Thread[] t = new VentanaAbstracta[processors];
+				
+		for (int ithread = 0; ithread < t.length; ++ithread){    
+            t[ithread] = new VentanaAleatoria(imagenes[ithread], ithread);
+            t[ithread].start();
+        }  
+  
+        try{     
+            for (int ithread = 0; ithread < t.length; ++ithread)  
+                t[ithread].join();  
+        }
+        catch (InterruptedException ie){  
+            throw new RuntimeException(ie);  
+        }
+	}
 }
