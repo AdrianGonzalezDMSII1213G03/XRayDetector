@@ -7,6 +7,7 @@ public abstract class VentanaAbstracta extends Thread{
 	private int anchura = 24;
 	private int getNumHilo;
 	private ImagePlus img;
+	private ImagePlus imgCompleta;
 	
 	public VentanaAbstracta(ImagePlus img, int numHilo) {
 		this.img = img;
@@ -45,6 +46,14 @@ public abstract class VentanaAbstracta extends Thread{
 	
 	public void setImage(ImagePlus im){
 		img = im;
+	}
+	
+	public void setImagenCompleta(ImagePlus im){
+		imgCompleta = im;
+	}
+	
+	public ImagePlus getImagenCompleta(){
+		return imgCompleta;
 	}
 
 }

@@ -122,11 +122,14 @@ public class Mediador {
 	
 	public void ejecutaEntrenamiento(){
 		int processors = Runtime.getRuntime().availableProcessors();
+		ImagePlus[] mascaras = divideImagen();
+		fr.abrirImagen("./res/img/img1.BMP");
 		ImagePlus[] imagenes = divideImagen();
 		Thread[] t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaAleatoria(imagenes[ithread], ithread);
+            t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);
+            ((VentanaAleatoria) t[ithread]).setImagenCompleta(imagenes[ithread]);
             t[ithread].start();
         }  
   
