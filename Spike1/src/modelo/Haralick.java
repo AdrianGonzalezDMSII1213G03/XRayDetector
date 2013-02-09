@@ -582,7 +582,8 @@ public class Haralick extends Feature {
 		haralickVector[10] = differenceEntropy();
 		haralickVector[11] = imc_1();
 		haralickVector[12] = imc_2();
-		haralickVector[13] = maximalCorrelationCoefficient();
+		//haralickVector[13] = maximalCorrelationCoefficient();
+		haralickVector[13] = 0;
 		
 		setVectorResultados(haralickVector);
 		//imprimeResultados();

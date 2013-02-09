@@ -1,11 +1,22 @@
 package modelo;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import weka.classifiers.Classifier;
+import weka.classifiers.meta.Bagging;
+import weka.classifiers.trees.REPTree;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -33,6 +44,27 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		rellenarListas();
 		//imprimeListas();
 		seleccionarVentanas();
+		BufferedReader reader = null;
+		
+		try {
+			reader = new BufferedReader(new FileReader("./res/arff/Arff_entrenamiento.arff"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		ArffReader arff = null;
+		
+		try {
+			arff = new ArffReader(reader);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Instances data = arff.getData();
+		data.setClassIndex(data.numAttributes() - 1);
+		createModel(data, "24");
 	}
 
 	private void imprimeListas() {
@@ -100,7 +132,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	}
 	
 	private void seleccionarVentanas(){
-		int nAttemps = 1000;
+		int nAttemps = 50;
 		ArrayList<int []> copiaListaDefectos = listaDefectos;
 		ArrayList<int []> copiaListaNoDefectos = listaNoDefectos;
 		
@@ -114,7 +146,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 					copiaListaDefectos.remove(randIndex);
 				}
 				else{
-					int randIndex = ((int) Math.random()*copiaListaDefectos.size());
+					int randIndex = ((int) Math.random()*copiaListaNoDefectos.size());
 					int [] coordVentana = copiaListaNoDefectos.get(randIndex);
 					calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
 					copiaListaNoDefectos.remove(randIndex);
@@ -126,8 +158,8 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
 				copiaListaDefectos.remove(randIndex);
 			}
-			else{
-				int randIndex = ((int) Math.random()*copiaListaDefectos.size());
+			else if (copiaListaNoDefectos.size() > 0){
+				int randIndex = ((int) Math.random()*copiaListaNoDefectos.size());
 				int [] coordVentana = copiaListaNoDefectos.get(randIndex);
 				calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
 				copiaListaNoDefectos.remove(randIndex);
@@ -316,14 +348,14 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		if (ftStandard != null) {
 			for (int i = 0; i < ftStandard.getHead().length; i++) {
 				attributesString += "@attribute " + ftStandard.getHead()[i]
-						+ " INTEGER\n";
+						+ " REAL\n";
 			}
 		}
 
 		/*if (standardSaliency != null) {
 			for (int i = 0; i < standardSaliency.getHead().length; i++) {
 				attributesString += "@attribute "
-						+ standardSaliency.getHead()[i] + "(S)" + " INTEGER\n";
+						+ standardSaliency.getHead()[i] + "(S)" + " REAL\n";
 			}
 		}*/
 		return attributesString;
@@ -342,14 +374,14 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			for (int j = 1; j < 6; j++) {
 				for (int i = 0; i < ftHaralick.getHead().length; i++) {
 					attributesString += "@attribute " + ftHaralick.getHead()[i]
-							+ "_mean" + j + " INTEGER\n";
+							+ "_mean" + j + " REAL\n";
 				}
 			}
 
 			for (int j = 1; j < 6; j++) {
 				for (int i = 0; i < ftHaralick.getHead().length; i++) {
 					attributesString += "@attribute " + ftHaralick.getHead()[i]
-							+ "_range" + j + " INTEGER\n";
+							+ "_range" + j + " REAL\n";
 				}
 			}
 		}
@@ -359,7 +391,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
 					attributesString += "@attribute "
 							+ haralickSaliency.getHead()[i] + "_mean" + j
-							+ "(S)" + " INTEGER\n";
+							+ "(S)" + " REAL\n";
 				}
 			}
 
@@ -367,7 +399,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
 					attributesString += "@attribute "
 							+ haralickSaliency.getHead()[i] + "_range" + j
-							+ "(S)" + " INTEGER\n";
+							+ "(S)" + " REAL\n";
 				}
 			}
 		}*/
@@ -392,14 +424,14 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		if (lbp != null) {
 			for (int i = 0; i < lbpHead.length; i++) {
 				attributesString += "@attribute " + ftLbp.getHead()[0] + "("
-						+ lbpHead[i] + ") INTEGER\n";
+						+ lbpHead[i] + ") REAL\n";
 			}
 		}
 
 		/*if (lbpSaliency != null) {
 			for (int i = 0; i < lbpSaliencyHead.length; i++) {
 				attributesString += "@attribute " + lbpSaliency.getHead() + "("
-						+ lbpSaliencyHead[i] + ")(S) INTEGER\n";
+						+ lbpSaliencyHead[i] + ")(S) REAL\n";
 			}
 		}*/
 
@@ -475,6 +507,52 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		features += defect;
 
 		return features;
+	}
+	
+	/**
+	 * Creates a model training a classifier using bagging.
+	 * 
+	 * @param data
+	 *            Contains all the instances of the arff
+	 * @param sizeWindow
+	 *            The size of the window
+	 */
+	public void createModel(Instances data, String sizeWindow) {
+
+		// se crea, opciones, setiputformat
+		Classifier cls;
+		//String separator = System.getProperty("file.separator");
+		//String path = System.getProperty("user.dir");
+		String path = "./res/model/";
+
+		Classifier base;
+		base = new REPTree();
+
+		cls = new Bagging();
+		((Bagging) cls).setNumIterations(10);
+		((Bagging) cls).setBagSizePercent(10);
+		((Bagging) cls).setClassifier(base);
+
+		ObjectOutputStream oos = null;
+
+		try {
+			data.setClassIndex(data.numAttributes() - 1);
+			cls.buildClassifier(data);
+
+			/*if (arffName.contains("mejores"))
+				oos = new ObjectOutputStream(new FileOutputStream((path
+						+ separator + "Modelos" + separator + "Bagging_"
+						+ "mejores_" + sizeWindow + ".model")));
+
+			if (arffName.contains("todas"))*/
+				oos = new ObjectOutputStream(new FileOutputStream((path + "todas_" + sizeWindow + ".model")));
+
+			oos.writeObject(cls);
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+
+		}
 	}
 
 }

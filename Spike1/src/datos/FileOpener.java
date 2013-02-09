@@ -13,4 +13,5 @@ public class FileOpener {
 		ImagePlus ip = opener.openImage(f.getAbsolutePath());
 		return ip.getBytesPerPixel();
 	}
+	
 }
