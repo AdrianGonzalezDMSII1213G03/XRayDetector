@@ -132,7 +132,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	}
 	
 	private void seleccionarVentanas(){
-		int nAttemps = 50;
+		int nAttemps = 300;
 		ArrayList<int []> copiaListaDefectos = listaDefectos;
 		ArrayList<int []> copiaListaNoDefectos = listaNoDefectos;
 		

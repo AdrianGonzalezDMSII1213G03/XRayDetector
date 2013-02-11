@@ -15,10 +15,10 @@ public class tui {
 		System.out.println("Se cargará la imagen " + img_mask);
 		mediador = Mediador.getInstance();
 		try{
-			System.out.println(mediador.cargaImagen(img_mask));
-			//mediador.ejecutaVentana();
+			System.out.println(mediador.cargaImagen(img));
+			mediador.ejecutaVentana();
 			//mediador.ejecutaVentanaSaliency();
-			mediador.ejecutaEntrenamiento();
+			//mediador.ejecutaEntrenamiento();
 		}
 		catch(Exception ex){
 			System.out.println("Error: " + ex.getMessage());
