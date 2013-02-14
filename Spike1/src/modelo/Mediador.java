@@ -2,10 +2,10 @@ package modelo;
 
 
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
 
+import utils.Graphic;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -15,9 +15,19 @@ public class Mediador {
 	
 	private static Mediador INSTANCE = null;
 	private FileReader fr;
+	private Thread[] t;
+	private ImagePlus imagen;
 	
 	private Mediador() {
 		fr = new FileReader();
+	}
+	
+	public ImagePlus getImagen(){
+		return imagen;
+	}
+	
+	public void setImagen(ImagePlus img){
+		imagen = img;
 	}
 	
 	public static Mediador getInstance(){	//Singleton
@@ -28,20 +38,35 @@ public class Mediador {
 			return INSTANCE;
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void stop(){
+		 for (int ithread = 0; ithread < t.length; ++ithread)  
+             t[ithread].stop();
+	}
 
 	public String cargaImagen(String img){		
 		int i = fr.abrirImagen(img);
+		setImagen(fr.getImagen());
 		return new String("Imagen abierta correctamente. Bytes por pixel: " + i);
 	}
 	
-	public ImagePlus[] divideImagen(){
+	public ImagePlus[] divideImagen(Rectangle selection){
 		int processors = Runtime.getRuntime().availableProcessors();
 		int offset = 10;
 		ImagePlus[] imagenes = new ImagePlus[processors];
-		ImagePlus img = fr.getImagen();		
+		ImagePlus img = getImagen();		
+		
+		if(selection.height != 0 && selection.width != 0){	//hay una selección
+			ImageProcessor ip =	img.duplicate().getProcessor();
+			ip.setRoi(selection);
+			ip = ip.crop();
+			BufferedImage croppedImage = ip.getBufferedImage();
+			img = new ImagePlus("croppedImage", croppedImage);
+		}
+		
 		int tam = img.getHeight()/processors;
-		//System.out.println("Proc: " + processors + "\tTam: " + tam);
-		//System.out.println("Width: " + img.getWidth());
+		
 		if(processors == 1){
 			imagenes[0] = img;
 			return imagenes;
@@ -81,13 +106,13 @@ public class Mediador {
 		return saliency;
 	}
 	
-	public void ejecutaVentana(){
+	public void ejecutaVentana(Rectangle selection, Graphic imgPanel){
 		int processors = Runtime.getRuntime().availableProcessors();
-		ImagePlus[] imagenes = divideImagen();
-		Thread[] t = new VentanaAbstracta[processors];
+		ImagePlus[] imagenes = divideImagen(selection);
+		t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel);
             t[ithread].start();
         }  
   
@@ -100,14 +125,14 @@ public class Mediador {
         }
 	}
 	
-	public void ejecutaVentanaSaliency(){
+	public void ejecutaVentanaSaliency(Rectangle selection, Graphic imgPanel){
 		int processors = Runtime.getRuntime().availableProcessors();
-		ImagePlus[] imagenes = divideImagen();
+		ImagePlus[] imagenes = divideImagen(selection);
 		ImagePlus[] saliency = getSaliency(imagenes);
-		Thread[] t = new VentanaAbstracta[processors];
+		t = new VentanaAbstracta[processors];
 		
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(saliency[ithread], ithread);
+            //t[ithread] = new VentanaDeslizante(saliency[ithread], ithread);
             t[ithread].start();
         }  
   
@@ -122,10 +147,11 @@ public class Mediador {
 	
 	public void ejecutaEntrenamiento(){
 		int processors = Runtime.getRuntime().availableProcessors();
-		ImagePlus[] mascaras = divideImagen();
+		Rectangle r = new Rectangle(0, 0, 0, 0);
+		ImagePlus[] mascaras = divideImagen(r);
 		fr.abrirImagen("./res/img/img1.BMP");
-		ImagePlus[] imagenes = divideImagen();
-		Thread[] t = new VentanaAbstracta[processors];
+		ImagePlus[] imagenes = divideImagen(r);
+		t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);

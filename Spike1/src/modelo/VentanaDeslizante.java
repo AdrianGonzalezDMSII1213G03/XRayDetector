@@ -5,6 +5,7 @@ import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import utils.Graphic;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -28,27 +30,36 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private double[] rangeVector;
 	private double[] lbp;
 	Feature ftStandard, ftHaralick, ftLbp;
+	private Graphic imgPanel;
+	private Rectangle selection;
 	
 	
-	public VentanaDeslizante(ImagePlus img, int numHilo) {
+	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel) {
 		super(img, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
+		this.imgPanel = imgPanel;
+		this.selection = sel;
 	}
 
 	@SuppressWarnings("static-access")
 	public void run(){
-		int salto = (int) (getAltura()*0.8);
-		int coordenadaX, coordenadaY, color = 0;
+		int salto = (int) (getAltura()*0.7);
+		int coordenadaX = 0, coordenadaY = 0, color = 0, altura = 0, anchura = 0;
 		Color c = null;
 		ImageProcessor ip = getImage().getProcessor();
 		double means[], ranges[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null;
 		boolean initializedNormal = false;
 		ImagePlus copiaStandard = getImage().duplicate();
 		
-		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - getAltura(); coordenadaY += salto) {
-			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - getAnchura(); coordenadaX += salto) {
+		altura = ip.getHeight();
+		anchura = ip.getWidth();
+		
+		
+		for (coordenadaY = 0;coordenadaY <= altura - getAltura(); coordenadaY += salto) {
+			for (coordenadaX = 0; coordenadaX <= anchura - getAnchura(); coordenadaX += salto) {
+				pintarVentana(coordenadaX, coordenadaY);
 				ip.setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
 				copiaImagen.setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
 				switch(color){
@@ -137,21 +148,40 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				imprimeRes(coordCentro, clase);
+				imprimeRes(coordenadaX, coordenadaY, clase);
 			}
 		}
 		guardaCopia();
 		
 	}
+
+	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
+		//System.out.println("Hola, soy el hilo " + getNumHilo() + " y estoy pintando la ventana [" + coordenadaX + "," + coordenadaY + "]");
+		int y = coordenadaY + selection.y + getNumHilo()*getImage().getHeight();
+		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
+			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+		}
+
+		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchura(), getAltura());
+		imgPanel.repaint();
+	}
 	
-	private void imprimeRes(int[] coordCentro, double prob) {
-		System.out.print("Ventana [" + coordCentro[0] + "," + coordCentro[1] + "] clasificada como: ");
+	private void imprimeRes(int coordX, int coordY, double prob) {
+		//System.out.print("Ventana [" + coordCentro[0] + "," + coordCentro[1] + "] clasificada como: ");
+		
+		int y = coordY + selection.y + getNumHilo()*getImage().getHeight();
+		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
+			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+		}
+		
 		if(prob == 0){
-			System.out.print("DEFECTO\n");
+			//System.out.print("DEFECTO\n");
+			imgPanel.addRectangle(coordX + selection.x, y, getAnchura(), getAltura());
+			imgPanel.repaint();
 		}
-		else{
-			System.out.print("NO DEFECTO\n");
-		}
+//		else{
+//			System.out.print("NO DEFECTO\n");
+//		}
 	}
 
 	private Classifier abrirModelo() {

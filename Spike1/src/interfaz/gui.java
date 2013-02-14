@@ -19,8 +19,11 @@ import javax.swing.JProgressBar;
 
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.JTextPane;
+
+import utils.Graphic;
 
 import modelo.Mediador;
 
@@ -35,6 +38,10 @@ public class gui {
 	private JPanel panelProgreso_1;
 	private Graphic imgPanel;
 	private JTextPane txtLog;
+	private JButton btnAnalizar;
+	private static Mediador mediador;
+	private Thread thread;
+	private Rectangle selection;
 
 	/**
 	 * Launch the application.
@@ -57,6 +64,7 @@ public class gui {
 	 */
 	public gui() {
 		initialize();
+		mediador = Mediador.getInstance();
 	}
 
 	/**
@@ -98,16 +106,20 @@ public class gui {
 		
 		JPanel panelImagen = getPanelImagen();
 		
-		ImagePlus imagAux = new ImagePlus("./res/img/app/logoGris.png");
-		Image imag = imagAux.getImage();
-		
-		imgPanel = new Graphic(imag);
-		panelImagen.add(imgPanel);
+		getImgPanel(panelImagen);
 		
 		
 		JPanel panelLog = getPanelLog();
 			
 		txtLog = getTxtLog(panelLog);
+	}
+
+	private void getImgPanel(JPanel panelImagen) {
+		ImagePlus imagAux = new ImagePlus("./res/img/app/logoGris.png");
+		Image imag = imagAux.getImage();
+		
+		imgPanel = new Graphic(imag);
+		panelImagen.add(imgPanel);
 	}
 
 	private JTextPane getTxtLog(JPanel panelLog) {
@@ -137,6 +149,7 @@ public class gui {
 
 	private void getBtnStop(JPanel panelProgreso) {
 		JButton btnStop = new JButton("Stop");
+		btnStop.addActionListener(new StopListener());
 		panelProgreso.add(btnStop);
 	}
 
@@ -155,8 +168,10 @@ public class gui {
 	}
 
 	private void getBtnAnalizar(JPanel panelControl) {
-		JButton btnNewButton = new JButton("Analizar imagen");
-		panelControl.add(btnNewButton);
+		btnAnalizar = new JButton("Analizar imagen");
+		btnAnalizar.setEnabled(false);
+		btnAnalizar.addActionListener(new AnalizarImagenListener());
+		panelControl.add(btnAnalizar);
 	}
 
 	private void getBtnEntrenar(JPanel panelControl) {
@@ -187,8 +202,9 @@ public class gui {
 		frmXraydetector.getContentPane().setLayout(null);
 	}
 	
-	public class CargarImagenListener implements ActionListener{
-	    public void actionPerformed (ActionEvent e){
+	private class CargarImagenListener implements ActionListener{
+	    
+		public void actionPerformed (ActionEvent e){
 	    	File image = null;
 	    	
 	    	JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
@@ -201,11 +217,13 @@ public class gui {
 				image = chooser.getSelectedFile();
 			}
 			if(image != null){
-				Mediador m = Mediador.getInstance();
-				m.cargaImagen(image.getAbsolutePath());
+				//Mediador m = Mediador.getInstance();
+				mediador.cargaImagen(image.getAbsolutePath());
 				ImagePlus img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
 				imgPanel.repaint();
+				selection = imgPanel.coordenates();
+				btnAnalizar.setEnabled(true);
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				StyleConstants.setBold(sa, true);	//Negrita
 				try {
@@ -216,6 +234,33 @@ public class gui {
 				}
 			}
 	        
+	    }
+	}
+	
+	private class AnalizarImagenListener implements ActionListener{
+	    public void actionPerformed (ActionEvent e){
+	    	//Mediador m = Mediador.getInstance();    	
+	    	//mediador.ejecutaVentana();
+	    	ThreadAnalizar threadAnalizar = new ThreadAnalizar();
+	    	thread = new Thread(threadAnalizar);
+	    	thread.start();
+	    }
+	}
+	
+	private class ThreadAnalizar implements Runnable{
+
+		@Override
+		public void run() {
+			mediador.ejecutaVentana(selection, imgPanel);			
+		}		
+	}
+	
+	private class StopListener implements ActionListener{
+	    public void actionPerformed (ActionEvent e){
+	    	if (thread != null){
+	    		mediador.stop();
+	    		//thread.interrupt();
+	    	}
 	    }
 	}
 }

@@ -16,7 +16,7 @@ public class tui {
 		mediador = Mediador.getInstance();
 		try{
 			System.out.println(mediador.cargaImagen(img));
-			mediador.ejecutaVentana();
+			//mediador.ejecutaVentana();
 			//mediador.ejecutaVentanaSaliency();
 			//mediador.ejecutaEntrenamiento();
 		}
