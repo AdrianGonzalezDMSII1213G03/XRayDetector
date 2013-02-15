@@ -32,15 +32,17 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	Feature ftStandard, ftHaralick, ftLbp;
 	private Graphic imgPanel;
 	private Rectangle selection;
+	private File model;
 	
 	
-	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel) {
+	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, File model) {
 		super(img, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
 		this.imgPanel = imgPanel;
 		this.selection = sel;
+		this.model = model;
 	}
 
 	@SuppressWarnings("static-access")
@@ -187,7 +189,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private Classifier abrirModelo() {
 		URL url = null;
 		try {
-			url = new File("./res/model/todas_24.model").toURI().toURL();
+			url = model.toURI().toURL();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

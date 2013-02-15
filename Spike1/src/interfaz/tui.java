@@ -2,7 +2,7 @@ package interfaz;
 
 import modelo.Mediador;
 
-public class tui {
+public class Tui {
 
 	private static String img = "./res/img/img1.BMP";
 	private static String img_mask = "./res/img/img1_mask.jpg";

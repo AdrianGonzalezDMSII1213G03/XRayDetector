@@ -4,6 +4,7 @@ package modelo;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import utils.Graphic;
 import ij.IJ;
@@ -106,13 +107,13 @@ public class Mediador {
 		return saliency;
 	}
 	
-	public void ejecutaVentana(Rectangle selection, Graphic imgPanel){
+	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, File model){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
 		t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, model);
             t[ithread].start();
         }  
   
