@@ -6,7 +6,11 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.swing.JProgressBar;
+import javax.swing.JTextPane;
+
 import utils.Graphic;
+import weka.core.Instances;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -107,13 +111,13 @@ public class Mediador {
 		return saliency;
 	}
 	
-	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, File model){
+	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, File model, JProgressBar progressBar){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
 		t = new VentanaAbstracta[processors];
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, model);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, model, progressBar);
             t[ithread].start();
         }  
   
@@ -146,26 +150,34 @@ public class Mediador {
         }
 	}
 	
-	public void ejecutaEntrenamiento(){
-		int processors = Runtime.getRuntime().availableProcessors();
-		Rectangle r = new Rectangle(0, 0, 0, 0);
-		ImagePlus[] mascaras = divideImagen(r);
-		fr.abrirImagen("./res/img/img1.BMP");
-		ImagePlus[] imagenes = divideImagen(r);
-		t = new VentanaAbstracta[processors];
-				
-		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);
-            ((VentanaAleatoria) t[ithread]).setImagenCompleta(imagenes[ithread]);
-            t[ithread].start();
-        }  
-  
-        try{     
-            for (int ithread = 0; ithread < t.length; ++ithread)  
-                t[ithread].join();  
-        }
-        catch (InterruptedException ie){  
-            throw new RuntimeException(ie);  
-        }
+	public void ejecutaEntrenamiento(File arff){
+		
+		if(arff != null){	//entrenamos con un arff existente
+			VentanaAbstracta va = new VentanaAleatoria(null, 0);
+			Instances data = va.leerArff(arff.getAbsolutePath());
+			va.createModel(data, "arff_existente");
+		}
+		else{	//entrenamos con las imágenes	
+			int processors = Runtime.getRuntime().availableProcessors();
+			Rectangle r = new Rectangle(0, 0, 0, 0);
+			ImagePlus[] mascaras = divideImagen(r);
+			fr.abrirImagen("./res/img/img1.BMP");
+			ImagePlus[] imagenes = divideImagen(r);
+			t = new VentanaAbstracta[processors];
+					
+			for (int ithread = 0; ithread < t.length; ++ithread){    
+	            t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);
+	            ((VentanaAleatoria) t[ithread]).setImagenCompleta(imagenes[ithread]);
+	            t[ithread].start();
+	        }  
+	  
+	        try{     
+	            for (int ithread = 0; ithread < t.length; ++ithread)  
+	                t[ithread].join();  
+	        }
+	        catch (InterruptedException ie){  
+	            throw new RuntimeException(ie);  
+	        }
+		}
 	}
 }

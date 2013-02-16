@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+
+import javax.swing.JProgressBar;
 
 import utils.Graphic;
 import weka.classifiers.AbstractClassifier;
@@ -33,9 +36,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private Graphic imgPanel;
 	private Rectangle selection;
 	private File model;
+	private JProgressBar progressBar;
+	private double porcent = 0.000F;
 	
 	
-	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, File model) {
+	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, File model, JProgressBar progressBar) {
 		super(img, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
@@ -43,6 +48,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		this.imgPanel = imgPanel;
 		this.selection = sel;
 		this.model = model;
+		this.progressBar = progressBar;
 	}
 
 	@SuppressWarnings("static-access")
@@ -57,6 +63,8 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
+		
+		double porcentajeVentana = calcularPorcentaje(salto, anchura, altura);
 		
 		
 		for (coordenadaY = 0;coordenadaY <= altura - getAltura(); coordenadaY += salto) {
@@ -151,10 +159,40 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					e.printStackTrace();
 				}
 				imprimeRes(coordenadaX, coordenadaY, clase);
+				setPorcentajeBarra(porcentajeVentana);
 			}
 		}
 		guardaCopia();
 		
+	}
+
+	private synchronized void setPorcentajeBarra(double porcentajeVentana) {
+		porcent += porcentajeVentana;
+		System.out.println("Valor nuevo de porcent: " + porcent);
+		//int res = (int) (progressBar.getValue() + porcent);
+		
+		if (porcent >=100){
+			progressBar.setValue(progressBar.getValue() +(int) porcent);
+			porcent -= 100; 
+		}
+		//progressBar.setString(val + NumberFormat.getPercentInstance().format(porcentajeVentana));
+		System.out.println("Valor nuevo de barra: " + progressBar.getValue());
+		//progressBar.setValue(progressBar.getValue() + 10);
+		progressBar.repaint();
+		
+	}
+
+	private double calcularPorcentaje(int salto, int anchura, int altura) {
+		//((1/nºventanas_ancho*nºventanas_alto)/nºhilos)*10000	Lo de 10000 es porque no admite float
+		double nv = 0.00000;
+		double nor = 0.00000;
+		nv = (double) (10000/(double)((anchura/salto)*(double)(altura/salto)));
+		System.out.printf("nv: %.5f %n" + nv, nv );
+		nor = nv/Runtime.getRuntime().availableProcessors();
+		//System.out.printf("nor: %.5f %n" + nor, nor );
+		//double por = nor;
+		System.out.printf("porcen: %.5f %n" + nor, nor );
+		return nor;
 	}
 
 	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
@@ -451,6 +489,17 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		header.setClassIndex(header.numAttributes() - 1);
 
 		return header;
+	}
+
+	@Override
+	public void createModel(Instances data, String sizeWindow) {
+		//método vacío, ya que es opcional	
+	}
+
+	@Override
+	public Instances leerArff(String url) {
+		//método vacío, ya que es opcional
+		return null;	
 	}
 	
 //	/**

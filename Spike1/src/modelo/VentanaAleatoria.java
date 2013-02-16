@@ -43,11 +43,16 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	public void run() {
 		rellenarListas();
 		//imprimeListas();
-		seleccionarVentanas();
+		seleccionarVentanas();		
+		Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
+		createModel(data, "24");
+	}
+
+	public Instances leerArff(String url) {
 		BufferedReader reader = null;
 		
 		try {
-			reader = new BufferedReader(new FileReader("./res/arff/Arff_entrenamiento.arff"));
+			reader = new BufferedReader(new FileReader(url));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -64,7 +69,8 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		
 		Instances data = arff.getData();
 		data.setClassIndex(data.numAttributes() - 1);
-		createModel(data, "24");
+		
+		return data;
 	}
 
 	private void imprimeListas() {

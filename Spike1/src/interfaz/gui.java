@@ -6,12 +6,9 @@ import java.awt.EventQueue;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -41,7 +38,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class Gui {
@@ -55,6 +51,8 @@ public class Gui {
 	private Thread thread;
 	private Rectangle selection;
 	private File model;
+	private File arff;
+	private JProgressBar progressBar;
 
 	/**
 	 * Launch the application.
@@ -168,7 +166,8 @@ public class Gui {
 
 	private void getProgressBar(JPanel panelProgreso) {
 		panelProgreso_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
+		progressBar.setMaximum(10000);	//10000 porque no admite float
 		panelProgreso.add(progressBar);
 	}
 
@@ -282,7 +281,7 @@ public class Gui {
 
 		@Override
 		public void run() {
-			mediador.ejecutaVentana(selection, imgPanel, model);			
+			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);			
 		}		
 	}
 	
@@ -373,12 +372,53 @@ public class Gui {
 	            		System.out.println("PELELE");
 	            	}
 	            	else if (button.getText().equals("Usar ARFF existente")){
-	            		System.out.println("MONDONGO");
+	            		JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	        	    	chooser.setDialogTitle("Escoja el ARFF para entrenar");
+	        	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("ARFF", "arff");
+	        	    	chooser.setFileFilter(filter);
+	        	    	int answer = chooser.showOpenDialog(null);
+	        			if (answer == JFileChooser.APPROVE_OPTION) {
+	        				arff = chooser.getSelectedFile();
+	        			}
+	        			if(arff != null){
+	        				ThreadEntrenar threadEntrenar = new ThreadEntrenar(true);
+	        		    	thread = new Thread(threadEntrenar);
+	        		    	thread.start();
+	        			}
 	            	}
 	            }
 	        }
-	    	//if (btnModel.getActionCommand())
-			//dial.setVisible(false);
+	    	
+			dial.setVisible(false);
 	    }
+	}
+	
+	private class ThreadEntrenar implements Runnable{
+		
+		private boolean entrenarConArff;
+
+		public ThreadEntrenar(boolean b) {
+			super();
+			entrenarConArff = b;
+		}
+
+		@Override
+		public void run() {
+			if(entrenarConArff){	//si queremos entrenar con un fichero existente
+				mediador.ejecutaEntrenamiento(arff);
+				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+				StyleConstants.setBold(sa, true);	//Negrita
+				try {
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "\nModelo entrenado correctamente" +
+							"con el ARFF especificado", sa);
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			else{	//entrenar con imágenes
+				
+			}
+		}		
 	}
 }
