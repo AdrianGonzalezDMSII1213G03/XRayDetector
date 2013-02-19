@@ -16,6 +16,7 @@ public class Standard extends Feature {
 	
 	public Standard(ImagePlus image) {
 		super(image);
+		IJ.run(image, "8-bit", "");
 	}
 
 	@Override

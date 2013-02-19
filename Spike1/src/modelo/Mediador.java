@@ -5,6 +5,7 @@ package modelo;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
@@ -150,7 +151,7 @@ public class Mediador {
         }
 	}
 	
-	public void ejecutaEntrenamiento(File arff){
+	public void ejecutaEntrenamiento(File arff, String originalDirectory){
 		
 		if(arff != null){	//entrenamos con un arff existente
 			VentanaAbstracta va = new VentanaAleatoria(null, 0);
@@ -161,7 +162,7 @@ public class Mediador {
 			int processors = Runtime.getRuntime().availableProcessors();
 			Rectangle r = new Rectangle(0, 0, 0, 0);
 			ImagePlus[] mascaras = divideImagen(r);
-			fr.abrirImagen("./res/img/img1.BMP");
+			cargaImagen(originalDirectory);
 			ImagePlus[] imagenes = divideImagen(r);
 			t = new VentanaAbstracta[processors];
 					
@@ -178,6 +179,16 @@ public class Mediador {
 	        catch (InterruptedException ie){  
 	            throw new RuntimeException(ie);  
 	        }
+		}
+	}
+	
+	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory){
+		for(int i=0; i < originalDirectory.length; i++){
+			if(!originalDirectory[i].contains("Thumbs.db")){
+				System.out.println("Or: " + originalDirectory[i] + " Mask: " + maskDirectory[i]);
+				cargaImagen(maskDirectory[i]);
+				ejecutaEntrenamiento(null, originalDirectory[i]);
+			}
 		}
 	}
 }

@@ -1,6 +1,8 @@
 package modelo;
 
-import java.awt.Color;
+import ij.ImagePlus;
+import ij.process.ImageProcessor;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,9 +19,6 @@ import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
-
-import ij.ImagePlus;
-import ij.process.ImageProcessor;
 
 public class VentanaAleatoria extends VentanaAbstracta {
 	
@@ -48,7 +47,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		createModel(data, "24");
 	}
 
-	public Instances leerArff(String url) {
+	public synchronized Instances leerArff(String url) {
 		BufferedReader reader = null;
 		
 		try {
@@ -73,6 +72,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		return data;
 	}
 
+	@SuppressWarnings("unused")
 	private void imprimeListas() {
 		Iterator<int []> it = listaDefectos.iterator();
 		while(it.hasNext()){
@@ -138,14 +138,15 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	}
 	
 	private void seleccionarVentanas(){
-		int nAttemps = 300;
+		int nAttemps = 150;
 		ArrayList<int []> copiaListaDefectos = listaDefectos;
 		ArrayList<int []> copiaListaNoDefectos = listaNoDefectos;
 		
 		for(int i=0; i < nAttemps; i++){
 			if(copiaListaDefectos.size() > 0 && copiaListaNoDefectos.size() > 0){
-				int cola = (int) Math.random();
-				if(cola == 0){
+				int cola = (int) Math.random()*10;
+				//System.out.println("\tCola: " + cola);
+				if(cola <= 5){
 					int randIndex = ((int) Math.random()*copiaListaDefectos.size());
 					int [] coordVentana = copiaListaDefectos.get(randIndex);
 					calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
@@ -322,24 +323,27 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		featuresString = generateFeatures(coordenates, defect);
 
 		outputFile = new File("./res/arff/Arff_entrenamiento.arff");
-		try {
-			if (!outputFile.exists()) {
-				String headerFile = getHeader(false);
-				System.out.println(outputFile.getPath());
-				outputFile.createNewFile();
-				arffFile = new FileWriter(outputFile);
-				arffFile.write(headerFile);
-
-			} else {
-				// si ya esta creado se escribe a continuacion
-				arffFile = new FileWriter(outputFile, true);
+		synchronized (this){	//en teoría, es redundante
+			try {
+				if (!outputFile.exists()) {
+					String headerFile = getHeader(false);
+					System.out.println(outputFile.getPath());
+					outputFile.createNewFile();
+					arffFile = new FileWriter(outputFile);
+					arffFile.write(headerFile);
+	
+				} else {
+					// si ya esta creado se escribe a continuacion
+					arffFile = new FileWriter(outputFile, true);
+				}
+	
+				arffFile.write(featuresString + "\n");
+				System.out.println(featuresString + "\n");
+				arffFile.close();
+			} catch (IOException e) {
+				System.out.println("Problema con los ficheros");
+				e.printStackTrace();
 			}
-
-			arffFile.write(featuresString + "\n");
-			arffFile.close();
-		} catch (IOException e) {
-			System.out.println("Problema con los ficheros");
-			e.printStackTrace();
 		}
 	}
 	

@@ -9,6 +9,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -38,6 +39,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 public class Gui {
@@ -53,6 +55,12 @@ public class Gui {
 	private File model;
 	private File arff;
 	private JProgressBar progressBar;
+	private File maskDirectory;
+	private File originalDirectory;
+	private boolean sameFiles = false;
+	private JButton btnEntrenarClasificador;
+	private JButton btnAbrirImagen;
+	private boolean imagenAbierta;
 
 	/**
 	 * Launch the application.
@@ -187,13 +195,13 @@ public class Gui {
 	}
 
 	private void getBtnEntrenar(JPanel panelControl) {
-		JButton btnEntrenarClasificador = new JButton("Entrenar clasificador");
+		btnEntrenarClasificador = new JButton("Entrenar clasificador");
 		btnEntrenarClasificador.addActionListener(new EntrenarListener(frmXraydetector));
 		panelControl.add(btnEntrenarClasificador);
 	}
 
 	private void getBtnAbrirImagen(JPanel panelControl) {
-		JButton btnAbrirImagen = new JButton("Abrir imagen");
+		btnAbrirImagen = new JButton("Abrir imagen");
 		btnAbrirImagen.addActionListener(new CargarImagenListener());
 		panelControl.add(btnAbrirImagen);
 	}
@@ -234,6 +242,7 @@ public class Gui {
 			}
 			if(image != null){
 				//Mediador m = Mediador.getInstance();
+				imagenAbierta = true;
 				mediador.cargaImagen(image.getAbsolutePath());
 				ImagePlus img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
@@ -270,6 +279,9 @@ public class Gui {
 				model = chooser.getSelectedFile();
 			}
 			if(model != null){
+				btnEntrenarClasificador.setEnabled(false);
+				btnAbrirImagen.setEnabled(false);
+				btnAnalizar.setEnabled(false);
 				ThreadAnalizar threadAnalizar = new ThreadAnalizar();
 		    	thread = new Thread(threadAnalizar);
 		    	thread.start();
@@ -281,7 +293,15 @@ public class Gui {
 
 		@Override
 		public void run() {
-			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);			
+			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);
+			btnEntrenarClasificador.setEnabled(true);
+			btnAbrirImagen.setEnabled(true);
+			if(imagenAbierta){
+				btnAnalizar.setEnabled(true);
+			}
+			else{
+				btnAnalizar.setEnabled(false);
+			}
 		}		
 	}
 	
@@ -289,6 +309,14 @@ public class Gui {
 	    public void actionPerformed (ActionEvent e){
 	    	if (thread != null){
 	    		mediador.stop();
+	    		btnEntrenarClasificador.setEnabled(true);
+				btnAbrirImagen.setEnabled(true);
+				if(imagenAbierta){
+					btnAnalizar.setEnabled(true);
+				}
+				else{
+					btnAnalizar.setEnabled(false);
+				}
 	    		//thread.interrupt();
 	    	}
 	    }
@@ -369,7 +397,37 @@ public class Gui {
 
 	            if (button.isSelected()) {
 	            	if (button.getText().equals("Crear nuevo ARFF")){
-	            		System.out.println("PELELE");
+	            		originalDirectory = null;
+	            		JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	            		// Para que solo se puedan abrir directorios
+	            		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	            		chooser.setDialogTitle("Selecciona una carpeta de imagenes originales");
+	            		int answer = chooser.showOpenDialog(null);
+	            		if (answer == JFileChooser.APPROVE_OPTION) {
+	            			originalDirectory = chooser.getSelectedFile().getAbsoluteFile();
+	            			
+	            			// Comprobamos que el directorio acabe en Entrenar/Originales ya
+	        				// que ahÃ­ van a estar las imagenes para entrenar
+	        				if (originalDirectory == null
+	        						|| !originalDirectory.getPath().contains("Originales")) {
+	        					JOptionPane
+	        							.showMessageDialog(
+	        									null,
+	        									"No has seleccionado una carpeta correcta para entrenar.",
+	        									"Error", 1);
+	        					sameFiles = false;
+	        				}
+	        				else {
+	        					// Se reemplaza Originales por Mascaras ya que el directorio
+	        					// de las mascaras es igual, solo cambia eso
+	        					maskDirectory = new File(originalDirectory.getAbsolutePath()
+	        							.replace("Originales", "Mascaras"));
+	        					
+	        					ThreadEntrenar threadEntrenar = new ThreadEntrenar(false);
+		        		    	thread = new Thread(threadEntrenar);
+		        		    	thread.start();
+	        				}
+	            		}
 	            	}
 	            	else if (button.getText().equals("Usar ARFF existente")){
 	            		JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
@@ -390,6 +448,9 @@ public class Gui {
 	        }
 	    	
 			dial.setVisible(false);
+			btnEntrenarClasificador.setEnabled(false);
+			btnAbrirImagen.setEnabled(false);
+			btnAnalizar.setEnabled(false);
 	    }
 	}
 	
@@ -405,7 +466,7 @@ public class Gui {
 		@Override
 		public void run() {
 			if(entrenarConArff){	//si queremos entrenar con un fichero existente
-				mediador.ejecutaEntrenamiento(arff);
+				mediador.ejecutaEntrenamiento(arff, null);
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				StyleConstants.setBold(sa, true);	//Negrita
 				try {
@@ -417,7 +478,83 @@ public class Gui {
 				}
 			}
 			else{	//entrenar con imágenes
+				// Listado de archivos del directorio de originales
+							
+				String originalList[] = originalDirectory.list();
+				Arrays.sort(originalList);
 				
+				// Listado de archivos del directorio de mascaras
+				String maskList[] = maskDirectory.list();
+				Arrays.sort(maskList);
+				
+				//System.out.println("Or: " + originalList.length + " Mask: " + maskList.length);
+				
+				if (originalList.length != maskList.length) {
+					if (originalList.length > maskList.length)
+						JOptionPane.showMessageDialog(null,
+								"El número de imágenes originales y máscaras no coinciden.\n"
+										+ "Faltan máscaras", "Error", 1);
+					else
+						JOptionPane.showMessageDialog(null,
+								"El número de imágenes originales y máscaras no coinciden.\n"
+										+ "Faltan originales", "Error", 1);
+				} else {
+					sameFiles = true;
+					for (int i = 0; i < originalList.length
+							&& sameFiles == true; i++) {
+						// Quitar extension jpg
+						String originalName = originalList[i].substring(0,
+								originalList[i].lastIndexOf("."));
+						// Quitar extension bmp
+						String maskName = maskList[i].substring(0,
+								maskList[i].lastIndexOf("."));
+
+						// Se comprueba que cada original y su mascara
+						// correspondiente tienen el mismo nombre
+						if (!originalName.equals(maskName))
+							sameFiles = false;
+					}
+					if (sameFiles == false)
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Los nombres de las imágenes originales no coinciden con los de las máscaras.",
+										"Error", 1);
+					else {
+
+						//String list[] = originalDirectory.list();
+//						txtLog
+//								.append("\nDirectorio abierto correctamente.\n\nImagenes a analizar:");
+//
+//						for (int i = 0; i < list.length; i++) {
+//							txtLog.append("\n" + list[i]);
+//						}
+
+						JOptionPane.showMessageDialog(null,
+								"Directorio abierto correctamente",
+								"Aviso", 1);
+						
+						File[] originalFiles = originalDirectory.listFiles();
+						File[] maskFiles = maskDirectory.listFiles();
+						originalList = new String[originalFiles.length];
+						maskList = new String[maskFiles.length];
+						
+						for(int i=0; i<originalFiles.length; i++){
+							originalList[i] = originalFiles[i].getAbsolutePath();
+							maskList[i] = maskFiles[i].getAbsolutePath();
+						}
+						
+						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList);
+					}
+				}
+				btnEntrenarClasificador.setEnabled(true);
+				btnAbrirImagen.setEnabled(true);
+				if(imagenAbierta){
+					btnAnalizar.setEnabled(true);
+				}
+				else{
+					btnAnalizar.setEnabled(false);
+				}
 			}
 		}		
 	}
