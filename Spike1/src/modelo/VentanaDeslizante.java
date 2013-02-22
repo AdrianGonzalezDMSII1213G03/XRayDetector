@@ -37,7 +37,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private Rectangle selection;
 	private File model;
 	private JProgressBar progressBar;
-	private double porcent = 0.000F;
+	private int cont = 0;
 	
 	
 	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, File model, JProgressBar progressBar) {
@@ -63,9 +63,6 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
-		
-		double porcentajeVentana = calcularPorcentaje(salto, anchura, altura);
-		
 		
 		for (coordenadaY = 0;coordenadaY <= altura - getAltura(); coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= anchura - getAnchura(); coordenadaX += salto) {
@@ -143,10 +140,10 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				}
 				
 					
-				int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + getNumHilo()*getImage().getHeight()};
+				//int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + getNumHilo()*getImage().getHeight()};
 				
 				long totalTiempo = System.currentTimeMillis() - tiempoInicio;
-				System.out.println("El tiempo de la ventana ["+ coordCentro[0]+","+coordCentro[1]+ "] es: " + totalTiempo + " miliseg");
+				//System.out.println("El tiempo de la ventana ["+ coordCentro[0]+","+coordCentro[1]+ "] es: " + totalTiempo + " miliseg");
 				
 				//crearArff(coordCentro);
 				Instance instancia = crearInstancia();
@@ -159,41 +156,22 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					e.printStackTrace();
 				}
 				imprimeRes(coordenadaX, coordenadaY, clase);
-				setPorcentajeBarra(porcentajeVentana);
+				System.out.println("CoordX: " + coordenadaX + " CoordY: " + coordenadaY);
+				setPorcentajeBarra();
 			}
 		}
 		guardaCopia();
 		
 	}
 
-	private synchronized void setPorcentajeBarra(double porcentajeVentana) {
-		porcent += porcentajeVentana;
-		System.out.println("Valor nuevo de porcent: " + porcent);
-		//int res = (int) (progressBar.getValue() + porcent);
-		
-		if (porcent >=100){
-			progressBar.setValue(progressBar.getValue() +(int) porcent);
-			porcent -= 100; 
-		}
-		//progressBar.setString(val + NumberFormat.getPercentInstance().format(porcentajeVentana));
-		System.out.println("Valor nuevo de barra: " + progressBar.getValue());
-		//progressBar.setValue(progressBar.getValue() + 10);
+	private synchronized void setPorcentajeBarra() {		
+		progressBar.setValue(progressBar.getValue() + 1);
 		progressBar.repaint();
-		
+		System.out.println("Barra: " + progressBar.getValue() + " Max Barra: " + progressBar.getMaximum());
+		cont++;
+		System.out.println("Cont en hilo " + getNumHilo() + " : " + cont);
 	}
 
-	private double calcularPorcentaje(int salto, int anchura, int altura) {
-		//((1/nºventanas_ancho*nºventanas_alto)/nºhilos)*10000	Lo de 10000 es porque no admite float
-		double nv = 0.00000;
-		double nor = 0.00000;
-		nv = (double) (10000/(double)((anchura/salto)*(double)(altura/salto)));
-		System.out.printf("nv: %.5f %n" + nv, nv );
-		nor = nv/Runtime.getRuntime().availableProcessors();
-		//System.out.printf("nor: %.5f %n" + nor, nor );
-		//double por = nor;
-		System.out.printf("porcen: %.5f %n" + nor, nor );
-		return nor;
-	}
 
 	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
 		//System.out.println("Hola, soy el hilo " + getNumHilo() + " y estoy pintando la ventana [" + coordenadaX + "," + coordenadaY + "]");

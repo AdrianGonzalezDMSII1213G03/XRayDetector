@@ -116,6 +116,8 @@ public class Mediador {
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
 		t = new VentanaAbstracta[processors];
+		
+		setMaxProgressBar(imagenes, progressBar);
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, model, progressBar);
@@ -190,5 +192,28 @@ public class Mediador {
 				ejecutaEntrenamiento(null, originalDirectory[i]);
 			}
 		}
+	}
+	
+	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){
+		int numTotalVentanas = 0;
+		
+		for(int i = 0; i<imgs.length; i++){
+			numTotalVentanas += calcularNumVentanas(imgs[i]);
+		}
+		barra.setMaximum(numTotalVentanas);
+		barra.setValue(0);
+	}
+
+	private int calcularNumVentanas(ImagePlus image) {
+		int altura, anchura, salto;
+		int altoVentana = 24;	//de momento, a pelo
+		salto = (int) (0.7*altoVentana);	//de momento, a pelo. después, se hará con el fichero de opciones
+		altura = image.getHeight();
+		anchura = image.getWidth();
+		int a = ((anchura-altoVentana)/salto)+1;
+		int b = ((altura-altoVentana)/salto)+1;
+		int res = a*b;
+		System.out.println("Ancho: "+anchura+" Alto: "+altura+" Salto: " +salto+ "Total ventanas: " +res);
+		return res;
 	}
 }

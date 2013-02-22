@@ -61,6 +61,7 @@ public class Gui {
 	private JButton btnEntrenarClasificador;
 	private JButton btnAbrirImagen;
 	private boolean imagenAbierta;
+	private JButton btnStop;
 
 	/**
 	 * Launch the application.
@@ -167,15 +168,15 @@ public class Gui {
 	}
 
 	private void getBtnStop(JPanel panelProgreso) {
-		JButton btnStop = new JButton("Stop");
+		btnStop = new JButton("Stop");
 		btnStop.addActionListener(new StopListener());
+		btnStop.setEnabled(false);
 		panelProgreso.add(btnStop);
 	}
 
 	private void getProgressBar(JPanel panelProgreso) {
 		panelProgreso_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		progressBar = new JProgressBar();
-		progressBar.setMaximum(10000);	//10000 porque no admite float
 		panelProgreso.add(progressBar);
 	}
 
@@ -282,6 +283,7 @@ public class Gui {
 				btnEntrenarClasificador.setEnabled(false);
 				btnAbrirImagen.setEnabled(false);
 				btnAnalizar.setEnabled(false);
+				btnStop.setEnabled(true);
 				ThreadAnalizar threadAnalizar = new ThreadAnalizar();
 		    	thread = new Thread(threadAnalizar);
 		    	thread.start();
@@ -296,6 +298,7 @@ public class Gui {
 			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);
 			btnEntrenarClasificador.setEnabled(true);
 			btnAbrirImagen.setEnabled(true);
+			btnStop.setEnabled(false);
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
 			}
@@ -311,6 +314,7 @@ public class Gui {
 	    		mediador.stop();
 	    		btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
+				btnStop.setEnabled(false);
 				if(imagenAbierta){
 					btnAnalizar.setEnabled(true);
 				}
@@ -451,6 +455,7 @@ public class Gui {
 			btnEntrenarClasificador.setEnabled(false);
 			btnAbrirImagen.setEnabled(false);
 			btnAnalizar.setEnabled(false);
+			btnStop.setEnabled(true);
 	    }
 	}
 	
@@ -549,6 +554,7 @@ public class Gui {
 				}
 				btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
+				btnStop.setEnabled(false);
 				if(imagenAbierta){
 					btnAnalizar.setEnabled(true);
 				}
