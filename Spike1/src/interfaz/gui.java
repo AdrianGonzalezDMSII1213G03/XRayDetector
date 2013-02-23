@@ -267,27 +267,45 @@ public class Gui {
 	    public void actionPerformed (ActionEvent e){
 	    	//Mediador m = Mediador.getInstance();    	
 	    	//mediador.ejecutaVentana();
-	    	
-	    	JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
-	    	chooser.setDialogTitle("Escoja el modelo para clasificar");
-	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Model", "model");
-	    	chooser.setFileFilter(filter);
-			/*chooser.addChoosableFileFilter(new ImageFilter());
-			chooser.setFileView(new ImageFileView());
-			chooser.setAccessory(new ImagePreview(chooser));*/
-	    	int answer = chooser.showOpenDialog(null);
-			if (answer == JFileChooser.APPROVE_OPTION) {
-				model = chooser.getSelectedFile();
-			}
-			if(model != null){
-				btnEntrenarClasificador.setEnabled(false);
-				btnAbrirImagen.setEnabled(false);
-				btnAnalizar.setEnabled(false);
-				btnStop.setEnabled(true);
-				ThreadAnalizar threadAnalizar = new ThreadAnalizar();
-		    	thread = new Thread(threadAnalizar);
-		    	thread.start();
-			}
+	    	int opcion;
+	    	//si no se ha seleccionado una región, mostramos un aviso
+	    	if(selection.height == 0 && selection.width == 0){
+		    	opcion = JOptionPane.showOptionDialog(
+		    			   null,
+		    			   "Aviso: no ha elegido ninguna región.\n" +
+		    			   "El proceso puede tardar mucho. ¿Desea continuar de todos modos?", 
+		    			   "Aviso",
+		    			   JOptionPane.YES_NO_CANCEL_OPTION,
+		    			   JOptionPane.WARNING_MESSAGE,
+		    			   null,    // null para icono por defecto.
+		    			   new Object[] { "Continuar", "Cancelar"},   // null para YES, NO y CANCEL
+		    			   "Cancelar");
+	    	}
+	    	else{
+	    		opcion = 0;
+	    	}
+	    	if(opcion == 0){
+		    	JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+		    	chooser.setDialogTitle("Escoja el modelo para clasificar");
+		    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Model", "model");
+		    	chooser.setFileFilter(filter);
+				/*chooser.addChoosableFileFilter(new ImageFilter());
+				chooser.setFileView(new ImageFileView());
+				chooser.setAccessory(new ImagePreview(chooser));*/
+		    	int answer = chooser.showOpenDialog(null);
+				if (answer == JFileChooser.APPROVE_OPTION) {
+					model = chooser.getSelectedFile();
+				}
+				if(model != null){
+					btnEntrenarClasificador.setEnabled(false);
+					btnAbrirImagen.setEnabled(false);
+					btnAnalizar.setEnabled(false);
+					btnStop.setEnabled(true);
+					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
+			    	thread = new Thread(threadAnalizar);
+			    	thread.start();
+				}
+	    	}
 	    }
 	}
 	
