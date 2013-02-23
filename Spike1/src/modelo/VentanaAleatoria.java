@@ -338,7 +338,6 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				}
 	
 				arffFile.write(featuresString + "\n");
-				System.out.println(featuresString + "\n");
 				arffFile.close();
 			} catch (IOException e) {
 				System.out.println("Problema con los ficheros");

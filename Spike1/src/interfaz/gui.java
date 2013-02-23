@@ -535,9 +535,9 @@ public class Gui {
 //							txtLog.append("\n" + list[i]);
 //						}
 
-						JOptionPane.showMessageDialog(null,
-								"Directorio abierto correctamente",
-								"Aviso", 1);
+//						JOptionPane.showMessageDialog(null,
+//								"Directorio abierto correctamente",
+//								"Aviso", 1);
 						
 						File[] originalFiles = originalDirectory.listFiles();
 						File[] maskFiles = maskDirectory.listFiles();
@@ -548,8 +548,7 @@ public class Gui {
 							originalList[i] = originalFiles[i].getAbsolutePath();
 							maskList[i] = maskFiles[i].getAbsolutePath();
 						}
-						
-						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList);
+						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar);
 					}
 				}
 				btnEntrenarClasificador.setEnabled(true);

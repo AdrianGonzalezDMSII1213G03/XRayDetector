@@ -184,12 +184,24 @@ public class Mediador {
 		}
 	}
 	
-	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory){
+	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra){
+		
+		barra.setMaximum(originalDirectory.length);
+		
+		for(int i=0; i < originalDirectory.length; i++){
+			if(!originalDirectory[i].contains("Thumbs.db")){
+				barra.setMaximum(originalDirectory.length-1);
+			}
+		}
+		
+		barra.setValue(0);
+		
 		for(int i=0; i < originalDirectory.length; i++){
 			if(!originalDirectory[i].contains("Thumbs.db")){
 				System.out.println("Or: " + originalDirectory[i] + " Mask: " + maskDirectory[i]);
 				cargaImagen(maskDirectory[i]);
 				ejecutaEntrenamiento(null, originalDirectory[i]);
+				barra.setValue(barra.getValue()+1);
 			}
 		}
 	}
