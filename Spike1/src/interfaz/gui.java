@@ -62,6 +62,7 @@ public class Gui {
 	private JButton btnAbrirImagen;
 	private boolean imagenAbierta;
 	private JButton btnStop;
+	private ImagePlus img;
 
 	/**
 	 * Launch the application.
@@ -245,7 +246,7 @@ public class Gui {
 				//Mediador m = Mediador.getInstance();
 				imagenAbierta = true;
 				mediador.cargaImagen(image.getAbsolutePath());
-				ImagePlus img = new ImagePlus(image.getAbsolutePath());
+				img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
 				imgPanel.repaint();
 				selection = imgPanel.coordenates();
@@ -301,6 +302,8 @@ public class Gui {
 					btnAbrirImagen.setEnabled(false);
 					btnAnalizar.setEnabled(false);
 					btnStop.setEnabled(true);
+					imgPanel.setImage(img.getImage());
+					imgPanel.repaint();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
 			    	thread = new Thread(threadAnalizar);
 			    	thread.start();
@@ -339,6 +342,9 @@ public class Gui {
 				else{
 					btnAnalizar.setEnabled(false);
 				}
+				imgPanel.setImage(img.getImage());
+				imgPanel.repaint();
+				progressBar.setValue(0);
 	    		//thread.interrupt();
 	    	}
 	    }
