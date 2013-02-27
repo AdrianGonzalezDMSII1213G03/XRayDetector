@@ -43,29 +43,25 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		rellenarListas();
 		//imprimeListas();
 		seleccionarVentanas();		
-		Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
-		createModel(data, "24");
+		//Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
+		//createModel(data, "24");
 	}
 
-	public synchronized Instances leerArff(String url) {
-		BufferedReader reader = null;
-		
+	public synchronized Instances leerArff (String url){
+		BufferedReader reader = null;		
 		try {
 			reader = new BufferedReader(new FileReader(url));
-		} catch (FileNotFoundException e1) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		ArffReader arff = null;
-		
+			e.printStackTrace();
+		}		
+		ArffReader arff = null;		
 		try {
 			arff = new ArffReader(reader);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		Instances data = arff.getData();
 		data.setClassIndex(data.numAttributes() - 1);
 		
@@ -314,7 +310,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		return header;
 	}
 	
-	public synchronized void crearArff(int[] coordenates, boolean defect){
+	public void crearArff(int[] coordenates, boolean defect){
 
 		String featuresString;
 		File outputFile;
@@ -322,27 +318,33 @@ public class VentanaAleatoria extends VentanaAbstracta {
 
 		featuresString = generateFeatures(coordenates, defect);
 
-		outputFile = new File("./res/arff/Arff_entrenamiento.arff");
-		synchronized (this){	//en teoría, es redundante
-			try {
-				if (!outputFile.exists()) {
+		outputFile = new File("./res/arff/Arff_entrenamiento" + getNumHilo() + ".arff");
+		try {
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+				if(getNumHilo() == 0){
 					String headerFile = getHeader(false);
-					System.out.println(outputFile.getPath());
-					outputFile.createNewFile();
 					arffFile = new FileWriter(outputFile);
 					arffFile.write(headerFile);
-	
-				} else {
-					// si ya esta creado se escribe a continuacion
-					arffFile = new FileWriter(outputFile, true);
 				}
-	
-				arffFile.write(featuresString + "\n");
-				arffFile.close();
-			} catch (IOException e) {
-				System.out.println("Problema con los ficheros");
-				e.printStackTrace();
+				else{
+					arffFile = new FileWriter(outputFile);
+				}
+				
+				System.out.println(outputFile.getPath());
+				
+				
+
+			} else {
+				// si ya esta creado se escribe a continuacion
+				arffFile = new FileWriter(outputFile, true);
 			}
+
+			arffFile.write(featuresString + "\n");
+			arffFile.close();
+		} catch (IOException e) {
+			System.out.println("Problema con los ficheros");
+			e.printStackTrace();
 		}
 	}
 	

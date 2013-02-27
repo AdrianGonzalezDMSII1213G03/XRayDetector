@@ -1,5 +1,7 @@
 package modelo;
 
+import java.io.FileNotFoundException;
+
 import weka.core.Instances;
 import ij.ImagePlus;
 

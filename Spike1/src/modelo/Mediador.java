@@ -5,10 +5,14 @@ package modelo;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Arrays;
 
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
+
+import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
 import weka.core.Instances;
@@ -157,7 +161,12 @@ public class Mediador {
 		
 		if(arff != null){	//entrenamos con un arff existente
 			VentanaAbstracta va = new VentanaAleatoria(null, 0);
-			Instances data = va.leerArff(arff.getAbsolutePath());
+			Instances data;
+			try {
+				data = va.leerArff(arff.getAbsolutePath());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 			va.createModel(data, "arff_existente");
 		}
 		else{	//entrenamos con las imágenes	
@@ -167,6 +176,7 @@ public class Mediador {
 			cargaImagen(originalDirectory);
 			ImagePlus[] imagenes = divideImagen(r);
 			t = new VentanaAbstracta[processors];
+			
 					
 			for (int ithread = 0; ithread < t.length; ++ithread){    
 	            t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);
@@ -181,9 +191,38 @@ public class Mediador {
 	        catch (InterruptedException ie){  
 	            throw new RuntimeException(ie);  
 	        }
+	  
 		}
 	}
 	
+	private void mergeArffFiles() {
+		File[] ficheros = new File[t.length];
+		for (int ithread = 0; ithread < t.length; ++ithread){
+			File file = new File("./res/arff/Arff_entrenamiento" + ithread + ".arff");
+			ficheros[ithread] = file;
+		}
+		// File to write
+		File fileOutput = new File("./res/arff/Arff_entrenamiento.arff");	//de momento, a pelo
+
+		for(int i=0; i<ficheros.length; i++){
+			// Read the file like string
+			try {
+				String file1Str = FileUtils.readFileToString(ficheros[i]);
+				if(i==0){
+					FileUtils.write(fileOutput, file1Str);
+				}
+				else{
+					FileUtils.write(fileOutput, file1Str, true);
+				}
+				ficheros[i].delete();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra){
 		
 		barra.setMaximum(originalDirectory.length);
@@ -204,6 +243,7 @@ public class Mediador {
 				barra.setValue(barra.getValue()+1);
 			}
 		}
+		mergeArffFiles();
 	}
 	
 	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){
