@@ -477,9 +477,25 @@ public class Gui {
 	        			if (answer == JFileChooser.APPROVE_OPTION) {
 	        				arff = chooser.getSelectedFile();
 	        			}
+	        			else{
+	        				arff=null;
+	        				btnEntrenarClasificador.setEnabled(true);
+		    				btnAbrirImagen.setEnabled(true);
+		    				btnStop.setEnabled(false);
+		    				if(imagenAbierta){
+		    					btnAnalizar.setEnabled(true);
+		    				}
+		    				else{
+		    					btnAnalizar.setEnabled(false);
+		    				}
+	        			}
 	        			if(arff != null){
 	        				ThreadEntrenar threadEntrenar = new ThreadEntrenar(true);
 	        		    	thread = new Thread(threadEntrenar);
+	        				btnEntrenarClasificador.setEnabled(false);
+	        				btnAbrirImagen.setEnabled(false);
+	        				btnAnalizar.setEnabled(false);
+	        				btnStop.setEnabled(true);
 	        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 	        		    	    public void uncaughtException(Thread th, Throwable ex) {
 	        		    	    	JOptionPane.showMessageDialog(
@@ -492,15 +508,12 @@ public class Gui {
 	        		    	thread.setUncaughtExceptionHandler(h);
 	        		    	thread.start();
 	        			}
+	        			
 	            	}
 	            }
 	        }
-	    	
 			dial.setVisible(false);
-			btnEntrenarClasificador.setEnabled(false);
-			btnAbrirImagen.setEnabled(false);
-			btnAnalizar.setEnabled(false);
-			btnStop.setEnabled(true);
+			
 	    }
 	}
 	
@@ -524,6 +537,15 @@ public class Gui {
 							"con el ARFF especificado", sa);
 				} catch (BadLocationException e1) {
 					throw new RuntimeException();
+				}
+				btnEntrenarClasificador.setEnabled(true);
+				btnAbrirImagen.setEnabled(true);
+				btnStop.setEnabled(false);
+				if(imagenAbierta){
+					btnAnalizar.setEnabled(true);
+				}
+				else{
+					btnAnalizar.setEnabled(false);
 				}
 			}
 			else{	//entrenar con imágenes

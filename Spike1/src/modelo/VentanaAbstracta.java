@@ -1,8 +1,5 @@
 package modelo;
 
-import java.io.FileNotFoundException;
-
-import weka.core.Instances;
 import ij.ImagePlus;
 
 public abstract class VentanaAbstracta extends Thread{
@@ -58,9 +55,5 @@ public abstract class VentanaAbstracta extends Thread{
 	public ImagePlus getImagenCompleta(){
 		return imgCompleta;
 	}
-	
-	public abstract void createModel(Instances data, String sizeWindow);
-	
-	public abstract Instances leerArff(String url);
 
 }

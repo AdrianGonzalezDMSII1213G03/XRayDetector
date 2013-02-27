@@ -4,8 +4,14 @@ package modelo;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Reader;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Arrays;
 
@@ -15,21 +21,25 @@ import javax.swing.JTextPane;
 import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
+import weka.classifiers.Classifier;
+import weka.classifiers.meta.Bagging;
+import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
-import datos.FileReader;
+import datos.ImageReader;
 
 public class Mediador {
 	
 	private static Mediador INSTANCE = null;
-	private FileReader fr;
+	private ImageReader ir;
 	private Thread[] t;
 	private ImagePlus imagen;
 	
 	private Mediador() {
-		fr = new FileReader();
+		ir = new ImageReader();
 	}
 	
 	public ImagePlus getImagen(){
@@ -56,8 +66,8 @@ public class Mediador {
 	}
 
 	public String cargaImagen(String img){		
-		int i = fr.abrirImagen(img);
-		setImagen(fr.getImagen());
+		int i = ir.abrirImagen(img);
+		setImagen(ir.getImagen());
 		return new String("Imagen abierta correctamente. Bytes por pixel: " + i);
 	}
 	
@@ -160,14 +170,13 @@ public class Mediador {
 	public void ejecutaEntrenamiento(File arff, String originalDirectory){
 		
 		if(arff != null){	//entrenamos con un arff existente
-			VentanaAbstracta va = new VentanaAleatoria(null, 0);
 			Instances data;
 			try {
-				data = va.leerArff(arff.getAbsolutePath());
+				data = leerArff(arff.getAbsolutePath());
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-			va.createModel(data, "arff_existente");
+			createModel(data, "arff_existente");
 		}
 		else{	//entrenamos con las imágenes	
 			int processors = Runtime.getRuntime().availableProcessors();
@@ -244,6 +253,8 @@ public class Mediador {
 			}
 		}
 		mergeArffFiles();
+		Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
+		createModel(data, "24");
 	}
 	
 	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){
@@ -267,5 +278,72 @@ public class Mediador {
 		int res = a*b;
 		System.out.println("Ancho: "+anchura+" Alto: "+altura+" Salto: " +salto+ "Total ventanas: " +res);
 		return res;
+	}
+	
+	/**
+	 * Creates a model training a classifier using bagging.
+	 * 
+	 * @param data
+	 *            Contains all the instances of the arff
+	 * @param sizeWindow
+	 *            The size of the window
+	 */
+	public void createModel(Instances data, String sizeWindow) {
+
+		// se crea, opciones, setiputformat
+		Classifier cls;
+		//String separator = System.getProperty("file.separator");
+		//String path = System.getProperty("user.dir");
+		String path = "./res/model/";
+
+		Classifier base;
+		base = new REPTree();
+
+		cls = new Bagging();
+		((Bagging) cls).setNumIterations(10);
+		((Bagging) cls).setBagSizePercent(10);
+		((Bagging) cls).setClassifier(base);
+
+		ObjectOutputStream oos = null;
+
+		try {
+			data.setClassIndex(data.numAttributes() - 1);
+			cls.buildClassifier(data);
+
+			/*if (arffName.contains("mejores"))
+				oos = new ObjectOutputStream(new FileOutputStream((path
+						+ separator + "Modelos" + separator + "Bagging_"
+						+ "mejores_" + sizeWindow + ".model")));
+
+			if (arffName.contains("todas"))*/
+				oos = new ObjectOutputStream(new FileOutputStream((path + "todas_" + sizeWindow + ".model")));
+
+			oos.writeObject(cls);
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+
+		}
+	}
+	
+	public Instances leerArff (String url){
+		BufferedReader reader = null;		
+		try {
+			reader = new BufferedReader(new FileReader(url));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		ArffReader arff = null;		
+		try {
+			arff = new ArffReader(reader);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		Instances data = arff.getData();
+		data.setClassIndex(data.numAttributes() - 1);
+		
+		return data;
 	}
 }

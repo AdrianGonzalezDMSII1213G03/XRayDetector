@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JProgressBar;
@@ -469,16 +468,6 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		return header;
 	}
 
-	@Override
-	public void createModel(Instances data, String sizeWindow) {
-		//método vacío, ya que es opcional	
-	}
-
-	@Override
-	public Instances leerArff(String url) {
-		//método vacío, ya que es opcional
-		return null;	
-	}
 	
 //	/**
 //	 * Method that generates a header for the file that will store the
