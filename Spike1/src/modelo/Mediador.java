@@ -11,12 +11,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Reader;
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.Arrays;
-
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import org.apache.commons.io.FileUtils;
 
@@ -48,6 +47,13 @@ public class Mediador {
 	
 	public void setImagen(ImagePlus img){
 		imagen = img;
+	}
+	
+	public int getNumThreads(){
+		if(t == null){
+			return 0;
+		}
+		return t.length;
 	}
 	
 	public static Mediador getInstance(){	//Singleton
@@ -232,7 +238,7 @@ public class Mediador {
 		
 	}
 
-	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra){
+	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra, JTextPane txtLog){
 		
 		barra.setMaximum(originalDirectory.length);
 		
@@ -244,16 +250,42 @@ public class Mediador {
 		
 		barra.setValue(0);
 		
+		SimpleAttributeSet sa = new  SimpleAttributeSet();
+		StyleConstants.setBold(sa, false);
+		
 		for(int i=0; i < originalDirectory.length; i++){
 			if(!originalDirectory[i].contains("Thumbs.db")){
-				System.out.println("Or: " + originalDirectory[i] + " Mask: " + maskDirectory[i]);
+				//System.out.println("Or: " + originalDirectory[i] + " Mask: " + maskDirectory[i]);
+				
+				try {
+					File f = new File(originalDirectory[i]);					
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Analizando imagen: " + f.getName() + "\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+					f = null;
+				} catch (BadLocationException e1) {
+					throw new RuntimeException();
+				}
+				
 				cargaImagen(maskDirectory[i]);
 				ejecutaEntrenamiento(null, originalDirectory[i]);
 				barra.setValue(barra.getValue()+1);
 			}
 		}
+		try {
+			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "\nFusionando ficheros ARFF\n\n", sa);
+			txtLog.setCaretPosition(txtLog.getDocument().getLength());
+		} catch (BadLocationException e1) {
+			throw new RuntimeException();
+		}
 		mergeArffFiles();
 		Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
+		
+		try {
+			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Creando modelo\n\n", sa);
+			txtLog.setCaretPosition(txtLog.getDocument().getLength());
+		} catch (BadLocationException e1) {
+			throw new RuntimeException();
+		}
 		createModel(data, "24");
 	}
 	

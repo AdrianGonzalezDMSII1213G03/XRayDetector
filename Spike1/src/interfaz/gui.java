@@ -11,6 +11,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -24,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -63,6 +66,7 @@ public class Gui {
 	private boolean imagenAbierta;
 	private JButton btnStop;
 	private ImagePlus img;
+	private boolean parado = false;
 
 	/**
 	 * Launch the application.
@@ -147,6 +151,9 @@ public class Gui {
 		JTextPane textPaneLog = new JTextPane();
 		textPaneLog.setEditable(false);
 		panelLog.add(textPaneLog);
+		JScrollPane scroll = new JScrollPane(textPaneLog);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		panelLog.add(scroll);
 		return textPaneLog;
 	}
 
@@ -155,7 +162,7 @@ public class Gui {
 		panelLog.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelLog.setBounds(10, 218, 236, 343);
 		frmXraydetector.getContentPane().add(panelLog);
-		panelLog.setLayout(new GridLayout(1, 0, 0, 0));
+		panelLog.setLayout(new GridLayout(1, 0, 0, 0));		
 		return panelLog;
 	}
 
@@ -235,6 +242,7 @@ public class Gui {
 	    	chooser.setDialogTitle("Escoja la imagen deseada");
 	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes BMP, JPG, JPEG, PNG", "bmp", "jpg", "jpeg", "png");
 	    	chooser.setFileFilter(filter);
+	    	chooser.setAcceptAllFileFilterUsed(false);
 			/*chooser.addChoosableFileFilter(new ImageFilter());
 			chooser.setFileView(new ImageFileView());
 			chooser.setAccessory(new ImagePreview(chooser));*/
@@ -253,14 +261,15 @@ public class Gui {
 				btnAnalizar.setEnabled(true);
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				StyleConstants.setBold(sa, true);	//Negrita
+				StyleConstants.setForeground(sa, Color.GREEN.darker());
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Imagen abierta correctamente", sa);
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Imagen abierta correctamente\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
-	        
 	    }
 	}
 	
@@ -290,6 +299,7 @@ public class Gui {
 		    	chooser.setDialogTitle("Escoja el modelo para clasificar");
 		    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Model", "model");
 		    	chooser.setFileFilter(filter);
+		    	chooser.setAcceptAllFileFilterUsed(false);
 				/*chooser.addChoosableFileFilter(new ImageFilter());
 				chooser.setFileView(new ImageFileView());
 				chooser.setAccessory(new ImagePreview(chooser));*/
@@ -298,6 +308,18 @@ public class Gui {
 					model = chooser.getSelectedFile();
 				}
 				if(model != null){
+					
+					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+					StyleConstants.setBold(sa, true);	//Negrita
+					StyleConstants.setForeground(sa, Color.GREEN.darker());
+					try {
+						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Modelo cargado correctamente\n\n", sa);
+						txtLog.setCaretPosition(txtLog.getDocument().getLength());
+					} catch (BadLocationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 					btnEntrenarClasificador.setEnabled(false);
 					btnAbrirImagen.setEnabled(false);
 					btnAnalizar.setEnabled(false);
@@ -316,7 +338,32 @@ public class Gui {
 
 		@Override
 		public void run() {
+			
+			SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos			
+			
+			try {
+				txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Iniciando proceso de análisis\n\n", sa);
+			} catch (BadLocationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);
+			
+			if(!parado){
+				StyleConstants.setBold(sa, true);	//Negrita
+				StyleConstants.setForeground(sa, Color.GREEN.darker());
+				
+				try {
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso de análisis finalizado con éxito\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			parado = false;
 			btnEntrenarClasificador.setEnabled(true);
 			btnAbrirImagen.setEnabled(true);
 			btnStop.setEnabled(false);
@@ -332,7 +379,10 @@ public class Gui {
 	private class StopListener implements ActionListener{
 	    public void actionPerformed (ActionEvent e){
 	    	if (thread != null){
-	    		mediador.stop();
+	    		parado = true;
+	    		if(mediador.getNumThreads() > 0){
+	    			mediador.stop();
+	    		}
 	    		btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
@@ -342,10 +392,25 @@ public class Gui {
 				else{
 					btnAnalizar.setEnabled(false);
 				}
-				imgPanel.setImage(img.getImage());
-				imgPanel.repaint();
+				if(img != null){
+					imgPanel.setImage(img.getImage());
+					imgPanel.repaint();
+				}
 				progressBar.setValue(0);
-	    		//thread.interrupt();
+				
+				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos	
+				StyleConstants.setBold(sa, true);	//Negrita
+				StyleConstants.setForeground(sa, Color.BLUE.darker());
+				
+				try {
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso detenido\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				thread.interrupt();
 	    	}
 	    }
 	}
@@ -444,6 +509,17 @@ public class Gui {
 	        									"No has seleccionado una carpeta correcta para entrenar.",
 	        									"Error", 1);
 	        					sameFiles = false;
+	        					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+	        					StyleConstants.setBold(sa, true);	//Negrita
+	        					StyleConstants.setForeground(sa, Color.RED);
+	        					try {
+	        						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Directorio incorrecto\n\n", sa);
+	        						txtLog.setCaretPosition(txtLog.getDocument().getLength());
+	        					} catch (BadLocationException e1) {
+	        						// TODO Auto-generated catch block
+	        						e1.printStackTrace();
+	        					}
+
 	        				}
 	        				else {
 	        					// Se reemplaza Originales por Mascaras ya que el directorio
@@ -461,6 +537,15 @@ public class Gui {
 		        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
 		        		    	    			   "Error",
 		        		    	    			   JOptionPane.ERROR_MESSAGE);
+		        		    	    	SimpleAttributeSet sa = new  SimpleAttributeSet();
+		        		    	    	StyleConstants.setBold(sa, true);	//Negrita
+		        						StyleConstants.setForeground(sa, Color.RED);
+		        						try {
+		        							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Error\n\n", sa);
+		        							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+		        						} catch (BadLocationException e1) {
+		        							throw new RuntimeException();
+		        						}
 		        		    	    }
 		        		    	};
 		        		    	thread.setUncaughtExceptionHandler(h);
@@ -473,6 +558,7 @@ public class Gui {
 	        	    	chooser.setDialogTitle("Escoja el ARFF para entrenar");
 	        	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("ARFF", "arff");
 	        	    	chooser.setFileFilter(filter);
+	        	    	chooser.setAcceptAllFileFilterUsed(false);
 	        	    	int answer = chooser.showOpenDialog(null);
 	        			if (answer == JFileChooser.APPROVE_OPTION) {
 	        				arff = chooser.getSelectedFile();
@@ -490,6 +576,17 @@ public class Gui {
 		    				}
 	        			}
 	        			if(arff != null){
+	        				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+	        				StyleConstants.setBold(sa, true);	//Negrita
+	        				StyleConstants.setForeground(sa, Color.GREEN.darker());
+	        				try {
+	        					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "ARFF abierto correctamente\n\n", sa);
+	        					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+	        				} catch (BadLocationException e1) {
+	        					// TODO Auto-generated catch block
+	        					e1.printStackTrace();
+	        				}
+
 	        				ThreadEntrenar threadEntrenar = new ThreadEntrenar(true);
 	        		    	thread = new Thread(threadEntrenar);
 	        				btnEntrenarClasificador.setEnabled(false);
@@ -503,6 +600,15 @@ public class Gui {
 	        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
 	        		    	    			   "Error",
 	        		    	    			   JOptionPane.ERROR_MESSAGE);
+	        		    	    	SimpleAttributeSet sa = new  SimpleAttributeSet();
+	        		    	    	StyleConstants.setBold(sa, true);	//Negrita
+	        						StyleConstants.setForeground(sa, Color.RED);
+	        						try {
+	        							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Error\n\n", sa);
+	        							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+	        						} catch (BadLocationException e1) {
+	        							throw new RuntimeException();
+	        						}
 	        		    	    }
 	        		    	};
 	        		    	thread.setUncaughtExceptionHandler(h);
@@ -529,14 +635,25 @@ public class Gui {
 		@Override
 		public void run() {
 			if(entrenarConArff){	//si queremos entrenar con un fichero existente
-				mediador.ejecutaEntrenamiento(arff, null);
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-				StyleConstants.setBold(sa, true);	//Negrita
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "\nModelo entrenado correctamente" +
-							"con el ARFF especificado", sa);
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Inicio del proceso de entrenamiento\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
 					throw new RuntimeException();
+				}
+				mediador.ejecutaEntrenamiento(arff, null);
+				
+				if(!parado){
+					StyleConstants.setBold(sa, true);	//Negrita
+					StyleConstants.setForeground(sa, Color.GREEN.darker());
+					try {
+						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Modelo entrenado correctamente" +
+								"con el ARFF especificado\n\n", sa);
+						txtLog.setCaretPosition(txtLog.getDocument().getLength());
+					} catch (BadLocationException e1) {
+						throw new RuntimeException();
+					}
 				}
 				btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
@@ -560,15 +677,36 @@ public class Gui {
 				
 				//System.out.println("Or: " + originalList.length + " Mask: " + maskList.length);
 				
+				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+				
 				if (originalList.length != maskList.length) {
-					if (originalList.length > maskList.length)
+					StyleConstants.setBold(sa, true);	//Negrita
+					StyleConstants.setForeground(sa, Color.RED);
+					
+					if (originalList.length > maskList.length){
 						JOptionPane.showMessageDialog(null,
 								"El número de imágenes originales y máscaras no coinciden.\n"
 										+ "Faltan máscaras", "Error", 1);
-					else
+						try {
+							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+									"Faltan máscaras\n\n", sa);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e1) {
+							throw new RuntimeException();
+						}
+					}
+					else{
 						JOptionPane.showMessageDialog(null,
 								"El número de imágenes originales y máscaras no coinciden.\n"
 										+ "Faltan originales", "Error", 1);
+						try {
+							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+									"Faltan imágenes originales\n\n", sa);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e1) {
+							throw new RuntimeException();
+						}
+					}
 				} else {
 					sameFiles = true;
 					for (int i = 0; i < originalList.length
@@ -585,25 +723,31 @@ public class Gui {
 						if (!originalName.equals(maskName))
 							sameFiles = false;
 					}
-					if (sameFiles == false)
+					if (sameFiles == false){
 						JOptionPane
 								.showMessageDialog(
 										null,
 										"Los nombres de las imágenes originales no coinciden con los de las máscaras.",
 										"Error", 1);
+						StyleConstants.setBold(sa, true);	//Negrita
+						StyleConstants.setForeground(sa, Color.RED);
+						try {
+							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+									"Los nombres de las imágenes originales no coinciden con los de las máscaras\n\n", sa);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e1) {
+							throw new RuntimeException();
+						}
+					}
 					else {
-
-						//String list[] = originalDirectory.list();
-//						txtLog
-//								.append("\nDirectorio abierto correctamente.\n\nImagenes a analizar:");
-//
-//						for (int i = 0; i < list.length; i++) {
-//							txtLog.append("\n" + list[i]);
-//						}
-
-//						JOptionPane.showMessageDialog(null,
-//								"Directorio abierto correctamente",
-//								"Aviso", 1);
+						StyleConstants.setBold(sa, true);	//Negrita
+						StyleConstants.setForeground(sa, Color.GREEN.darker());
+						try {
+							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Directorio abierto correctamente\n\n", sa);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e1) {
+							throw new RuntimeException();
+						}
 						
 						File[] originalFiles = originalDirectory.listFiles();
 						File[] maskFiles = maskDirectory.listFiles();
@@ -614,9 +758,30 @@ public class Gui {
 							originalList[i] = originalFiles[i].getAbsolutePath();
 							maskList[i] = maskFiles[i].getAbsolutePath();
 						}
-						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar);
+						
+						StyleConstants.setBold(sa, false);
+						StyleConstants.setForeground(sa, Color.BLACK);
+						try {
+							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Iniciando proceso de entrenamiento\n\n", sa);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e1) {
+							throw new RuntimeException();
+						}
+						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog);
+						
+						if(!parado){
+							StyleConstants.setBold(sa, true);
+							StyleConstants.setForeground(sa, Color.GREEN.darker());
+							try {
+								txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso de entrenamiento finalizado con éxito\n\n", sa);
+								txtLog.setCaretPosition(txtLog.getDocument().getLength());
+							} catch (BadLocationException e1) {
+								throw new RuntimeException();
+							}
+						}
 					}
 				}
+				parado = false;
 				btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
