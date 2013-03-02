@@ -1,26 +1,30 @@
 package modelo;
 
+import utils.Propiedades;
 import ij.ImagePlus;
 
 public abstract class VentanaAbstracta extends Thread{
-	private int altura = 24;
-	private int anchura = 24;
+	private int altura;
+	private int anchura;
 	private int getNumHilo;
 	private ImagePlus img;
 	private ImagePlus imgCompleta;
+	private static Propiedades prop;
 	
 	public VentanaAbstracta(ImagePlus img, int numHilo) {
 		this.img = img;
 		this.getNumHilo = numHilo;
+		prop = Propiedades.getInstance();
+		altura = anchura = prop.getTamVentana();
 	}
 	
 	public abstract void run();
 	
-	public int getAltura(){
+	public int getAlturaVentana(){
 		return altura;
 	}
 	
-	public int getAnchura(){
+	public int getAnchuraVentana(){
 		return anchura;
 	}
 	
@@ -54,6 +58,10 @@ public abstract class VentanaAbstracta extends Thread{
 	
 	public ImagePlus getImagenCompleta(){
 		return imgCompleta;
+	}
+	
+	public Propiedades getPropiedades(){
+		return prop;
 	}
 
 }

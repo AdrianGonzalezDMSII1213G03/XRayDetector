@@ -20,6 +20,7 @@ import javax.swing.text.StyleConstants;
 import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
+import utils.Propiedades;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
@@ -36,9 +37,11 @@ public class Mediador {
 	private ImageReader ir;
 	private Thread[] t;
 	private ImagePlus imagen;
+	private static Propiedades prop;
 	
 	private Mediador() {
 		ir = new ImageReader();
+		prop = Propiedades.getInstance();
 	}
 	
 	public ImagePlus getImagen(){
@@ -132,7 +135,7 @@ public class Mediador {
 		return saliency;
 	}
 	
-	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, File model, JProgressBar progressBar){
+	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
 		t = new VentanaAbstracta[processors];
@@ -140,7 +143,7 @@ public class Mediador {
 		setMaxProgressBar(imagenes, progressBar);
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, model, progressBar);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, progressBar);
             t[ithread].start();
         }  
   
@@ -217,7 +220,8 @@ public class Mediador {
 			ficheros[ithread] = file;
 		}
 		// File to write
-		File fileOutput = new File("./res/arff/Arff_entrenamiento.arff");	//de momento, a pelo
+		//File fileOutput = new File("./res/arff/Arff_entrenamiento.arff");	//de momento, a pelo
+		File fileOutput = new File(prop.getPathArff());
 
 		for(int i=0; i<ficheros.length; i++){
 			// Read the file like string
@@ -278,7 +282,7 @@ public class Mediador {
 			throw new RuntimeException();
 		}
 		mergeArffFiles();
-		Instances data = leerArff("./res/arff/Arff_entrenamiento.arff");
+		Instances data = leerArff(prop.getPathArff());
 		
 		try {
 			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Creando modelo\n\n", sa);
@@ -286,7 +290,7 @@ public class Mediador {
 		} catch (BadLocationException e1) {
 			throw new RuntimeException();
 		}
-		createModel(data, "24");
+		createModel(data, String.valueOf(prop.getTamVentana()));
 	}
 	
 	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){
@@ -301,14 +305,14 @@ public class Mediador {
 
 	private int calcularNumVentanas(ImagePlus image) {
 		int altura, anchura, salto;
-		int altoVentana = 24;	//de momento, a pelo
-		salto = (int) (0.7*altoVentana);	//de momento, a pelo. después, se hará con el fichero de opciones
+		int altoVentana = prop.getTamVentana();
+		salto = (int) (prop.getSalto()*altoVentana);
 		altura = image.getHeight();
 		anchura = image.getWidth();
 		int a = ((anchura-altoVentana)/salto)+1;
 		int b = ((altura-altoVentana)/salto)+1;
 		int res = a*b;
-		System.out.println("Ancho: "+anchura+" Alto: "+altura+" Salto: " +salto+ "Total ventanas: " +res);
+		//System.out.println("Ancho: "+anchura+" Alto: "+altura+" Salto: " +salto+ "Total ventanas: " +res);
 		return res;
 	}
 	

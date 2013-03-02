@@ -35,6 +35,7 @@ import java.awt.Rectangle;
 import javax.swing.JTextPane;
 
 import utils.Graphic;
+import utils.Propiedades;
 
 import modelo.Mediador;
 
@@ -67,6 +68,7 @@ public class Gui {
 	private JButton btnStop;
 	private ImagePlus img;
 	private boolean parado = false;
+	private static Propiedades prop;
 
 	/**
 	 * Launch the application.
@@ -89,7 +91,8 @@ public class Gui {
 	 */
 	public Gui() {
 		initialize();
-		mediador = Mediador.getInstance();
+		prop = Propiedades.getInstance();
+		mediador = Mediador.getInstance();		
 	}
 
 	/**
@@ -309,6 +312,7 @@ public class Gui {
 				}
 				if(model != null){
 					
+					prop.setPathModel(model.getAbsolutePath());
 					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 					StyleConstants.setBold(sa, true);	//Negrita
 					StyleConstants.setForeground(sa, Color.GREEN.darker());
@@ -348,7 +352,7 @@ public class Gui {
 				e1.printStackTrace();
 			}
 			
-			mediador.ejecutaVentana(selection, imgPanel, model, progressBar);
+			mediador.ejecutaVentana(selection, imgPanel, progressBar);
 			
 			if(!parado){
 				StyleConstants.setBold(sa, true);	//Negrita

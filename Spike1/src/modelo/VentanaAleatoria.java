@@ -51,13 +51,13 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	}
 
 	private void rellenarListas() {
-		int salto = (int) (getAltura()*0.8);
+		int salto = (int) (getAlturaVentana()*getPropiedades().getSalto());
 		int coordenadaX, coordenadaY;
 		ImageProcessor ip = getImage().getProcessor();
 		
-		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - getAltura(); coordenadaY += salto) {
-			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - getAnchura(); coordenadaX += salto) {
-				getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - getAlturaVentana(); coordenadaY += salto) {
+			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - getAnchuraVentana(); coordenadaX += salto) {
+				getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY()};
 				
 				if(getDefecto(getImage().duplicate())){
@@ -141,11 +141,11 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		copiaStandard = getImagenCompleta().duplicate();
 		ftStandard = new Standard(getImagenCompleta());
 		ftStandard.setImagenCompleta(copiaStandard);
-		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftStandard.calcular();
 		
 		ftLbp = new Lbp(getImagenCompleta());
-		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftLbp.calcular();
 		lbp = ftLbp.getVectorResultados();
 					
@@ -154,7 +154,7 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			for (int w = 0; w < 4; w++) {
 			
 				ftHaralick = new Haralick(getImagenCompleta(), grades[w], step);
-				ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+				ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftHaralick.calcular();
 				
 				switch (w) {

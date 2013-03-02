@@ -34,25 +34,23 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	Feature ftStandard, ftHaralick, ftLbp;
 	private Graphic imgPanel;
 	private Rectangle selection;
-	private File model;
 	private JProgressBar progressBar;
 	private int cont = 0;
 	
 	
-	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, File model, JProgressBar progressBar) {
+	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
 		super(img, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
 		this.imgPanel = imgPanel;
 		this.selection = sel;
-		this.model = model;
 		this.progressBar = progressBar;
 	}
 
 	@SuppressWarnings("static-access")
 	public void run(){
-		int salto = (int) (getAltura()*0.7);
+		int salto = (int) (getAlturaVentana()*getPropiedades().getSalto());
 		int coordenadaX = 0, coordenadaY = 0, color = 0, altura = 0, anchura = 0;
 		Color c = null;
 		ImageProcessor ip = getImage().getProcessor();
@@ -63,11 +61,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
 		
-		for (coordenadaY = 0;coordenadaY <= altura - getAltura(); coordenadaY += salto) {
-			for (coordenadaX = 0; coordenadaX <= anchura - getAnchura(); coordenadaX += salto) {
+		for (coordenadaY = 0;coordenadaY <= altura - getAlturaVentana(); coordenadaY += salto) {
+			for (coordenadaX = 0; coordenadaX <= anchura - getAnchuraVentana(); coordenadaX += salto) {
 				pintarVentana(coordenadaX, coordenadaY);
-				ip.setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
-				copiaImagen.setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+				ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+				copiaImagen.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				switch(color){
 					case 0:
 						c = c.BLUE;
@@ -89,11 +87,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				
 				ftStandard = new Standard(getImage());
 				ftStandard.setImagenCompleta(copiaStandard);
-				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftStandard.calcular();
 				
 				ftLbp = new Lbp(getImage());
-				ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+				ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftLbp.calcular();
 				lbp = ftLbp.getVectorResultados();
 							
@@ -102,7 +100,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					for (int w = 0; w < 4; w++) {
 					
 						ftHaralick = new Haralick(getImage(), grades[w], step);
-						ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchura(), getAltura());
+						ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 						ftHaralick.calcular();
 						
 						switch (w) {
@@ -179,7 +177,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 
-		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchura(), getAltura());
+		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 		imgPanel.repaint();
 	}
 	
@@ -193,7 +191,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		
 		if(prob == 0){
 			//System.out.print("DEFECTO\n");
-			imgPanel.addRectangle(coordX + selection.x, y, getAnchura(), getAltura());
+			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 			imgPanel.repaint();
 		}
 //		else{
@@ -203,6 +201,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 
 	private Classifier abrirModelo() {
 		URL url = null;
+		File model = new File(getPropiedades().getPathModel());
 		try {
 			url = model.toURI().toURL();
 		} catch (MalformedURLException e) {
