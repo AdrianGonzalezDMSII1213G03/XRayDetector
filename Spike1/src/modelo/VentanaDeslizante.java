@@ -9,13 +9,18 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
 
 import javax.swing.JProgressBar;
 
 import utils.Graphic;
+import utils.MyLogHandler;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -149,7 +154,10 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				try {
 					clase = clas.classifyInstance(instancia);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 					e.printStackTrace();
 				}
 				imprimeRes(coordenadaX, coordenadaY, clase);
@@ -205,30 +213,45 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		try {
 			url = model.toURI().toURL();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 		ObjectInputStream file = null;
 		try {
 			file = new ObjectInputStream(url.openStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 		Classifier classifier = null;
 		try {
 			classifier = (AbstractClassifier) file.readObject();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 		try {
 			file.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 		return classifier;

@@ -6,8 +6,14 @@ import ij.process.ImageProcessor;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+
+import utils.MyLogHandler;
 
 public class VentanaAleatoria extends VentanaAbstracta {
 	
@@ -310,7 +316,10 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			arffFile.write(featuresString + "\n");
 			arffFile.close();
 		} catch (IOException e) {
-			System.out.println("Problema con los ficheros");
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 	}

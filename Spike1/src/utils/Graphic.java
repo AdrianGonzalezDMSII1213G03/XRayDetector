@@ -12,8 +12,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Date;
+import java.util.logging.Level;
 
 import javax.swing.JPanel;
 
@@ -201,7 +205,10 @@ public class Graphic extends JPanel {
 					g2d.draw(rect);
 				}
 			} catch (ConcurrentModificationException e) {
-
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			}
 
 		} else {

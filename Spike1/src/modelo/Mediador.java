@@ -11,6 +11,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Date;
+import java.util.logging.Level;
+
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -20,6 +25,7 @@ import javax.swing.text.StyleConstants;
 import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
+import utils.MyLogHandler;
 import utils.Propiedades;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.Bagging;
@@ -235,8 +241,7 @@ public class Mediador {
 				}
 				ficheros[i].delete();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 		
@@ -358,7 +363,7 @@ public class Mediador {
 			oos.flush();
 			oos.close();
 		} catch (Exception e) {
-
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -367,15 +372,13 @@ public class Mediador {
 		try {
 			reader = new BufferedReader(new FileReader(url));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}		
 		ArffReader arff = null;		
 		try {
 			arff = new ArffReader(reader);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}		
 		Instances data = arff.getData();
 		data.setClassIndex(data.numAttributes() - 1);

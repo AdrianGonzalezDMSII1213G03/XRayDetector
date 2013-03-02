@@ -34,6 +34,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JTextPane;
 
+import utils.MyLogHandler;
 import utils.Graphic;
 import utils.Propiedades;
 
@@ -43,8 +44,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.logging.Level;
 
 public class Gui {
 
@@ -103,16 +108,28 @@ public class Gui {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 		
@@ -269,7 +286,10 @@ public class Gui {
 					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Imagen abierta correctamente\n\n", sa);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					// TODO Auto-generated catch block
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 					e1.printStackTrace();
 				}
 			}
@@ -320,7 +340,10 @@ public class Gui {
 						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Modelo cargado correctamente\n\n", sa);
 						txtLog.setCaretPosition(txtLog.getDocument().getLength());
 					} catch (BadLocationException e1) {
-						// TODO Auto-generated catch block
+						Date date = new Date();
+						StringWriter sWriter = new StringWriter();
+						e1.printStackTrace(new PrintWriter(sWriter));
+						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 						e1.printStackTrace();
 					}
 					
@@ -348,7 +371,10 @@ public class Gui {
 			try {
 				txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Iniciando proceso de análisis\n\n", sa);
 			} catch (BadLocationException e1) {
-				// TODO Auto-generated catch block
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e1.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 				e1.printStackTrace();
 			}
 			
@@ -362,7 +388,10 @@ public class Gui {
 					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso de análisis finalizado con éxito\n\n", sa);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					// TODO Auto-generated catch block
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 					e1.printStackTrace();
 				}
 			}
@@ -410,7 +439,10 @@ public class Gui {
 					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso detenido\n\n", sa);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					// TODO Auto-generated catch block
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 					e1.printStackTrace();
 				}
 				
@@ -520,7 +552,10 @@ public class Gui {
 	        						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Directorio incorrecto\n\n", sa);
 	        						txtLog.setCaretPosition(txtLog.getDocument().getLength());
 	        					} catch (BadLocationException e1) {
-	        						// TODO Auto-generated catch block
+	        						Date date = new Date();
+	        						StringWriter sWriter = new StringWriter();
+	        						e1.printStackTrace(new PrintWriter(sWriter));
+	        						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 	        						e1.printStackTrace();
 	        					}
 
@@ -587,7 +622,10 @@ public class Gui {
 	        					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "ARFF abierto correctamente\n\n", sa);
 	        					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 	        				} catch (BadLocationException e1) {
-	        					// TODO Auto-generated catch block
+	        					Date date = new Date();
+	        					StringWriter sWriter = new StringWriter();
+	        					e1.printStackTrace(new PrintWriter(sWriter));
+	        					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
 	        					e1.printStackTrace();
 	        				}
 

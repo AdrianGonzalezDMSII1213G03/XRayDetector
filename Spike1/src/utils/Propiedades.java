@@ -5,7 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
 
 public class Propiedades {
 	
@@ -33,7 +37,10 @@ public class Propiedades {
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 				e.printStackTrace();
 			}
 			cargarOpcionesPorDefecto();
@@ -43,10 +50,16 @@ public class Propiedades {
 			try {
 				propiedades.load(new FileInputStream("./res/config/config.properties"));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 				e.printStackTrace();
 			}
 		}
@@ -69,10 +82,16 @@ public class Propiedades {
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -102,10 +121,16 @@ public class Propiedades {
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 			e.printStackTrace();
 		}
 	}
