@@ -35,16 +35,18 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	"270 degrees" };
 	private double[] meanVector;
 	private double[] rangeVector;
-	private double[] lbp;
-	Feature ftStandard, ftHaralick, ftLbp;
+	private double[] meanVectorSaliency;
+	private double[] rangeVectorSaliency;
+	//private double[] lbp;
+	Feature ftStandard, ftHaralick, ftLbp, ftStandardSaliency, ftHaralickSaliency, ftLbpSaliency;
 	private Graphic imgPanel;
 	private Rectangle selection;
 	private JProgressBar progressBar;
 	private int cont = 0;
 	
 	
-	public VentanaDeslizante(ImagePlus img, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
-		super(img, numHilo);
+	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
+		super(img, saliency, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
@@ -59,7 +61,9 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		int coordenadaX = 0, coordenadaY = 0, color = 0, altura = 0, anchura = 0;
 		Color c = null;
 		ImageProcessor ip = getImage().getProcessor();
-		double means[], ranges[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null;
+		double means[], ranges[], meansSaliency[], rangesSaliency[],
+			vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
+			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 		boolean initializedNormal = false;
 		ImagePlus copiaStandard = getImage().duplicate();
 		
@@ -95,10 +99,20 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftStandard.calcular();
 				
+				ftStandardSaliency = new Standard(getSaliency());
+				ftStandardSaliency.setImagenCompleta(copiaStandard);	//esto va a haber que quitarlo
+				ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+				ftStandardSaliency.calcular();
+				
 				ftLbp = new Lbp(getImage());
 				ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftLbp.calcular();
-				lbp = ftLbp.getVectorResultados();
+				//lbp = ftLbp.getVectorResultados();
+				
+				ftLbpSaliency = new Lbp(getSaliency());
+				ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+				ftLbpSaliency.calcular();
+				//lbp = ftLbp.getVectorResultados();
 							
 				int total = 0;
 				for (int step = 1; step < 6; step++) {
@@ -108,18 +122,26 @@ public class VentanaDeslizante extends VentanaAbstracta{
 						ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 						ftHaralick.calcular();
 						
+						ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
+						ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+						ftHaralickSaliency.calcular();
+						
 						switch (w) {
 						case 0:
 							vector0 = ftHaralick.getVectorResultados();
+							vector0sal = ftHaralickSaliency.getVectorResultados();
 							break;
 						case 1:
 							vector90 = ftHaralick.getVectorResultados();
+							vector90sal = ftHaralickSaliency.getVectorResultados();
 							break;
 						case 2:
 							vector180 = ftHaralick.getVectorResultados();
+							vector180sal = ftHaralickSaliency.getVectorResultados();
 							break;
 						case 3:
 							vector270 = ftHaralick.getVectorResultados();
+							vector270sal = ftHaralickSaliency.getVectorResultados();
 							break;
 						}
 
@@ -127,16 +149,23 @@ public class VentanaDeslizante extends VentanaAbstracta{
 
 					means = calculateMean(vector0, vector90, vector180, vector270);
 					ranges = calculateRange(vector0, vector90, vector180, vector270);
+					
+					meansSaliency = calculateMean(vector0sal, vector90sal, vector180sal, vector270sal);
+					rangesSaliency = calculateRange(vector0sal, vector90sal, vector180sal, vector270sal);
 
 					if (initializedNormal == false) {
 						meanVector = new double[ftHaralick.getVectorResultados().length * 5];
 						rangeVector = new double[ftHaralick.getVectorResultados().length * 5];
+						meanVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
+						rangeVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
 						initializedNormal = true;
 					}
 					for (int k = 0; k < means.length; k++) {
 						// Sale un vector que contiene los 5 steps de medias
 						meanVector[total] = means[k];
 						rangeVector[total] = ranges[k];
+						meanVectorSaliency[total] = meansSaliency[k];
+						rangeVectorSaliency[total] = rangesSaliency[k];
 						total++;
 					}
 				}
@@ -258,7 +287,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	}
 
 	private Instance crearInstancia() {
-		double newVals[] = new double[387];
+		double newVals[] = new double[407];
 		int count = 0;
 		
 		if (ftStandard != null) {
@@ -268,12 +297,12 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			}
 		}
 
-		/*if (standardSaliency != null) {
-			for (int i = 0; i < standardSaliency.getStandardVector().length; i++) {
-				newVals[count] = standardSaliency.getStandardVector()[i];
+		if (ftStandardSaliency != null) {
+			for (int i = 0; i < ftStandardSaliency.getVectorResultados().length; i++) {
+				newVals[count] = ftStandardSaliency.getVectorResultados()[i];
 				count++;
 			}
-		}*/
+		}
 
 		if (meanVector != null) {
 			for (int i = 0; i < meanVector.length; i++) {
@@ -289,19 +318,19 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			}
 		}
 
-		/*if (saliencyMeanVector != null) {
-			for (int i = 0; i < saliencyMeanVector.length; i++) {
-				newVals[count] = saliencyMeanVector[i];
+		if (meanVectorSaliency != null) {
+			for (int i = 0; i < meanVectorSaliency.length; i++) {
+				newVals[count] = meanVectorSaliency[i];
 				count++;
 			}
 		}
 
-		if (saliencyRangeVector != null) {
-			for (int i = 0; i < saliencyRangeVector.length; i++) {
-				newVals[count] = saliencyRangeVector[i];
+		if (rangeVectorSaliency != null) {
+			for (int i = 0; i < rangeVectorSaliency.length; i++) {
+				newVals[count] = rangeVectorSaliency[i];
 				count++;
 			}
-		}*/
+		}
 
 		if (ftLbp != null) {
 			for (int i = 0; i < ftLbp.getVectorResultados().length; i++) {
@@ -310,12 +339,12 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			}
 		}
 
-		/*if (lbpSaliencyVector != null) {
-			for (int i = 0; i < lbpSaliencyVector.length; i++) {
-				newVals[count] = lbpSaliencyVector[i];
+		if (ftLbpSaliency != null) {
+			for (int i = 0; i < ftLbpSaliency.getVectorResultados().length; i++) {
+				newVals[count] = ftLbpSaliency.getVectorResultados()[i];
 				count++;
 			}
-		}*/
+		}
 		// newVals es el vector de doubles donde tienes los datos de las medias
 		// etc.
 		Instance instance = new DenseInstance(1, newVals);
@@ -428,11 +457,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				atts.add(new Attribute(ftStandard.getHead()[j]));
 		}
 
-		/*for (int j = 0; j < ftStandard.getHead().length; j++) {
-			if (features == null
-					|| featuresCopy.contains(ftStandard.getHead()[j] + "(S)"))
-				atts.add(new Attribute(ftStandard.getHead()[j] + "(S)"));
-		}*/
+		for (int j = 0; j < ftStandardSaliency.getHead().length; j++) {
+			//if (features == null
+					//|| featuresCopy.contains(ftStandard.getHead()[j] + "(S)"))
+				atts.add(new Attribute(ftStandardSaliency.getHead()[j] + "(S)"));
+		}
 
 		for (int j = 1; j < 6; j++) {
 			for (int i = 0; i < ftHaralick.getHead().length; i++) {
@@ -450,23 +479,23 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			}
 		}
 
-		/*for (int j = 1; j < 6; j++) {
-			for (int i = 0; i < ftHaralick.getHead().length; i++) {
-				if (features == null
-						|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
-					atts.add(new Attribute(ftHaralick.getHead()[i] + "_mean" + j
+		for (int j = 1; j < 6; j++) {
+			for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
+				//if (features == null
+					//	|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
+					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + "_mean" + j
 							+ "(S)"));
 			}
 		}
 
 		for (int j = 1; j < 6; j++) {
-			for (int i = 0; i < ftHaralick.getHead().length; i++) {
-				if (features == null
-						|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
-					atts.add(new Attribute(ftHaralick.getHead()[i] + "_range" + j
+			for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
+				//if (features == null
+					//	|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
+					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + "_range" + j
 							+ "(S)"));
 			}
-		}*/
+		}
 
 		for (int j = 1; j < 60; j++) {
 			//if (features == null
@@ -474,11 +503,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				atts.add(new Attribute(ftLbp.getHead() + "(" + j + ")"));
 		}
 
-		/*for (int j = 1; j < 60; j++) {
-			if (features == null
-					|| featuresCopy.contains(lbp.getHead() + "_" + j + "(S)"))
-				atts.add(new Attribute(lbp.getHead() + "(" + j + ")(S)"));
-		}*/
+		for (int j = 1; j < 60; j++) {
+			//if (features == null
+				//	|| featuresCopy.contains(lbp.getHead() + "_" + j + "(S)"))
+				atts.add(new Attribute(ftLbpSaliency.getHead() + "(" + j + ")(S)"));
+		}
 
 		atts.add(new Attribute("Defecto", defect));
 
@@ -489,232 +518,4 @@ public class VentanaDeslizante extends VentanaAbstracta{
 
 		return header;
 	}
-
-	
-//	/**
-//	 * Method that generates a header for the file that will store the
-//	 * characteristics.
-//	 * 
-//	 * @return string with the header
-//	 */
-//	public String getHeader(boolean coordenadas) {
-//		String header = new String();
-//		header += "% 1. Titulo: Deteccion de defectos en piezas metalicas \n%\n";
-//		header += "% 2. Fuentes:\n";
-//		header += "%       (a) Creador: Alan Blanco Alamo\n";
-//		header += "%       (b) Creador: Victor Barbero Garcia\n";
-//		header += "@relation deteccionDefectos \n";
-//		if (coordenadas) {
-//			header += "@attribute coordenadasX INTEGER\n";
-//			header += "@attribute coordenadasY INTEGER\n";
-//		}
-//		header += getStandardAttributes();
-//		header += getHaralickAttributes();
-//		header += getLbpAttributes();
-//		header += "@ATTRIBUTE class {true, false}\n";
-//		header += "@data\n";
-//		return header;
-//	}
-//	
-//	public synchronized void crearArff(int[] coordenates){
-//
-//		String featuresString;
-//		File outputFile;
-//		FileWriter arffFile;
-//
-//		featuresString = generateFeatures(coordenates, false);
-//
-//		outputFile = new File("./res/arff/Arff_prueba.arff");
-//		try {
-//			if (!outputFile.exists()) {
-//				String headerFile = getHeader(true);
-//				System.out.println(outputFile.getPath());
-//				outputFile.createNewFile();
-//				arffFile = new FileWriter(outputFile);
-//				arffFile.write(headerFile);
-//
-//			} else {
-//				// si ya esta creado se escribe a continuacion
-//				arffFile = new FileWriter(outputFile, true);
-//			}
-//
-//			arffFile.write(featuresString + "\n");
-//			arffFile.close();
-//		} catch (IOException e) {
-//			System.out.println("Problema con los ficheros");
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	/**
-//	 * Method that generates a string with the name and type of each standard
-//	 * attribute. In Weka arff format.
-//	 * 
-//	 * @return string with the information of all attributes
-//	 */
-//	private String getStandardAttributes() {
-//		String attributesString = new String();
-//		if (ftStandard != null) {
-//			for (int i = 0; i < ftStandard.getHead().length; i++) {
-//				attributesString += "@attribute " + ftStandard.getHead()[i]
-//						+ " INTEGER\n";
-//			}
-//		}
-//
-//		/*if (standardSaliency != null) {
-//			for (int i = 0; i < standardSaliency.getHead().length; i++) {
-//				attributesString += "@attribute "
-//						+ standardSaliency.getHead()[i] + "(S)" + " INTEGER\n";
-//			}
-//		}*/
-//		return attributesString;
-//	}
-//
-//	/**
-//	 * Method that generates a string with the name and type of each haralick
-//	 * attribute. In Weka arff format.
-//	 * 
-//	 * @return string with the information of all attributes
-//	 */
-//	private String getHaralickAttributes() {
-//		String attributesString = new String();
-//
-//		if (ftHaralick != null) {
-//			for (int j = 1; j < 6; j++) {
-//				for (int i = 0; i < ftHaralick.getHead().length; i++) {
-//					attributesString += "@attribute " + ftHaralick.getHead()[i]
-//							+ "_mean" + j + " INTEGER\n";
-//				}
-//			}
-//
-//			for (int j = 1; j < 6; j++) {
-//				for (int i = 0; i < ftHaralick.getHead().length; i++) {
-//					attributesString += "@attribute " + ftHaralick.getHead()[i]
-//							+ "_range" + j + " INTEGER\n";
-//				}
-//			}
-//		}
-//
-//		/*if (haralickSaliency != null) {
-//			for (int j = 1; j < 6; j++) {
-//				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
-//					attributesString += "@attribute "
-//							+ haralickSaliency.getHead()[i] + "_mean" + j
-//							+ "(S)" + " INTEGER\n";
-//				}
-//			}
-//
-//			for (int j = 1; j < 6; j++) {
-//				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
-//					attributesString += "@attribute "
-//							+ haralickSaliency.getHead()[i] + "_range" + j
-//							+ "(S)" + " INTEGER\n";
-//				}
-//			}
-//		}*/
-//
-//		return attributesString;
-//	}
-//
-//	/**
-//	 * Method that generates a string with the name and type of each lbp
-//	 * attribute. In Weka arff format.
-//	 * 
-//	 * @return string with the information of all attributes
-//	 */
-//	private String getLbpAttributes() {
-//		String attributesString = new String();
-//		int[] lbpHead = new int[59];
-//		
-//		for (int x = 0; x < 59; x++) {
-//			lbpHead[x] = x + 1;
-//		}
-//
-//		if (lbp != null) {
-//			for (int i = 0; i < lbpHead.length; i++) {
-//				attributesString += "@attribute " + ftLbp.getHead()[0] + "("
-//						+ lbpHead[i] + ") INTEGER\n";
-//			}
-//		}
-//
-//		/*if (lbpSaliency != null) {
-//			for (int i = 0; i < lbpSaliencyHead.length; i++) {
-//				attributesString += "@attribute " + lbpSaliency.getHead() + "("
-//						+ lbpSaliencyHead[i] + ")(S) INTEGER\n";
-//			}
-//		}*/
-//
-//		return attributesString;
-//	}
-//	
-//	/**
-//	 * Method that generates a string of features.
-//	 * 
-//	 * @return string of features
-//	 */
-//	public String generateFeatures(int[] coordenates, boolean defect) {
-//		String features = new String();
-//		if (coordenates != null) {
-//			features += coordenates[0];
-//			features += ", ";
-//			features += coordenates[1];
-//			features += ", ";
-//		}
-//
-//		if (ftStandard != null) {
-//			for (int i = 0; i < ftStandard.getVectorResultados().length; i++) {
-//				features += ftStandard.getVectorResultados()[i];
-//				features += ", ";
-//			}
-//		}
-//
-//		/*if (standardSaliency != null) {
-//			for (int i = 0; i < standardSaliency.getStandardVector().length; i++) {
-//				features += standardSaliency.getStandardVector()[i];
-//				features += ", ";
-//			}
-//		}*/
-//
-//		if (ftHaralick != null) {
-//			for (int i = 0; i < meanVector.length; i++) {
-//				features += meanVector[i];
-//				features += ", ";
-//			}
-//
-//			for (int i = 0; i < rangeVector.length; i++) {
-//				features += rangeVector[i];
-//				features += ", ";
-//			}
-//		}
-//
-//		/*if (haralickSaliency != null) {
-//			for (int i = 0; i < saliencyMeanVector.length; i++) {
-//				features += saliencyMeanVector[i];
-//				features += ", ";
-//			}
-//
-//			for (int i = 0; i < saliencyRangeVector.length; i++) {
-//				features += saliencyRangeVector[i];
-//				features += ", ";
-//			}
-//		}*/
-//
-//		if (ftLbp != null) {
-//			for (int i = 0; i < lbp.length; i++) {
-//				features += lbp[i];
-//				features += ", ";
-//			}
-//		}
-//
-//		/*if (lbpSaliency != null) {
-//			for (int i = 0; i < lbpSaliencyVector.length; i++) {
-//				features += lbpSaliencyVector[i];
-//				features += ", ";
-//			}
-//		}*/
-//
-//		features += defect;
-//
-//		return features;
-//	}
 }

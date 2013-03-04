@@ -136,7 +136,7 @@ public class Mediador {
 		for(int i=0; i<imagenes.length; i++){
 			Preprocesamiento p = new Saliency(imagenes[i], 1);
 			saliency[i] = new ImagePlus("", p.calcular());
-			IJ.saveAs(saliency[i], "BMP", "./res/img/" + "saliency_hilo_" + i);
+			//IJ.saveAs(saliency[i], "BMP", "./res/img/" + "saliency_hilo_" + i);
 		}
 		return saliency;
 	}
@@ -144,12 +144,13 @@ public class Mediador {
 	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
+		ImagePlus[] saliency = getSaliency(imagenes);
 		t = new VentanaAbstracta[processors];
 		
 		setMaxProgressBar(imagenes, progressBar);
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], ithread, selection, imgPanel, progressBar);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], ithread, selection, imgPanel, progressBar);
             t[ithread].start();
         }  
   
@@ -162,26 +163,7 @@ public class Mediador {
         }
 	}
 	
-	public void ejecutaVentanaSaliency(Rectangle selection, Graphic imgPanel){
-		int processors = Runtime.getRuntime().availableProcessors();
-		ImagePlus[] imagenes = divideImagen(selection);
-		ImagePlus[] saliency = getSaliency(imagenes);
-		t = new VentanaAbstracta[processors];
-		
-		for (int ithread = 0; ithread < t.length; ++ithread){    
-            //t[ithread] = new VentanaDeslizante(saliency[ithread], ithread);
-            t[ithread].start();
-        }  
-  
-        try{     
-            for (int ithread = 0; ithread < t.length; ++ithread)  
-                t[ithread].join();  
-        }
-        catch (InterruptedException ie){  
-            throw new RuntimeException(ie);  
-        }
-	}
-	
+
 	public void ejecutaEntrenamiento(File arff, String originalDirectory){
 		
 		if(arff != null){	//entrenamos con un arff existente
@@ -199,11 +181,12 @@ public class Mediador {
 			ImagePlus[] mascaras = divideImagen(r);
 			cargaImagen(originalDirectory);
 			ImagePlus[] imagenes = divideImagen(r);
+			ImagePlus[] saliency = getSaliency(imagenes);
 			t = new VentanaAbstracta[processors];
 			
 					
 			for (int ithread = 0; ithread < t.length; ++ithread){    
-	            t[ithread] = new VentanaAleatoria(mascaras[ithread], ithread);
+	            t[ithread] = new VentanaAleatoria(mascaras[ithread], saliency[ithread], ithread);
 	            ((VentanaAleatoria) t[ithread]).setImagenCompleta(imagenes[ithread]);
 	            t[ithread].start();
 	        }  

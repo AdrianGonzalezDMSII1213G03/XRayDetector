@@ -157,7 +157,7 @@ public class Standard extends Feature {
 
 		ImagePlus copy1 = getImagenCompleta().duplicate();
 		ImagePlus copy2 = getImagenCompleta().duplicate();
-		IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
+		//IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
 
 		// Al hacer estos convolve luego con el getPixel de abajo salen valores
 		// entre 0 y 255

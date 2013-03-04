@@ -23,14 +23,18 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	"270 degrees" };
 	private double[] meanVector;
 	private double[] rangeVector;
+	private double[] meanVectorSaliency;
+	private double[] rangeVectorSaliency;
 	private double[] lbp;
-	Feature ftStandard, ftHaralick, ftLbp;
-	double means[], ranges[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null;
+	private double[] lbpSaliency;
+	Feature ftStandard, ftHaralick, ftLbp, ftStandardSaliency, ftHaralickSaliency, ftLbpSaliency;
+	double means[], ranges[], meansSaliency[], rangesSaliency[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
+			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 	boolean initializedNormal = false;
 	ImagePlus copiaStandard;
 
-	public VentanaAleatoria(ImagePlus img, int numHilo) {
-		super(img, numHilo);
+	public VentanaAleatoria(ImagePlus img, ImagePlus saliency, int numHilo) {
+		super(img, saliency, numHilo);
 	}
 
 	@Override
@@ -150,10 +154,20 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftStandard.calcular();
 		
+		ftStandardSaliency = new Standard(getSaliency());
+		ftStandardSaliency.setImagenCompleta(copiaStandard);	//esto va a haber que quitarlo
+		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandardSaliency.calcular();
+		
 		ftLbp = new Lbp(getImagenCompleta());
 		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftLbp.calcular();
 		lbp = ftLbp.getVectorResultados();
+		
+		ftLbpSaliency = new Lbp(getSaliency());
+		ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbpSaliency.calcular();
+		lbpSaliency = ftLbpSaliency.getVectorResultados();
 					
 		int total = 0;
 		for (int step = 1; step < 6; step++) {
@@ -163,18 +177,26 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftHaralick.calcular();
 				
+				ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
+				ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+				ftHaralickSaliency.calcular();
+				
 				switch (w) {
 				case 0:
 					vector0 = ftHaralick.getVectorResultados();
+					vector0sal = ftHaralickSaliency.getVectorResultados();
 					break;
 				case 1:
 					vector90 = ftHaralick.getVectorResultados();
+					vector90sal = ftHaralickSaliency.getVectorResultados();
 					break;
 				case 2:
 					vector180 = ftHaralick.getVectorResultados();
+					vector180sal = ftHaralickSaliency.getVectorResultados();
 					break;
 				case 3:
 					vector270 = ftHaralick.getVectorResultados();
+					vector270sal = ftHaralickSaliency.getVectorResultados();
 					break;
 				}
 
@@ -182,16 +204,23 @@ public class VentanaAleatoria extends VentanaAbstracta {
 
 			means = calculateMean(vector0, vector90, vector180, vector270);
 			ranges = calculateRange(vector0, vector90, vector180, vector270);
+			
+			meansSaliency = calculateMean(vector0sal, vector90sal, vector180sal, vector270sal);
+			rangesSaliency = calculateRange(vector0sal, vector90sal, vector180sal, vector270sal);
 
 			if (initializedNormal == false) {
 				meanVector = new double[ftHaralick.getVectorResultados().length * 5];
 				rangeVector = new double[ftHaralick.getVectorResultados().length * 5];
+				meanVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
+				rangeVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
 				initializedNormal = true;
 			}
 			for (int k = 0; k < means.length; k++) {
 				// Sale un vector que contiene los 5 steps de medias
 				meanVector[total] = means[k];
 				rangeVector[total] = ranges[k];
+				meanVectorSaliency[total] = meansSaliency[k];
+				rangeVectorSaliency[total] = rangesSaliency[k];
 				total++;
 			}
 		}
@@ -339,12 +368,12 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (standardSaliency != null) {
-			for (int i = 0; i < standardSaliency.getHead().length; i++) {
+		if (ftStandardSaliency != null) {
+			for (int i = 0; i < ftStandardSaliency.getHead().length; i++) {
 				attributesString += "@attribute "
-						+ standardSaliency.getHead()[i] + "(S)" + " REAL\n";
+						+ ftStandardSaliency.getHead()[i] + "(S)" + " REAL\n";
 			}
-		}*/
+		}
 		return attributesString;
 	}
 
@@ -373,23 +402,23 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (haralickSaliency != null) {
+		if (ftHaralickSaliency != null) {
 			for (int j = 1; j < 6; j++) {
-				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
+				for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
 					attributesString += "@attribute "
-							+ haralickSaliency.getHead()[i] + "_mean" + j
+							+ ftHaralickSaliency.getHead()[i] + "_mean" + j
 							+ "(S)" + " REAL\n";
 				}
 			}
 
 			for (int j = 1; j < 6; j++) {
-				for (int i = 0; i < haralickSaliency.getHead().length; i++) {
+				for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
 					attributesString += "@attribute "
-							+ haralickSaliency.getHead()[i] + "_range" + j
+							+ ftHaralickSaliency.getHead()[i] + "_range" + j
 							+ "(S)" + " REAL\n";
 				}
 			}
-		}*/
+		}
 
 		return attributesString;
 	}
@@ -415,12 +444,12 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (lbpSaliency != null) {
-			for (int i = 0; i < lbpSaliencyHead.length; i++) {
-				attributesString += "@attribute " + lbpSaliency.getHead() + "("
-						+ lbpSaliencyHead[i] + ")(S) REAL\n";
+		if (lbpSaliency != null) {
+			for (int i = 0; i < lbpHead.length; i++) {
+				attributesString += "@attribute " + ftLbpSaliency.getHead()[0] + "("
+						+ lbpHead[i] + ")(S) REAL\n";
 			}
-		}*/
+		}
 
 		return attributesString;
 	}
@@ -446,12 +475,12 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (standardSaliency != null) {
-			for (int i = 0; i < standardSaliency.getStandardVector().length; i++) {
-				features += standardSaliency.getStandardVector()[i];
+		if (ftStandardSaliency != null) {
+			for (int i = 0; i < ftStandardSaliency.getVectorResultados().length; i++) {
+				features += ftStandardSaliency.getVectorResultados()[i];
 				features += ", ";
 			}
-		}*/
+		}
 
 		if (ftHaralick != null) {
 			for (int i = 0; i < meanVector.length; i++) {
@@ -465,17 +494,17 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (haralickSaliency != null) {
-			for (int i = 0; i < saliencyMeanVector.length; i++) {
-				features += saliencyMeanVector[i];
+		if (ftHaralickSaliency != null) {
+			for (int i = 0; i < meanVectorSaliency.length; i++) {
+				features += meanVectorSaliency[i];
 				features += ", ";
 			}
 
-			for (int i = 0; i < saliencyRangeVector.length; i++) {
-				features += saliencyRangeVector[i];
+			for (int i = 0; i < rangeVectorSaliency.length; i++) {
+				features += rangeVectorSaliency[i];
 				features += ", ";
 			}
-		}*/
+		}
 
 		if (ftLbp != null) {
 			for (int i = 0; i < lbp.length; i++) {
@@ -484,12 +513,12 @@ public class VentanaAleatoria extends VentanaAbstracta {
 			}
 		}
 
-		/*if (lbpSaliency != null) {
-			for (int i = 0; i < lbpSaliencyVector.length; i++) {
-				features += lbpSaliencyVector[i];
+		if (ftLbpSaliency != null) {
+			for (int i = 0; i < lbpSaliency.length; i++) {
+				features += lbpSaliency[i];
 				features += ", ";
 			}
-		}*/
+		}
 
 		features += defect;
 
