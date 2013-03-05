@@ -676,6 +676,7 @@ public class Gui {
 
 		@Override
 		public void run() {
+			btnStop.setEnabled(true);
 			if(entrenarConArff){	//si queremos entrenar con un fichero existente
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				try {

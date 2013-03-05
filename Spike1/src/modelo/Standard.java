@@ -155,8 +155,8 @@ public class Standard extends Feature {
 			}
 		}
 
-		ImagePlus copy1 = getImagenCompleta().duplicate();
-		ImagePlus copy2 = getImagenCompleta().duplicate();
+		ImagePlus copy1 = getImagenConvolucion().duplicate();
+		ImagePlus copy2 = getImagenConvolucion().duplicate();
 		//IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
 
 		// Al hacer estos convolve luego con el getPixel de abajo salen valores
@@ -209,7 +209,7 @@ public class Standard extends Feature {
 		int[] kernel = { 0, 1, 0, 1, -4, 1, 0, 1, 0 };
 		double sum = 0, total = 0;
 
-		ImagePlus copy = getImagenCompleta().duplicate();
+		ImagePlus copy = getImagenConvolucion().duplicate();
 		copy.getProcessor().convolve3x3(kernel);
 		
 		//copy.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);

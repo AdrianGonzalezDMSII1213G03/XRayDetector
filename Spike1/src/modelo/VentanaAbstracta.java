@@ -10,12 +10,16 @@ public abstract class VentanaAbstracta extends Thread{
 	private ImagePlus img;
 	private ImagePlus saliency;
 	private ImagePlus imgCompleta;
+	private ImagePlus imgConvolucion;
+	private ImagePlus imgConvolucionSaliency;
 	private static Propiedades prop;
 	
-	public VentanaAbstracta(ImagePlus img, ImagePlus saliency, int numHilo) {
+	public VentanaAbstracta(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo) {
 		this.img = img;
 		this.getNumHilo = numHilo;
 		this.saliency = saliency;
+		this.imgConvolucion = convolucion;
+		this.imgConvolucionSaliency = convolucionSaliency;
 		prop = Propiedades.getInstance();
 		altura = anchura = prop.getTamVentana();
 	}
@@ -68,6 +72,22 @@ public abstract class VentanaAbstracta extends Thread{
 	
 	public ImagePlus getSaliency(){
 		return saliency;
+	}
+	
+	public void setConvolucion(ImagePlus im){
+		imgConvolucion = im;
+	}
+	
+	public ImagePlus getConvolucion(){
+		return imgConvolucion;
+	}
+	
+	public void setConvolucionSaliency(ImagePlus im){
+		imgConvolucionSaliency = im;
+	}
+	
+	public ImagePlus getConvolucionSaliency(){
+		return imgConvolucionSaliency;
 	}
 	
 	public Propiedades getPropiedades(){

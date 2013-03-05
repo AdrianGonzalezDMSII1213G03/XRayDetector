@@ -45,8 +45,8 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private int cont = 0;
 	
 	
-	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
-		super(img, saliency, numHilo);
+	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
+		super(img, saliency, convolucion, convolucionSaliency, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
@@ -65,7 +65,11 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
 			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 		boolean initializedNormal = false;
-		ImagePlus copiaStandard = getImage().duplicate();
+		ImagePlus copiaStandard = getConvolucion().duplicate();
+		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
+		
+		System.out.println("Copiastandard: H: " + copiaStandard.getHeight() + " W: " + copiaStandard.getWidth());
+		System.out.println("CopiastandardSal: H: " + copiaStandardSaliency.getHeight() + " W: " + copiaStandardSaliency.getWidth());
 		
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
@@ -95,12 +99,12 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				long tiempoInicio = System.currentTimeMillis();
 				
 				ftStandard = new Standard(getImage());
-				ftStandard.setImagenCompleta(copiaStandard);
+				ftStandard.setImagenConvolucion(copiaStandard);
 				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftStandard.calcular();
 				
 				ftStandardSaliency = new Standard(getSaliency());
-				ftStandardSaliency.setImagenCompleta(copiaStandard);	//esto va a haber que quitarlo
+				ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
 				ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 				ftStandardSaliency.calcular();
 				

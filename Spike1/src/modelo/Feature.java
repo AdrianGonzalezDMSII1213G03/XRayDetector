@@ -9,7 +9,7 @@ public abstract class Feature {
 	private int step;
 	private String selectedStep;
 	private double[] vectorResultados;
-	private ImagePlus imagenCompleta;
+	private ImagePlus imagenConvolucion;
 
 	public Feature(ImagePlus image){
 		this.image = image;
@@ -41,12 +41,12 @@ public abstract class Feature {
 		vectorResultados = v;
 	}
 	
-	public void setImagenCompleta(ImagePlus img){
-		imagenCompleta = img;
+	public void setImagenConvolucion(ImagePlus img){
+		imagenConvolucion = img;
 	}
 	
-	public ImagePlus getImagenCompleta(){
-		return imagenCompleta;
+	public ImagePlus getImagenConvolucion(){
+		return imagenConvolucion;
 	}
 	
 	public abstract void calcular();

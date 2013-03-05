@@ -11,11 +11,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.logging.Level;
-
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -25,14 +20,12 @@ import javax.swing.text.StyleConstants;
 import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
-import utils.MyLogHandler;
 import utils.Propiedades;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
-import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import datos.ImageReader;
@@ -136,7 +129,6 @@ public class Mediador {
 		for(int i=0; i<imagenes.length; i++){
 			Preprocesamiento p = new Saliency(imagenes[i], 1);
 			saliency[i] = new ImagePlus("", p.calcular());
-			//IJ.saveAs(saliency[i], "BMP", "./res/img/" + "saliency_hilo_" + i);
 		}
 		return saliency;
 	}
@@ -145,12 +137,20 @@ public class Mediador {
 		int processors = Runtime.getRuntime().availableProcessors();
 		ImagePlus[] imagenes = divideImagen(selection);
 		ImagePlus[] saliency = getSaliency(imagenes);
+		ImagePlus[] convolucion = getImgConvolucion(imagenes, selection, getImagen());
+		
+		//convolucion de saliency
+		Preprocesamiento p = new Saliency(getImagen(), 1);
+		ImagePlus imgSaliency = new ImagePlus("", p.calcular());
+		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, selection, imgSaliency);
+		
 		t = new VentanaAbstracta[processors];
 		
 		setMaxProgressBar(imagenes, progressBar);
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
-            t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], ithread, selection, imgPanel, progressBar);
+            t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
+            		ithread, selection, imgPanel, progressBar);
             t[ithread].start();
         }  
   
@@ -163,6 +163,49 @@ public class Mediador {
         }
 	}
 	
+
+	private ImagePlus[] getImgConvolucion(ImagePlus[] imagenes,
+			Rectangle selection, ImagePlus image) {
+		
+		ImagePlus[] conv = new ImagePlus[imagenes.length];
+		
+		if(selection.height == 0 && selection.width == 0){
+			for(int i=0; i<imagenes.length; i++){
+				conv[i] = imagenes[i].duplicate();
+			}
+		}
+		else{		
+			for(int i=0; i<imagenes.length; i++){
+				int newX = selection.x - (prop.getTamVentana()/2);
+				int newY = selection.y - (prop.getTamVentana()/2);
+				int newHeight = selection.height + prop.getTamVentana();
+				int newWidth = selection.width + prop.getTamVentana();
+				
+				if(newX < 0){
+					newX = 0;
+				}
+				if(newY < 0){
+					newY = 0;
+				}
+				if(newHeight > getImagen().getHeight()){
+					newHeight = selection.height;
+				}
+				if(newWidth > getImagen().getWidth()){
+					newWidth = selection.width;
+				}
+				
+				ImageProcessor ip =	image.duplicate().getProcessor();
+				ip.setRoi(newX, newY, newWidth, newHeight);
+				ip = ip.crop();
+				//System.out.println("Valores: newX: " + newX + " newY: " + newY + " NewW: " + newWidth + " newH: " + newHeight);
+				BufferedImage croppedImage = ip.getBufferedImage();
+				conv[i] = new ImagePlus("croppedImage" + i, croppedImage);
+				//System.out.println("conv[i]: H: " + conv[i].getHeight() + " W: " + conv[i].getWidth());
+				ip.resetRoi();
+			}
+		}
+		return conv;
+	}
 
 	public void ejecutaEntrenamiento(File arff, String originalDirectory){
 		
@@ -182,11 +225,18 @@ public class Mediador {
 			cargaImagen(originalDirectory);
 			ImagePlus[] imagenes = divideImagen(r);
 			ImagePlus[] saliency = getSaliency(imagenes);
+			ImagePlus[] convolucion = getImgConvolucion(imagenes, r, getImagen());
+			
+			//convolucion de saliency
+			Preprocesamiento p = new Saliency(getImagen(), 1);
+			ImagePlus imgSaliency = new ImagePlus("", p.calcular());
+			ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, r, imgSaliency);
+			
 			t = new VentanaAbstracta[processors];
 			
 					
 			for (int ithread = 0; ithread < t.length; ++ithread){    
-	            t[ithread] = new VentanaAleatoria(mascaras[ithread], saliency[ithread], ithread);
+	            t[ithread] = new VentanaAleatoria(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread], ithread);
 	            ((VentanaAleatoria) t[ithread]).setImagenCompleta(imagenes[ithread]);
 	            t[ithread].start();
 	        }  

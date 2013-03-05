@@ -31,10 +31,9 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	double means[], ranges[], meansSaliency[], rangesSaliency[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
 			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 	boolean initializedNormal = false;
-	ImagePlus copiaStandard;
 
-	public VentanaAleatoria(ImagePlus img, ImagePlus saliency, int numHilo) {
-		super(img, saliency, numHilo);
+	public VentanaAleatoria(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo) {
+		super(img, saliency, convolucion, convolucionSaliency, numHilo);
 	}
 
 	@Override
@@ -148,14 +147,18 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	}
 	
 	private void calcularCaracteristicas(int coordenadaX, int coordenadaY, boolean defect){
+		
+		ImagePlus copiaStandard = getConvolucion().duplicate();
+		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
+		
 		copiaStandard = getImagenCompleta().duplicate();
 		ftStandard = new Standard(getImagenCompleta());
-		ftStandard.setImagenCompleta(copiaStandard);
+		ftStandard.setImagenConvolucion(copiaStandard);
 		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftStandard.calcular();
 		
 		ftStandardSaliency = new Standard(getSaliency());
-		ftStandardSaliency.setImagenCompleta(copiaStandard);	//esto va a haber que quitarlo
+		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
 		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
 		ftStandardSaliency.calcular();
 		
