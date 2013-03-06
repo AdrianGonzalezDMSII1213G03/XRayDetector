@@ -18,6 +18,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -50,6 +52,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
+import javax.swing.JSlider;
 
 public class Gui {
 
@@ -74,6 +77,7 @@ public class Gui {
 	private ImagePlus img;
 	private boolean parado = false;
 	private static Propiedades prop;
+	private JSlider slider;
 
 	/**
 	 * Launch the application.
@@ -157,6 +161,34 @@ public class Gui {
 		JPanel panelLog = getPanelLog();
 			
 		txtLog = getTxtLog(panelLog);
+		
+		JPanel panelSlider = getPanelSlider();
+		
+		getSlider(panelSlider);
+	}
+
+	public void getSlider(JPanel panelSlider) {
+		slider = new JSlider();
+		slider.setEnabled(false);
+		slider.setMinorTickSpacing(1);
+		slider.setMajorTickSpacing(4);
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		slider.setToolTipText("Rango de toleracia de ajuste al defecto");
+		slider.setValue(14);
+		slider.setMinimum(4);
+		slider.setMaximum(24);
+		slider.addChangeListener(new SliderListener());
+		panelSlider.add(slider);
+	}
+
+	public JPanel getPanelSlider() {
+		JPanel panelSlider = new JPanel();
+		panelSlider.setBorder(new TitledBorder(null, "Nivel de tolerancia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelSlider.setBounds(10, 218, 236, 73);
+		frmXraydetector.getContentPane().add(panelSlider);
+		panelSlider.setLayout(new GridLayout(1, 1, 0, 0));
+		return panelSlider;
 	}
 
 	private void getImgPanel(JPanel panelImagen) {
@@ -180,7 +212,7 @@ public class Gui {
 	private JPanel getPanelLog() {
 		JPanel panelLog = new JPanel();
 		panelLog.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelLog.setBounds(10, 218, 236, 343);
+		panelLog.setBounds(10, 302, 236, 259);
 		frmXraydetector.getContentPane().add(panelLog);
 		panelLog.setLayout(new GridLayout(1, 0, 0, 0));		
 		return panelLog;
@@ -279,6 +311,7 @@ public class Gui {
 				imgPanel.repaint();
 				selection = imgPanel.coordenates();
 				btnAnalizar.setEnabled(true);
+				slider.setEnabled(false);
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				StyleConstants.setBold(sa, true);	//Negrita
 				StyleConstants.setForeground(sa, Color.GREEN.darker());
@@ -294,6 +327,21 @@ public class Gui {
 				}
 			}
 	    }
+	}
+	
+	private class SliderListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			
+			if (!slider.getValueIsAdjusting()) {
+				prop.setUmbral(slider.getValue());
+				mediador.drawEdge(imgPanel);
+			}
+			
+		}
+		
+		
 	}
 	
 	private class AnalizarImagenListener implements ActionListener{
@@ -347,6 +395,7 @@ public class Gui {
 						e1.printStackTrace();
 					}
 					
+					slider.setEnabled(false);
 					btnEntrenarClasificador.setEnabled(false);
 					btnAbrirImagen.setEnabled(false);
 					btnAnalizar.setEnabled(false);
@@ -400,6 +449,7 @@ public class Gui {
 			btnEntrenarClasificador.setEnabled(true);
 			btnAbrirImagen.setEnabled(true);
 			btnStop.setEnabled(false);
+			slider.setEnabled(true);
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
 			}
@@ -416,6 +466,7 @@ public class Gui {
 	    		if(mediador.getNumThreads() > 0){
 	    			mediador.stop();
 	    		}
+	    		slider.setEnabled(false);
 	    		btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
@@ -567,6 +618,7 @@ public class Gui {
 	        							.replace("Originales", "Mascaras"));
 	        					
 	        					ThreadEntrenar threadEntrenar = new ThreadEntrenar(false);
+	        					slider.setEnabled(false);
 		        		    	thread = new Thread(threadEntrenar);
 		        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 		        		    	    public void uncaughtException(Thread th, Throwable ex) {
@@ -614,6 +666,7 @@ public class Gui {
 		    					btnAnalizar.setEnabled(false);
 		    				}
 	        			}
+	        			
 	        			if(arff != null){
 	        				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 	        				StyleConstants.setBold(sa, true);	//Negrita
@@ -635,6 +688,7 @@ public class Gui {
 	        				btnAbrirImagen.setEnabled(false);
 	        				btnAnalizar.setEnabled(false);
 	        				btnStop.setEnabled(true);
+	        				slider.setEnabled(false);
 	        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 	        		    	    public void uncaughtException(Thread th, Throwable ex) {
 	        		    	    	JOptionPane.showMessageDialog(

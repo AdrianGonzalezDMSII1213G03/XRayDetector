@@ -36,6 +36,7 @@ import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 import ij.IJ;
 import ij.ImagePlus;
+import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 import datos.ImageReader;
 
@@ -493,7 +494,7 @@ public class Mediador {
 		imgPanel.isEnded(true);
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
-
+		guardarMapaCalor();
 	}
 	
 	/**
@@ -565,5 +566,12 @@ public class Mediador {
 		g.drawImage(fgImage, 0, 0, null);
 		g.dispose();
 		return bgImage;
+	}
+	
+	//Pruebas
+	public void guardarMapaCalor(){
+		FloatProcessor fp = new FloatProcessor(defectMatrix);
+		ImagePlus i = new ImagePlus("mapa_calor", fp.createImage());
+		IJ.saveAs(i, "BMP", "./res/img/" + i.getTitle());
 	}
 }

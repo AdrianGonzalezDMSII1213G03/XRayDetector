@@ -108,6 +108,25 @@ public class Propiedades {
 		return Integer.parseInt(propiedades.getProperty("umbral"));
 	}
 	
+	public void setUmbral(int umbral){
+		propiedades.setProperty("umbral", String.valueOf(umbral));
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		}
+	}
+	
 	public String getPathArff(){
 		return propiedades.getProperty("pathArff");
 	}
