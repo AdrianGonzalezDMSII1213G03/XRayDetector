@@ -4,8 +4,14 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 
 import utils.Graphic;
@@ -42,17 +49,18 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private Graphic imgPanel;
 	private Rectangle selection;
 	private JProgressBar progressBar;
-	private int cont = 0;
+	int[][] defectMatrix;
 	
 	
-	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar) {
+	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix) {
 		super(img, saliency, convolucion, convolucionSaliency, numHilo);
 		copiaImagen = img.duplicate();
 		IJ.run(copiaImagen, "RGB Color", "");
 		IJ.setForegroundColor(0, 255, 121);
 		this.imgPanel = imgPanel;
 		this.selection = sel;
-		this.progressBar = progressBar;
+		this.progressBar = progressBar;		
+		this.defectMatrix = defectMatrix;
 	}
 
 	@SuppressWarnings("static-access")
@@ -68,9 +76,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		ImagePlus copiaStandard = getConvolucion().duplicate();
 		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
 		
-		System.out.println("Copiastandard: H: " + copiaStandard.getHeight() + " W: " + copiaStandard.getWidth());
-		System.out.println("CopiastandardSal: H: " + copiaStandardSaliency.getHeight() + " W: " + copiaStandardSaliency.getWidth());
-		
+			
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
 		
@@ -96,7 +102,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				cambiaColor(c);
 				dibujaRoi();
 				
-				long tiempoInicio = System.currentTimeMillis();
+				//long tiempoInicio = System.currentTimeMillis();
 				
 				ftStandard = new Standard(getImage());
 				ftStandard.setImagenConvolucion(copiaStandard);
@@ -177,7 +183,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					
 				//int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + getNumHilo()*getImage().getHeight()};
 				
-				long totalTiempo = System.currentTimeMillis() - tiempoInicio;
+				//long totalTiempo = System.currentTimeMillis() - tiempoInicio;
 				//System.out.println("El tiempo de la ventana ["+ coordCentro[0]+","+coordCentro[1]+ "] es: " + totalTiempo + " miliseg");
 				
 				//crearArff(coordCentro);
@@ -194,25 +200,20 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					e.printStackTrace();
 				}
 				imprimeRes(coordenadaX, coordenadaY, clase);
-				System.out.println("CoordX: " + coordenadaX + " CoordY: " + coordenadaY);
 				setPorcentajeBarra();
 			}
 		}
-		guardaCopia();
-		
+		//guardaCopia();
 	}
 
 	private synchronized void setPorcentajeBarra() {		
 		progressBar.setValue(progressBar.getValue() + 1);
-		progressBar.repaint();
-		System.out.println("Barra: " + progressBar.getValue() + " Max Barra: " + progressBar.getMaximum());
-		cont++;
-		System.out.println("Cont en hilo " + getNumHilo() + " : " + cont);
+		progressBar.repaint();		
 	}
 
 
 	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
-		//System.out.println("Hola, soy el hilo " + getNumHilo() + " y estoy pintando la ventana [" + coordenadaX + "," + coordenadaY + "]");
+		
 		int y = coordenadaY + selection.y + getNumHilo()*getImage().getHeight();
 		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
 			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
@@ -223,22 +224,29 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	}
 	
 	private void imprimeRes(int coordX, int coordY, double prob) {
-		//System.out.print("Ventana [" + coordCentro[0] + "," + coordCentro[1] + "] clasificada como: ");
 		
+		//para la coordenada Y, hay que determinar en qué trozo de la imagen estamos analizando
 		int y = coordY + selection.y + getNumHilo()*getImage().getHeight();
 		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
 			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 		
 		if(prob == 0){
-			//System.out.print("DEFECTO\n");
 			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 			imgPanel.repaint();
+			rellenarMatrizDefectos(coordX+ selection.x, y);
 		}
-//		else{
-//			System.out.print("NO DEFECTO\n");
-//		}
 	}
+	
+	public synchronized void rellenarMatrizDefectos(int coordX, int coordY){
+		for (int i = coordY; i < coordY + getAlturaVentana(); i++) {
+			for (int j = coordX; j < coordX + getAnchuraVentana(); j++) {
+				defectMatrix[j][i]++;
+			}
+		}
+	}
+	
+
 
 	private Classifier abrirModelo() {
 		URL url = null;

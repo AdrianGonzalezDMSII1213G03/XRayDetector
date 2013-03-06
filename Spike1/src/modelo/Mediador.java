@@ -2,7 +2,13 @@ package modelo;
 
 
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -26,12 +34,14 @@ import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import datos.ImageReader;
 
 public class Mediador {
 	
+	private int[][] defectMatrix;
 	private static Mediador INSTANCE = null;
 	private ImageReader ir;
 	private Thread[] t;
@@ -135,6 +145,9 @@ public class Mediador {
 	
 	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		int processors = Runtime.getRuntime().availableProcessors();
+		
+		defectMatrix = new int[getImagen().getWidth()][getImagen().getHeight()];
+		
 		ImagePlus[] imagenes = divideImagen(selection);
 		ImagePlus[] saliency = getSaliency(imagenes);
 		ImagePlus[] convolucion = getImgConvolucion(imagenes, selection, getImagen());
@@ -150,7 +163,7 @@ public class Mediador {
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
-            		ithread, selection, imgPanel, progressBar);
+            		ithread, selection, imgPanel, progressBar, defectMatrix);
             t[ithread].start();
         }  
   
@@ -161,6 +174,7 @@ public class Mediador {
         catch (InterruptedException ie){  
             throw new RuntimeException(ie);  
         }
+        drawEdge(imgPanel);
 	}
 	
 
@@ -417,5 +431,139 @@ public class Mediador {
 		data.setClassIndex(data.numAttributes() - 1);
 		
 		return data;
+	}
+	
+	public void drawEdge(Graphic imgPanel) {
+		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];
+		//defect = false;
+
+		for (int i = 0; i < getImagen().getHeight(); i++) {
+			for (int j = 0; j < getImagen().getWidth(); j++) {
+				defectsMatrix2[j][i] = defectMatrix[j][i];
+			}
+		}
+
+		for (int i = 0; i < getImagen().getHeight(); i++) {
+			for (int j = 0; j < getImagen().getWidth(); j++) {
+
+				if (defectMatrix[j][i] > prop.getUmbral()) {
+					defectsMatrix2[j][i] = 1;
+					//defect = true;
+				} else
+					defectsMatrix2[j][i] = 0;
+			}
+		}
+
+		BufferedImage bfrdImage = new BufferedImage(getImagen().getWidth(),
+				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);
+		for (int i = 0; i < getImagen().getHeight(); i++) {
+			for (int j = 0; j < getImagen().getWidth(); j++) {
+				if (defectsMatrix2[j][i] == 0)
+					// Color blanco
+					bfrdImage.setRGB(j, i, new Color(255, 255, 255).getRGB());
+
+				if (defectsMatrix2[j][i] == 1)
+					// Color amarillo
+					bfrdImage.setRGB(j, i, new Color(255, 255, 0).getRGB());
+			}
+		}
+
+		ImagePlus edgesImage = new ImagePlus("", bfrdImage);
+
+		// Detectar bordes
+		IJ.run(edgesImage, "Find Edges", "");
+
+		// Invertir colores
+		IJ.run(edgesImage, "Invert", "");
+
+		BufferedImage bufferedEdgesImage = imageToBufferedImage(edgesImage
+				.getImage());
+
+		BufferedImage backgroundImage = imageToBufferedImage(getImagen().getImage());
+
+		// Poner fondo transparente
+		BufferedImage transparentImage = makeColorTransparent(
+				bufferedEdgesImage, Color.white);
+
+		// Superponer las dos imagenes
+		BufferedImage bufferedResult = overlayImages(backgroundImage,
+				transparentImage);
+
+		ImagePlus imagePlusResult = new ImagePlus("", bufferedResult);
+		imgPanel.isEnded(true);
+		imgPanel.setImage(imagePlusResult.getImage());
+		imgPanel.repaint();
+
+	}
+	
+	/**
+	 * This method converts an image of the BufferedImage to Image.
+	 * 
+	 * @param im
+	 *            Image to converts
+	 * @return bufferedImage
+	 */
+	public BufferedImage imageToBufferedImage(Image im) {
+		BufferedImage bi = new BufferedImage(im.getWidth(null),
+				im.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		Graphics bg = bi.getGraphics();
+		bg.drawImage(im, 0, 0, null);
+		bg.dispose();
+		return bi;
+	}
+
+	/**
+	 * Converts a specified color to transparent.
+	 * 
+	 * @param bufferedImage
+	 *            Image to work with
+	 * @param color
+	 *            Color that wish make transparent
+	 * @return image with that color transparent
+	 */
+	public BufferedImage makeColorTransparent(BufferedImage bufferedImage,
+			Color color) {
+		BufferedImage bufim = new BufferedImage(bufferedImage.getWidth(),
+				bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = bufim.createGraphics();
+		g.setComposite(AlphaComposite.Src);
+		g.drawImage(bufferedImage, null, 0, 0);
+		g.dispose();
+		for (int i = 0; i < bufim.getHeight(); i++) {
+			for (int j = 0; j < bufim.getWidth(); j++) {
+				if (bufim.getRGB(j, i) == color.getRGB()) {
+					bufim.setRGB(j, i, 0x8F1C1C);
+				}
+			}
+		}
+		return bufim;
+	}
+
+	/**
+	 * This method overlays two images.
+	 * 
+	 * @param bgImage
+	 *            Image that will be the background
+	 * @param fgImage
+	 *            Image that will be the foreground
+	 * @return Image overlayed
+	 */
+	public BufferedImage overlayImages(BufferedImage bgImage,
+			BufferedImage fgImage) {
+		if (fgImage.getHeight() > bgImage.getHeight()
+				|| fgImage.getWidth() > fgImage.getWidth()) {
+			JOptionPane.showMessageDialog(null,
+					"Foreground Image Is Bigger In One or Both Dimensions"
+							+ "\nCannot proceed with overlay."
+							+ "\n\n Please use smaller Image for foreground");
+			return null;
+		}
+		Graphics2D g = bgImage.createGraphics();
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g.drawImage(bgImage, 0, 0, null);
+		g.drawImage(fgImage, 0, 0, null);
+		g.dispose();
+		return bgImage;
 	}
 }
