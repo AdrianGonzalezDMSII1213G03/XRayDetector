@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2013-03-06T23:36:19</date>
+  <millis>1362609379529</millis>
+  <sequence>0</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Registro grave</message>
+</record>
+<record>
+  <date>2013-03-06T23:36:19</date>
+  <millis>1362609379651</millis>
+  <sequence>1</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>WARNING</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Advertencia </message>
+</record>
+<record>
+  <date>2013-03-06T23:36:19</date>
+  <millis>1362609379652</millis>
+  <sequence>2</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>INFO</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Información</message>
+</record>
+<record>
+  <date>2013-03-06T23:36:19</date>
+  <millis>1362609379654</millis>
+  <sequence>3</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Wed Mar 06 23:36:19 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+<record>
+  <date>2013-03-06T23:37:19</date>
+  <millis>1362609439105</millis>
+  <sequence>4</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Wed Mar 06 23:37:19 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+<record>
+  <date>2013-03-06T23:37:39</date>
+  <millis>1362609459092</millis>
+  <sequence>5</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Wed Mar 06 23:37:39 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+<record>
+  <date>2013-03-06T23:37:45</date>
+  <millis>1362609465829</millis>
+  <sequence>6</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Wed Mar 06 23:37:45 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2013-03-06T23:46:53</date>
+  <millis>1362610013587</millis>
+  <sequence>0</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Registro grave</message>
+</record>
+<record>
+  <date>2013-03-06T23:46:53</date>
+  <millis>1362610013600</millis>
+  <sequence>1</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>WARNING</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Advertencia </message>
+</record>
+<record>
+  <date>2013-03-06T23:46:53</date>
+  <millis>1362610013602</millis>
+  <sequence>2</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>INFO</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Información</message>
+</record>
+<record>
+  <date>2013-03-06T23:46:53</date>
+  <millis>1362610013603</millis>
+  <sequence>3</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Wed Mar 06 23:46:53 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2013-03-07T10:14:30</date>
+  <millis>1362647670052</millis>
+  <sequence>0</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Registro grave</message>
+</record>
+<record>
+  <date>2013-03-07T10:14:30</date>
+  <millis>1362647670162</millis>
+  <sequence>1</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>WARNING</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Advertencia </message>
+</record>
+<record>
+  <date>2013-03-07T10:14:30</date>
+  <millis>1362647670163</millis>
+  <sequence>2</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>INFO</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Información</message>
+</record>
+<record>
+  <date>2013-03-07T10:14:30</date>
+  <millis>1362647670164</millis>
+  <sequence>3</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Thu Mar 07 10:14:29 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2013-03-07T13:52:31</date>
+  <millis>1362660751826</millis>
+  <sequence>0</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Registro grave</message>
+</record>
+<record>
+  <date>2013-03-07T13:52:31</date>
+  <millis>1362660751859</millis>
+  <sequence>1</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>WARNING</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Advertencia </message>
+</record>
+<record>
+  <date>2013-03-07T13:52:31</date>
+  <millis>1362660751861</millis>
+  <sequence>2</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>INFO</level>
+  <class>utils.MyLogHandler</class>
+  <method>&lt;init&gt;</method>
+  <thread>13</thread>
+  <message>Información</message>
+</record>
+<record>
+  <date>2013-03-07T13:52:31</date>
+  <millis>1362660751862</millis>
+  <sequence>3</sequence>
+  <logger>util.MyLogHandler</logger>
+  <level>SEVERE</level>
+  <class>Thu Mar 07 13:52:31 CET 2013</class>
+  <method>Error: </method>
+  <thread>13</thread>
+  <message>java.util.ConcurrentModificationException</message>
+</record>
+</log>
