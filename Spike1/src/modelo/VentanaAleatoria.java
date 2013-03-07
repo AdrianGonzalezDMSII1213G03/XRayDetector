@@ -11,6 +11,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.logging.Level;
 
 import utils.MyLogHandler;
@@ -67,13 +68,13 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		for (coordenadaY = 0; coordenadaY <= ip.getHeight() - getAlturaVentana(); coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= ip.getWidth() - getAnchuraVentana(); coordenadaX += salto) {
 				getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY()};
+				int[] coordVentana = new int[]{(int)coordenadaX, (int)coordenadaY};
 				
 				if(getDefecto(getImage().duplicate())){
-					listaDefectos.add(coordCentro);
+					listaDefectos.add(coordVentana);
 				}
 				else{
-					listaNoDefectos.add(coordCentro);
+					listaNoDefectos.add(coordVentana);
 				}
 			}
 		}
@@ -113,32 +114,33 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		int nAttemps = 150;
 		ArrayList<int []> copiaListaDefectos = listaDefectos;
 		ArrayList<int []> copiaListaNoDefectos = listaNoDefectos;
+		Random rand = new Random();
 		
 		for(int i=0; i < nAttemps; i++){
 			if(copiaListaDefectos.size() > 0 && copiaListaNoDefectos.size() > 0){
-				int cola = (int) Math.random()*10;
+				int cola = rand.nextInt(10);
 				//System.out.println("\tCola: " + cola);
 				if(cola <= 5){
-					int randIndex = ((int) Math.random()*copiaListaDefectos.size());
+					int randIndex = rand.nextInt(copiaListaDefectos.size());
 					int [] coordVentana = copiaListaDefectos.get(randIndex);
 					calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
 					copiaListaDefectos.remove(randIndex);
 				}
 				else{
-					int randIndex = ((int) Math.random()*copiaListaNoDefectos.size());
+					int randIndex = rand.nextInt(copiaListaNoDefectos.size());
 					int [] coordVentana = copiaListaNoDefectos.get(randIndex);
 					calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
 					copiaListaNoDefectos.remove(randIndex);
 				}
 			}
 			else if(copiaListaDefectos.size() > 0){
-				int randIndex = ((int) Math.random()*copiaListaDefectos.size());
+				int randIndex = rand.nextInt(copiaListaDefectos.size());
 				int [] coordVentana = copiaListaDefectos.get(randIndex);
 				calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
 				copiaListaDefectos.remove(randIndex);
 			}
 			else if (copiaListaNoDefectos.size() > 0){
-				int randIndex = ((int) Math.random()*copiaListaNoDefectos.size());
+				int randIndex = rand.nextInt(copiaListaNoDefectos.size());
 				int [] coordVentana = copiaListaNoDefectos.get(randIndex);
 				calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
 				copiaListaNoDefectos.remove(randIndex);

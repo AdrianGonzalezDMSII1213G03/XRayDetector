@@ -389,8 +389,9 @@ public class Mediador {
 		base = new REPTree();
 
 		cls = new Bagging();
-		((Bagging) cls).setNumIterations(10);
-		((Bagging) cls).setBagSizePercent(10);
+		((Bagging) cls).setNumIterations(25);
+		((Bagging) cls).setBagSizePercent(100);
+		((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());
 		((Bagging) cls).setClassifier(base);
 
 		ObjectOutputStream oos = null;
