@@ -94,6 +94,9 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		//boolean defect = false;
 		int defectVector[];
 
+		
+		//	1 Pixel mal	 			COMO EL CULO
+		/*
 		for (int y = 0; y < img.getHeight(); y++) {
 			for (int x = 0; x < img.getWidth(); x++) {
 				defectVector = img.getPixel(x, y);
@@ -106,7 +109,56 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				}
 			}
 		}
-
+		*/
+		
+		//	>50% Pixel mal			BASTANTE BIEN
+		/*
+		int numPixVentana = getAlturaVentana() * getAnchuraVentana();
+		int pixelDef = 0;
+		for (int y = 0; y < img.getHeight(); y++) {
+			for (int x = 0; x < img.getWidth(); x++) {
+				defectVector = img.getPixel(x, y);
+				//System.out.println("Valor pixel: [" + defectVector[1] + "," + defectVector[2] + "," + defectVector[3] + "]");
+				// El valor 0 del vector, guarda el valor en escala de grises.
+				// Por eso no nos interesa.
+				if ((defectVector[1] != 255 && defectVector[1] != 0)
+						|| (defectVector[2] != 255 && defectVector[2] != 0)) {
+					pixelDef++;
+					if(pixelDef>(numPixVentana/2)){
+						return true;
+					}					
+				}
+			}
+		}
+		*/
+		
+		//Pixel Central malo	ACEPTABLE PERO FALTA PRECISION	
+//		int x = (int) img.getProcessor().getRoi().getCenterX();
+//		int y = (int) img.getProcessor().getRoi().getCenterY();
+//		defectVector = img.getPixel(x, y);
+//		if ((defectVector[1] != 255 && defectVector[1] != 0)
+//				|| (defectVector[2] != 255 && defectVector[2] != 0)) {
+//			return true;
+//		}					
+		
+		//Pixel Central + Vecinos Malo	BASTANTE BIEN
+		int x = (int) img.getProcessor().getRoi().getCenterX();
+		int y = (int) img.getProcessor().getRoi().getCenterY();
+		int pixelDef = 0;
+		//región de vecinos de 3x3
+		for (int i=-1; i<2;  i++){
+			for (int j=-1; j<2;  j++){
+				defectVector = img.getPixel(x+j, y+i);
+				if ((defectVector[1] != 255 && defectVector[1] != 0)
+						|| (defectVector[2] != 255 && defectVector[2] != 0)) {
+					pixelDef++;
+					if(pixelDef> 5){	//porcentaje de la región del centro de la ventana
+						return true;
+					}				
+				}
+			}
+		}
+		
 		return false;
 	}
 	
