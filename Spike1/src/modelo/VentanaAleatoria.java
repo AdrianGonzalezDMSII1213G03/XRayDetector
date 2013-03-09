@@ -364,7 +364,13 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		header += getStandardAttributes();
 		header += getHaralickAttributes();
 		header += getLbpAttributes();
-		header += "@ATTRIBUTE class {true, false}\n";
+		
+		//CLASIFICACIÓN CON CLASE NOMINAL
+		//header += "@ATTRIBUTE class {true, false}\n";
+		
+		//REGRESIÓN
+		header += "@ATTRIBUTE class numeric\n";
+		
 		header += "@data\n";
 		return header;
 	}
@@ -576,8 +582,17 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				features += ", ";
 			}
 		}
-
-		features += defect;
+		
+		//CLASIFICACIÓN CLASE NOMINAL (TRUE, FALSE)
+		//features += defect;
+		
+		//REGRESIÓN (CLASE 1,0)
+		if(defect){
+			features += "1";
+		}
+		else{
+			features += "0";
+		}
 
 		return features;
 	}

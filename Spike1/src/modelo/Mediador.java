@@ -30,6 +30,7 @@ import org.apache.commons.io.FileUtils;
 import utils.Graphic;
 import utils.Propiedades;
 import weka.classifiers.Classifier;
+import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
@@ -388,12 +389,17 @@ public class Mediador {
 		Classifier base;
 		base = new REPTree();
 
-		cls = new Bagging();
+		//CLASIFICADOR CLASES NOMINALES (TRUE,FALSE)
+		/*cls = new Bagging();
 		((Bagging) cls).setNumIterations(25);
 		((Bagging) cls).setBagSizePercent(100);
 		((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());
 		((Bagging) cls).setClassifier(base);
-
+		*/
+		
+		//REGRESIÓN LINEAL (CLASES NUMÉRICAS, 1,0)
+		cls = new LinearRegression();
+		
 		ObjectOutputStream oos = null;
 
 		try {
@@ -406,7 +412,7 @@ public class Mediador {
 						+ "mejores_" + sizeWindow + ".model")));
 
 			if (arffName.contains("todas"))*/
-				oos = new ObjectOutputStream(new FileOutputStream((path + "todas_" + sizeWindow + ".model")));
+				oos = new ObjectOutputStream(new FileOutputStream((path + "todas_regresion_" + sizeWindow + ".model")));
 
 			oos.writeObject(cls);
 			oos.flush();

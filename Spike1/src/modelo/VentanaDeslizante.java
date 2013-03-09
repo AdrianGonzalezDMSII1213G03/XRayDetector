@@ -224,7 +224,15 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 		
-		if(prob == 0){
+		//CLASIFICACIÓN CLASE NOMINAL
+		/*if(prob == 0){
+			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
+			imgPanel.repaint();
+			rellenarMatrizDefectos(coordX+ selection.x, y);
+		}*/
+		
+		//REGRESIÓN
+		if(prob >= 0.5){
 			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 			imgPanel.repaint();
 			rellenarMatrizDefectos(coordX+ selection.x, y);

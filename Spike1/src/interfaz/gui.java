@@ -378,6 +378,9 @@ public class Gui {
 				if (answer == JFileChooser.APPROVE_OPTION) {
 					model = chooser.getSelectedFile();
 				}
+				else{
+					model = null;
+				}
 				if(model != null){
 					
 					prop.setPathModel(model.getAbsolutePath());
