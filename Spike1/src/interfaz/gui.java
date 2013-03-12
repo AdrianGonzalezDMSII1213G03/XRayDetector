@@ -295,15 +295,11 @@ public class Gui {
 	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes BMP, JPG, JPEG, PNG", "bmp", "jpg", "jpeg", "png");
 	    	chooser.setFileFilter(filter);
 	    	chooser.setAcceptAllFileFilterUsed(false);
-			/*chooser.addChoosableFileFilter(new ImageFilter());
-			chooser.setFileView(new ImageFileView());
-			chooser.setAccessory(new ImagePreview(chooser));*/
 	    	int answer = chooser.showOpenDialog(null);
 			if (answer == JFileChooser.APPROVE_OPTION) {
 				image = chooser.getSelectedFile();
 			}
 			if(image != null){
-				//Mediador m = Mediador.getInstance();
 				imagenAbierta = true;
 				mediador.cargaImagen(image.getAbsolutePath());
 				img = new ImagePlus(image.getAbsolutePath());
@@ -312,6 +308,7 @@ public class Gui {
 				selection = imgPanel.coordenates();
 				btnAnalizar.setEnabled(true);
 				slider.setEnabled(false);
+				
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				StyleConstants.setBold(sa, true);	//Negrita
 				StyleConstants.setForeground(sa, Color.GREEN.darker());
@@ -346,9 +343,8 @@ public class Gui {
 	
 	private class AnalizarImagenListener implements ActionListener{
 	    public void actionPerformed (ActionEvent e){
-	    	//Mediador m = Mediador.getInstance();    	
-	    	//mediador.ejecutaVentana();
 	    	int opcion;
+	    	
 	    	//si no se ha seleccionado una región, mostramos un aviso
 	    	if(selection.height == 0 && selection.width == 0){
 		    	opcion = JOptionPane.showOptionDialog(
@@ -359,8 +355,7 @@ public class Gui {
 		    			   JOptionPane.YES_NO_CANCEL_OPTION,
 		    			   JOptionPane.WARNING_MESSAGE,
 		    			   null,    // null para icono por defecto.
-		    			   new Object[] { "Continuar", "Cancelar"},   // null para YES, NO y CANCEL
-		    			   "Cancelar");
+		    			   new Object[] { "Continuar", "Cancelar"},"Cancelar");
 	    	}
 	    	else{
 	    		opcion = 0;
@@ -371,9 +366,6 @@ public class Gui {
 		    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Model", "model");
 		    	chooser.setFileFilter(filter);
 		    	chooser.setAcceptAllFileFilterUsed(false);
-				/*chooser.addChoosableFileFilter(new ImageFilter());
-				chooser.setFileView(new ImageFileView());
-				chooser.setAccessory(new ImagePreview(chooser));*/
 		    	int answer = chooser.showOpenDialog(null);
 				if (answer == JFileChooser.APPROVE_OPTION) {
 					model = chooser.getSelectedFile();
@@ -381,8 +373,7 @@ public class Gui {
 				else{
 					model = null;
 				}
-				if(model != null){
-					
+				if(model != null){					
 					prop.setPathModel(model.getAbsolutePath());
 					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 					StyleConstants.setBold(sa, true);	//Negrita
@@ -590,7 +581,7 @@ public class Gui {
 	            			originalDirectory = chooser.getSelectedFile().getAbsoluteFile();
 	            			
 	            			// Comprobamos que el directorio acabe en Entrenar/Originales ya
-	        				// que ahÃ­ van a estar las imagenes para entrenar
+	        				// que ahí van a estar las imagenes para entrenar
 	        				if (originalDirectory == null
 	        						|| !originalDirectory.getPath().contains("Originales")) {
 	        					JOptionPane
@@ -775,38 +766,10 @@ public class Gui {
 				String maskList[] = maskDirectory.list();
 				Arrays.sort(maskList);
 				
-				//System.out.println("Or: " + originalList.length + " Mask: " + maskList.length);
-				
 				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
 				
 				if (originalList.length != maskList.length) {
-					StyleConstants.setBold(sa, true);	//Negrita
-					StyleConstants.setForeground(sa, Color.RED);
-					
-					if (originalList.length > maskList.length){
-						JOptionPane.showMessageDialog(null,
-								"El número de imágenes originales y máscaras no coinciden.\n"
-										+ "Faltan máscaras", "Error", 1);
-						try {
-							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-									"Faltan máscaras\n\n", sa);
-							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-						} catch (BadLocationException e1) {
-							throw new RuntimeException();
-						}
-					}
-					else{
-						JOptionPane.showMessageDialog(null,
-								"El número de imágenes originales y máscaras no coinciden.\n"
-										+ "Faltan originales", "Error", 1);
-						try {
-							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-									"Faltan imágenes originales\n\n", sa);
-							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-						} catch (BadLocationException e1) {
-							throw new RuntimeException();
-						}
-					}
+					mostrarErrorNumImagenes(originalList, maskList, sa);
 				} else {
 					sameFiles = true;
 					for (int i = 0; i < originalList.length
@@ -824,20 +787,7 @@ public class Gui {
 							sameFiles = false;
 					}
 					if (sameFiles == false){
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Los nombres de las imágenes originales no coinciden con los de las máscaras.",
-										"Error", 1);
-						StyleConstants.setBold(sa, true);	//Negrita
-						StyleConstants.setForeground(sa, Color.RED);
-						try {
-							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-									"Los nombres de las imágenes originales no coinciden con los de las máscaras\n\n", sa);
-							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-						} catch (BadLocationException e1) {
-							throw new RuntimeException();
-						}
+						mostrarErrorNombresFicheros(sa);
 					}
 					else {
 						StyleConstants.setBold(sa, true);	//Negrita
@@ -890,6 +840,54 @@ public class Gui {
 				}
 				else{
 					btnAnalizar.setEnabled(false);
+				}
+			}
+		}
+
+		private void mostrarErrorNombresFicheros(SimpleAttributeSet sa) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Los nombres de las imágenes originales no coinciden con los de las máscaras.",
+							"Error", 1);
+			StyleConstants.setBold(sa, true);	//Negrita
+			StyleConstants.setForeground(sa, Color.RED);
+			try {
+				txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+						"Los nombres de las imágenes originales no coinciden con los de las máscaras\n\n", sa);
+				txtLog.setCaretPosition(txtLog.getDocument().getLength());
+			} catch (BadLocationException e1) {
+				throw new RuntimeException();
+			}
+		}
+
+		private void mostrarErrorNumImagenes(String[] originalList,
+				String[] maskList, SimpleAttributeSet sa) {
+			StyleConstants.setBold(sa, true);	//Negrita
+			StyleConstants.setForeground(sa, Color.RED);
+			
+			if (originalList.length > maskList.length){
+				JOptionPane.showMessageDialog(null,
+						"El número de imágenes originales y máscaras no coinciden.\n"
+								+ "Faltan máscaras", "Error", 1);
+				try {
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+							"Faltan máscaras\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+				} catch (BadLocationException e1) {
+					throw new RuntimeException();
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null,
+						"El número de imágenes originales y máscaras no coinciden.\n"
+								+ "Faltan originales", "Error", 1);
+				try {
+					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
+							"Faltan imágenes originales\n\n", sa);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+				} catch (BadLocationException e1) {
+					throw new RuntimeException();
 				}
 			}
 		}		

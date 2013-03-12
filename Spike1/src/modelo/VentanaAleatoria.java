@@ -3,18 +3,10 @@ package modelo;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.logging.Level;
-
-import utils.MyLogHandler;
+import datos.GestorArff;
 
 public class VentanaAleatoria extends VentanaAbstracta {
 	
@@ -173,70 +165,41 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				int cola = rand.nextInt(10);
 				//System.out.println("\tCola: " + cola);
 				if(cola <= 5){
-					int randIndex = rand.nextInt(copiaListaDefectos.size());
-					int [] coordVentana = copiaListaDefectos.get(randIndex);
-					calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
-					copiaListaDefectos.remove(randIndex);
+					seleccionarItemLista(copiaListaDefectos, rand, true);
 				}
 				else{
-					int randIndex = rand.nextInt(copiaListaNoDefectos.size());
-					int [] coordVentana = copiaListaNoDefectos.get(randIndex);
-					calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
-					copiaListaNoDefectos.remove(randIndex);
+					seleccionarItemLista(copiaListaNoDefectos, rand, false);
 				}
 			}
 			else if(copiaListaDefectos.size() > 0){
-				int randIndex = rand.nextInt(copiaListaDefectos.size());
-				int [] coordVentana = copiaListaDefectos.get(randIndex);
-				calcularCaracteristicas(coordVentana[0], coordVentana[1], true);
-				copiaListaDefectos.remove(randIndex);
+				seleccionarItemLista(copiaListaDefectos, rand, true);
 			}
 			else if (copiaListaNoDefectos.size() > 0){
-				int randIndex = rand.nextInt(copiaListaNoDefectos.size());
-				int [] coordVentana = copiaListaNoDefectos.get(randIndex);
-				calcularCaracteristicas(coordVentana[0], coordVentana[1], false);
-				copiaListaNoDefectos.remove(randIndex);
+				seleccionarItemLista(copiaListaNoDefectos, rand, false);
 			}
 		}
+	}
+
+	public void seleccionarItemLista(ArrayList<int[]> lista, Random rand, boolean defect) {
+		int randIndex = rand.nextInt(lista.size());
+		int [] coordVentana = lista.get(randIndex);
+		calcularCaracteristicas(coordVentana[0], coordVentana[1], defect);
+		lista.remove(randIndex);
 	}
 	
 	private void calcularCaracteristicas(int coordenadaX, int coordenadaY, boolean defect){
 		
-		ImagePlus copiaStandard = getConvolucion().duplicate();
-		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
-		
-		copiaStandard = getImagenCompleta().duplicate();
-		ftStandard = new Standard(getImagenCompleta());
-		ftStandard.setImagenConvolucion(copiaStandard);
-		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandard.calcular();
-		
-		ftStandardSaliency = new Standard(getSaliency());
-		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
-		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandardSaliency.calcular();
-		
-		ftLbp = new Lbp(getImagenCompleta());
-		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbp.calcular();
-		lbp = ftLbp.getVectorResultados();
-		
-		ftLbpSaliency = new Lbp(getSaliency());
-		ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbpSaliency.calcular();
-		lbpSaliency = ftLbpSaliency.getVectorResultados();
+		calcularStandard(coordenadaX, coordenadaY);		
+		calcularStandardSaliency(coordenadaX, coordenadaY);		
+		calcularLbp(coordenadaX, coordenadaY);		
+		calcularLbpSaliency(coordenadaX, coordenadaY);
 					
 		int total = 0;
 		for (int step = 1; step < 6; step++) {
 			for (int w = 0; w < 4; w++) {
 			
-				ftHaralick = new Haralick(getImagenCompleta(), grades[w], step);
-				ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftHaralick.calcular();
-				
-				ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
-				ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftHaralickSaliency.calcular();
+				calcularHaralick(coordenadaX, coordenadaY, step, w);				
+				calcularHaralickSaliency(coordenadaX, coordenadaY, step, w);
 				
 				switch (w) {
 				case 0:
@@ -281,7 +244,62 @@ public class VentanaAleatoria extends VentanaAbstracta {
 				total++;
 			}
 		}
-		crearArff(null, defect);
+		generarArff(coordenadaX, coordenadaY, defect);
+	}
+
+	public void generarArff(int coordenadaX, int coordenadaY, boolean defect) {
+		int[] coordenates = new int[]{coordenadaX, coordenadaY};
+		String featuresString = generateFeatures(coordenates, defect);
+		String headerFile = null;
+		if(getNumHilo() == 0){
+			headerFile = getHeader(false);
+		}
+		GestorArff garff = new GestorArff();
+		garff.crearArff(getNumHilo(), featuresString, headerFile);
+	}
+
+	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
+			int step, int w) {
+		ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
+		ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralickSaliency.calcular();
+	}
+
+	public void calcularHaralick(int coordenadaX, int coordenadaY, int step,
+			int w) {
+		ftHaralick = new Haralick(getImagenCompleta(), grades[w], step);
+		ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralick.calcular();
+	}
+
+	public void calcularLbpSaliency(int coordenadaX, int coordenadaY) {
+		ftLbpSaliency = new Lbp(getSaliency());
+		ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbpSaliency.calcular();
+		lbpSaliency = ftLbpSaliency.getVectorResultados();
+	}
+
+	public void calcularLbp(int coordenadaX, int coordenadaY) {
+		ftLbp = new Lbp(getImagenCompleta());
+		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbp.calcular();
+		lbp = ftLbp.getVectorResultados();
+	}
+
+	public void calcularStandardSaliency(int coordenadaX, int coordenadaY) {
+		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
+		ftStandardSaliency = new Standard(getSaliency());
+		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
+		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandardSaliency.calcular();
+	}
+
+	public void calcularStandard(int coordenadaX, int coordenadaY) {
+		ImagePlus copiaStandard = getConvolucion().duplicate();
+		ftStandard = new Standard(getImagenCompleta());
+		ftStandard.setImagenConvolucion(copiaStandard);
+		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandard.calcular();
 	}
 	
 	/**
@@ -373,47 +391,6 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		
 		header += "@data\n";
 		return header;
-	}
-	
-	public void crearArff(int[] coordenates, boolean defect){
-
-		String featuresString;
-		File outputFile;
-		FileWriter arffFile;
-
-		featuresString = generateFeatures(coordenates, defect);
-
-		outputFile = new File("./res/arff/Arff_entrenamiento" + getNumHilo() + ".arff");
-		try {
-			if (!outputFile.exists()) {
-				outputFile.createNewFile();
-				if(getNumHilo() == 0){
-					String headerFile = getHeader(false);
-					arffFile = new FileWriter(outputFile);
-					arffFile.write(headerFile);
-				}
-				else{
-					arffFile = new FileWriter(outputFile);
-				}
-				
-				System.out.println(outputFile.getPath());
-				
-				
-
-			} else {
-				// si ya esta creado se escribe a continuacion
-				arffFile = new FileWriter(outputFile, true);
-			}
-
-			arffFile.write(featuresString + "\n");
-			arffFile.close();
-		} catch (IOException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
-		}
 	}
 	
 	/**

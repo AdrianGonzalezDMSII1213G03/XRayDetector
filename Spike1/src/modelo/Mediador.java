@@ -2,6 +2,11 @@ package modelo;
 
 
 
+import ij.IJ;
+import ij.ImagePlus;
+import ij.process.FloatProcessor;
+import ij.process.ImageProcessor;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,12 +15,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
@@ -25,21 +26,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import org.apache.commons.io.FileUtils;
-
 import utils.Graphic;
 import utils.Propiedades;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.LinearRegression;
-import weka.classifiers.meta.Bagging;
-import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
-import weka.core.converters.ArffLoader.ArffReader;
-import ij.IJ;
-import ij.ImagePlus;
-import ij.process.FloatProcessor;
-import ij.process.ImageProcessor;
 import datos.ImageReader;
+import datos.GestorArff;
 
 public class Mediador {
 	
@@ -93,7 +86,7 @@ public class Mediador {
 	
 	public ImagePlus[] divideImagen(Rectangle selection){
 		int processors = Runtime.getRuntime().availableProcessors();
-		int offset = 10;
+		int offset = prop.getTamVentana()/2;
 		ImagePlus[] imagenes = new ImagePlus[processors];
 		ImagePlus img = getImagen();		
 		
@@ -228,7 +221,8 @@ public class Mediador {
 		if(arff != null){	//entrenamos con un arff existente
 			Instances data;
 			try {
-				data = leerArff(arff.getAbsolutePath());
+				GestorArff l = new GestorArff();
+				data = l.leerArff(arff.getAbsolutePath());
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -268,33 +262,7 @@ public class Mediador {
 		}
 	}
 	
-	private void mergeArffFiles() {
-		File[] ficheros = new File[t.length];
-		for (int ithread = 0; ithread < t.length; ++ithread){
-			File file = new File("./res/arff/Arff_entrenamiento" + ithread + ".arff");
-			ficheros[ithread] = file;
-		}
-		// File to write
-		//File fileOutput = new File("./res/arff/Arff_entrenamiento.arff");	//de momento, a pelo
-		File fileOutput = new File(prop.getPathArff());
 
-		for(int i=0; i<ficheros.length; i++){
-			// Read the file like string
-			try {
-				String file1Str = FileUtils.readFileToString(ficheros[i]);
-				if(i==0){
-					FileUtils.write(fileOutput, file1Str);
-				}
-				else{
-					FileUtils.write(fileOutput, file1Str, true);
-				}
-				ficheros[i].delete();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		
-	}
 
 	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra, JTextPane txtLog){
 		
@@ -335,8 +303,9 @@ public class Mediador {
 		} catch (BadLocationException e1) {
 			throw new RuntimeException();
 		}
-		mergeArffFiles();
-		Instances data = leerArff(prop.getPathArff());
+		GestorArff l = new GestorArff();
+		l.mergeArffFiles(t.length);
+		Instances data = l.leerArff(prop.getPathArff());
 		
 		try {
 			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Creando modelo\n\n", sa);
@@ -386,11 +355,12 @@ public class Mediador {
 		//String path = System.getProperty("user.dir");
 		String path = "./res/model/";
 
-		Classifier base;
-		base = new REPTree();
+		
 
 		//CLASIFICADOR CLASES NOMINALES (TRUE,FALSE)
-		/*cls = new Bagging();
+		/*Classifier base;
+		base = new REPTree();
+		cls = new Bagging();
 		((Bagging) cls).setNumIterations(25);
 		((Bagging) cls).setBagSizePercent(100);
 		((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());
@@ -422,46 +392,49 @@ public class Mediador {
 		}
 	}
 	
-	public Instances leerArff (String url){
-		BufferedReader reader = null;		
-		try {
-			reader = new BufferedReader(new FileReader(url));
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}		
-		ArffReader arff = null;		
-		try {
-			arff = new ArffReader(reader);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}		
-		Instances data = arff.getData();
-		data.setClassIndex(data.numAttributes() - 1);
-		
-		return data;
-	}
+
 	
 	public void drawEdge(Graphic imgPanel) {
 		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];
 		//defect = false;
 
-		for (int i = 0; i < getImagen().getHeight(); i++) {
-			for (int j = 0; j < getImagen().getWidth(); j++) {
-				defectsMatrix2[j][i] = defectMatrix[j][i];
-			}
-		}
+		copiarMatrizDefectos(defectsMatrix2);
 
-		for (int i = 0; i < getImagen().getHeight(); i++) {
-			for (int j = 0; j < getImagen().getWidth(); j++) {
+		binarizarMatriz(defectsMatrix2);
 
-				if (defectMatrix[j][i] > prop.getUmbral()) {
-					defectsMatrix2[j][i] = 1;
-					//defect = true;
-				} else
-					defectsMatrix2[j][i] = 0;
-			}
-		}
+		BufferedImage bfrdImage = crearMascara(defectsMatrix2);
 
+		ImagePlus edgesImage = new ImagePlus("", bfrdImage);
+
+		BufferedImage bufferedResult = establecerBordes(edgesImage);
+
+		ImagePlus imagePlusResult = new ImagePlus("", bufferedResult);
+		imgPanel.isEnded(true);
+		imgPanel.setImage(imagePlusResult.getImage());
+		imgPanel.repaint();
+		guardarMapaCalor();
+	}
+
+	public BufferedImage establecerBordes(ImagePlus edgesImage) {
+		// Detectar bordes
+		IJ.run(edgesImage, "Find Edges", "");
+
+		// Invertir colores
+		IJ.run(edgesImage, "Invert", "");
+
+		BufferedImage bufferedEdgesImage = imageToBufferedImage(edgesImage.getImage());
+
+		BufferedImage backgroundImage = imageToBufferedImage(getImagen().getImage());
+
+		// Poner fondo transparente
+		BufferedImage transparentImage = makeColorTransparent(bufferedEdgesImage, Color.white);
+
+		// Superponer las dos imagenes
+		BufferedImage bufferedResult = overlayImages(backgroundImage, transparentImage);
+		return bufferedResult;
+	}
+
+	public BufferedImage crearMascara(int[][] defectsMatrix2) {
 		BufferedImage bfrdImage = new BufferedImage(getImagen().getWidth(),
 				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);
 		for (int i = 0; i < getImagen().getHeight(); i++) {
@@ -475,33 +448,28 @@ public class Mediador {
 					bfrdImage.setRGB(j, i, new Color(255, 255, 0).getRGB());
 			}
 		}
+		return bfrdImage;
+	}
 
-		ImagePlus edgesImage = new ImagePlus("", bfrdImage);
+	public void copiarMatrizDefectos(int[][] defectsMatrix2) {
+		for (int i = 0; i < getImagen().getHeight(); i++) {
+			for (int j = 0; j < getImagen().getWidth(); j++) {
+				defectsMatrix2[j][i] = defectMatrix[j][i];
+			}
+		}
+	}
 
-		// Detectar bordes
-		IJ.run(edgesImage, "Find Edges", "");
+	public void binarizarMatriz(int[][] defectsMatrix2) {
+		for (int i = 0; i < getImagen().getHeight(); i++) {
+			for (int j = 0; j < getImagen().getWidth(); j++) {
 
-		// Invertir colores
-		IJ.run(edgesImage, "Invert", "");
-
-		BufferedImage bufferedEdgesImage = imageToBufferedImage(edgesImage
-				.getImage());
-
-		BufferedImage backgroundImage = imageToBufferedImage(getImagen().getImage());
-
-		// Poner fondo transparente
-		BufferedImage transparentImage = makeColorTransparent(
-				bufferedEdgesImage, Color.white);
-
-		// Superponer las dos imagenes
-		BufferedImage bufferedResult = overlayImages(backgroundImage,
-				transparentImage);
-
-		ImagePlus imagePlusResult = new ImagePlus("", bufferedResult);
-		imgPanel.isEnded(true);
-		imgPanel.setImage(imagePlusResult.getImage());
-		imgPanel.repaint();
-		guardarMapaCalor();
+				if (defectMatrix[j][i] > prop.getUmbral()) {
+					defectsMatrix2[j][i] = 1;
+					//defect = true;
+				} else
+					defectsMatrix2[j][i] = 0;
+			}
+		}
 	}
 	
 	/**

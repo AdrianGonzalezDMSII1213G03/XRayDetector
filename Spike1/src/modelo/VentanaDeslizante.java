@@ -37,7 +37,6 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private double[] rangeVector;
 	private double[] meanVectorSaliency;
 	private double[] rangeVectorSaliency;
-	//private double[] lbp;
 	Feature ftStandard, ftHaralick, ftLbp, ftStandardSaliency, ftHaralickSaliency, ftLbpSaliency;
 	private Graphic imgPanel;
 	private Rectangle selection;
@@ -56,78 +55,35 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		this.defectMatrix = defectMatrix;
 	}
 
-	@SuppressWarnings("static-access")
 	public void run(){
 		int salto = (int) (getAlturaVentana()*getPropiedades().getSalto());
-		int coordenadaX = 0, coordenadaY = 0, color = 0, altura = 0, anchura = 0;
-		Color c = null;
+		int coordenadaX = 0, coordenadaY = 0, altura = 0, anchura = 0;
 		ImageProcessor ip = getImage().getProcessor();
 		double means[], ranges[], meansSaliency[], rangesSaliency[],
 			vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
 			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 		boolean initializedNormal = false;
-		ImagePlus copiaStandard = getConvolucion().duplicate();
-		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
 		
-			
 		altura = ip.getHeight();
 		anchura = ip.getWidth();
 		
 		for (coordenadaY = 0;coordenadaY <= altura - getAlturaVentana(); coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= anchura - getAnchuraVentana(); coordenadaX += salto) {
+				
 				pintarVentana(coordenadaX, coordenadaY);
 				ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				copiaImagen.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				switch(color){
-					case 0:
-						c = c.BLUE;
-						color = 1;
-						break;
-					case 1:
-						c = c.RED;
-						color = 2;
-						break;
-					case 2:
-						c = c.GREEN;
-						color = 0;
-						break;
-				}
-				cambiaColor(c);
-				dibujaRoi();
 				
-				//long tiempoInicio = System.currentTimeMillis();
-				
-				ftStandard = new Standard(getImage());
-				ftStandard.setImagenConvolucion(copiaStandard);
-				ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftStandard.calcular();
-				
-				ftStandardSaliency = new Standard(getSaliency());
-				ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
-				ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftStandardSaliency.calcular();
-				
-				ftLbp = new Lbp(getImage());
-				ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftLbp.calcular();
-				//lbp = ftLbp.getVectorResultados();
-				
-				ftLbpSaliency = new Lbp(getSaliency());
-				ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ftLbpSaliency.calcular();
-				//lbp = ftLbp.getVectorResultados();
+				calcularStandard(coordenadaX, coordenadaY);				
+				calcularStandardSaliency(coordenadaX, coordenadaY);				
+				calcularLbp(coordenadaX, coordenadaY);				
+				calcularLbpSaliency(coordenadaX, coordenadaY);
 							
 				int total = 0;
 				for (int step = 1; step < 6; step++) {
 					for (int w = 0; w < 4; w++) {
 					
-						ftHaralick = new Haralick(getImage(), grades[w], step);
-						ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-						ftHaralick.calcular();
-						
-						ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
-						ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-						ftHaralickSaliency.calcular();
+						calcularHaralick(coordenadaX, coordenadaY, step, w);						
+						calcularHaralickSaliency(coordenadaX, coordenadaY, step, w);
 						
 						switch (w) {
 						case 0:
@@ -172,14 +128,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 						total++;
 					}
 				}
-				
-					
-				//int[] coordCentro = new int[]{(int)ip.getRoi().getCenterX(), (int)ip.getRoi().getCenterY() + getNumHilo()*getImage().getHeight()};
-				
-				//long totalTiempo = System.currentTimeMillis() - tiempoInicio;
-				//System.out.println("El tiempo de la ventana ["+ coordCentro[0]+","+coordCentro[1]+ "] es: " + totalTiempo + " miliseg");
-				
-				//crearArff(coordCentro);
+								
 				Instance instancia = crearInstancia();
 				Classifier clas = abrirModelo();
 				double clase = 0;
@@ -196,7 +145,48 @@ public class VentanaDeslizante extends VentanaAbstracta{
 				setPorcentajeBarra();
 			}
 		}
-		//guardaCopia();
+	}
+
+	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
+			int step, int w) {
+		ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
+		ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralickSaliency.calcular();
+	}
+
+	public void calcularHaralick(int coordenadaX, int coordenadaY, int step,
+			int w) {
+		ftHaralick = new Haralick(getImage(), grades[w], step);
+		ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralick.calcular();
+	}
+
+	public void calcularLbpSaliency(int coordenadaX, int coordenadaY) {
+		ftLbpSaliency = new Lbp(getSaliency());
+		ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbpSaliency.calcular();
+	}
+
+	public void calcularLbp(int coordenadaX, int coordenadaY) {
+		ftLbp = new Lbp(getImage());
+		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbp.calcular();
+	}
+
+	public void calcularStandardSaliency(int coordenadaX, int coordenadaY) {
+		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
+		ftStandardSaliency = new Standard(getSaliency());
+		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
+		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandardSaliency.calcular();
+	}
+
+	public void calcularStandard(int coordenadaX, int coordenadaY) {
+		ImagePlus copiaStandard = getConvolucion().duplicate();
+		ftStandard = new Standard(getImage());
+		ftStandard.setImagenConvolucion(copiaStandard);
+		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandard.calcular();
 	}
 
 	private synchronized void setPorcentajeBarra() {		
@@ -209,7 +199,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		
 		int y = coordenadaY + selection.y + getNumHilo()*getImage().getHeight();
 		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 
 		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
@@ -221,7 +211,7 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		//para la coordenada Y, hay que determinar en qué trozo de la imagen estamos analizando
 		int y = coordY + selection.y + getNumHilo()*getImage().getHeight();
 		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-			y -= 20;	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 		
 		//CLASIFICACIÓN CLASE NOMINAL

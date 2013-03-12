@@ -178,22 +178,11 @@ public class Graphic extends JPanel {
 
 		if (ended == false) {
 
-			// Rectangle2D rectangle = new
-			// Rectangle2D.Double(seleccion.getX(),seleccion.getY(),seleccion.getWidth(),seleccion.getHeight());
 			rectangle = new Rectangle2D.Double(coorX, coorY, width, height);
 			g2d.setColor(Color.yellow);
-			// g2d.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND,
-			// BasicStroke.JOIN_ROUND, 1f, new float[] { 2f }, 0f));
-			// g2d3.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND,
-			// BasicStroke.JOIN_ROUND, 1f, new float[] { 2f }, 0f));
 
 			g2d.draw(rectangle);
 
-/*			selection2.x = (int) coorX;
-			selection2.y = (int) coorY;
-			selection2.width = (int) width;
-			selection2.height = (int) height;
-*/
 			if (window != null) {
 				g2d.setColor(Color.yellow);
 				g2d.draw(window);
