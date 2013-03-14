@@ -17,6 +17,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
@@ -25,6 +26,8 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 
 import utils.Graphic;
 import utils.Propiedades;
@@ -264,7 +267,7 @@ public class Mediador {
 	
 
 
-	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra, JTextPane txtLog){
+	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra, JTextPane txtLog, HTMLEditorKit kit, HTMLDocument doc){
 		
 		barra.setMaximum(originalDirectory.length);
 		
@@ -276,20 +279,19 @@ public class Mediador {
 		
 		barra.setValue(0);
 		
-		SimpleAttributeSet sa = new  SimpleAttributeSet();
-		StyleConstants.setBold(sa, false);
-		
 		for(int i=0; i < originalDirectory.length; i++){
 			if(!originalDirectory[i].contains("Thumbs.db")){
 				//System.out.println("Or: " + originalDirectory[i] + " Mask: " + maskDirectory[i]);
 				
 				try {
-					File f = new File(originalDirectory[i]);					
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Analizando imagen: " + f.getName() + "\n", sa);
+					File f = new File(originalDirectory[i]);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Analizando imagen: " + f.getName() + "</p>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 					f = null;
-				} catch (BadLocationException e1) {
-					throw new RuntimeException();
+				} catch (BadLocationException e) {
+					throw new RuntimeException(e);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 				}
 				
 				cargaImagen(maskDirectory[i]);
@@ -298,9 +300,11 @@ public class Mediador {
 			}
 		}
 		try {
-			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "\nFusionando ficheros ARFF\n\n", sa);
+			kit.insertHTML(doc, doc.getLength(), "<br><p class=\"normal\"> Fusionando ficheros ARFF</p><br>", 0, 0, null);
 			txtLog.setCaretPosition(txtLog.getDocument().getLength());
 		} catch (BadLocationException e1) {
+			throw new RuntimeException();
+		} catch (IOException e) {
 			throw new RuntimeException();
 		}
 		GestorArff l = new GestorArff();
@@ -308,9 +312,11 @@ public class Mediador {
 		Instances data = l.leerArff(prop.getPathArff());
 		
 		try {
-			txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Creando modelo\n\n", sa);
+			kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Creando modelo</p><br>", 0, 0, null);
 			txtLog.setCaretPosition(txtLog.getDocument().getLength());
 		} catch (BadLocationException e1) {
+			throw new RuntimeException();
+		} catch (IOException e) {
 			throw new RuntimeException();
 		}
 		createModel(data, String.valueOf(prop.getTamVentana()));

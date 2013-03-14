@@ -24,6 +24,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
@@ -46,6 +48,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -78,6 +81,8 @@ public class Gui {
 	private boolean parado = false;
 	private static Propiedades prop;
 	private JSlider slider;
+	private HTMLEditorKit kit;
+    private HTMLDocument doc;
 
 	/**
 	 * Launch the application.
@@ -203,6 +208,23 @@ public class Gui {
 		JTextPane textPaneLog = new JTextPane();
 		textPaneLog.setEditable(false);
 		panelLog.add(textPaneLog);
+		textPaneLog.setContentType("text/html");
+		kit = new HTMLEditorKit();
+	    doc = new HTMLDocument();
+	    textPaneLog.setEditorKit(kit);
+	    textPaneLog.setDocument(doc);
+	    
+		textPaneLog.setText("<!DOCTYPE html>" +
+							"<html>"+
+							"<head>"+
+							"<style>"+
+							"p.normal {font-weight:normal;}"+
+							"p.error {font-weight:bold; color:red}"+
+							"p.exito {font-weight:bold; color:green}"+
+							"p.stop {font-weight:bold; color:blue}"+
+							"</style>"+
+							"</head>"+
+							"<body>");
 		JScrollPane scroll = new JScrollPane(textPaneLog);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panelLog.add(scroll);
@@ -309,13 +331,16 @@ public class Gui {
 				btnAnalizar.setEnabled(true);
 				slider.setEnabled(false);
 				
-				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-				StyleConstants.setBold(sa, true);	//Negrita
-				StyleConstants.setForeground(sa, Color.GREEN.darker());
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Imagen abierta correctamente\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Imagen abierta correctamente</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					Date date = new Date();
 					StringWriter sWriter = new StringWriter();
 					e1.printStackTrace(new PrintWriter(sWriter));
@@ -375,13 +400,17 @@ public class Gui {
 				}
 				if(model != null){					
 					prop.setPathModel(model.getAbsolutePath());
-					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-					StyleConstants.setBold(sa, true);	//Negrita
-					StyleConstants.setForeground(sa, Color.GREEN.darker());
+
 					try {
-						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Modelo cargado correctamente\n\n", sa);
+						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo cargado correctamente</p><br>", 0, 0, null);
 						txtLog.setCaretPosition(txtLog.getDocument().getLength());
 					} catch (BadLocationException e1) {
+						Date date = new Date();
+						StringWriter sWriter = new StringWriter();
+						e1.printStackTrace(new PrintWriter(sWriter));
+						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						e1.printStackTrace();
+					} catch (IOException e1) {
 						Date date = new Date();
 						StringWriter sWriter = new StringWriter();
 						e1.printStackTrace(new PrintWriter(sWriter));
@@ -409,11 +438,16 @@ public class Gui {
 		@Override
 		public void run() {
 			
-			SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos			
-			
 			try {
-				txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Iniciando proceso de análisis\n\n", sa);
+				kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Iniciando proceso de análisis</p><br>", 0, 0, null);
+				txtLog.setCaretPosition(txtLog.getDocument().getLength());
 			} catch (BadLocationException e1) {
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e1.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				e1.printStackTrace();
+			} catch (IOException e1) {
 				Date date = new Date();
 				StringWriter sWriter = new StringWriter();
 				e1.printStackTrace(new PrintWriter(sWriter));
@@ -424,13 +458,17 @@ public class Gui {
 			mediador.ejecutaVentana(selection, imgPanel, progressBar);
 			
 			if(!parado){
-				StyleConstants.setBold(sa, true);	//Negrita
-				StyleConstants.setForeground(sa, Color.GREEN.darker());
 				
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso de análisis finalizado con éxito\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					Date date = new Date();
 					StringWriter sWriter = new StringWriter();
 					e1.printStackTrace(new PrintWriter(sWriter));
@@ -476,14 +514,16 @@ public class Gui {
 				}
 				progressBar.setValue(0);
 				
-				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos	
-				StyleConstants.setBold(sa, true);	//Negrita
-				StyleConstants.setForeground(sa, Color.BLUE.darker());
-				
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso detenido\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"stop\"> Proceso detenido</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
+				} catch (IOException e1) {
 					Date date = new Date();
 					StringWriter sWriter = new StringWriter();
 					e1.printStackTrace(new PrintWriter(sWriter));
@@ -590,19 +630,23 @@ public class Gui {
 	        									"No has seleccionado una carpeta correcta para entrenar.",
 	        									"Error", 1);
 	        					sameFiles = false;
-	        					SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-	        					StyleConstants.setBold(sa, true);	//Negrita
-	        					StyleConstants.setForeground(sa, Color.RED);
+	        					
 	        					try {
-	        						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Directorio incorrecto\n\n", sa);
-	        						txtLog.setCaretPosition(txtLog.getDocument().getLength());
-	        					} catch (BadLocationException e1) {
-	        						Date date = new Date();
-	        						StringWriter sWriter = new StringWriter();
-	        						e1.printStackTrace(new PrintWriter(sWriter));
-	        						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
-	        						e1.printStackTrace();
-	        					}
+									kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Directorio incorrecto</p><br>", 0, 0, null);
+									txtLog.setCaretPosition(txtLog.getDocument().getLength());
+								} catch (BadLocationException e1) {
+									Date date = new Date();
+									StringWriter sWriter = new StringWriter();
+									e1.printStackTrace(new PrintWriter(sWriter));
+									MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+									e1.printStackTrace();
+								} catch (IOException e1) {
+									Date date = new Date();
+									StringWriter sWriter = new StringWriter();
+									e1.printStackTrace(new PrintWriter(sWriter));
+									MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+									e1.printStackTrace();
+								}
 
 	        				}
 	        				else {
@@ -622,15 +666,22 @@ public class Gui {
 		        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
 		        		    	    			   "Error",
 		        		    	    			   JOptionPane.ERROR_MESSAGE);
-		        		    	    	SimpleAttributeSet sa = new  SimpleAttributeSet();
-		        		    	    	StyleConstants.setBold(sa, true);	//Negrita
-		        						StyleConstants.setForeground(sa, Color.RED);
 		        						try {
-		        							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Error\n\n", sa);
-		        							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-		        						} catch (BadLocationException e1) {
-		        							throw new RuntimeException();
-		        						}
+											kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
+											txtLog.setCaretPosition(txtLog.getDocument().getLength());
+										} catch (BadLocationException e) {
+											Date date = new Date();
+											StringWriter sWriter = new StringWriter();
+											e.printStackTrace(new PrintWriter(sWriter));
+											MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+											e.printStackTrace();
+										} catch (IOException e) {
+											Date date = new Date();
+											StringWriter sWriter = new StringWriter();
+											e.printStackTrace(new PrintWriter(sWriter));
+											MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+											e.printStackTrace();
+										}
 		        		    	    }
 		        		    	};
 		        		    	thread.setUncaughtExceptionHandler(h);
@@ -662,19 +713,23 @@ public class Gui {
 	        			}
 	        			
 	        			if(arff != null){
-	        				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-	        				StyleConstants.setBold(sa, true);	//Negrita
-	        				StyleConstants.setForeground(sa, Color.GREEN.darker());
+        				
 	        				try {
-	        					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "ARFF abierto correctamente\n\n", sa);
-	        					txtLog.setCaretPosition(txtLog.getDocument().getLength());
-	        				} catch (BadLocationException e1) {
-	        					Date date = new Date();
-	        					StringWriter sWriter = new StringWriter();
-	        					e1.printStackTrace(new PrintWriter(sWriter));
-	        					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
-	        					e1.printStackTrace();
-	        				}
+								kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> ARFF abierto correctamente</p><br>", 0, 0, null);
+								txtLog.setCaretPosition(txtLog.getDocument().getLength());
+							} catch (BadLocationException e1) {
+								Date date = new Date();
+								StringWriter sWriter = new StringWriter();
+								e1.printStackTrace(new PrintWriter(sWriter));
+								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								Date date = new Date();
+								StringWriter sWriter = new StringWriter();
+								e1.printStackTrace(new PrintWriter(sWriter));
+								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+								e1.printStackTrace();
+							}
 
 	        				ThreadEntrenar threadEntrenar = new ThreadEntrenar(true);
 	        		    	thread = new Thread(threadEntrenar);
@@ -690,15 +745,22 @@ public class Gui {
 	        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
 	        		    	    			   "Error",
 	        		    	    			   JOptionPane.ERROR_MESSAGE);
-	        		    	    	SimpleAttributeSet sa = new  SimpleAttributeSet();
-	        		    	    	StyleConstants.setBold(sa, true);	//Negrita
-	        						StyleConstants.setForeground(sa, Color.RED);
-	        						try {
-	        							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Error\n\n", sa);
-	        							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-	        						} catch (BadLocationException e1) {
-	        							throw new RuntimeException();
-	        						}
+	        		    	    	try {
+										kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
+										txtLog.setCaretPosition(txtLog.getDocument().getLength());
+									} catch (BadLocationException e) {
+										Date date = new Date();
+										StringWriter sWriter = new StringWriter();
+										e.printStackTrace(new PrintWriter(sWriter));
+										MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+										e.printStackTrace();
+									} catch (IOException e) {
+										Date date = new Date();
+										StringWriter sWriter = new StringWriter();
+										e.printStackTrace(new PrintWriter(sWriter));
+										MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+										e.printStackTrace();
+									}
 	        		    	    }
 	        		    	};
 	        		    	thread.setUncaughtExceptionHandler(h);
@@ -726,24 +788,28 @@ public class Gui {
 		public void run() {
 			btnStop.setEnabled(true);
 			if(entrenarConArff){	//si queremos entrenar con un fichero existente
-				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
+				
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Inicio del proceso de entrenamiento\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Inicio del proceso de entrenamiento</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
-				} catch (BadLocationException e1) {
-					throw new RuntimeException();
+				} catch (BadLocationException e) {
+					throw new RuntimeException(e);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 				}
+				
 				mediador.ejecutaEntrenamiento(arff, null);
 				
 				if(!parado){
-					StyleConstants.setBold(sa, true);	//Negrita
-					StyleConstants.setForeground(sa, Color.GREEN.darker());
+					
 					try {
-						txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Modelo entrenado correctamente" +
-								"con el ARFF especificado\n\n", sa);
+						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo entrenado correctamente" +
+								"con el ARFF especificado</p><br>", 0, 0, null);
 						txtLog.setCaretPosition(txtLog.getDocument().getLength());
-					} catch (BadLocationException e1) {
-						throw new RuntimeException();
+					} catch (BadLocationException e) {
+						throw new RuntimeException(e);
+					} catch (IOException e) {
+						throw new RuntimeException(e);
 					}
 				}
 				btnEntrenarClasificador.setEnabled(true);
@@ -789,14 +855,15 @@ public class Gui {
 					if (sameFiles == false){
 						mostrarErrorNombresFicheros(sa);
 					}
-					else {
-						StyleConstants.setBold(sa, true);	//Negrita
-						StyleConstants.setForeground(sa, Color.GREEN.darker());
+					else {						
 						try {
-							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Directorio abierto correctamente\n\n", sa);
+							kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Directorio abierto correctamente" +
+									"con el ARFF especificado</p><br>", 0, 0, null);
 							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-						} catch (BadLocationException e1) {
-							throw new RuntimeException();
+						} catch (BadLocationException e) {
+							throw new RuntimeException(e);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
 						}
 						
 						File[] originalFiles = originalDirectory.listFiles();
@@ -809,25 +876,29 @@ public class Gui {
 							maskList[i] = maskFiles[i].getAbsolutePath();
 						}
 						
-						StyleConstants.setBold(sa, false);
-						StyleConstants.setForeground(sa, Color.BLACK);
 						try {
-							txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Iniciando proceso de entrenamiento\n\n", sa);
+							kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Iniciando proceso de entrenamiento" +
+									"con el ARFF especificado</p><br>", 0, 0, null);
 							txtLog.setCaretPosition(txtLog.getDocument().getLength());
-						} catch (BadLocationException e1) {
-							throw new RuntimeException();
+						} catch (BadLocationException e) {
+							throw new RuntimeException(e);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
 						}
-						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog);
+						
+						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog, kit, doc);
 						
 						if(!parado){
-							StyleConstants.setBold(sa, true);
-							StyleConstants.setForeground(sa, Color.GREEN.darker());
+														
 							try {
-								txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso de entrenamiento finalizado con éxito\n\n", sa);
+								kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de entrenamiento finalizado con éxito </p><br>", 0, 0, null);
 								txtLog.setCaretPosition(txtLog.getDocument().getLength());
-							} catch (BadLocationException e1) {
-								throw new RuntimeException();
+							} catch (BadLocationException e) {
+								throw new RuntimeException(e);
+							} catch (IOException e) {
+								throw new RuntimeException(e);
 							}
+							
 						}
 					}
 				}
@@ -850,44 +921,72 @@ public class Gui {
 							null,
 							"Los nombres de las imágenes originales no coinciden con los de las máscaras.",
 							"Error", 1);
-			StyleConstants.setBold(sa, true);	//Negrita
-			StyleConstants.setForeground(sa, Color.RED);
 			try {
-				txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-						"Los nombres de las imágenes originales no coinciden con los de las máscaras\n\n", sa);
+				kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Proceso fallido: " +
+						"Los nombres de las imágenes originales no coinciden con los de las máscaras</p><br>", 0, 0, null);
 				txtLog.setCaretPosition(txtLog.getDocument().getLength());
 			} catch (BadLocationException e1) {
-				throw new RuntimeException();
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e1.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				Date date = new Date();
+				StringWriter sWriter = new StringWriter();
+				e1.printStackTrace(new PrintWriter(sWriter));
+				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				e1.printStackTrace();
 			}
 		}
 
 		private void mostrarErrorNumImagenes(String[] originalList,
 				String[] maskList, SimpleAttributeSet sa) {
-			StyleConstants.setBold(sa, true);	//Negrita
-			StyleConstants.setForeground(sa, Color.RED);
 			
 			if (originalList.length > maskList.length){
 				JOptionPane.showMessageDialog(null,
 						"El número de imágenes originales y máscaras no coinciden.\n"
 								+ "Faltan máscaras", "Error", 1);
+				
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-							"Faltan máscaras\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Proceso fallido: " +
+							"Faltan máscaras</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					throw new RuntimeException();
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
 				}
 			}
 			else{
 				JOptionPane.showMessageDialog(null,
 						"El número de imágenes originales y máscaras no coinciden.\n"
 								+ "Faltan originales", "Error", 1);
+				
 				try {
-					txtLog.getStyledDocument().insertString(txtLog.getStyledDocument().getLength(), "Proceso fallido: " +
-							"Faltan imágenes originales\n\n", sa);
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Proceso fallido: " +
+							"Faltan imágenes originales</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					throw new RuntimeException();
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					Date date = new Date();
+					StringWriter sWriter = new StringWriter();
+					e1.printStackTrace(new PrintWriter(sWriter));
+					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					e1.printStackTrace();
 				}
 			}
 		}		
