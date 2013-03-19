@@ -23,14 +23,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -56,6 +54,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import javax.swing.JSlider;
+
+import org.apache.commons.io.FileUtils;
 
 public class Gui {
 
@@ -83,6 +83,9 @@ public class Gui {
 	private JSlider slider;
 	private HTMLEditorKit kit;
     private HTMLDocument doc;
+    private JPanel panelLog_1;
+    private JButton btnLimpiarLog;
+    private JButton btnExportarLog;
 
 	/**
 	 * Launch the application.
@@ -167,9 +170,26 @@ public class Gui {
 			
 		txtLog = getTxtLog(panelLog);
 		
+		getBotonExportarLog();
+		getBotonLimpiarLog();
+		
 		JPanel panelSlider = getPanelSlider();
 		
 		getSlider(panelSlider);
+	}
+
+	public void getBotonLimpiarLog() {
+		btnLimpiarLog = new JButton("Limpiar Log");
+		btnLimpiarLog.setBounds(10, 212, 107, 36);
+		btnLimpiarLog.addActionListener(new LimpiarLogListener());
+		panelLog_1.add(btnLimpiarLog);
+	}
+
+	public void getBotonExportarLog() {
+		btnExportarLog = new JButton("Exportar Log");
+		btnExportarLog.setBounds(120, 212, 107, 36);
+		btnExportarLog.addActionListener(new ExportarLogListener());
+		panelLog_1.add(btnExportarLog);
 	}
 
 	public void getSlider(JPanel panelSlider) {
@@ -206,11 +226,13 @@ public class Gui {
 
 	private JTextPane getTxtLog(JPanel panelLog) {
 		JTextPane textPaneLog = new JTextPane();
+		textPaneLog.setBounds(4, 4, 209, 186);
 		textPaneLog.setEditable(false);
 		panelLog.add(textPaneLog);
 		textPaneLog.setContentType("text/html");
 		kit = new HTMLEditorKit();
 	    doc = new HTMLDocument();
+	    panelLog_1.setLayout(null);
 	    textPaneLog.setEditorKit(kit);
 	    textPaneLog.setDocument(doc);
 	    
@@ -226,18 +248,18 @@ public class Gui {
 							"</head>"+
 							"<body>");
 		JScrollPane scroll = new JScrollPane(textPaneLog);
+		scroll.setBounds(10, 16, 217, 186);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panelLog.add(scroll);
 		return textPaneLog;
 	}
 
 	private JPanel getPanelLog() {
-		JPanel panelLog = new JPanel();
-		panelLog.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelLog.setBounds(10, 302, 236, 259);
-		frmXraydetector.getContentPane().add(panelLog);
-		panelLog.setLayout(new GridLayout(1, 0, 0, 0));		
-		return panelLog;
+		panelLog_1 = new JPanel();
+		panelLog_1.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelLog_1.setBounds(10, 302, 236, 259);
+		frmXraydetector.getContentPane().add(panelLog_1);
+		return panelLog_1;
 	}
 
 	private JPanel getPanelImagen() {
@@ -774,6 +796,46 @@ public class Gui {
 			
 	    }
 	}
+	
+	private class LimpiarLogListener implements ActionListener{
+	    public void actionPerformed (ActionEvent e){
+	    	txtLog.setText("<!DOCTYPE html>" +
+					"<html>"+
+					"<head>"+
+					"<style>"+
+					"p.normal {font-weight:normal;}"+
+					"p.error {font-weight:bold; color:red}"+
+					"p.exito {font-weight:bold; color:green}"+
+					"p.stop {font-weight:bold; color:blue}"+
+					"</style>"+
+					"</head>"+
+					"<body>");
+	    }
+	}
+	
+	private class ExportarLogListener implements ActionListener{
+	    public void actionPerformed (ActionEvent e){
+	    	String s = txtLog.getText();
+	    	s += "</body></html>";
+	    	try {
+				FileUtils.writeStringToFile(new File("./res/log/html/log.html"), s);
+				kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Log exportado con éxito</p><br>", 0, 0, null);
+				txtLog.setCaretPosition(txtLog.getDocument().getLength());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				try {
+					kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Fallo al exportar el log</p><br>", 0, 0, null);
+					txtLog.setCaretPosition(txtLog.getDocument().getLength());
+				} catch (BadLocationException e2) {
+					e2.printStackTrace();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}				
+			} catch (BadLocationException e1) {
+				e1.printStackTrace();
+			}
+	    }
+    }
 	
 	private class ThreadEntrenar implements Runnable{
 		
