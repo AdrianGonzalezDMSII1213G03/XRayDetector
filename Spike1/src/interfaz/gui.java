@@ -6,9 +6,14 @@ import java.awt.EventQueue;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -29,6 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -56,6 +62,9 @@ import java.util.logging.Level;
 import javax.swing.JSlider;
 
 import org.apache.commons.io.FileUtils;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class Gui {
 
@@ -86,6 +95,13 @@ public class Gui {
     private JPanel panelLog_1;
     private JButton btnLimpiarLog;
     private JButton btnExportarLog;
+    private JMenu mnOpciones;
+    private JMenuItem mntmOpcionesAvanzadas;
+    private JMenu mnAyuda;
+    private JMenuItem mntmAyudaEnLnea;
+    private JMenuItem mntmAcercaDe;
+    private int tamVentanaOpciones;
+    private double saltoOpciones;
 
 	/**
 	 * Launch the application.
@@ -176,6 +192,32 @@ public class Gui {
 		JPanel panelSlider = getPanelSlider();
 		
 		getSlider(panelSlider);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmXraydetector.setJMenuBar(menuBar);
+		
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir.addActionListener(new SalirListener());
+		mnArchivo.add(mntmSalir);
+		mnOpciones = new JMenu("Opciones");
+		menuBar.add(mnOpciones);
+
+		mntmOpcionesAvanzadas = new JMenuItem("Opciones avanzadas");
+		mntmOpcionesAvanzadas.addActionListener(new OpcionesAvanzadasListener(frmXraydetector));
+		mnOpciones.add(mntmOpcionesAvanzadas);
+
+
+		mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+
+		mntmAyudaEnLnea = new JMenuItem("Ayuda en l\u00EDnea");
+		mnAyuda.add(mntmAyudaEnLnea);
+
+		mntmAcercaDe = new JMenuItem("Acerca de");
+		mnAyuda.add(mntmAcercaDe);
 	}
 
 	public void getBotonLimpiarLog() {
@@ -323,7 +365,7 @@ public class Gui {
 	private void getJFramePrincipal() {
 		frmXraydetector = new JFrame();
 		frmXraydetector.setTitle("XRayDetector");
-		frmXraydetector.setBounds(100, 100, 1024, 600);
+		frmXraydetector.setBounds(100, 100, 1024, 619);
 		frmXraydetector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXraydetector.getContentPane().setLayout(null);
 		frmXraydetector.setLocationRelativeTo(null);
@@ -383,9 +425,7 @@ public class Gui {
 				mediador.drawEdge(imgPanel);
 			}
 			
-		}
-		
-		
+		}		
 	}
 	
 	private class AnalizarImagenListener implements ActionListener{
@@ -794,6 +834,118 @@ public class Gui {
 	        }
 			dial.setVisible(false);
 			
+	    }
+	}
+	
+	private class SalirListener implements ActionListener{
+	    public void actionPerformed (ActionEvent e){
+	    	frmXraydetector.dispose();
+	    }
+	}
+	
+	private class OpcionesAvanzadasListener implements ActionListener{
+		    
+			private Frame frame;
+			private JSlider slider;
+			private JComboBox<String> comboBoxVentana;
+			
+			public OpcionesAvanzadasListener(Frame fr) {
+				frame = fr;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				JDialog dialogo = new JDialog(frame, "Opciones avanzadas", true);
+				
+				
+				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();
+				frmOpcionesAvanzadas.setTitle("Opciones avanzadas");
+				frmOpcionesAvanzadas.setBounds(100, 100, 380, 170);
+				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frmOpcionesAvanzadas.getContentPane().setLayout(null);
+				
+				
+				JLabel lblTamaoDeVentana = new JLabel("Tama\u00F1o de ventana");
+				lblTamaoDeVentana.setBounds(22, 11, 119, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDeVentana);
+				
+				JLabel lblTamaoDelSalto = new JLabel("Tama\u00F1o del salto (%)");
+				lblTamaoDelSalto.setBounds(22, 46, 119, 20);
+				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDelSalto);
+				
+				comboBoxVentana = new JComboBox<String>();
+				comboBoxVentana.setModel(new DefaultComboBoxModel<String>(new String[] {"8", "12", "16", "24", "32", "48"}));
+				comboBoxVentana.setSelectedIndex(0);
+				comboBoxVentana.setBounds(149, 8, 52, 20);
+				comboBoxVentana.addActionListener(new ComboBoxTamVentanaListener());
+				frmOpcionesAvanzadas.getContentPane().add(comboBoxVentana);
+				tamVentanaOpciones = Integer.parseInt(comboBoxVentana.getSelectedItem().toString());
+				
+				slider = new JSlider();
+				slider.setMajorTickSpacing(10);
+				slider.setMinorTickSpacing(1);
+				slider.setMinimum(10);
+				slider.setPaintLabels(true);
+				slider.setPaintTicks(true);
+				slider.setBounds(141, 36, 213, 44);
+				slider.addChangeListener(new SliderSaltoListener());
+				saltoOpciones = 0.5;
+				frmOpcionesAvanzadas.getContentPane().add(slider);
+				
+				JButton btnAceptar = new JButton("Aceptar");
+				btnAceptar.setBounds(94, 102, 89, 23);
+				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));
+				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);
+				
+				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBounds(193, 102, 89, 23);
+				btnCancelar.addActionListener(new CancelarListener(dialogo));
+				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);
+				
+				JDesktopPane desktoppane = new JDesktopPane();
+				desktoppane.add(frmOpcionesAvanzadas);
+				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());
+				dialogo.setMinimumSize(new Dimension(380, 170));
+				dialogo.setResizable(false);
+				dialogo.pack();
+				dialogo.setLocationRelativeTo(frame);
+				dialogo.setVisible(true);
+			}
+			
+			private class SliderSaltoListener implements ChangeListener{
+
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					
+					if (!slider.getValueIsAdjusting()) {
+						saltoOpciones = (double)slider.getValue()/100;
+					}
+					
+				}		
+			}
+			
+			private class ComboBoxTamVentanaListener implements ActionListener{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tamVentanaOpciones = Integer.parseInt(comboBoxVentana.getSelectedItem().toString());					
+				}
+			}
+	}
+	
+	private class AceptarOpcionesListener implements ActionListener{
+		
+		private JDialog dialog;
+		
+		public AceptarOpcionesListener(JDialog dialog){
+			this.dialog = dialog;
+		}
+		
+	    public void actionPerformed (ActionEvent e){
+	    	prop.setSalto(saltoOpciones);
+	    	prop.setTamVentana(tamVentanaOpciones);
+	    	dialog.dispose();
 	    }
 	}
 	
