@@ -1,7 +1,9 @@
 package modelo;
 
+import utils.Differentials_;
 import ij.IJ;
 import ij.ImagePlus;
+
 
 public class Standard extends Feature {
 
@@ -111,83 +113,99 @@ public class Standard extends Feature {
 	 * @return first derivative
 	 */
 	public double firstDerivative() {
-		int m = 15; // tamaño de la mascara
-		double sigma = m / 8.5;
-		double gx[][] = new double[m][m];
-		double gy[][] = new double[m][m];
-		double y0[][] = new double[getImage().getRoi().getBounds().height][getImage().getRoi().getBounds().height];
-		double y1[][] = new double[getImage().getRoi().getBounds().width][getImage().getRoi().getBounds().width];
-		float conv1[] = new float[m * m];
-		float conv2[] = new float[m * m];
-		int k = 0, total = 0;
-		double s2, c, x, x2, y, y2, ex, sum = 0, max;
-
-		s2 = Math.pow(sigma, 2);
-		c = (m - 1) / 2;
-
-		for (int i = 1; i <= m; i++) {
-			x = i - c;
-			x2 = Math.pow(i - c, 2);
-			for (int j = 1; j <= m; j++) {
-				y = j - c;
-				y2 = Math.pow(j - c, 2);
-				ex = Math.pow(Math.E, (-(x2 + y2) / 2 / s2));
-				gx[i - 1][j - 1] = y * ex;
-				gy[i - 1][j - 1] = x * ex;
-			}
-		}
-
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < m; j++) {
-				sum = sum + Math.abs(gx[i][j]);
-			}
-
-		}
-		max = sum / 2 * (0.3192 * m - 0.3543);
-
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < m; j++) {
-				gx[i][j] = gx[i][j] / max;
-				conv1[k] = (float) gx[i][j];
-				gy[i][j] = gy[i][j] / max;
-				conv2[k] = (float) gy[i][j];
-				k++;
-			}
-		}
-
-		ImagePlus copy1 = getImagenConvolucion().duplicate();
-		ImagePlus copy2 = getImagenConvolucion().duplicate();
-		//IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
-
-		// Al hacer estos convolve luego con el getPixel de abajo salen valores
-		// entre 0 y 255
-		// En el equivalente de matlab (Yx e Yy) salen valores decimales
-		// negativos y positivos
-		copy1.getProcessor().convolve(conv1, m, m);
-		copy2.getProcessor().convolve(conv2, m, m);
+		//PRIMERA VERSIÓN: VERSIÓN DEL AÑO PASADO
+//		int m = 15; // tamaño de la mascara
+//		double sigma = m / 8.5;
+//		double gx[][] = new double[m][m];
+//		double gy[][] = new double[m][m];
+//		double y0[][] = new double[getImage().getRoi().getBounds().height][getImage().getRoi().getBounds().height];
+//		double y1[][] = new double[getImage().getRoi().getBounds().width][getImage().getRoi().getBounds().width];
+//		float conv1[] = new float[m * m];
+//		float conv2[] = new float[m * m];
+//		int k = 0, total = 0;
+//		double s2, c, x, x2, y, y2, ex, sum = 0, max;
+//
+//		s2 = Math.pow(sigma, 2);
+//		c = (m - 1) / 2;
+//
+//		for (int i = 1; i <= m; i++) {
+//			x = i - c;
+//			x2 = Math.pow(i - c, 2);
+//			for (int j = 1; j <= m; j++) {
+//				y = j - c;
+//				y2 = Math.pow(j - c, 2);
+//				ex = Math.pow(Math.E, (-(x2 + y2) / 2 / s2));
+//				gx[i - 1][j - 1] = y * ex;
+//				gy[i - 1][j - 1] = x * ex;
+//			}
+//		}
+//
+//		for (int i = 0; i < m; i++) {
+//			for (int j = 0; j < m; j++) {
+//				sum = sum + Math.abs(gx[i][j]);
+//			}
+//
+//		}
+//		max = sum / 2 * (0.3192 * m - 0.3543);
+//
+//		for (int i = 0; i < m; i++) {
+//			for (int j = 0; j < m; j++) {
+//				gx[i][j] = gx[i][j] / max;
+//				conv1[k] = (float) gx[i][j];
+//				gy[i][j] = gy[i][j] / max;
+//				conv2[k] = (float) gy[i][j];
+//				k++;
+//			}
+//		}
+//
+//		ImagePlus copy1 = getImagenConvolucion().duplicate();
+//		ImagePlus copy2 = getImagenConvolucion().duplicate();
+//		//IJ.saveAs(copy1, "BMP", "./res/img/" + "copia_imagen_standard");
+//
+//		// Al hacer estos convolve luego con el getPixel de abajo salen valores
+//		// entre 0 y 255
+//		// En el equivalente de matlab (Yx e Yy) salen valores decimales
+//		// negativos y positivos
+//		copy1.getProcessor().convolve(conv1, m, m);
+//		copy2.getProcessor().convolve(conv2, m, m);
+//		
+//		//copy1.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);
+//
+//		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
+//			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
+//				y0[i-coordY][j-coordX] = Math
+//						.sqrt((copy1.getProcessor().getPixel(j-coordX, i-coordY) * 
+//							   copy1.getProcessor().getPixel(j-coordX, i-coordY)) +
+//							  (copy2.getProcessor().getPixel(j-coordX, i-coordY) *
+//							   copy2.getProcessor().getPixel(j-coordX, i-coordY)));
+//			}
+//		}
+//
+//		for (int i = (int) c; i < getImage().getRoi().getBounds().height; i++) {
+//			for (int j = (int) c; j < getImage().getRoi().getBounds().width; j++) {
+//				y1[i][j] = y0[i][j];
+//			}
+//		}
+//
+//		sum = 0;
+//		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
+//			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
+//				sum = sum + Math.abs(y1[i-coordY][j-coordX]);
+//				total++;
+//			}
+//		}
 		
-		//copy1.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);
-
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+		Differentials_ diff = new Differentials_();
+        diff.setImp(getImagenConvolucion().duplicate());
+        Differentials_.setOperation(Differentials_.GRADIENT_MAGNITUDE);
+        diff.run("");
+        
+		double sum = 0;
+		int total = 0;
 		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
 			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
-				y0[i-coordY][j-coordX] = Math
-						.sqrt((copy1.getProcessor().getPixel(j-coordX, i-coordY) * copy1
-								.getProcessor().getPixel(j-coordX, i-coordY))
-								+ (copy2.getProcessor().getPixel(j-coordX, i-coordY) * copy2
-										.getProcessor().getPixel(j-coordX, i-coordY)));
-			}
-		}
-
-		for (int i = (int) c; i < getImage().getRoi().getBounds().height; i++) {
-			for (int j = (int) c; j < getImage().getRoi().getBounds().width; j++) {
-				y1[i][j] = y0[i][j];
-			}
-		}
-
-		sum = 0;
-		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
-			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
-				sum = sum + Math.abs(y1[i-coordY][j-coordX]);
+				sum = sum + Math.abs(diff.getImp().getProcessor().getPixel(i-coordY, j-coordX));
 				total++;
 			}
 		}
@@ -206,17 +224,23 @@ public class Standard extends Feature {
 	 * @return Second derivative
 	 */
 	public double secondDerivative() {
-		int[] kernel = { 0, 1, 0, 1, -4, 1, 0, 1, 0 };
 		double sum = 0, total = 0;
-
-		ImagePlus copy = getImagenConvolucion().duplicate();
-		copy.getProcessor().convolve3x3(kernel);
 		
-		//copy.getProcessor().setRoi(coordX, coordY, getImage().getRoi().getBounds().width, getImage().getRoi().getBounds().height);
+//		PRIMERA VERSIÓN: AÑO PASADO
+//		int[] kernel = { 0, 1, 0, 1, -4, 1, 0, 1, 0 };
+//		ImagePlus copy = getImagenConvolucion().duplicate();
+//		copy.getProcessor().convolve3x3(kernel);
+		
 
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+		Differentials_ diff = new Differentials_();
+        diff.setImp(getImagenConvolucion().duplicate());
+        Differentials_.setOperation(Differentials_.LAPLACIAN);
+        diff.run("");
+		
 		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
 			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
-				sum = sum + copy.getProcessor().getPixel(x-coordX, y-coordY);
+				sum = sum + diff.getImp().getProcessor().getPixel(x-coordX, y-coordY);
 				total++;
 			}
 		}
