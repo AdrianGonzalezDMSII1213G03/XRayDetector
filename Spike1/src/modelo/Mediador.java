@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -27,10 +29,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import utils.Auto_Local_Threshold;
 import utils.Graphic;
 import utils.Propiedades;
 import weka.classifiers.Classifier;
-import weka.classifiers.functions.LinearRegression;
+import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
 import datos.GestorArff;
 import datos.ImageReader;
@@ -43,6 +46,7 @@ public class Mediador {
 	private Thread[] t;
 	private ImagePlus imagen;
 	private static Propiedades prop;
+	private ArrayList<int[]> listaCoordenadas;
 	
 	private Mediador() {
 		ir = new ImageReader();
@@ -141,6 +145,7 @@ public class Mediador {
 	
 	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		int processors = Runtime.getRuntime().availableProcessors();
+		listaCoordenadas = calcularUmbralesLocales(selection);		
 		
 		defectMatrix = new int[getImagen().getWidth()][getImagen().getHeight()];
 		
@@ -372,7 +377,7 @@ public class Mediador {
 		*/
 		
 		//REGRESIÓN LINEAL (CLASES NUMÉRICAS, 1,0)
-		cls = new LinearRegression();
+		cls = new REPTree();
 		
 		ObjectOutputStream oos = null;
 
@@ -396,17 +401,57 @@ public class Mediador {
 		}
 	}
 	
+	public ArrayList<int[]> calcularUmbralesLocales(Rectangle selection){
+		Auto_Local_Threshold alt = new Auto_Local_Threshold();
+		ImagePlus img;
+		
+		if(selection.height != 0 && selection.width != 0){	//hay una selección
+			ImageProcessor ip =	getImagen().duplicate().getProcessor();
+			ip.setRoi(selection);
+			ip = ip.crop();
+			BufferedImage croppedImage = ip.getBufferedImage();
+			img = new ImagePlus("croppedImage", croppedImage);
+			alt.setImp(img);
+			alt.run("MidGrey");
+			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
+			return obtenerListaPixelesBlancos(img, selection.x, selection.y);
+		}
+		else{
+			img = getImagen().duplicate();
+			alt.setImp(img);
+			alt.run("MidGrey");
+			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
+			return obtenerListaPixelesBlancos(img, 0, 0);
+		}
+	}
+	
 
 	
+	private ArrayList<int[]> obtenerListaPixelesBlancos(ImagePlus img, int xIni, int yIni) {
+		ArrayList<int[]> listaCoordenadas = new ArrayList<int[]>();
+		
+		for(int j = 0; j<img.getHeight(); j++){
+			for(int i = 0; i<img.getWidth(); i++){
+				if(img.getProcessor().getPixel(i, j) == 255){	//pixel blanco
+					listaCoordenadas.add(new int[]{i+xIni,j+yIni});
+				}
+			}
+		}
+		return listaCoordenadas;
+	}
+
 	public void drawEdge(Graphic imgPanel) {
 		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];
+		int[][] defectsMatrixDefinitiva;
 		//defect = false;
 
 		copiarMatrizDefectos(defectsMatrix2);
 
 		binarizarMatriz(defectsMatrix2);
+		
+		defectsMatrixDefinitiva = obtenerMatrizInterseccion(defectsMatrix2, listaCoordenadas);
 
-		BufferedImage bfrdImage = crearMascara(defectsMatrix2);
+		BufferedImage bfrdImage = crearMascara(defectsMatrixDefinitiva);
 
 		ImagePlus edgesImage = new ImagePlus("", bfrdImage);
 
@@ -417,6 +462,21 @@ public class Mediador {
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
 		guardarMapaCalor();
+	}
+
+	private int[][] obtenerMatrizInterseccion(int[][] defectsMatrix,
+			ArrayList<int[]> listaCoordenadas) {
+		
+		int[][] defectsMatrixDefinitiva = new int[getImagen().getWidth()][getImagen().getHeight()];
+		
+		Iterator<int[]> it = listaCoordenadas.iterator();
+		while(it.hasNext()){
+			int[] coord = it.next();
+			if(defectsMatrix[coord[0]][coord[1]] == 1){
+				defectsMatrixDefinitiva[coord[0]][coord[1]] = 1;
+			}
+		}
+		return defectsMatrixDefinitiva;
 	}
 
 	public BufferedImage establecerBordes(ImagePlus edgesImage) {
