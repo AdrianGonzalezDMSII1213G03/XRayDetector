@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -463,6 +464,28 @@ public class Mediador {
 		imgPanel.repaint();
 		guardarMapaCalor();
 	}
+	
+	//duplicado
+	public void drawEdgeRegiones(Graphic imgPanel) {
+		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];
+		//defect = false;
+
+		copiarMatrizDefectos(defectsMatrix2);
+
+		binarizarMatriz(defectsMatrix2);
+
+		BufferedImage bfrdImage = crearMascara(defectsMatrix2);
+
+		ImagePlus edgesImage = new ImagePlus("", bfrdImage);
+
+		BufferedImage bufferedResult = establecerBordes(edgesImage);
+
+		ImagePlus imagePlusResult = new ImagePlus("", bufferedResult);
+		imgPanel.isEnded(true);
+		imgPanel.setImage(imagePlusResult.getImage());
+		imgPanel.repaint();
+		guardarMapaCalor();
+	}
 
 	private int[][] obtenerMatrizInterseccion(int[][] defectsMatrix,
 			ArrayList<int[]> listaCoordenadas) {
@@ -612,5 +635,60 @@ public class Mediador {
 		FloatProcessor fp = new FloatProcessor(defectMatrix);
 		ImagePlus i = new ImagePlus("mapa_calor", fp.createImage());
 		IJ.saveAs(i, "BMP", "./res/img/" + i.getTitle());
+	}
+	
+	public void ejecutaVentanaOpcionRegiones(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
+		ArrayList<int[]> blancos = calcularUmbralesLocales(selection);
+		int numProcessors = Runtime.getRuntime().availableProcessors();
+		
+		t = new VentanaAbstracta[numProcessors];
+		defectMatrix = new int[getImagen().getWidth()][getImagen().getHeight()];
+		progressBar.setMaximum(blancos.size());
+		
+		int tamListas = blancos.size()/numProcessors;
+		
+		ImagePlus[] imagenes = new ImagePlus[1];
+		
+		if(selection.height != 0 && selection.width != 0){	//hay una selección
+			ImageProcessor ip =	getImagen().duplicate().getProcessor();
+			ip.setRoi(selection);
+			ip = ip.crop();
+			BufferedImage croppedImage = ip.getBufferedImage();
+			imagenes[0] = new ImagePlus("croppedImage", croppedImage);
+		}
+		else{
+			imagenes[0] = getImagen().duplicate();
+		}		
+		
+		ImagePlus[] saliency = getSaliency(imagenes);
+		ImagePlus[] convolucion = getImgConvolucion(imagenes, selection, getImagen());
+		
+		//convolucion de saliency
+		Preprocesamiento p = new Saliency(getImagen(), 1);
+		ImagePlus imgSaliency = new ImagePlus("", p.calcular());
+		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, selection, imgSaliency);
+		
+		for (int ithread = 0; ithread < t.length; ++ithread){
+			List<int[]> pixeles = new ArrayList<int[]>();
+			if(ithread == t.length-1){
+				pixeles = blancos.subList(ithread*tamListas, blancos.size());
+			}
+			else{
+				pixeles = blancos.subList(ithread*tamListas, ((ithread+1)*tamListas)-1);
+			}
+			
+            t[ithread] = new VentanaRegiones(imagenes[0], saliency[0], convolucion[0], convolucionSaliency[0],
+            		ithread, selection, imgPanel, progressBar, defectMatrix, pixeles);
+            t[ithread].start();
+        }  
+  
+        try{     
+            for (int ithread = 0; ithread < t.length; ++ithread)  
+                t[ithread].join();  
+        }
+        catch (InterruptedException ie){  
+            throw new RuntimeException(ie);  
+        }
+        drawEdgeRegiones(imgPanel);
 	}
 }

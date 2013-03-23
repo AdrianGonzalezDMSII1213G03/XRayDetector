@@ -15,7 +15,7 @@ import ij.plugin.*;
 // 1.4  2/Nov/2011 Niblack's new constant should be subtracted to match mean, mode and midgrey methods. Midgrey method had the wrong constant sign.
 // 1.5	21/Mar/2013 Modificación del código para que funcione con XRayDetector
 
-                
+@SuppressWarnings("unused")                
 public class Auto_Local_Threshold implements PlugIn {
 	
 	//ADICIÓN PARA QUE FUNCIONE CON NUESTRO CÓDIGO
@@ -255,11 +255,11 @@ public class Auto_Local_Threshold implements PlugIn {
 		Maximp=duplicateImage(ip);
 		ipMax=Maximp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMax, radius, rf.MAX);// Maximum
+		rf.rank(ipMax, radius, RankFilters.MAX);// Maximum
 		//Maximp.show();
 		Minimp=duplicateImage(ip);
 		ipMin=Minimp.getProcessor();
-		rf.rank(ipMin, radius, rf.MIN); //Minimum
+		rf.rank(ipMin, radius, RankFilters.MIN); //Minimum
 		//Minimp.show();
 		byte[] pixels = (byte [])ip.getPixels();
 		byte[] max = (byte [])ipMax.getPixels();
@@ -307,7 +307,7 @@ public class Auto_Local_Threshold implements PlugIn {
 
 		ipMean=Meanimp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMean, radius, rf.MEAN);// Mean
+		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean
 		//Meanimp.show();
 		byte[] pixels = (byte []) ip.getPixels();
 		float[] mean = (float []) ipMean.getPixels();
@@ -344,7 +344,7 @@ public class Auto_Local_Threshold implements PlugIn {
 		Medianimp=duplicateImage(ip);
 		ipMedian=Medianimp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMedian, radius, rf.MEDIAN);
+		rf.rank(ipMedian, radius, RankFilters.MEDIAN);
 		//Medianimp.show();
 		byte[] pixels = (byte []) ip.getPixels();
 		byte[] median = (byte []) ipMedian.getPixels();
@@ -382,11 +382,11 @@ public class Auto_Local_Threshold implements PlugIn {
 		Maximp=duplicateImage(ip);
 		ipMax=Maximp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMax, radius, rf.MAX);// Maximum
+		rf.rank(ipMax, radius, RankFilters.MAX);// Maximum
 		//Maximp.show();
 		Minimp=duplicateImage(ip);
 		ipMin=Minimp.getProcessor();
-		rf.rank(ipMin, radius, rf.MIN); //Minimum
+		rf.rank(ipMin, radius, RankFilters.MIN); //Minimum
 		//Minimp.show();
 		byte[] pixels = (byte [])ip.getPixels();
 		byte[] max = (byte [])ipMax.getPixels();
@@ -441,13 +441,13 @@ public class Auto_Local_Threshold implements PlugIn {
 
 		ipMean=Meanimp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMean, radius, rf.MEAN);// Mean
+		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean
 		//Meanimp.show();
 		Varimp=duplicateImage(ip);
 		ic = new ImageConverter(Varimp);
 		ic.convertToGray32();
 		ipVar=Varimp.getProcessor();
-		rf.rank(ipVar, radius, rf.VARIANCE); //Variance
+		rf.rank(ipVar, radius, RankFilters.VARIANCE); //Variance
 		//Varimp.show();
 		byte[] pixels = (byte []) ip.getPixels();
 		float[] mean = (float []) ipMean.getPixels();
@@ -500,13 +500,13 @@ public class Auto_Local_Threshold implements PlugIn {
 
 		ipMean=Meanimp.getProcessor();
 		RankFilters rf=new RankFilters();
-		rf.rank(ipMean, radius, rf.MEAN);// Mean
+		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean
 		//Meanimp.show();
 		Varimp=duplicateImage(ip);
 		ic = new ImageConverter(Varimp);
 		ic.convertToGray32();
 		ipVar=Varimp.getProcessor();
-		rf.rank(ipVar, radius, rf.VARIANCE); //Variance
+		rf.rank(ipVar, radius, RankFilters.VARIANCE); //Variance
 		//Varimp.show();
 		byte[] pixels = (byte []) ip.getPixels();
 		float[] mean = (float []) ipMean.getPixels();

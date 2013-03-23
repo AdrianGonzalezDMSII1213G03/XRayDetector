@@ -56,8 +56,8 @@ public class Standard extends Feature {
 	public double mean() {
 		double sum = 0, total = 0;
 
-		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
-			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
+		for (int y = coordY; y < coordY + getImage().getProcessor().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getProcessor().getRoi().getBounds().width; x++) {
 				sum = sum + getImage().getProcessor().getPixel(x, y);
 				total++;
 			}
@@ -78,8 +78,8 @@ public class Standard extends Feature {
 		int total = 0;
 		double sum = 0, power = 0, mean = 0;
 
-		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
-			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
+		for (int y = coordY; y < coordY + getImage().getProcessor().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getProcessor().getRoi().getBounds().width; x++) {
 				sum = sum + getImage().getProcessor().getPixel(x, y);
 				total++;
 			}
@@ -88,8 +88,8 @@ public class Standard extends Feature {
 		mean = sum / total;
 
 		total = 0;
-		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
-			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
+		for (int y = coordY; y < coordY + getImage().getProcessor().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getProcessor().getRoi().getBounds().width; x++) {
 
 				power = power
 						+ Math.pow(
@@ -203,8 +203,9 @@ public class Standard extends Feature {
         
 		double sum = 0;
 		int total = 0;
-		for (int i = coordY; i < coordY + getImage().getRoi().getBounds().height; i++) {
-			for (int j = coordX; j < coordX + getImage().getRoi().getBounds().width; j++) {
+		
+		for (int i = coordY; i < coordY + getImage().getProcessor().getRoi().getBounds().height; i++) {
+			for (int j = coordX; j < coordX + getImage().getProcessor().getRoi().getBounds().width; j++) {
 				sum = sum + Math.abs(diff.getImp().getProcessor().getPixel(i-coordY, j-coordX));
 				total++;
 			}
@@ -237,9 +238,8 @@ public class Standard extends Feature {
         diff.setImp(getImagenConvolucion().duplicate());
         Differentials_.setOperation(Differentials_.LAPLACIAN);
         diff.run("");
-		
-		for (int y = coordY; y < coordY + getImage().getRoi().getBounds().height; y++) {
-			for (int x = coordX; x < coordX + getImage().getRoi().getBounds().width; x++) {
+		for (int y = coordY; y < coordY + getImage().getProcessor().getRoi().getBounds().height; y++) {
+			for (int x = coordX; x < coordX + getImage().getProcessor().getRoi().getBounds().width; x++) {
 				sum = sum + diff.getImp().getProcessor().getPixel(x-coordX, y-coordY);
 				total++;
 			}

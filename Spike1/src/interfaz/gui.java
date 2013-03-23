@@ -422,7 +422,8 @@ public class Gui {
 			
 			if (!slider.getValueIsAdjusting()) {
 				prop.setUmbral(slider.getValue());
-				mediador.drawEdge(imgPanel);
+				//mediador.drawEdge(imgPanel);	primera opción
+				mediador.drawEdgeRegiones(imgPanel);	//segunda opción
 			}
 			
 		}		
@@ -517,7 +518,8 @@ public class Gui {
 				e1.printStackTrace();
 			}
 			
-			mediador.ejecutaVentana(selection, imgPanel, progressBar);
+			//mediador.ejecutaVentana(selection, imgPanel, progressBar); primera opción
+			mediador.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción
 			
 			if(!parado){
 				

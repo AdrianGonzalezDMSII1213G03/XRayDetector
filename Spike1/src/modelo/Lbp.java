@@ -53,9 +53,9 @@ public class Lbp extends Feature {
 		
 		int coordX = getImage().getRoi().getBounds().x;
 		int coordY = getImage().getRoi().getBounds().y;
-
-		for (int y = coordY + 1; y < coordY + getImage().getRoi().getBounds().height - 1; y++) {
-			for (int x = coordX + 1; x < coordX + getImage().getRoi().getBounds().width -1; x++) {
+		
+		for (int y = coordY + 1; y < coordY + getImage().getProcessor().getRoi().getBounds().height - 1; y++) {
+			for (int x = coordX + 1; x < coordX + getImage().getProcessor().getRoi().getBounds().width -1; x++) {
 				
 				// Vector con las posiciones vecinas
 				int[] positions = { x, y - 1, x + 1, y - 1, x + 1, y, x + 1,

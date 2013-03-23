@@ -1,8 +1,5 @@
 package modelo;
 
-import ij.ImagePlus;
-import ij.process.ImageProcessor;
-
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.JProgressBar;
@@ -25,9 +24,12 @@ import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import ij.ImagePlus;
+import ij.process.ImageProcessor;
 
-public class VentanaDeslizante extends VentanaAbstracta{
-
+public class VentanaRegiones extends VentanaAbstracta {
+	
+	private List<int[]> listaPixeles;
 	private ImagePlus copiaImagen;
 	String grades[] = { "0 degrees", "90 degrees", "180 degrees",
 	"270 degrees" };
@@ -40,48 +42,53 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private Rectangle selection;
 	private JProgressBar progressBar;
 	int[][] defectMatrix;
-	
-	
-	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix) {
+
+	public VentanaRegiones(ImagePlus img, ImagePlus saliency,
+			ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle selection, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix, List<int[]> pixeles) {
 		super(img, saliency, convolucion, convolucionSaliency, numHilo);
+
+		listaPixeles = pixeles;
 		copiaImagen = img.duplicate();
 //		IJ.run(copiaImagen, "RGB Color", "");
 //		IJ.setForegroundColor(0, 255, 121);
 		this.imgPanel = imgPanel;
-		this.selection = sel;
+		this.selection = selection;
 		this.progressBar = progressBar;		
 		this.defectMatrix = defectMatrix;
 	}
 
-	public void run(){
-		int salto = (int) (getAlturaVentana()*getPropiedades().getSalto());
-		int coordenadaX = 0, coordenadaY = 0, altura = 0, anchura = 0;
+	@Override
+	public void run() {
 		ImageProcessor ip = getImage().getProcessor();
 		double means[], ranges[], meansSaliency[], rangesSaliency[],
 			vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
 			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
 		boolean initializedNormal = false;
 		
-		altura = ip.getHeight();
-		anchura = ip.getWidth();
 		
-		for (coordenadaY = 0;coordenadaY <= altura - getAlturaVentana(); coordenadaY += salto) {
-			for (coordenadaX = 0; coordenadaX <= anchura - getAnchuraVentana(); coordenadaX += salto) {
-				
-				pintarVentana(coordenadaX, coordenadaY);
-				ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				
-				calcularStandard(coordenadaX, coordenadaY);				
-				calcularStandardSaliency(coordenadaX, coordenadaY);				
-				calcularLbp(coordenadaX, coordenadaY);				
-				calcularLbpSaliency(coordenadaX, coordenadaY);
+		
+		Iterator<int[]> it = listaPixeles.iterator();
+		while(it.hasNext()){
+			int[] coord = it.next();
+			int coordX = (coord[0] - selection.x) - getAnchuraVentana()/2;
+			int coordY = (coord[1] - selection.y) - getAlturaVentana()/2;
+			
+			if(coordX >= 0 && coordY >= 0 && coordX <= (getImage().getProcessor().getWidth() - getAnchuraVentana())
+					&& coordY <= (getImage().getProcessor().getHeight() - getAlturaVentana())){
+				pintarVentana(coordX, coordY);
+				ip.setRoi(coordX, coordY, getAnchuraVentana(), getAlturaVentana());
+				System.out.println("Hilo: " + getNumHilo() + " X: " + coordX + " Y: " + coordY + " Roi ALTO" + ip.getRoi().getBounds().height + " ANCHO: " + ip.getRoi().getBounds().width);
+				calcularStandard(coordX, coordY);				
+				calcularStandardSaliency(coordX, coordY);				
+				calcularLbp(coordX, coordY);				
+				calcularLbpSaliency(coordX, coordY);
 							
 				int total = 0;
 				for (int step = 1; step < 6; step++) {
 					for (int w = 0; w < 4; w++) {
 					
-						calcularHaralick(coordenadaX, coordenadaY, step, w);						
-						calcularHaralickSaliency(coordenadaX, coordenadaY, step, w);
+						calcularHaralick(coordX, coordY, step, w);						
+						calcularHaralickSaliency(coordX, coordY, step, w);
 						
 						switch (w) {
 						case 0:
@@ -139,12 +146,12 @@ public class VentanaDeslizante extends VentanaAbstracta{
 					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 					e.printStackTrace();
 				}
-				imprimeRes(coordenadaX, coordenadaY, clase);
-				setPorcentajeBarra();
+				imprimeRes(coordX, coordY, clase);
 			}
+			setPorcentajeBarra();
 		}
 	}
-
+	
 	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
 			int step, int w) {
 		ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
@@ -195,10 +202,10 @@ public class VentanaDeslizante extends VentanaAbstracta{
 
 	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
 		
-		int y = coordenadaY + selection.y + getNumHilo()*getImage().getHeight();
-		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
-		}
+		int y = coordenadaY + selection.y;
+//		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
+//			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+//		}
 
 		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 		imgPanel.repaint();
@@ -207,10 +214,10 @@ public class VentanaDeslizante extends VentanaAbstracta{
 	private void imprimeRes(int coordX, int coordY, double prob) {
 		
 		//para la coordenada Y, hay que determinar en qué trozo de la imagen estamos analizando
-		int y = coordY + selection.y + getNumHilo()*getImage().getHeight();
-		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
-		}
+		int y = coordY + selection.y;
+//		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
+//			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
+//		}
 		
 		//CLASIFICACIÓN CLASE NOMINAL
 		if(prob == 0){
@@ -510,4 +517,5 @@ public class VentanaDeslizante extends VentanaAbstracta{
 
 		return header;
 	}
+
 }
