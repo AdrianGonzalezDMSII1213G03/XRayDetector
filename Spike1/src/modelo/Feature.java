@@ -21,7 +21,7 @@ public abstract class Feature {
 		this.step = step;
 	}
 		
-	public ImagePlus getImage(){
+	public ImagePlus getImagen(){
 		return image;
 	}
 	

@@ -75,10 +75,10 @@ public class Haralick extends Feature {
 
 		// This part get all the pixel values into the pixel [ ] array via the
 		// Image Processor
-		IJ.run(getImage(), "8-bit", "");
-		byte[] pixels = (byte[]) (getImage().getProcessor().getPixels());
-		int width = getImage().getWidth();
-		Rectangle r = getImage().getProcessor().getRoi();
+		IJ.run(getImagen(), "8-bit", "");
+		byte[] pixels = (byte[]) (getImagen().getProcessor().getPixels());
+		int width = getImagen().getWidth();
+		Rectangle r = getImagen().getProcessor().getRoi();
 
 		// The variable a holds the value of the pixel where the Image Processor
 		// is sitting its attention
@@ -102,7 +102,7 @@ public class Haralick extends Feature {
 					i = offset + x;
 
 					a = 0xff & pixels[i];
-					b = 0xff & (getImage().getProcessor().getPixel(x + getStep(), y));
+					b = 0xff & (getImagen().getProcessor().getPixel(x + getStep(), y));
 
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
@@ -117,7 +117,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImage().getProcessor().getPixel(x, y - getStep()));
+					b = 0xff & (getImagen().getProcessor().getPixel(x, y - getStep()));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;
@@ -131,7 +131,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImage().getProcessor().getPixel(x - getStep(), y));
+					b = 0xff & (getImagen().getProcessor().getPixel(x - getStep(), y));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;
@@ -145,7 +145,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImage().getProcessor().getPixel(x, y + getStep()));
+					b = 0xff & (getImagen().getProcessor().getPixel(x, y + getStep()));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;

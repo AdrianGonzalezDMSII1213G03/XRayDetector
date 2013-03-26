@@ -88,16 +88,10 @@ public class GestorArff {
 				else{
 					arffFile = new FileWriter(outputFile);
 				}
-				
-				System.out.println(outputFile.getPath());
-				
-				
-
 			} else {
 				// si ya esta creado se escribe a continuacion
 				arffFile = new FileWriter(outputFile, true);
 			}
-
 			arffFile.write(featuresString + "\n");
 			arffFile.close();
 		} catch (IOException e) {

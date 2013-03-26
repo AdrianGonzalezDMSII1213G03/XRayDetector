@@ -51,11 +51,11 @@ public class Lbp extends Feature {
 		double decimal;
 		boolean found;
 		
-		int coordX = getImage().getRoi().getBounds().x;
-		int coordY = getImage().getRoi().getBounds().y;
-
-		for (int y = coordY + 1; y < coordY + getImage().getRoi().getBounds().height - 1; y++) {
-			for (int x = coordX + 1; x < coordX + getImage().getRoi().getBounds().width -1; x++) {
+		int coordX = getImagen().getProcessor().getRoi().getBounds().x;
+		int coordY = getImagen().getProcessor().getRoi().getBounds().y;
+		
+		for (int y = coordY + 1; y < coordY + getImagen().getProcessor().getRoi().getBounds().height - 1; y++) {
+			for (int x = coordX + 1; x < coordX + getImagen().getProcessor().getRoi().getBounds().width -1; x++) {
 				
 				// Vector con las posiciones vecinas
 				int[] positions = { x, y - 1, x + 1, y - 1, x + 1, y, x + 1,
@@ -65,8 +65,8 @@ public class Lbp extends Feature {
 				found = false;
 
 				for (int i = 0; i < positions.length; i = i + 2) {
-					if (getImage().getProcessor().getPixel(positions[i],
-							positions[i + 1]) >= getImage().getProcessor().getPixel(
+					if (getImagen().getProcessor().getPixel(positions[i],
+							positions[i + 1]) >= getImagen().getProcessor().getPixel(
 							x, y)) {
 						pattern[count] = 1;
 					} else

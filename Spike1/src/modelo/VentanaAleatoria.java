@@ -4,27 +4,14 @@ import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
+
 import datos.GestorArff;
 
 public class VentanaAleatoria extends VentanaAbstracta {
 	
 	public ArrayList<int []> listaDefectos = new ArrayList<int []>();
 	public ArrayList<int []> listaNoDefectos = new ArrayList<int []>();
-	String grades[] = { "0 degrees", "90 degrees", "180 degrees",
-	"270 degrees" };
-	private double[] meanVector;
-	private double[] rangeVector;
-	private double[] meanVectorSaliency;
-	private double[] rangeVectorSaliency;
-	private double[] lbp;
-	private double[] lbpSaliency;
-	Feature ftStandard, ftHaralick, ftLbp, ftStandardSaliency, ftHaralickSaliency, ftLbpSaliency;
-	double means[], ranges[], meansSaliency[], rangesSaliency[], vector0[] = null, vector90[] = null, vector180[] = null, vector270[] = null,
-			vector0sal[] = null, vector90sal[] = null, vector180sal[] = null, vector270sal[] = null;
-	boolean initializedNormal = false;
-
 	public VentanaAleatoria(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo) {
 		super(img, saliency, convolucion, convolucionSaliency, numHilo);
 	}
@@ -35,21 +22,6 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		//imprimeListas();
 		seleccionarVentanas();		
 		
-	}
-
-	@SuppressWarnings("unused")
-	private void imprimeListas() {
-		Iterator<int []> it = listaDefectos.iterator();
-		while(it.hasNext()){
-			int[] coordCentro = it.next();
-			System.out.println("Coordenada defecto en hilo " + getNumHilo() + "[" + coordCentro[0] + "," + coordCentro[1] + "]");
-		}
-
-		Iterator<int []> it2 = listaNoDefectos.iterator();
-		while(it2.hasNext()){
-			int[] coordCentro = it2.next();
-			System.out.println("Coordenada no defecto en hilo " + getNumHilo() + "[" + coordCentro[0] + "," + coordCentro[1] + "]");
-		}
 	}
 
 	private void rellenarListas() {
@@ -189,67 +161,12 @@ public class VentanaAleatoria extends VentanaAbstracta {
 	
 	private void calcularCaracteristicas(int coordenadaX, int coordenadaY, boolean defect){
 		
-		calcularStandard(coordenadaX, coordenadaY);		
-		calcularStandardSaliency(coordenadaX, coordenadaY);		
-		calcularLbp(coordenadaX, coordenadaY);		
-		calcularLbpSaliency(coordenadaX, coordenadaY);
-					
-		int total = 0;
-		for (int step = 1; step < 6; step++) {
-			for (int w = 0; w < 4; w++) {
-			
-				calcularHaralick(coordenadaX, coordenadaY, step, w);				
-				calcularHaralickSaliency(coordenadaX, coordenadaY, step, w);
-				
-				switch (w) {
-				case 0:
-					vector0 = ftHaralick.getVectorResultados();
-					vector0sal = ftHaralickSaliency.getVectorResultados();
-					break;
-				case 1:
-					vector90 = ftHaralick.getVectorResultados();
-					vector90sal = ftHaralickSaliency.getVectorResultados();
-					break;
-				case 2:
-					vector180 = ftHaralick.getVectorResultados();
-					vector180sal = ftHaralickSaliency.getVectorResultados();
-					break;
-				case 3:
-					vector270 = ftHaralick.getVectorResultados();
-					vector270sal = ftHaralickSaliency.getVectorResultados();
-					break;
-				}
-
-			}
-
-			means = calculateMean(vector0, vector90, vector180, vector270);
-			ranges = calculateRange(vector0, vector90, vector180, vector270);
-			
-			meansSaliency = calculateMean(vector0sal, vector90sal, vector180sal, vector270sal);
-			rangesSaliency = calculateRange(vector0sal, vector90sal, vector180sal, vector270sal);
-
-			if (initializedNormal == false) {
-				meanVector = new double[ftHaralick.getVectorResultados().length * 5];
-				rangeVector = new double[ftHaralick.getVectorResultados().length * 5];
-				meanVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
-				rangeVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];
-				initializedNormal = true;
-			}
-			for (int k = 0; k < means.length; k++) {
-				// Sale un vector que contiene los 5 steps de medias
-				meanVector[total] = means[k];
-				rangeVector[total] = ranges[k];
-				meanVectorSaliency[total] = meansSaliency[k];
-				rangeVectorSaliency[total] = rangesSaliency[k];
-				total++;
-			}
-		}
+		ejecutarCalculos(coordenadaX, coordenadaY, getImagenCompleta());
 		generarArff(coordenadaX, coordenadaY, defect);
 	}
 
 	public void generarArff(int coordenadaX, int coordenadaY, boolean defect) {
-		int[] coordenates = new int[]{coordenadaX, coordenadaY};
-		String featuresString = generateFeatures(coordenates, defect);
+		String featuresString = generateFeatures(null, defect);
 		String headerFile = null;
 		if(getNumHilo() == 0){
 			headerFile = getHeader(false);
@@ -258,110 +175,6 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		garff.crearArff(getNumHilo(), featuresString, headerFile);
 	}
 
-	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
-			int step, int w) {
-		ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
-		ftHaralickSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftHaralickSaliency.calcular();
-	}
-
-	public void calcularHaralick(int coordenadaX, int coordenadaY, int step,
-			int w) {
-		ftHaralick = new Haralick(getImagenCompleta(), grades[w], step);
-		ftHaralick.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftHaralick.calcular();
-	}
-
-	public void calcularLbpSaliency(int coordenadaX, int coordenadaY) {
-		ftLbpSaliency = new Lbp(getSaliency());
-		ftLbpSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbpSaliency.calcular();
-		lbpSaliency = ftLbpSaliency.getVectorResultados();
-	}
-
-	public void calcularLbp(int coordenadaX, int coordenadaY) {
-		ftLbp = new Lbp(getImagenCompleta());
-		ftLbp.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbp.calcular();
-		lbp = ftLbp.getVectorResultados();
-	}
-
-	public void calcularStandardSaliency(int coordenadaX, int coordenadaY) {
-		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
-		ftStandardSaliency = new Standard(getSaliency());
-		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
-		ftStandardSaliency.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandardSaliency.calcular();
-	}
-
-	public void calcularStandard(int coordenadaX, int coordenadaY) {
-		ImagePlus copiaStandard = getConvolucion().duplicate();
-		ftStandard = new Standard(getImagenCompleta());
-		ftStandard.setImagenConvolucion(copiaStandard);
-		ftStandard.getImage().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandard.calcular();
-	}
-	
-	/**
-	 * This method calculates the mean of each box from four vectors.
-	 * 
-	 * @param vector0
-	 *            Vector with the features for the 0 grades
-	 * @param vector90
-	 *            Vector with the features for the 90 grades
-	 * @param vector180
-	 *            Vector with the features for the 180 grades
-	 * @param vector270
-	 *            Vector with the features for the 027 grades
-	 * @return vector with the mean
-	 */
-	public double[] calculateMean(double[] vector0, double[] vector90,
-			double[] vector180, double[] vector270) {
-		double[] mean = new double[vector0.length];
-
-		for (int i = 0; i < vector0.length; i++) {
-			mean[i] = (vector0[i] + vector90[i] + vector180[i] + vector270[i]) / 4;
-		}
-
-		return mean;
-	}
-
-	/**
-	 * Calculates the range.
-	 * 
-	 * @param vector0
-	 *            Vector with the features for the 0 grades
-	 * @param vector90
-	 *            Vector with the features for the 90 grades
-	 * @param vector180
-	 *            Vector with the features for the 180 grades
-	 * @param vector270
-	 *            Vector with the features for the 027 grades
-	 * @return vector with the range
-	 */
-	public double[] calculateRange(double[] vector0, double[] vector90,
-			double[] vector180, double[] vector270) {
-		double[] range = new double[vector0.length];
-		double[] compareVector = new double[4];
-		double max;
-
-		for (int i = 0; i < vector0.length; i++) {
-			compareVector[0] = Math.abs(vector0[i]);
-			compareVector[1] = Math.abs(vector90[i]);
-			compareVector[2] = Math.abs(vector180[i]);
-			compareVector[3] = Math.abs(vector270[i]);
-			max = -2000;
-
-			for (int j = 0; j < compareVector.length; j++) {
-				if (compareVector[j] > max) {
-					max = compareVector[j];
-				}
-			}
-			range[i] = max;
-		}
-		return range;
-	}
-	
 	/**
 	 * Method that generates a header for the file that will store the
 	 * characteristics.
@@ -372,8 +185,8 @@ public class VentanaAleatoria extends VentanaAbstracta {
 		String header = new String();
 		header += "% 1. Titulo: Deteccion de defectos en piezas metalicas \n%\n";
 		header += "% 2. Fuentes:\n";
-		header += "%       (a) Creador: Alan Blanco Alamo\n";
-		header += "%       (b) Creador: Victor Barbero Garcia\n";
+		header += "%       (a) Creador: Adrian Gonzalez Duarte\n";
+		header += "%       (b) Creador: Joaquin Bravo Panadero\n";
 		header += "@relation deteccionDefectos \n";
 		if (coordenadas) {
 			header += "@attribute coordenadasX INTEGER\n";
