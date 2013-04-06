@@ -450,7 +450,12 @@ public class Mediador {
 
 		binarizarMatriz(defectsMatrix2);
 		
-		defectsMatrixDefinitiva = obtenerMatrizInterseccion(defectsMatrix2, listaCoordenadas);
+		if(prop.getTipoDeteccion() == 0){	//normal
+			defectsMatrixDefinitiva = defectsMatrix2;
+		}
+		else{	//normal + umbrales locales
+			defectsMatrixDefinitiva = obtenerMatrizInterseccion(defectsMatrix2, listaCoordenadas);
+		}		
 
 		BufferedImage bfrdImage = crearMascara(defectsMatrixDefinitiva);
 

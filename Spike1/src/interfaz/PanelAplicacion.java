@@ -382,8 +382,20 @@ public class PanelAplicacion{
 			
 			if (!slider.getValueIsAdjusting()) {
 				prop.setUmbral(slider.getValue());
-				mediador.drawEdge(imgPanel);	//primera opción
-				//mediador.drawEdgeRegiones(imgPanel);	//segunda opción
+				
+				int opcion = prop.getTipoDeteccion();
+				
+				switch(opcion){
+					case 0:
+						mediador.drawEdge(imgPanel);	//normal
+						break;
+					case 1:
+						mediador.drawEdge(imgPanel);	//normal + umbrales locales
+						break;
+					case 2:
+						mediador.drawEdgeRegiones(imgPanel);	//blancos en umbrales locales
+						break;
+				}
 			}
 			
 		}		
@@ -478,8 +490,19 @@ public class PanelAplicacion{
 				e1.printStackTrace();
 			}
 			
-			mediador.ejecutaVentana(selection, imgPanel, progressBar); //primera opción
-			//mediador.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción
+			int opcion = prop.getTipoDeteccion();
+			
+			switch(opcion){
+				case 0:
+					mediador.ejecutaVentana(selection, imgPanel, progressBar); //normal
+					break;
+				case 1:
+					mediador.ejecutaVentana(selection, imgPanel, progressBar); //normal + umbrales locales -> la llamada es igual
+					break;
+				case 2:
+					mediador.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción
+					break;
+			}
 			
 			if(!parado){
 				

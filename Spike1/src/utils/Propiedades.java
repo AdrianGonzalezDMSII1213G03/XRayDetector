@@ -32,7 +32,7 @@ public class Propiedades {
 	}
 	
 	private void cargarPropiedades() {
-		File f = new File("config.properties");
+		File f = new File("./res/config/config.properties");
 		if(!f.exists()){
 			try {
 				f.createNewFile();
@@ -76,6 +76,7 @@ public class Propiedades {
 		propiedades.setProperty("tamVentana", "24");
 		propiedades.setProperty("salto", "0.7");
 		propiedades.setProperty("umbral", "8");
+		propiedades.setProperty("tipoDeteccion", "0");
 		propiedades.setProperty("pathArff", "./res/arff/Arff_entrenamiento.arff");
 		propiedades.setProperty("pathModel", ".res/model/todas_24.model");
 		
@@ -108,8 +109,31 @@ public class Propiedades {
 		return Integer.parseInt(propiedades.getProperty("umbral"));
 	}
 	
+	public int getTipoDeteccion(){
+		return Integer.parseInt(propiedades.getProperty("tipoDeteccion"));
+	}
+	
 	public void setUmbral(int umbral){
 		propiedades.setProperty("umbral", String.valueOf(umbral));
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTipoDeteccion(int tipo){
+		propiedades.setProperty("tipoDeteccion", String.valueOf(tipo));
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {
