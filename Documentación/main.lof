@@ -1,0 +1,7 @@
+\select@language {spanish}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 2.1}{\ignorespaces Proceso de adquisici\IeC {\'o}n de im\IeC {\'a}genes de radiograf\IeC {\'\i }a}}{6}{figure.14}
+\contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map. La imagen original a la izquierda, con el correspondiente saliency map a la derecha}}{8}{figure.20}
+\contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Ejemplo del funcionamiento de los Local Binary Patterns [16]}}{13}{figure.38}
+\contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Vecindades de distinto tama\IeC {\~n}o en los LBP [16]}}{14}{figure.39}

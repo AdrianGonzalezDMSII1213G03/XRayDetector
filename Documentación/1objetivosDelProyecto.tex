@@ -9,12 +9,11 @@ Los objetivos principales del proyecto son principalmente cuatro:
  \item Rediseñar completamente la aplicación que presentaron los alumnos del año pasado, buscando un diseño mucho más modular y reutilizable.
  \item Refactorizar todo el código que reutilicemos, buscando un mejor estilo para favorecer su comprensión y reutilización.
  \item Mejorar el rendimiento de la aplicación anterior, buscando que la misma se pueda aprovechar de los procesadores actuales de más de un núcleo de proceso.
- \item Ampliación de la funcionalidad de la aplicación anterior en diversos aspectos, como la construcción de una \cli{} (\textit{Command Line Interface}) que permita trabajar de una forma rápida y directa con las principales órdenes de la aplicación, de cara a una posible ejecución en supercomputadores, o la implementación de algoritmos de segmentación que permitan obtener un resumen de las características de los defectos encontrados.
+ \item Mejorar la precisión a la hora de localizar los defectos.
+ \item Ampliación de la funcionalidad de la aplicación anterior en diversos aspectos, como la implementación de algoritmos de segmentación que permitan obtener un resumen de las características geométricas de los defectos encontrados que, en un futuro, permitirán clasificar los defectos en varios y tipos y decidir si la pieza es defectuosa y debe ser retirada o si es correcta.
 \end{enumerate}
 
 En el proyecto se van a implementar los algoritmos de selección de características más relevantes o significativos que hemos encontrado, prestando especial atención al diseño para que sea fácil la inclusión de nuevos algoritmos en el futuro. Esto posibilitará que el proyecto crezca en el tiempo y amplíe su capacidad.
-
-La estructura modular que se va a seguir en el desarrollo posibilitará el acceso al \textit{core} desde línea de comandos y desde la interfaz gráfica. En cada uno de los modos se priorizarán una serie de objetivos; así desde la consola la aplicación deberá ser cómoda y, además, el acceso a los distintos algoritmos deberá ser rápido. Por otra parte, desde la interfaz gráfica, se dará mayor importancia a la visualización de las características analizadas y de los defectos encontrados.
 
 \section{Objetivos Técnicos}
 Este proyecto se va a desarrollar utilizando el paradigma de la \textit{Orientacion a Objetos} el cual nos permitirá un diseño fácilmente comprensible por futuros desarrolladores que deseen proseguir con el presente trabajo. 

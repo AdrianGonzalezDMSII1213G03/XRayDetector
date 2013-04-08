@@ -23,8 +23,9 @@ infrarrojo). En nuestro caso será un sistema de rayos X.
 \item Un digitalizador, dispositivo que permitirá convertir la señal de salida del sensor a forma digital.
 
 \end{itemize}
+\newpage
 %Figura de Adquisicón de imágenes
-\figura{1}{imgs/adquisicion_imagen.png}{Proceso de adquisición de imágenes de radiografía}{}
+\figura{1}{imgs/adquisicion_imagen}{Proceso de adquisición de imágenes de radiografía}{img_rad}{}
 
 
 \section{Preprocesamiento}
@@ -34,22 +35,22 @@ Se utiliza un conjunto de técnicas que, aplicadas a las imágenes digitales, me
 A continuación se explican algunas de las técnicas que comprenden esta etapa.
 
 
-\subsection*{Binarización}
+\subsection{Binarización}
 La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos: verdadero y falso. En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
 Para hacer esto, primero se debe convertir la imagen a escala de grises. Después hay que fijar
 un valor umbral entre 0 y 255. Una vez que se tenga dicho umbral, se convertirán a 255 todos
 los valores de la imagen superiores al umbral, mientras que los inferiores se convertirán a 0. El resultado será una imagen en blanco y negro que permitirá realizar tareas como la detección de contornos, separar regiones u objetos de interés del resto de la imagen, etc.
 
-\subsection*{Filtros de detección de bordes}
+\subsection{Filtros de detección de bordes}
 HAY QUE VER CUÁLES DE ESTAS METEMOS, SI METEMOS ALGUNA
 
-\subsection*{Realzado de la imagen}
+\subsection{Realzado de la imagen}
 El realzado de imágenes es una técnica de preprocesado cuyo objetivo principal es el de destacar los detalles finos de una imagen o intensificar detalles que han sido difuminados, bien sea por error o bien por efecto natural del método de adquisición de la imagen. De esta manera, se obtiene una imagen de salida que será más fácil de interpretar, haciendo la información relevante más visible.
 Mediante el realzado se intenta acentuar las aristas de la imagen, obteniendo así una imagen con más contraste, es decir, con una mayor variabilidad entre los tonos de gris de sus diferentes píxeles. Con ello se consigue una mejora de la imagen, ya que los objetos aparecerán más resaltados, haciendo más fácil su diferenciación.
 Las utilidades del realce de las imágenes son variadas e incluyen aplicaciones que van desde
 la impresión electrónica y las imágenes médicas hasta las inspecciones industriales e incluso la detección autónoma de objetivos en las armas inteligentes.
 
-\subsection*{Saliency}
+\subsection{Saliency}
 El «Saliency Map» o «Mapa de Prominencia» [43] es un mapa topográfico que permite representar
 la prominencia visual de una determinada imagen.
 Uno de los mayores problemas de la percepción es la sobrecarga de información. Se hace necesario identificar qué partes de la información disponible merecen ser seleccionadas para ser analizadas y qué partes deben descartarse. Este algoritmo busca solucionar este problema.
@@ -59,9 +60,11 @@ localización de las que la rodean, en color, orientación, movimiento, profundi
 La implementación del mapa de saliencia usada en este proyecto está basada en la variante
 descrita en el artículo Human Detection Using a Mobile Platform and Novel Features Derived
 From a Visual Saliency Mechanism [40].
+
+\newpage
 %Figura de Saliency Map
 \figura{1}{imgs/saliency.png}{Ejemplo de Saliency Map. La imagen original a la izquierda,
-con el correspondiente saliency map a la derecha}{}
+con el correspondiente saliency map a la derecha}{saliency}{}
 
 
 \section{Descriptores de regiones}
@@ -72,3 +75,195 @@ Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferenc
 También se les conoce como características estándar o de primer orden [46]. Son medidas que
 se calculan a partir de los valores de gris originales de la imagen y su frecuencia, como la media, varianza, desviación estándar, etc. En estas medidas no se considera la relación de co-ocurrencia entre los píxeles.
 Las características más comunes y que se han usado en este proyecto son:
+
+\subsubsection*{Media}
+Se calcula el promedio de los niveles de intensidad de todos los píxeles de la imagen. Esta es una medida útil ya que nos permite determinar de forma sencilla la claridad de la imagen. Si la media es alta, la imagen será más clara, mientras que si la media es baja, será más oscura.
+
+\subsubsection*{Desviación estándar}
+Es una medida de dispersión que nos indica cuánto se alejan los valores respecto a la media. Nos sirve para apreciar el grado de variabilidad entre los valores de intensidad de los píxeles de una región.
+
+\subsubsection*{Primera y segunda derivadas}
+Se utilizan operadores de detección de bordes [37] basados en aproximaciones de la primera y segunda derivada de los niveles de grises de la imagen. Ver sección 2.2.2 en la página 8. La primera derivada del perfil de gris será positiva en el borde de entrada de la transición entre una zona clara y otra oscura. En el borde de salida será negativa, mientras que en las zonas de nivel de gris constante será cero. El módulo de la primera derivada podrá utilizarse, por lo tanto, para detectar la presencia de un borde en una imagen. En cuanto a la segunda derivada, será positiva en la parte de la transición asociada con el lado oscuro del borde, negativa en la parte de la transición asociada con el lado claro y cero en las zonas de nivel de gris constante. El signo de la segunda derivada nos permitirá determinar si un píxel perteneciente a un borde está situado en el lado oscuro o claro del mismo.
+
+
+\subsection{Descriptores de textura}
+La texturas son propiedades asociadas a las superficies, como rugosidad, suavizado, granularidad, regularidad. En el campo de las imágenes, significa la repetición espacial de ciertos patrones sobre una superficie.
+
+Otra definición de la textura podría ser la variación entre píxeles en una pequeña vecindad de una imagen. Alternativamente, la textura puede describirse también como un atributo que representa la distribución espacial de los niveles de intensidad en una región dada de una imagen digital.
+
+
+El análisis de la textura de las imágenes nos ofrecerá datos útiles para nuestro trabajo. Hemos utilizado los siguientes descriptores:
+
+\subsubsection*{Características de Haralick}
+Siguiendo la propuesta de Haralick [25], se extrae información de textura de la distribución de los valores de intensidad de los píxeles. Dichos valores se calculan utilizando matrices de coocurrencia que representan información de textura de segundo orden.
+
+Haralick propuso un conjunto de 14 medidas de textura basada en la dependencia espacial de los tonos de grises. Esas dependencias están especificadas en la matriz de co-ocurrencia espacial (o de niveles de gris). La forma de calcular dicha matriz está definida en el siguiente artículo [46].
+
+La matriz de co-ocurrencia, una vez normalizada, tiene las siguientes propiedades:
+
+\begin{itemize}
+
+\item Es cuadrada.
+
+\item Tiene el mismo número de filas y columnas que el número de bits de la imagen. Con una imagen de 8 bits ($2^{8} = 256$ posibles valores) la matriz de co-ocurrencia será de 256x256, es decir, 65536 celdas.
+
+\item Es simétrica con respecto a la diagonal.
+
+\item Los elementos de la diagonal representan pares de píxeles que no tienen diferencias en su nivel de gris. Si estos elementos tienen probabilidades grandes, entonces la imagen no muestra mucho contraste, ya que la mayoría de los píxeles son idénticos a sus vecinos.
+
+\item Sumando los valores de la diagonal tenemos la probabilidad de que un píxel tenga el mismo nivel de gris que su vecino.
+
+\item Las líneas paralelas a la diagonal separadas por una celda, representan los pares de píxeles con una diferencia de un nivel de gris. De la misma manera sumando los elementos separados dos celdas de la diagonal, tenemos los pares de píxeles con dos valores de grises de diferencia. A medida que nos alejamos de la diagonal la diferencia entre niveles de grises es mayor.
+
+\item Sumando los valores de estas diagonales secundarias (y paralelas a la diagonal principal) obtenemos la probabilidad de que un píxel tenga 1, 2, 3, etc niveles de grises de diferencia con su vecino.
+
+\end{itemize}
+
+Una vez construida la matriz de co-ocurrencia, de ella pueden derivarse diferentes medidas. Se obtendrán matrices para las direcciones 0º, 90º, 180º y 270º y para distancias 1, 2, 3, 4 y 5. Para cada una de estas distancias se calculará un vector con las medias de las cuatro direcciones y otro con los rangos. Las características a calcular a partir de la matriz son las siguientes:
+
+\begin{enumerate}
+
+\item \textbf{Segundo Momento Angular}
+
+Mide la homogeneidad local. Cuanto más suave es la textura, mayor valor toma. Si la matriz de co-ocurrencia tiene pocas entradas de gran magnitud, toma valores altos. Es baja cuando todas las entradas son similares [2].
+
+\[f_1 = \sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j)^2\]
+
+$p(i,j)$ es el valor de la matriz de coocurrencia en la fila $i$ y la columna $j$
+$N_g$ es la dimensión de la matriz
+
+\item \textbf{Contraste}
+
+Es lo opuesto a la homogeneidad, es decir, es una medida de la variación local en una imagen. Tiene un valor alto cuando la región dentro de la ventana tiene un alto contraste.
+
+\[f_2 = \sum_{n=0}^{N_g-1}\sum_{j=1}^{N_g} p(i,j)\]
+
+\item \textbf{Correlación}
+
+Mide las dependencias lineales de los niveles de grises, la similitud entre píxeles vecinos. Un objeto tiene mayor correlación dentro de él que con los objetos adyacentes. Píxeles cercanos están más correlacionados entre sí que los píxeles más distantes.
+
+\[f_3 = \frac{\sum_i \sum_j (i,j)\cdot p(i,j) - v_xv_y}{\sigma_x\sigma_y}\]
+
+Donde $v_x, v_y, \sigma_x, \sigma_y$ son las medias y desviaciones estándar de $p_x$ y $p_y$, las funciones de densidad de probabilidad parcial.
+
+\item \textbf{Suma de cuadrados}
+
+Es la medida del contraste del nivel de gris.
+
+\[f_4 = \sum_{i=1}^{N_g}\sum_{j=1}^{N_g}(i-j)^2\cdot p(i,j)\]
+
+\item \textbf{Momento Diferencial Inverso}
+
+También llamado homogeneidad, es más alto cuando la matriz de co-ocurrencia se concentra a lo largo de la diagonal. Esto ocurre cuando la imagen es localmente homogénea de acuerdo al tamaño de la ventana.
+
+\[f_5 = \sum_{i}\sum_{j}\frac{1}{1+(i-j)^2}\cdot p(i,j)\]
+
+\item \textbf{Suma promedio}
+
+\[f_6 = \sum_{i=2}^{2N_g}i \cdot p_{x+y}(i)\]
+
+\item \textbf{Suma de Entropías}
+
+\[f_7 = \sum_{i=2}^{2N_g}(i-f_8)^2 \cdot p_{x+y}(i)\]
+
+\item \textbf{Suma de Varianzas}
+
+\[f_8 = -\sum_{i=2}^{2N_g}p_{x+y}(i)\log(p_{x+y}(i))\]
+
+\item \textbf{Entropía}
+
+Es alta cuando los elementos de la matriz de co-ocurrencia tienen valores relativamente iguales. Es baja cuando los elementos son cercanos a 0 ó 1.
+
+\[f_9 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p(i,j))\]
+
+\item \textbf{Diferencia de Varianzas}
+
+\[f_{10} = \sum_{i=0}^{N_g-1} i^2 p_{x-y}(i)\]
+
+\item \textbf{Diferencia de Entropías}
+
+\[f_{11} = -\sum_{i=0}^{N_g-1}p_{x-y}(i)\log(p_{x-y}(i))\]
+
+\item \textbf{Medidas de Información de Correlación 1}
+
+\[f_{12} = \frac{HXY-HXY1}{\max(HX,HY)}\]
+
+Donde:
+
+\[HXY = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p(i,j))\]
+\[HXY1 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p_x(i) p_y(j))\]
+\[HXY2 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p_x(i) p_y(j)\log(p_x(i) p_y(j))\]
+
+\item \textbf{Medidas de Información de Correlación 2}
+
+\[f_{13} = (1- \exp(-2 |HXY2 - HXY|))^{1/2}\]
+
+\item \textbf{Coeficiente de Correlación Máxima}
+
+\[f_{14} = \sqrt{\lambda_2 }\]
+
+Donde $\lambda_2$ es el segundo valor propio de la matriz Q definida como:
+
+\[Q(i,j) = \sum_k\frac{p(i,k)p(j,k)}{p_x(i)p_y(i)}\]
+\end{enumerate}
+
+
+\subsubsection*{Local Binary Patterns}
+Los \underline{Local Binary Patterns} (LBP) [59] son un tipo de característica usado para la clasificación
+de texturas. Fueron descritos por primera vez en 1994 [52].
+
+Debido a su poder de discriminación y su simplicidad de cálculo, se ha convertido en un método popular que se usa en varios tipos de aplicaciones [16].
+
+Este operador de textura etiqueta los píxeles de una imagen comparando los valores de intensidad de los píxeles de una vecindad de 3x3 con el del píxel central.
+
+Cuando el valor del píxel vecino es mayor que el del píxel central, se escribe «1». En caso contrario, se escribe «0». El resultado es un número binario de 8 dígitos, que suele convertirse a decimal por comodidad o para mayor facilidad de cálculo. Este número recibe también el nombre de «patrón».
+
+Luego se realiza un histograma que contendrá la frecuencia con la que se ha producido cada patrón. Dicho histograma podrá utilizarse como descriptor de textura.
+
+Posteriormente se ha extendido el uso de diferentes tamaños, no sólo a ocho puntos, sino a muestreos circulares donde la bilinealidad se consigue con la interpolación de los valores de los píxeles, lo que permite utilizar cualquier radio y por lo tanto cualquier número de píxeles vecinos.
+
+Para reducir la longitud del vector de características se utilizan los patrones uniformes. Un local binary pattern es uniforme si el patrón contiene un máximo de dos transiciones a nivel de bit, de «0» a «1» o viceversa.
+
+\figuraConPosicion{1}{imgs/lbp.png}{Ejemplo del funcionamiento de los Local Binary Patterns [16]}{lbp}{}{H}
+
+Por ejemplo, los patrones 00000000 (0 transiciones), 01110000 (2 transiciones) y 11001111 (2 transiciones) son uniformes mientras que los patrones 11001001 (4 transiciones) y 01010010 (6 transiciones) no lo son. El número de transiciones se guarda en un valor llamado medida de uniformidad \textit{U}.
+
+En el cálculo de los LBP, se utiliza una etiqueta para cada uno de los patrones uniformes, mientras que todos los patrones no uniformes son agrupados en una sola etiqueta. Por ejemplo, cuando se usa una vecindad (8,$R$)(donde $R$ es el radio), hay un total de 256 patrones, 58 de los cuales son uniformes, lo cual produce un total de 59 etiquetas diferentes. Todo esto dará como resultado un histograma con 59 intervalos.
+\newpage
+
+\figura{1}{imgs/vecindades_lbp.png}{Vecindades de distinto tamaño en los LBP [16]}{vecindades_lbp}{}
+
+
+\section{Reconocimiento e interpretación de imágenes}
+Una vez obtenidas las características de la imagen, el siguiente paso será reconocer dichos datos e interpretarlos. Para ello será necesario entrenar un clasificador. Una vez entrenado, podrá predecir dónde estarán los defectos que buscamos.
+
+Un clasificador [58] es un elemento que, tomando un conjunto de características como entrada, proporciona a la salida una clase etiquetada. En nuestro caso la clase sería el «defecto», que podría tomar dos valores: «verdadero» o «falso». En el caso de que sea una regresión, en vez de una clasificación de clases nominales, los valores que devolverá el clasificador serán 0 y 1.
+
+Utilizaremos el clasificador por su capacidad de aprender a partir de imágenes de ejemplo y de generalizar este conocimiento para que se pueda aplicar a nuevas y diferentes imágenes.
+
+Para construir el clasificador utilizaremos un conjunto de imágenes etiquetadas. Para etiquetarlas, se creará una máscara de cada imagen en la que se marcarán a mano los defectos. Estas máscaras permitirán al clasificador saber qué partes de la imagen son defectos y cuales no.
+
+El clasificador no puede trabajar directamente con imágenes, sino con vectores de características, que serán las que se calculen a partir de las imágenes de ejemplo. Estos vectores de características se guardarán en ficheros \textit{ARFF}, que tendrán una serie de atributos definidos en la cabecera, cada uno de ellos correspondiente a una característica. El fichero contendrá un conjunto de instancias, que son cada serie de valores que toman los atributos. Los ficheros \textit{ARFF} son el formato propio de \textit{Weka}, y en su estructura se pueden diferenciar las siguientes secciones:
+
+\begin{itemize}
+\item \textbf{@relation:} Los ficheros \textit{ARFF} deben empezar con esta declaración en su primera línea (no puede haber líneas en blanco antes). Será una cadena de caracteres.
+
+\item \textbf{@attribute:} En esta sección hay que poner una línea por cada atributo que vaya a tener el conjunto de datos. Para cada atributo habrá que indicar su nombre y el tipo de dato. El tipo puede ser numeric, string, etc.
+
+\item \textbf{@data:} En esta sección se incluyen los datos. Cada columna se separa por comas y todas las
+filas deberán tener el mismo número de columnas, que coincidirá con el número de atributos declarados.
+\end{itemize}
+
+Al entrenar al clasificador obtendremos un modelo, el cual usaremos cuando queramos detectar los defectos de una nueva imagen.
+
+Un clasificador puede ser, según los tipos de aprendizaje:
+
+\begin{itemize}
+\item Supervisado: cuando se utilizan ejemplos previamente etiquetados.
+\item No supervisado: cuando se utilizan patrones de entradas para los no se especifican los valores
+de sus salidas.
+\end{itemize}
+
+Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio que hicieron los alumnos del año pasado con varios tipo de clasificadores, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}. [¿INCLUIR LA INFO DE BAGGING?]
+
+Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión. [¿METER LO DE REPTREE?]
