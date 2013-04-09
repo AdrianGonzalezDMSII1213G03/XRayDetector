@@ -20,6 +20,7 @@ public class Auto_Local_Threshold implements PlugIn {
 	
 	//ADICIÓN PARA QUE FUNCIONE CON NUESTRO CÓDIGO
 	private ImagePlus imp;
+	private int radius;
 	
 	public void setImp(ImagePlus imp){
 		this.imp = imp;
@@ -27,6 +28,14 @@ public class Auto_Local_Threshold implements PlugIn {
 	
 	public ImagePlus getImp(){
 		return imp;
+	}
+	
+	public void setRadius(int rad){
+		radius = rad;
+	}
+	
+	public int getRadius(){
+		return radius;
 	}
 	///////////////////////////////////////////////
 	
@@ -71,7 +80,7 @@ public class Auto_Local_Threshold implements PlugIn {
 //		boolean doIstack=false; 
 		
 		String myMethod = arg;
-		int radius = 15;
+		//int radius = 15;
 		double par1 = 0;
 		double par2 = 0;
 		boolean doIwhite = true;

@@ -404,35 +404,48 @@ public class Mediador {
 	
 	public ArrayList<int[]> calcularUmbralesLocales(Rectangle selection){
 		Auto_Local_Threshold alt = new Auto_Local_Threshold();
+		alt.setRadius(15);
 		ImagePlus img;
 		
 		if(selection.height != 0 && selection.width != 0){	//hay una selección
 			ImageProcessor ip =	getImagen().duplicate().getProcessor();
-			ip.setRoi(selection);
+			int x = selection.x - alt.getRadius();			
+			int y = selection.y - alt.getRadius();			
+			int height = selection.height + (alt.getRadius()*2);
+			int width = selection.width + (alt.getRadius()*2);
+			
+			if(x < 0 || y < 0 || height + y > getImagen().getHeight() || width + x > getImagen().getWidth()){
+				ip.setRoi(selection); //si no entra la seleccion+radio, cogemos la selección normal
+			}
+			else{				
+				Rectangle rec = new Rectangle(x, y, width, height);
+				ip.setRoi(rec);
+			}
+			
 			ip = ip.crop();
 			BufferedImage croppedImage = ip.getBufferedImage();
 			img = new ImagePlus("croppedImage", croppedImage);
 			alt.setImp(img);
 			alt.run("MidGrey");
 			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
-			return obtenerListaPixelesBlancos(img, selection.x, selection.y);
+			return obtenerListaPixelesBlancos(img, selection.x, selection.y, selection.height, selection.width);
 		}
 		else{
 			img = getImagen().duplicate();
 			alt.setImp(img);
 			alt.run("MidGrey");
 			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
-			return obtenerListaPixelesBlancos(img, 0, 0);
+			return obtenerListaPixelesBlancos(img, 0, 0, img.getHeight(), img.getWidth());
 		}
 	}
 	
 
 	
-	private ArrayList<int[]> obtenerListaPixelesBlancos(ImagePlus img, int xIni, int yIni) {
+	private ArrayList<int[]> obtenerListaPixelesBlancos(ImagePlus img, int xIni, int yIni, int height, int width) {
 		ArrayList<int[]> listaCoordenadas = new ArrayList<int[]>();
 		
-		for(int j = 0; j<img.getHeight(); j++){
-			for(int i = 0; i<img.getWidth(); i++){
+		for(int j = 0; j<height; j++){
+			for(int i = 0; i<width; i++){
 				if(img.getProcessor().getPixel(i, j) == 255){	//pixel blanco
 					listaCoordenadas.add(new int[]{i+xIni,j+yIni});
 				}
