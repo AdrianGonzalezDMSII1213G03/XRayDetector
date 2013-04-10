@@ -165,7 +165,7 @@ public class Mediador {
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
-            		ithread, selection, imgPanel, progressBar, defectMatrix);
+            		ithread, selection, imgPanel, progressBar, defectMatrix, false);
             t[ithread].start();
         }  
   
@@ -299,7 +299,16 @@ public class Mediador {
 				}
 				
 				cargaImagen(maskDirectory[i]);
-				ejecutaEntrenamiento(null, originalDirectory[i]);
+				int tipoEntrenamiento = prop.getTipoEntrenamiento();
+				switch(tipoEntrenamiento){
+				case 0:
+					ejecutaEntrenamiento(null, originalDirectory[i]);
+					break;
+				case 1:
+					ejecutaEntrenamientoDeslizante(originalDirectory[i]);
+					break;
+				}
+				
 				barra.setValue(barra.getValue()+1);
 			}
 		}
@@ -324,6 +333,38 @@ public class Mediador {
 			throw new RuntimeException();
 		}
 		createModel(data, String.valueOf(prop.getTamVentana()));
+	}
+	
+	public void ejecutaEntrenamientoDeslizante(String originalDirectory){
+		int processors = Runtime.getRuntime().availableProcessors();	
+		Rectangle r = new Rectangle(0, 0, 0, 0);
+		ImagePlus[] mascaras = divideImagen(r);
+		cargaImagen(originalDirectory);
+		ImagePlus[] imagenes = divideImagen(r);
+		ImagePlus[] saliency = getSaliency(imagenes);
+		ImagePlus[] convolucion = getImgConvolucion(imagenes, r, getImagen());
+		
+		//convolucion de saliency
+		Preprocesamiento p = new Saliency(getImagen(), 1);
+		ImagePlus imgSaliency = new ImagePlus("", p.calcular());
+		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, r, imgSaliency);
+		
+		t = new VentanaAbstracta[processors];
+				
+		for (int ithread = 0; ithread < t.length; ++ithread){    
+            t[ithread] = new VentanaDeslizante(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
+            		ithread, r, null, null, defectMatrix, true);
+            ((VentanaAbstracta) t[ithread]).setImagenCompleta(imagenes[ithread]);
+            t[ithread].start();
+        }  
+  
+        try{     
+            for (int ithread = 0; ithread < t.length; ++ithread)  
+                t[ithread].join();  
+        }
+        catch (InterruptedException ie){  
+            throw new RuntimeException(ie);  
+        }
 	}
 	
 	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){

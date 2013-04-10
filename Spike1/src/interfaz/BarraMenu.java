@@ -36,6 +36,7 @@ public class BarraMenu extends JMenuBar {
 	private JMenuItem mntmAcercaDe;
 	private int tamVentanaOpciones;
 	private int tipoDeteccion;
+	private int tipoEntrenamiento;
 	private double saltoOpciones;
 	private static Propiedades prop;
 	
@@ -83,6 +84,7 @@ public class BarraMenu extends JMenuBar {
 			private JSlider slider;
 			private JComboBox<String> comboBoxVentana;
 			private JComboBox<String> comboBoxTipo;
+			private JComboBox<String> comboBoxEntrenamiento;
 			
 			public OpcionesAvanzadasListener(Frame fr) {
 				frame = fr;
@@ -109,10 +111,30 @@ public class BarraMenu extends JMenuBar {
 				
 				getLabelTipo(frmOpcionesAvanzadas);
 				
-				getComboBoxTipo(frmOpcionesAvanzadas);
+				getComboBoxTipo(frmOpcionesAvanzadas);					
 				
-				getDesktopPane(dialogo, frmOpcionesAvanzadas);			
+				getLblEntrenamiento(frmOpcionesAvanzadas);
 				
+				getComboBoxEntrenamiento(frmOpcionesAvanzadas);
+				
+				getDesktopPane(dialogo, frmOpcionesAvanzadas);	
+				
+			}
+
+			public void getComboBoxEntrenamiento(
+					JInternalFrame frmOpcionesAvanzadas) {
+				comboBoxEntrenamiento = new JComboBox<String>();
+				comboBoxEntrenamiento.setModel(new DefaultComboBoxModel<String>(new String[] {"Ventana aleatoria", "Ventana deslizante"}));
+				comboBoxEntrenamiento.setBounds(149, 135, 205, 20);
+				comboBoxEntrenamiento.setSelectedIndex(prop.getTipoEntrenamiento());
+				comboBoxEntrenamiento.addActionListener(new ComboBoxTipoEntrenamientoListener());
+				frmOpcionesAvanzadas.getContentPane().add(comboBoxEntrenamiento);
+			}
+
+			public void getLblEntrenamiento(JInternalFrame frmOpcionesAvanzadas) {
+				JLabel lblEntrenamiento = new JLabel("Ventana entrenamiento");
+				lblEntrenamiento.setBounds(22, 141, 119, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblEntrenamiento);
 			}
 
 			public void getLabelSalto(JInternalFrame frmOpcionesAvanzadas) {
@@ -130,7 +152,7 @@ public class BarraMenu extends JMenuBar {
 			public JInternalFrame getInternalFrame() {
 				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();
 				frmOpcionesAvanzadas.setTitle("Opciones avanzadas");
-				frmOpcionesAvanzadas.setBounds(100, 100, 380, 201);
+				frmOpcionesAvanzadas.setBounds(100, 100, 380, 240);
 				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmOpcionesAvanzadas.getContentPane().setLayout(null);
 				return frmOpcionesAvanzadas;
@@ -141,7 +163,7 @@ public class BarraMenu extends JMenuBar {
 				JDesktopPane desktoppane = new JDesktopPane();
 				desktoppane.add(frmOpcionesAvanzadas);
 				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());
-				dialogo.setMinimumSize(new Dimension(380, 201));
+				dialogo.setMinimumSize(new Dimension(380, 240));
 				dialogo.setResizable(false);
 				dialogo.pack();
 				dialogo.setLocationRelativeTo(frame);
@@ -151,7 +173,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnCancelar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(194, 128, 89, 23);
+				btnCancelar.setBounds(193, 178, 89, 23);
 				btnCancelar.addActionListener(new CancelarListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);
 			}
@@ -159,7 +181,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnAceptar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnAceptar = new JButton("Aceptar");
-				btnAceptar.setBounds(94, 128, 89, 23);
+				btnAceptar.setBounds(94, 178, 89, 23);
 				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);
 			}
@@ -230,6 +252,14 @@ public class BarraMenu extends JMenuBar {
 					tipoDeteccion = comboBoxTipo.getSelectedIndex();					
 				}
 			}
+			
+			private class ComboBoxTipoEntrenamientoListener implements ActionListener{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tipoEntrenamiento = comboBoxEntrenamiento.getSelectedIndex();					
+				}
+			}
 	}
 	
 	private class AceptarOpcionesListener implements ActionListener{
@@ -244,6 +274,7 @@ public class BarraMenu extends JMenuBar {
 	    	prop.setSalto(saltoOpciones);
 	    	prop.setTamVentana(tamVentanaOpciones);
 	    	prop.setTipoDeteccion(tipoDeteccion);
+	    	prop.setTipoEntrenamiento(tipoEntrenamiento);
 	    	dialog.dispose();
 	    }
 	}

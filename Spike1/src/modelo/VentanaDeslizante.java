@@ -7,18 +7,22 @@ import java.awt.Rectangle;
 
 import javax.swing.JProgressBar;
 
+
 import utils.Graphic;
 
 public class VentanaDeslizante extends VentanaAbstracta{
 
 	private Graphic imgPanel;
 	private Rectangle selection;
-	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix) {
+	private boolean entrenamiento; 
+	
+	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix, boolean entr) {
 		super(img, saliency, convolucion, convolucionSaliency, numHilo);
 		this.imgPanel = imgPanel;
 		this.selection = sel;
 		this.progressBar = progressBar;		
 		this.defectMatrix = defectMatrix;
+		entrenamiento = entr;
 	}
 
 	public void run(){
@@ -31,12 +35,20 @@ public class VentanaDeslizante extends VentanaAbstracta{
 		
 		for (coordenadaY = 0;coordenadaY <= altura - getAlturaVentana(); coordenadaY += salto) {
 			for (coordenadaX = 0; coordenadaX <= anchura - getAnchuraVentana(); coordenadaX += salto) {
-				pintarVentana(coordenadaX, coordenadaY);
-				ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-				ejecutarCalculos(coordenadaX, coordenadaY, getImage());
-				double clase = clasificar();
-				imprimeRes(coordenadaX, coordenadaY, clase);
-				setPorcentajeBarra();
+				if (entrenamiento){
+					ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+					ejecutarCalculos(coordenadaX, coordenadaY, getImage());
+					boolean defect = getDefecto(getImage().duplicate());
+					generarArff(coordenadaX, coordenadaY, defect);
+				}
+				else{
+					pintarVentana(coordenadaX, coordenadaY);
+					ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+					ejecutarCalculos(coordenadaX, coordenadaY, getImage());
+					double clase = clasificar();
+					imprimeRes(coordenadaX, coordenadaY, clase);
+					setPorcentajeBarra();
+				}
 			}
 		}
 	}
