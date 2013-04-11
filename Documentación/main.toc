@@ -12,5 +12,13 @@
 \contentsline {section}{\numberline {2.3}Descriptores de regiones}{8}{section.21}
 \contentsline {subsection}{\numberline {2.3.1}Descriptores simples}{8}{subsection.22}
 \contentsline {subsection}{\numberline {2.3.2}Descriptores de textura}{9}{subsection.23}
-\contentsline {section}{\numberline {2.4}Reconocimiento e interpretaci\IeC {\'o}n de im\IeC {\'a}genes}{14}{section.40}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{26}{section.40}
+\contentsline {section}{\numberline {2.4}Segmentaci\IeC {\'o}n}{14}{section.40}
+\contentsline {subsection}{\numberline {2.4.1}MidGrey}{15}{subsection.41}
+\contentsline {section}{\numberline {2.5}Reconocimiento e interpretaci\IeC {\'o}n de im\IeC {\'a}genes}{15}{section.42}
+\contentsline {section}{\numberline {2.6}Ensayos no destructivos}{16}{section.43}
+\contentsline {subsection}{\numberline {2.6.1}Radiograf\IeC {\'\i }a}{16}{subsection.44}
+\contentsline {subsection}{\numberline {2.6.2}Ventajas del ensayo radiogr\IeC {\'a}fico}{17}{subsection.45}
+\contentsline {subsection}{\numberline {2.6.3}Limitaciones del ensayo radiogr\IeC {\'a}fico}{17}{subsection.50}
+\contentsline {subsection}{\numberline {2.6.4}Objetivos del ensayo radiogr\IeC {\'a}fico}{17}{subsection.57}
+\contentsline {subsection}{\numberline {2.6.5}Principios del ensayo radiogr\IeC {\'a}fico}{18}{subsection.61}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{28}{subsection.61}

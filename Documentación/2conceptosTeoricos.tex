@@ -31,12 +31,15 @@ infrarrojo). En nuestro caso será un sistema de rayos X.
 \section{Preprocesamiento}
 El preprocesamiento de la imagen es una etapa que consiste en reducir la información de la
 misma, de forma que pueda ser interpretada por una computadora, facilitando así la posterior fase de análisis.
+
 Se utiliza un conjunto de técnicas que, aplicadas a las imágenes digitales, mejoran su calidad o facilitan la búsqueda de información. A partir de una imagen origen, se obtiene otra imagen final cuyo resultado sea más adecuado para una aplicación específica, optimizando ciertas características de la misma que hagan posible realizar operaciones de procesado sobre ella.
+
 A continuación se explican algunas de las técnicas que comprenden esta etapa.
 
 
 \subsection{Binarización}
 La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos: verdadero y falso. En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
+
 Para hacer esto, primero se debe convertir la imagen a escala de grises. Después hay que fijar
 un valor umbral entre 0 y 255. Una vez que se tenga dicho umbral, se convertirán a 255 todos
 los valores de la imagen superiores al umbral, mientras que los inferiores se convertirán a 0. El resultado será una imagen en blanco y negro que permitirá realizar tareas como la detección de contornos, separar regiones u objetos de interés del resto de la imagen, etc.
@@ -46,17 +49,23 @@ HAY QUE VER CUÁLES DE ESTAS METEMOS, SI METEMOS ALGUNA
 
 \subsection{Realzado de la imagen}
 El realzado de imágenes es una técnica de preprocesado cuyo objetivo principal es el de destacar los detalles finos de una imagen o intensificar detalles que han sido difuminados, bien sea por error o bien por efecto natural del método de adquisición de la imagen. De esta manera, se obtiene una imagen de salida que será más fácil de interpretar, haciendo la información relevante más visible.
+
 Mediante el realzado se intenta acentuar las aristas de la imagen, obteniendo así una imagen con más contraste, es decir, con una mayor variabilidad entre los tonos de gris de sus diferentes píxeles. Con ello se consigue una mejora de la imagen, ya que los objetos aparecerán más resaltados, haciendo más fácil su diferenciación.
+
 Las utilidades del realce de las imágenes son variadas e incluyen aplicaciones que van desde
 la impresión electrónica y las imágenes médicas hasta las inspecciones industriales e incluso la detección autónoma de objetivos en las armas inteligentes.
 
 \subsection{Saliency}
 El «Saliency Map» o «Mapa de Prominencia» [43] es un mapa topográfico que permite representar
 la prominencia visual de una determinada imagen.
+
 Uno de los mayores problemas de la percepción es la sobrecarga de información. Se hace necesario identificar qué partes de la información disponible merecen ser seleccionadas para ser analizadas y qué partes deben descartarse. Este algoritmo busca solucionar este problema.
+
 Koch y Ulman propusieron en 1985 [29] que las diferentes características visuales que contribuyen a la selección de atención ante un estímulo (color, orientación, movimiento, etc.) fueran combinadas en un único mapa topográfico, el Saliency Map, que integraría la información normalizada de los mapas de características individuales en una medida global de visibilidad.
+
 La saliencia de una posición dada es determinada principalmente por cómo de diferente es dicha
 localización de las que la rodean, en color, orientación, movimiento, profundidad, etc.
+
 La implementación del mapa de saliencia usada en este proyecto está basada en la variante
 descrita en el artículo Human Detection Using a Mobile Platform and Novel Features Derived
 From a Visual Saliency Mechanism [40].
@@ -74,6 +83,7 @@ Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferenc
 \subsection{Descriptores simples}
 También se les conoce como características estándar o de primer orden [46]. Son medidas que
 se calculan a partir de los valores de gris originales de la imagen y su frecuencia, como la media, varianza, desviación estándar, etc. En estas medidas no se considera la relación de co-ocurrencia entre los píxeles.
+
 Las características más comunes y que se han usado en este proyecto son:
 
 \subsubsection*{Media}
@@ -234,6 +244,42 @@ En el cálculo de los LBP, se utiliza una etiqueta para cada uno de los patrones
 \figura{1}{imgs/vecindades_lbp.png}{Vecindades de distinto tamaño en los LBP [16]}{vecindades_lbp}{}
 
 
+\section{Segmentación}
+Además de calcular ciertas características de las imágenes, como hemos visto en el apartado anterior, se hace necesaria realizar una segmentación de la imagen, para aumentar la precisión de la detección de los defectos.
+
+La segmentación de una imagen consiste en particionar esa imagen en múltiples segmentos (conjuntos de píxeles). El objetivo es simplificar y/o cambiar la representación de una imagen en algo que sea más significativo o fácil de analizar. Se suele usar típicamente para localizar objetos y bordes. Más precisamente, la segmentación de una imagen es el proceso de asignar una etiqueta a cada píxel de una imagen, con lo que los píxeles que tengan la misma etiqueta compartirán ciertas características.
+
+De entre todos los posibles métodos de segmentación que existen, nosotros hemos usado el denominado \textit{Thresholding}. Es uno de los métodos más simples. Está basado en considerar un valor, llamado \textbf{umbral}, que se usa para convertir una imagen en escala de grises a una binaria. La clave está, por tanto, en el valor umbral. Hay varias opciones:
+
+\begin{itemize}
+\item Basados en la forma del histograma.
+\item Basados en clustering.
+\item Basados en entropía.
+\item Basados en atributos de objetos.
+\item Métodos espaciales.
+\item Métodos locales.
+\end{itemize}
+
+De todos estos, nosotros hemos usado los locales. Estos métodos se basan en adaptar el valor umbral en cada píxel, de acuerdo a las características del vecindario de ese píxel. Este vecindario viene dado por un radio, que se puede cambiar.
+
+Hay varios de estos métodos. A continuación, vamos a describir los que hemos considerado.
+
+\subsection{MidGrey}
+Este método selecciona el umbral de acuerdo a la media del máximo y mínimo valor de la distribución local de escala de grises.
+
+Por lo tanto, el umbral viene dado por la siguiente fórmula:
+
+\[T = (\frac{\max+\min}{2})-c\]
+
+Donde $c$ es una constante que sirve para afinar el método.
+
+Para determinar a qué región pertenece el píxel, se comprueba con el umbral. Si es mayor que éste último, el píxel pertenece al objeto. Si no, pertenece al fondo.
+
+
+
+
+
+
 \section{Reconocimiento e interpretación de imágenes}
 Una vez obtenidas las características de la imagen, el siguiente paso será reconocer dichos datos e interpretarlos. Para ello será necesario entrenar un clasificador. Una vez entrenado, podrá predecir dónde estarán los defectos que buscamos.
 
@@ -267,3 +313,58 @@ de sus salidas.
 Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio que hicieron los alumnos del año pasado con varios tipo de clasificadores, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}. [¿INCLUIR LA INFO DE BAGGING?]
 
 Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión. [¿METER LO DE REPTREE?]
+
+\section{Ensayos no destructivos}
+Los ensayos no destructivos [65] son pruebas que, practicadas sobre un material, no alteran de forma permanente sus propiedades físicas, químicas, mecánicas o dimensionales. Los ensayos no destructivos implican un daño imperceptible o nulo.
+
+Los diferentes métodos de ensayos no destructivos se basan en la aplicación de fenómenos físicos tales como ondas electromagnéticas, acústicas, elásticas, emisión de partículas subatómicas, capilaridad, absorción y cualquier tipo de prueba que no implique un daño considerable a la muestra examinada.
+
+Los datos aportados por este tipo de ensayos suelen ser menos exactos que los de los ensayos destructivos. Sin embargo, suelen ser más baratos, ya que no implican la destrucción de la pieza a examinar. En ocasiones los ensayos no destructivos buscan únicamente verificar la homogeneidad y continuidad del material analizado, por lo que se complementan con los datos provenientes de los ensayos destructivos.
+
+Uno de los aspectos más importantes de cualquier método de ensayo no destructivo es que todo el personal debe estar entrenado, cualificado un negativo fotográfico y certificado. El personal debe estar familiarizado con las técnicas, el equipamiento, el objeto a ensayar y cómo interpretar los resultados.
+
+En este proyecto se ha utilizado el ensayo radiográfico.
+
+\subsection{Radiografía}
+Una radiografía [70] es una imagen registrada en una placa o película fotográfica, o de forma digital en una base de datos. La imagen se obtiene al exponer al receptor de imagen radiográfica a una fuente de radiación de alta energía, comúnmente rayos X o radiación gamma procedente de isótopos radiactivos. Al interponer un objeto entre la fuente de radiación y el receptor, las partes más densas aparecen con diferentes tonos dentro de una escala de grises, en función inversa a la densidad del objeto. Por ejemplo, si la radiación incide directamente sobre el receptor, se registra un tono negro.
+
+Sus usos pueden ser tanto médicos, para detectar fisuras en huesos, como industriales en la detección de defectos en materiales y soldaduras, tales como grietas, poros, rebabas, etc.
+
+La radiografía se usa para ensayar una variedad de productos, tales como objetos de fundición, objetos forjados y soldaduras. Es también muy usada en la industria aeroespacial para la detección de grietas (fisuras) en las estructuras de los aviones, la detección de agua en las estructuras tipo panal y detección de objetos extraños. Los objetos a ensayar se exponen a rayos X o gamma y se procesa un film o se visualiza digitalmente. El personal de ensayos radiográficos instala, expone y procesa la película o digitalmente procesa las señales e interpreta las imágenes de acuerdo con códigos.
+
+\subsection{Ventajas del ensayo radiográfico}
+Las ventajas del ensayo radiográfico [70] incluyen lo siguiente:
+
+\begin{enumerate}
+\item Puede usarse con la mayoría de los materiales.
+\item Puede usarse para proporcionar un registro visual permanente del objeto ensayado o un registro digital con la subsiguiente visualización en un monitor de computadora.
+\item Puede revelar algunas discontinuidades dentro del material.
+\item Revela errores de fabricación y a menudo indica la necesidad de acciones correctivas.
+\end{enumerate}
+
+\subsection{Limitaciones del ensayo radiográfico}
+Las limitaciones de la radiografía [70] incluyen consideraciones físicas y económicas.
+
+\begin{enumerate}
+\item Deben seguirse siempre los procedimientos de seguridad para las radiaciones.
+\item La accesibilidad puede estar limitada. El operador debe tener acceso a ambos lados del objeto a ensayar.
+\item Las discontinuidades que no son paralelas con el haz de radiación son difíciles de localizar.
+\item La radiografía es un método caro de ensayo.
+\item Es un método de ensayo que consume mucho tiempo. Después de tomar la radiografía, la película debe ser procesada, secada e interpretada (aunque este problema desaparece cuando la imagen de rayos X se registra digitalmente).
+\item Algunas discontinuidades superficiales pueden ser difíciles, si no imposible, de detectar.
+\end{enumerate}
+
+\subsection{Objetivos del ensayo radiográfico}
+El objetivo del ensayo radiográfico [70] es asegurar la confiabilidad del producto. Esto puede lograrse sobre la base de los siguientes factores.
+
+\begin{enumerate}
+\item La radiografía permite al técnico ver la calidad interna del objeto ensayado o evidencia la
+configuración interna de los componentes.
+\item Revela la naturaleza del objeto ensayado sin perjudicar la utilidad del material.
+\item Revela discontinuidades estructurales, fallas mecánicas y errores de montaje.
+\end{enumerate}
+
+La realización del ensayo radiográfico es sólo una parte del procedimiento. Los resultados del ensayo deben ser interpretados de acuerdo con normas de aceptación, y luego el objeto ensayado es aceptado o rechazado.
+
+\subsection{Principios del ensayo radiográfico}
+Los rayos X y gamma [70] tienen la capacidad de penetrar los materiales incluso los materiales que no transmiten la luz. Al pasar a través de un material, algunos de esos rayos son absorbidos. La cantidad de radiación que se transmite a través de un objeto ensayado varía dependiendo del espesor y densidad del material y del tamaño de la fuente que se use. La radiación transmitida a través del objeto produce una imagen radiográfica. El objeto ensayado absorbe radiación, pero hay menos absorción donde el objeto es más fino o donde se presenta un vacío. Las porciones más gruesas del objeto o las inclusiones más densas se verán como imágenes más claras en la radiografía porque aumenta el espesor y la absorción es mayor.
