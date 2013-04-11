@@ -540,7 +540,8 @@ public class PanelAplicacion{
 	}
 	
 	private class StopListener implements ActionListener{
-	    public void actionPerformed (ActionEvent e){
+	    @SuppressWarnings("deprecation")
+		public void actionPerformed (ActionEvent e){
 	    	if (thread != null){
 	    		parado = true;
 	    		if(mediador.getNumThreads() > 0){
@@ -579,7 +580,7 @@ public class PanelAplicacion{
 					e1.printStackTrace();
 				}
 				
-				thread.interrupt();
+				thread.stop();
 	    	}
 	    }
 	}

@@ -4,6 +4,9 @@ package modelo;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.measure.ResultsTable;
+import ij.plugin.frame.RoiManager;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
@@ -32,6 +35,9 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import utils.Auto_Local_Threshold;
 import utils.Graphic;
+import utils.ParticleAnalyzer;
+import utils.Thresholder;
+
 import utils.Propiedades;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.REPTree;
@@ -48,6 +54,7 @@ public class Mediador {
 	private ImagePlus imagen;
 	private static Propiedades prop;
 	private ArrayList<int[]> listaCoordenadas;
+	private Roi[] arrayRois;
 	
 	private Mediador() {
 		ir = new ImageReader();
@@ -80,8 +87,10 @@ public class Mediador {
 	
 	@SuppressWarnings("deprecation")
 	public void stop(){
-		 for (int ithread = 0; ithread < t.length; ++ithread)  
-             t[ithread].stop();
+		 for (int ithread = 0; ithread < t.length; ithread++){ 
+             //((VentanaAbstracta)t[ithread]).parar();
+			 t[ithread].stop();
+		 }
 	}
 
 	public String cargaImagen(String img){		
@@ -468,16 +477,64 @@ public class Mediador {
 			img = new ImagePlus("croppedImage", croppedImage);
 			alt.setImp(img);
 			alt.run("MidGrey");
-			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
+			Rectangle r = new Rectangle(alt.getRadius(), alt.getRadius(), selection.width, selection.height);
+			ImagePlus im = alt.getImp();
+			im.setRoi(r);
+			ImageProcessor iproc = im.getProcessor();
+			iproc = iproc.crop();
+			croppedImage = iproc.getBufferedImage();
+			im = new ImagePlus("croppedImage", croppedImage);
+			Thresholder th = new Thresholder();
+			th.setImage(im);
+			th.run("");
+			getArrayRois(im);
 			return obtenerListaPixelesBlancos(img, selection.x, selection.y, selection.height, selection.width);
 		}
 		else{
 			img = getImagen().duplicate();
 			alt.setImp(img);
 			alt.run("MidGrey");
-			IJ.saveAs(img, "BMP", "./res/img/" + "umbrales_locales");
+			Thresholder th = new Thresholder();
+			th.setImage(alt.getImp());
+			th.run("");
+			getArrayRois(alt.getImp());
 			return obtenerListaPixelesBlancos(img, 0, 0, img.getHeight(), img.getWidth());
 		}
+	}
+
+	public void getArrayRois(ImagePlus im2) {
+		ImagePlus im = im2.duplicate();
+		
+		int myMinSize = 8; // This is the minimum size of the particles
+		int myMaxSize = 999; // This is the maximum size of the particles
+		double myMinCirc = 0.00; // This is the minimum circularity of the
+		// particles
+		double myMaxCirc = 1.00; // This is the maximum circularity of the
+		// particles
+
+		int myOptions = 0;
+		
+		// This provides the characteristics of the particle measurements
+		//int myMeasurements = ParticleAnalyzer.AREA+ ParticleAnalyzer.PERIMETER+ParticleAnalyzer.CIRCULARITY+ParticleAnalyzer.ELLIPSE;
+		//int myMeasurements = ParticleAnalyzer.FERET+ParticleAnalyzer.LIMIT;
+		int myMeasurements =0;
+		
+		/* This variable defines the results provided in the table */
+
+		ResultsTable myRT = new ResultsTable(); // Here we create our empty
+		// results table
+		ParticleAnalyzer pa = new ParticleAnalyzer(myOptions, myMeasurements, myRT, myMinSize, myMaxSize, myMinCirc, myMaxCirc);  
+		/** In this method we create our particle analyzer with our properties */
+
+		RoiManager manager = new RoiManager(true);
+		
+		ParticleAnalyzer.setRoiManager(manager);
+
+		pa.analyze(im); // This method runs our particle analyzer in our
+		// imageplus imp //"and imageprocessor "ip"
+		
+
+		arrayRois = manager.getRoisAsArray();
 	}
 	
 
@@ -739,6 +796,7 @@ public class Mediador {
 			
             t[ithread] = new VentanaRegiones(imagenes[0], saliency[0], convolucion[0], convolucionSaliency[0],
             		ithread, selection, imgPanel, progressBar, defectMatrix, pixeles);
+            ((VentanaRegiones)t[ithread]).setArrayRois(arrayRois);
             t[ithread].start();
         }  
   
@@ -747,7 +805,7 @@ public class Mediador {
                 t[ithread].join();  
         }
         catch (InterruptedException ie){  
-            throw new RuntimeException(ie);  
+             
         }
         drawEdgeRegiones(imgPanel);
 	}
