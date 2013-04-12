@@ -5,3 +5,6 @@
 \contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map. La imagen original a la izquierda, con el correspondiente saliency map a la derecha}}{8}{figure.20}
 \contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Ejemplo del funcionamiento de los Local Binary Patterns [16]}}{13}{figure.38}
 \contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Vecindades de distinto tama\IeC {\~n}o en los LBP [16]}}{14}{figure.39}
+\contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas [38]}}{19}{figure.65}
+\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Esquema de la ventana deslizante [38]}}{20}{figure.67}
+\contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto.}}{22}{figure.70}

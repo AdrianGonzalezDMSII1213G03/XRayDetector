@@ -271,11 +271,12 @@ Por lo tanto, el umbral viene dado por la siguiente fórmula:
 
 \[T = (\frac{\max+\min}{2})-c\]
 
-Donde $c$ es una constante que sirve para afinar el método.
+Donde $c$ es una constante que sirve para afinar el método. Por defecto, es cero.
 
 Para determinar a qué región pertenece el píxel, se comprueba con el umbral. Si es mayor que éste último, el píxel pertenece al objeto. Si no, pertenece al fondo.
 
-
+\subsection{Mean}
+En este caso, el umbral es la media de la distribución local en escala de grises. Por lo tanto, para determinar a qué región pertenece el píxel, se compara con la media de la región de vecinos (menos el parámetro $c$, en caso de que se especifique). Si es mayor, es parte del objeto. Si no, es parte del fondo.
 
 
 
@@ -368,3 +369,89 @@ La realización del ensayo radiográfico es sólo una parte del procedimiento. L
 
 \subsection{Principios del ensayo radiográfico}
 Los rayos X y gamma [70] tienen la capacidad de penetrar los materiales incluso los materiales que no transmiten la luz. Al pasar a través de un material, algunos de esos rayos son absorbidos. La cantidad de radiación que se transmite a través de un objeto ensayado varía dependiendo del espesor y densidad del material y del tamaño de la fuente que se use. La radiación transmitida a través del objeto produce una imagen radiográfica. El objeto ensayado absorbe radiación, pero hay menos absorción donde el objeto es más fino o donde se presenta un vacío. Las porciones más gruesas del objeto o las inclusiones más densas se verán como imágenes más claras en la radiografía porque aumenta el espesor y la absorción es mayor.
+
+
+\section{Fundamentos teóricos de la versión inicial}
+En este apartado se describe la primera versión que realizamos de la detección de defectos. Esta primera versión es una versión mejorada de la versión final de los alumnos del año pasado.
+
+Se ha continuado la misma idea que utilizaron los alumnos del año pasado, basada en el artículo «\underline{Automated Detection of Welding Defects without Segmentation}» de Domingo Mery [38]. Lo único que se ha cambiado, aparte del diseño arquitectónico y parte del código y de la interfaz, es que ahora usamos un enfoque multihilo y que se ha cambiado un poco parte del proceso de entrenamiento.
+
+\subsection{Preproceso}
+Para la realización del análisis de la imagen y su posterior detección de defectos, hay que partir una imagen original en escala de grises. A dicha imagen se la pasa un filtro \textit{«Saliency Map»}. Con todo esto, se obtiene la imagen original y la imagen Saliency que son analizadas paralelamente.
+
+\figuraConPosicion{1}{imgs/extraccion.png}{Esquema del proceso de extracción de características [38]}{extraccion}{}{H}
+
+\subsection{Extracción de características}
+Antes de detectar cualquier tipo de defecto, es necesario entrenar un clasificador para que pueda predecir donde están los defectos buscados. Para ello se analizan un conjunto de imágenes de las que se crean máscaras en las que se pintan los defectos. Estas máscaras sirven para que el clasificador sepa qué partes de la imagen son defectos y cuáles no.
+
+Para analizar cada imagen se utiliza una ventana que recorre toda la región de interés analizando sus características. En el artículo original sólo aparecía el número total de características, lo cual dificultó la identificación del número que había que calcular para cada tipo, por eso nosotros las hemos desglosado según su clase:
+
+\begin{itemize}
+\item \textbf{Características estándar:} 4 características.
+\item \textbf{Características de Haralick:} Se calculan 14 características, obteniendo 5 vectores de medias
+y 5 de rangos. $14 \times 10 = 140$ características.
+\item \textbf{Características LBP:} Se obtiene un histograma con 59 intervalos, es decir, 59 características.
+\end{itemize}
+
+El número final de características habrá que multiplicarlo por dos, ya que todas las características se calculan tanto para la imagen original como para la imagen con saliency map aplicado. Por lo tanto, el total sería:
+
+( 4 estándar + 140 haralick + 59 lbp )$\times$2 = 406 CARACTERÍSTICAS
+
+Estas características serán las que se guarden en los ficheros \textit{ARFF} que se utilicen para entrenar
+al clasificador, junto con la clase, que tendrá valor «true» si la instancia tiene defecto, o «false» si
+no. En caso de que se use regresión lineal serán 0 y 1. El defecto se identificará gracias a las máscaras mencionadas anteriormente.
+
+La ventana irá analizando cada vez una región de la imagen, recorriendo todos y cada uno de sus píxeles, de los que extraerá las características que posteriormente se analizarán. Cada vez que la ventana se mueva y analice una nueva región, se creará una nueva instancia, que se corresponderá con una línea del fichero \textit{ARFF} en el que se guardan las características. Nosotros hemos hecho que el tamaño de la ventana sea configurable, aunque por defecto se utilizará una ventana de 24$\times$24 píxeles, como en el artículo. Esta ventana puede ser de dos tipos:
+
+\subsubsection*{Ventana deslizante}
+La ventana comienza desde la esquina superior izquierda de la imagen y se va moviendo cada cierto porcentaje del tamaño de la ventana. Cuando llega al extremo derecho baja ese mismo porcentaje y comienza de nuevo desde el lado izquierdo. A diferencia del artículo, donde se usa siempre un salto de 4 píxeles, nosotros hemos hecho que se pueda seleccionar el tamaño del salto.
+
+\figuraConPosicion{1}{imgs/ventana_deslizante.png}{Esquema de la ventana deslizante [38]}{ventana_deslizante}{}{H}
+
+\subsubsection*{Ventana aleatoria}
+Se obtienen 300 muestras de ventanas por imagen, seleccionándolas aleatoriamente entre aquellas que tienen defecto y las que no.
+
+\subsection{Determinación de cuándo una ventana es defectuosa}
+Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto o no, ya que se necesita etiquetar las muestras de cada ventana como «defecto» o «no defecto». Los alumnos del año pasado utilizaron una aproximación muy simple: consideraban que una ventana era defectuosa cuando, al poner esa ventana sobre la máscara coloreada manualmente, al menos un píxel de la misma estaba coloreado. Comprobamos que esto provoca falsos positivos, con lo que se pierde exactitud. Por lo tanto, decidimos implementar otras posibilidades:
+
+\subsubsection*{Píxel central}
+En este caso, se considera una ventana defectuosa cuando el píxel central de la misma es defectuoso. Es un poco más preciso que la versión del año pasado, pero sigue sin ser demasiado buena.
+
+\subsubsection*{Porcentaje de la ventana}
+En esta aproximación, se considera defectuosa una ventana cuando al menos un cierto porcentaje de la ventana contiene píxeles coloreados, es decir, defectuosos. Hemos obtenido resultados muy buenos con porcentajes que van desde el 50\% al 75\%.
+
+\subsubsection*{Píxel central más región de vecinos}
+En este caso, no sólo consideramos el píxel central, si no que creamos una región cuadrada de $3 \times 3$ píxeles a su alrededor. Consideramos entonces una ventana como defectuosa cuando un cierto porcentaje de esta región de vecinos está coloreada. Obtenemos unos resultados muy parecidos a los de la anterior aproximación con porcentajes parecidos.
+
+
+\subsection{Detección de defectos}
+El proceso es prácticamente igual al entrenamiento del clasificador. Se genera una imagen Saliency Map a partir de la imagen original, al igual que antes, y a partir de las dos imágenes (la original y la Saliency) se analizan mediante una ventana deslizante.
+
+Cada vez que la ventana se desplaza se genera una instancia que contiene todas las características analizadas. Esta instancia es utilizada por el modelo que predice si la ventana está situada sobre un defecto.
+
+Si la ventana contiene un defecto, es marcada con un cuadrado verde y a cada uno de sus píxeles se le suma una unidad (este valor de los píxeles desde ahora será llamado factor).
+
+Estos pixeles son almacenados en una matriz global del mismo tamaño que la imagen a analizar, por lo que según se desplaza la ventana deslizante se van actualizando todos los valores de los pixeles que contienen defectos.
+
+Una vez finalizado el proceso de detección, se binariza la matriz resultante según su factor. Para este proceso en el artículo original [38] se utiliza un factor de 24.
+
+Éste factor es descrito como el número de veces que ha sido marcado un píxel como defecto. Si un píxel tiene un factor menor que 24, dicho pixel se considera como no defecto. En cambio, si un píxel tiene un factor de 24 o más será considerado como defecto.
+
+Dicho esto, en el proyecto utilizamos un factor variable. Por defecto el factor es de 8, pero tras la ejecución se puede variar para observar los cambios en la imagen en tiempo real.
+
+Como ya se ha descrito, el proceso de binarización recae en el factor de un píxel. Si el factor es 8 o mayor, al pixel se le asigna un 1 (defecto), si es menor que 8 se le asigna un 0 (no defecto). Al tener una matriz de ceros y unos es sencillo obtener una imagen binaria con la región de defectos.
+
+\figuraConPosicion{1}{imgs/dibujado_defectos.png}{Proceso de dibujado de defectos en nuestro proyecto.}{dibujado_defectos}{}{H}
+
+Una vez obtenida la imagen binarizada con la región de defectos se le aplica un filtro de detección de bordes para marcar una línea que rodee el defecto mostrando su ubicación. En este caso se ha utilizado el filtro por defecto de detección de bordes de ImageJ.
+
+Observamos que el proceso de detección de bordes invierte los colores, la línea queda en blanco y el fondo en negro, así que invertimos los colores utilizando uno de los filtros de ImageJ.
+
+Hecho esto, solo queda poner el fondo transparente y superponer la imagen del borde sobre la imagen original.
+
+\subsection{Multihilo}
+Como ya hemos dicho varias veces, uno de los objetivos del proyecto es mejorar el rendimiento de la versión del año pasado. Una de las principales modificaciones para conseguir esto ha sido la inclusión de una estrategia multihilo, aprovechando las oportunidades que nos brindan los procesadores actuales.
+
+Lo que hemos hecho ha sido dividir la imagen en tantas partes como procesadores disponibles tenga la máquina que está ejecutando el programa. Por ejemplo, si tenemos 2 procesadores, la imagen se dividirá en 2, en su dimensión vertical. Hay que tener en cuenta un pequeño margen, necesario para que el cálculo de algunas características sea correcto. Por ello, en el ejemplo anterior, las 2 imágenes no serían exactamente de la mitad de altura que la original, si no que serían un poco más grandes. Hay un pequeño solapamiento.
+
+Una vez que tenemos dividida la imagen, se ejecuta el proceso de detección o de entrenamiento sobre cada uno de los trozos de imagen. Con esto obtenemos un rendimiento mucho mayor que la versión del año pasado.

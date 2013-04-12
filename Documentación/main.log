@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  11 APR 2013 16:53
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  12 APR 2013 12:18
 entering extended mode
 **main.tex
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.tex
@@ -929,7 +929,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 45.
 
-<imgs/escudo.pdf, id=94, 98.2805pt x 163.92221pt>
+<imgs/escudo.pdf, id=122, 98.2805pt x 163.92221pt>
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 45.
@@ -1049,7 +1049,7 @@ Cap\'{\i }tulo 2.
 
 
 
-] <imgs/adquisicion_imagen.png, id=216, 726.46407pt x 482.55281pt>
+] <imgs/adquisicion_imagen.png, id=257, 726.46407pt x 482.55281pt>
 File: imgs/adquisicion_imagen.png Graphic file (type png)
 
 <use imgs/adquisicion_imagen.png>
@@ -1062,7 +1062,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 28.
 
 [6 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/adquisic
-ion_imagen.png>] [7] <imgs/saliency.png, id=227, 249.93375pt x 124.21407pt>
+ion_imagen.png>] [7] <imgs/saliency.png, id=268, 249.93375pt x 124.21407pt>
 File: imgs/saliency.png Graphic file (type png)
 
 <use imgs/saliency.png>
@@ -1073,7 +1073,7 @@ Package pdftex.def Info: imgs/saliency.png used on input line 76.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 76.
 
 [8 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/saliency
-.png>] [9] [10] [11] [12] <imgs/lbp.png, id=268, 767.11594pt x 355.3275pt>
+.png>] [9] [10] [11] [12] <imgs/lbp.png, id=309, 767.11594pt x 355.3275pt>
 File: imgs/lbp.png Graphic file (type png)
 
 <use imgs/lbp.png>
@@ -1084,7 +1084,7 @@ Package pdftex.def Info: imgs/lbp.png used on input line 237.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 237.
 
 [13 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/lbp.png
->] <imgs/vecindades_lbp.png, id=274, 429.10312pt x 179.92218pt>
+>] <imgs/vecindades_lbp.png, id=315, 429.10312pt x 179.92218pt>
 File: imgs/vecindades_lbp.png Graphic file (type png)
 
 <use imgs/vecindades_lbp.png>
@@ -1095,7 +1095,56 @@ Package pdftex.def Info: imgs/vecindades_lbp.png used on input line 244.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 244.
 
 [14 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/vecinda
-des_lbp.png>] [15] [16] [17]) [18]
+des_lbp.png>] [15]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
+[17] <imgs/extraccion.png, id=342, 496.10344pt x 141.52875pt>
+File: imgs/extraccion.png Graphic file (type png)
+
+<use imgs/extraccion.png>
+Package pdftex.def Info: imgs/extraccion.png used on input line 382.
+(pdftex.def)             Requested size: 390.79141pt x 111.48686pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 382.
+
+
+Underfull \vbox (badness 4229) has occurred while \output is active []
+
+ [18]
+[19 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/extracc
+ion.png>] <imgs/ventana_deslizante.png, id=355, 496.85625pt x 118.19156pt>
+File: imgs/ventana_deslizante.png Graphic file (type png)
+
+<use imgs/ventana_deslizante.png>
+Package pdftex.def Info: imgs/ventana_deslizante.png used on input line 409.
+(pdftex.def)             Requested size: 390.79141pt x 92.96272pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 409.
+
+[20 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ventana
+_deslizante.png>]
+<imgs/dibujado_defectos.png, id=360, 331.2375pt x 283.0575pt>
+File: imgs/dibujado_defectos.png Graphic file (type png)
+
+<use imgs/dibujado_defectos.png>
+Package pdftex.def Info: imgs/dibujado_defectos.png used on input line 444.
+(pdftex.def)             Requested size: 390.79141pt x 333.96606pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 444.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21]
+[22 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibujad
+o_defectos.png>]) [23] [24
+
+
+]
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 72.
@@ -1105,12 +1154,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--72
 
  []
 
-[19
-
-
-]
+[25]
 No file anexo1PlanDeProyectoSoftware.tex.
-[20
+[26
 
 
 
@@ -1124,9 +1170,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--75
 
  []
 
-[21]
+[27]
 No file anexo2EspecificacionDeRequisitos.tex.
-[22
+[28
 
 
 
@@ -1140,9 +1186,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
-[23]
+[29]
 No file anexo3EspecificacionDeDisenno.tex.
-[24
+[30
 
 
 
@@ -1156,9 +1202,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--81
 
  []
 
-[25]
+[31]
 No file anexo4ManualDelProgramador.tex.
-[26
+[32
 
 
 
@@ -1172,9 +1218,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 84--84
 
  []
 
-[27]
+[33]
 No file anexo5ManualDelUsuario.tex.
-[28
+[34
 
 
 
@@ -1188,9 +1234,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 95--95
 
  []
 
-[29]
+[35]
 No file apendiceA.tex.
-[30
+[36
 
 
 
@@ -1204,9 +1250,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 98--98
 
  []
 
-[31]
+[37]
 No file apendiceB.tex.
-[32
+[38
 
 
 
@@ -1237,7 +1283,7 @@ suario.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 109.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 109.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 142FA42C1837320785BE7E78A27EF8CF;1639.
+(rerunfilecheck)             Checksum: 51449F8865655F285C83F45839EDB3E4;2178.
 
 
 LaTeX Warning: There were undefined references.
@@ -1245,10 +1291,10 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 109.
  ) 
 Here is how much of TeX's memory you used:
- 12343 strings out of 494045
- 178840 string characters out of 3148381
- 310816 words of memory out of 3000000
- 15217 multiletter control sequences out of 15000+200000
+ 12384 strings out of 494045
+ 179552 string characters out of 3148381
+ 314046 words of memory out of 3000000
+ 15239 multiletter control sequences out of 15000+200000
  69661 words of font info for 74 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  55i,9n,45p,967b,469s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1266,9 +1312,9 @@ m Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr
 8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (44 pages, 612209 bytes).
+Output written on main.pdf (50 pages, 788710 bytes).
 PDF statistics:
- 448 PDF objects out of 1000 (max. 8388607)
- 106 named destinations out of 1000 (max. 500000)
- 210 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 122 named destinations out of 1000 (max. 500000)
+ 281 words of extra memory for PDF output out of 10000 (max. 10000000)
 

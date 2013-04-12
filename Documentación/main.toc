@@ -14,11 +14,18 @@
 \contentsline {subsection}{\numberline {2.3.2}Descriptores de textura}{9}{subsection.23}
 \contentsline {section}{\numberline {2.4}Segmentaci\IeC {\'o}n}{14}{section.40}
 \contentsline {subsection}{\numberline {2.4.1}MidGrey}{15}{subsection.41}
-\contentsline {section}{\numberline {2.5}Reconocimiento e interpretaci\IeC {\'o}n de im\IeC {\'a}genes}{15}{section.42}
-\contentsline {section}{\numberline {2.6}Ensayos no destructivos}{16}{section.43}
-\contentsline {subsection}{\numberline {2.6.1}Radiograf\IeC {\'\i }a}{16}{subsection.44}
-\contentsline {subsection}{\numberline {2.6.2}Ventajas del ensayo radiogr\IeC {\'a}fico}{17}{subsection.45}
-\contentsline {subsection}{\numberline {2.6.3}Limitaciones del ensayo radiogr\IeC {\'a}fico}{17}{subsection.50}
-\contentsline {subsection}{\numberline {2.6.4}Objetivos del ensayo radiogr\IeC {\'a}fico}{17}{subsection.57}
-\contentsline {subsection}{\numberline {2.6.5}Principios del ensayo radiogr\IeC {\'a}fico}{18}{subsection.61}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{28}{subsection.61}
+\contentsline {subsection}{\numberline {2.4.2}Mean}{15}{subsection.42}
+\contentsline {section}{\numberline {2.5}Reconocimiento e interpretaci\IeC {\'o}n de im\IeC {\'a}genes}{15}{section.43}
+\contentsline {section}{\numberline {2.6}Ensayos no destructivos}{16}{section.44}
+\contentsline {subsection}{\numberline {2.6.1}Radiograf\IeC {\'\i }a}{17}{subsection.45}
+\contentsline {subsection}{\numberline {2.6.2}Ventajas del ensayo radiogr\IeC {\'a}fico}{17}{subsection.46}
+\contentsline {subsection}{\numberline {2.6.3}Limitaciones del ensayo radiogr\IeC {\'a}fico}{17}{subsection.51}
+\contentsline {subsection}{\numberline {2.6.4}Objetivos del ensayo radiogr\IeC {\'a}fico}{18}{subsection.58}
+\contentsline {subsection}{\numberline {2.6.5}Principios del ensayo radiogr\IeC {\'a}fico}{18}{subsection.62}
+\contentsline {section}{\numberline {2.7}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n inicial}{18}{section.63}
+\contentsline {subsection}{\numberline {2.7.1}Preproceso}{18}{subsection.64}
+\contentsline {subsection}{\numberline {2.7.2}Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{19}{subsection.66}
+\contentsline {subsection}{\numberline {2.7.3}Determinaci\IeC {\'o}n de cu\IeC {\'a}ndo una ventana es defectuosa}{20}{subsection.68}
+\contentsline {subsection}{\numberline {2.7.4}Detecci\IeC {\'o}n de defectos}{21}{subsection.69}
+\contentsline {subsection}{\numberline {2.7.5}Multihilo}{22}{subsection.71}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{34}{subsection.71}
