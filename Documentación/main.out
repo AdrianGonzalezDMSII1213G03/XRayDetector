@@ -27,4 +27,7 @@
 \BOOKMARK [2][-]{subsection.68}{Determinaci\363n de cu\341ndo una ventana es defectuosa}{section.63}% 27
 \BOOKMARK [2][-]{subsection.69}{Detecci\363n de defectos}{section.63}% 28
 \BOOKMARK [2][-]{subsection.71}{Multihilo}{section.63}% 29
-\BOOKMARK [0][-]{subsection.71}{Ap\351ndices}{}% 30
+\BOOKMARK [1][-]{section.72}{Fundamentos te\363ricos de la versi\363n final}{chapter.12}% 30
+\BOOKMARK [2][-]{subsection.73}{Primera opci\363n: detecci\363n normal con posterior intersecci\363n con umbrales locales}{section.72}% 31
+\BOOKMARK [2][-]{subsection.74}{Segunda opci\363n: p\355xeles blancos en umbrales locales}{section.72}% 32
+\BOOKMARK [0][-]{figure.75}{Ap\351ndices}{}% 33

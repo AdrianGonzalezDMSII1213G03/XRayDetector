@@ -28,4 +28,7 @@
 \contentsline {subsection}{\numberline {2.7.3}Determinaci\IeC {\'o}n de cu\IeC {\'a}ndo una ventana es defectuosa}{20}{subsection.68}
 \contentsline {subsection}{\numberline {2.7.4}Detecci\IeC {\'o}n de defectos}{21}{subsection.69}
 \contentsline {subsection}{\numberline {2.7.5}Multihilo}{22}{subsection.71}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{34}{subsection.71}
+\contentsline {section}{\numberline {2.8}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{23}{section.72}
+\contentsline {subsection}{\numberline {2.8.1}Primera opci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{23}{subsection.73}
+\contentsline {subsection}{\numberline {2.8.2}Segunda opci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{23}{subsection.74}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{34}{figure.75}

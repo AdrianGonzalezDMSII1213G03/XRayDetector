@@ -455,3 +455,33 @@ Como ya hemos dicho varias veces, uno de los objetivos del proyecto es mejorar e
 Lo que hemos hecho ha sido dividir la imagen en tantas partes como procesadores disponibles tenga la máquina que está ejecutando el programa. Por ejemplo, si tenemos 2 procesadores, la imagen se dividirá en 2, en su dimensión vertical. Hay que tener en cuenta un pequeño margen, necesario para que el cálculo de algunas características sea correcto. Por ello, en el ejemplo anterior, las 2 imágenes no serían exactamente de la mitad de altura que la original, si no que serían un poco más grandes. Hay un pequeño solapamiento.
 
 Una vez que tenemos dividida la imagen, se ejecuta el proceso de detección o de entrenamiento sobre cada uno de los trozos de imagen. Con esto obtenemos un rendimiento mucho mayor que la versión del año pasado.
+
+
+\section{Fundamentos teóricos de la versión final}
+Con las modificaciones descritas en el apartado anterior, ya observamos que tanto el rendimiento como la precisión habían aumentado con respecto al año pasado. Aún así, teniendo en mente la posibilidad de calcular otra serie de características (como las geométricas) sobre los defectos detectados para ,en un futuro, poder clasificarlos en sus diferentes tipos, se decidió intentar mejorar aún más esta precisión.
+
+Se implementaron dos nuevas aproximaciones a la hora de detectar defectos (por lo tanto, el proceso de entrenamiento cambia). En ambas aproximaciones nos valemos de una imagen segmentada con los filtros de umbrales locales que ya hemos visto. Lo que cambia entre ellas es cómo consideramos estos flitros.
+
+\subsection{Primera opción: detección normal con posterior intersección con umbrales locales}
+En esta primera aproximación, primero se realiza la detección de defectos como en la primera versión del proyecto. La diferencia está en el dibujado definitivo de los defectos.
+
+Con la detección de defectos normal, obtenemos una matriz del mismo tamaño que la imagen, a partir de la cual se dibujan los defectos. En esta matriz se guarda, en cada posición (es decir, en cada píxel), el número de ventanas que los han cubierto y que se han marcado como defecto. Si este número supera cierto umbral, habrá una nueva matriz, en la que habrá un uno en todos aquellos píxeles que son realmente defecto. A partir de esta matriz, se crea el dibujado definitivo.
+
+En nuestra aproximación, introducimos un paso intermedio antes de generar la matriz definitiva. En vez de poner directamente un uno o un cero, lo que hacemos es segmentar la imagen mediante el filtro de umbrales locales. A continuación, los píxeles que superan el umbral seleccionado son comparados con la imagen de umbrales locales. Si en esta imagen aparecen como blancos, se consideran defecto. Si no, se descarta.
+
+\subsection{Segunda opción: píxeles blancos en umbrales locales}
+Esta aproximación difiere bastante más respecto a las opciones ya vistas.
+
+En este caso, lo primero que se hace es generar la imagen de umbrales locales. A partir de esta imagen, generamos una lista con las coordenadas de los píxeles que se han marcado como blancos.
+
+Después, binarizamos la imagen de umbrales locales para aplicar un análisis de partículas sobre ella, con el objetivo de obtener todas las regiones que destacan, a las que consideramos regiones candidatas de albergar un defecto.
+
+Cuando tenemos la lista y las regiones, vamos sacando coordenadas de la lista y vamos determinando la región a la que pertenecen. Dependiendo del tamaño de la región y el tamaño de la ventana, se considera la coordenada o se desecha. En caso de que se considere, centramos una ventana sobre ella y aplicamos el cálculo de características y clasificación ya vistos anteriormente.
+
+\figuraConPosicion{1}{imgs/segunda_opcion.png}{Proceso de detección en la segunda opción.}{segunda_opcion}{}{H}
+
+El dibujado de los defectos se realiza con la misma matriz que en la primera versión del proyecto.
+
+La parte de analizar las regiones para determinar si hay que considerar la coordenada o no fue añadida después de una primera versión de esta opción, en la que se consideraba toda la lista de píxeles blancos. Se decidió cambiar porque si considerábamos toda la lista obteníamos muchísimos falsos positivos, con lo que la precisión no era buena.
+
+Para aumentar el rendimiento, antes de empezar a calcular características, se divide la lista de píxeles blancos en tantas partes como procesadores disponibles haya. Después, habrá tantos hilos como partes, en los que en cada uno de ellos se iterará sobre cada una de las partes, de forma paralela.
