@@ -30,4 +30,25 @@
 \BOOKMARK [1][-]{section.72}{Fundamentos te\363ricos de la versi\363n final}{chapter.12}% 30
 \BOOKMARK [2][-]{subsection.73}{Primera opci\363n: detecci\363n normal con posterior intersecci\363n con umbrales locales}{section.72}% 31
 \BOOKMARK [2][-]{subsection.74}{Segunda opci\363n: p\355xeles blancos en umbrales locales}{section.72}% 32
-\BOOKMARK [0][-]{figure.75}{Ap\351ndices}{}% 33
+\BOOKMARK [0][-]{chapter.76}{T\351cnicas y herramientas}{}% 33
+\BOOKMARK [1][-]{section.77}{T\351cnicas}{chapter.76}% 34
+\BOOKMARK [2][-]{subsection.78}{Metodolog\355a Scrum}{section.77}% 35
+\BOOKMARK [2][-]{subsection.81}{Java}{section.77}% 36
+\BOOKMARK [2][-]{subsection.82}{UML}{section.77}% 37
+\BOOKMARK [2][-]{subsection.83}{Weka}{section.77}% 38
+\BOOKMARK [2][-]{subsection.93}{ImageJ}{section.77}% 39
+\BOOKMARK [2][-]{subsection.94}{Diagramas de Gantt}{section.77}% 40
+\BOOKMARK [1][-]{section.95}{Herramientas}{chapter.76}% 41
+\BOOKMARK [2][-]{subsection.96}{Eclipse}{section.95}% 42
+\BOOKMARK [2][-]{subsection.97}{JUnit}{section.95}% 43
+\BOOKMARK [2][-]{subsection.98}{JDepend}{section.95}% 44
+\BOOKMARK [2][-]{subsection.99}{Source Monitor}{section.95}% 45
+\BOOKMARK [2][-]{subsection.100}{Astah}{section.95}% 46
+\BOOKMARK [2][-]{subsection.101}{GitHub}{section.95}% 47
+\BOOKMARK [2][-]{subsection.102}{PivotalTracker}{section.95}% 48
+\BOOKMARK [2][-]{subsection.103}{MiKTeX}{section.95}% 49
+\BOOKMARK [2][-]{subsection.104}{TeXMaker}{section.95}% 50
+\BOOKMARK [2][-]{subsection.105}{WindowBuilder}{section.95}% 51
+\BOOKMARK [2][-]{subsection.106}{Auto Local Threshold}{section.95}% 52
+\BOOKMARK [2][-]{subsection.107}{Apache Commons IO}{section.95}% 53
+\BOOKMARK [0][-]{subsection.107}{Ap\351ndices}{}% 54

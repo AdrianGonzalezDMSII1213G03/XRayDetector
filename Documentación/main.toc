@@ -31,4 +31,25 @@
 \contentsline {section}{\numberline {2.8}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{23}{section.72}
 \contentsline {subsection}{\numberline {2.8.1}Primera opci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{23}{subsection.73}
 \contentsline {subsection}{\numberline {2.8.2}Segunda opci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{23}{subsection.74}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{34}{figure.75}
+\contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{25}{chapter.76}
+\contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{25}{section.77}
+\contentsline {subsection}{\numberline {3.1.1}Metodolog\IeC {\'\i }a Scrum}{25}{subsection.78}
+\contentsline {subsection}{\numberline {3.1.2}Java}{29}{subsection.81}
+\contentsline {subsection}{\numberline {3.1.3}UML}{29}{subsection.82}
+\contentsline {subsection}{\numberline {3.1.4}Weka}{30}{subsection.83}
+\contentsline {subsection}{\numberline {3.1.5}ImageJ}{30}{subsection.93}
+\contentsline {subsection}{\numberline {3.1.6}Diagramas de Gantt}{31}{subsection.94}
+\contentsline {section}{\numberline {3.2}Herramientas}{32}{section.95}
+\contentsline {subsection}{\numberline {3.2.1}Eclipse}{32}{subsection.96}
+\contentsline {subsection}{\numberline {3.2.2}JUnit}{32}{subsection.97}
+\contentsline {subsection}{\numberline {3.2.3}JDepend}{33}{subsection.98}
+\contentsline {subsection}{\numberline {3.2.4}Source Monitor}{33}{subsection.99}
+\contentsline {subsection}{\numberline {3.2.5}Astah}{33}{subsection.100}
+\contentsline {subsection}{\numberline {3.2.6}GitHub}{33}{subsection.101}
+\contentsline {subsection}{\numberline {3.2.7}PivotalTracker}{34}{subsection.102}
+\contentsline {subsection}{\numberline {3.2.8}MiK\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}}{34}{subsection.103}
+\contentsline {subsection}{\numberline {3.2.9}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}Maker}{34}{subsection.104}
+\contentsline {subsection}{\numberline {3.2.10}WindowBuilder}{35}{subsection.105}
+\contentsline {subsection}{\numberline {3.2.11}Auto Local Threshold}{35}{subsection.106}
+\contentsline {subsection}{\numberline {3.2.12}Apache Commons IO}{35}{subsection.107}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{46}{subsection.107}

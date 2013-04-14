@@ -129,6 +129,26 @@ Este código es un lenguaje máquina de bajo nivel que es interpretado por la m�
 
 La ventaja de ser un lenguaje interpretado es que cualquier programa escrito en \java{} puede ejecutarse en cualquier \textit{hardware} o sistema operativo, la única condición necesaria es que exista una máquina virtual disponible.
 
+\subsection{UML}
+El Lenguaje Unificado de Modelado (UML) [18] es el lenguaje de modelado de sistemas de software más conocido y utilizado en la actualidad. Se trata de un lenguaje gráfico, llamado «lenguaje de modelado», que se utiliza para visualizar, especificar, construir y documentar un sistema, describiendo sus métodos o procesos. Es el lenguaje en el que está descrito el modelo.
+
+UML permite modelar la estructura, comportamiento y arquitectura de las aplicaciones. Además, la programación orientada a objetos, que ha sido la elegida para este proyecto, es un complemento perfecto de UML. Por estas razones se ha elegido UML, en su versión 2.0.
+
+UML cuenta con varios tipos de diagramas, los cuales muestran diferentes aspectos de las entidades
+representadas. Para la realización del proyecto se han utilizado los siguientes tipos:
+
+\begin{itemize}
+\item \textbf{Diagrama de Casos de Uso:} muestra los casos de uso, actores y sus interrelaciones.
+\item \textbf{Diagrama de Paquetes:} muestra como los elementos de modelado están organizados en
+paquetes, ademas de las dependencias entre esos paquetes.
+\item \textbf{Diagrama de Clases:} representa una colección de elementos de modelado estáticos, tales
+como clases y tipos, sus contenidos y sus relaciones.
+\item \textbf{Diagrama de Secuencias:} modela la lógica secuencial, ordenando en el tiempo los diferentes
+mensajes entre entidades.
+\end{itemize}
+
+El análisis, diseño e implementación del sistema se ha realizado empleando esta técnica, gracias a lo aprendido en las diferentes asignaturas de la carrera.
+
 
 \subsection{Weka}
 \weka{} es una plataforma de software para aprendizaje automático y minería de datos, diseñada por la Universidad de Waikato. Está escrito en \java{}. Se trata de software libre distribuido bajo licencia \gnu{}.
@@ -154,41 +174,43 @@ datos, clustering, clasificación, regresión, visualización, y selección. Tod
 
 
 \subsection{ImageJ}
-ImageJ [3] es un programa de procesamiento de imagen digital de dominio público programado
-en \java{} desarrollado en el National Institutes of Health.
+ImageJ [3] es un programa de procesamiento de imagen digital de dominio público programado en \java{} desarrollado en el National Institutes of Health.
+
 La licencia de ImageJ es la siguiente:
+
+\begin{quotation}
 ImageJ is a work of the United States Government. It is in the public domain and
 open source. There is no copyright. You are free to do anything you want with this
 source but I like to get credit for my work and I would like you to offer your changes
 to me so I can possibly add them to the, “official” version.
-Lo que quiere decir básicamente que somos libres de hacer lo que queramos con ImageJ pero
-que si realizamos algún cambio deberíamos ofrecérselos al creador para que los añada a la versión «oficial».
-ImageJ fue diseñado con una arquitectura abierta que proporciona extensibilidad vía plugins
-\java{} y macros (macroinstrucciones) grabables. Se pueden desarrollar plugins de escaneo personalizado, análisis y procesamiento usando el editor incluido en ImageJ y un compilador \java{}. Los plug-ins escritos por usuarios hacen posible resolver muchos problemas de procesado y análisis de imágenes, desde de imágenes en vivo de las células en tres dimensiones, procesado de imágenes radiológicas, comparaciones de múltiples datos de sistema de imagen hasta sistemas automáticos de hematología.
-Aunque ImageJ es extensible mediante plugins y macros, nosotros lo hemos elegido con la
-finalidad de utilizarlo como librería.
-ImageJ puede mostrar, editar, analizar, procesar, guardar, e imprimir imágenes de 8 bits (256
-colores), 16 bits (miles de colores) y 32 bits (millones de colores). Puede leer varios formatos de imagen incluyendo TIFF, PNG, GIF, JPEG, BMP, DICOM, FITS, así como formatos RAW (formato).
-ImageJ aguanta pilas o lotes, una serie de imágenes que comparten una sola ventana, y es
-multiproceso, de forma que las operaciones que requieren mucho tiempo se pueden realizar en paralelo en hardware multi-CPU. ImageJ puede calcular el área y las estadísticas de valor de píxel de selecciones definidas por el usuario y la intensidad de objetos umbral (thresholded objects). Puede medir distancias y ángulos. Se puede crear histogramas de densidad y gráficos de línea de perfil.
-Es compatible con las funciones estándar de procesamiento de imágenes tales como operaciones
-lógicas y aritméticas entre imágenes, manipulación de contraste, convolución, Análisis de Fourier, nitidez, suavizado, detección de bordes y filtrado de mediana. Hace transformaciones geométricas como ampliar, rotación y flips. El programa es compatible con cualquier número de imágenes al mismo tiempo, limitado solamente por la memoria disponible.
+\end{quotation}
+
+Lo que quiere decir básicamente que somos libres de hacer lo que queramos con ImageJ pero que si realizamos algún cambio deberíamos ofrecérselos al creador para que los añada a la versión «oficial».
+
+ImageJ fue diseñado con una arquitectura abierta que proporciona extensibilidad vía plugins \java{} y macros (macroinstrucciones) grabables. Se pueden desarrollar plugins de escaneo personalizado, análisis y procesamiento usando el editor incluido en ImageJ y un compilador \java{}. Los plug-ins escritos por usuarios hacen posible resolver muchos problemas de procesado y análisis de imágenes, desde de imágenes en vivo de las células en tres dimensiones, procesado de imágenes radiológicas, comparaciones de múltiples datos de sistema de imagen hasta sistemas automáticos de hematología.
+
+Aunque ImageJ es extensible mediante plugins y macros, nosotros lo hemos elegido con la finalidad de utilizarlo como librería.
+
+ImageJ puede mostrar, editar, analizar, procesar, guardar, e imprimir imágenes de 8 bits (256 colores), 16 bits (miles de colores) y 32 bits (millones de colores). Puede leer varios formatos de imagen incluyendo TIFF, PNG, GIF, JPEG, BMP, DICOM, FITS, así como formatos RAW (formato).
+
+ImageJ aguanta pilas o lotes, una serie de imágenes que comparten una sola ventana, y es multiproceso, de forma que las operaciones que requieren mucho tiempo se pueden realizar en paralelo en hardware multi-CPU.
+
+ImageJ puede calcular el área y las estadísticas de valor de píxel de selecciones definidas por el usuario y la intensidad de objetos umbral (thresholded objects). Puede medir distancias y ángulos. Se puede crear histogramas de densidad y gráficos de línea de perfil.
+
+Es compatible con las funciones estándar de procesamiento de imágenes tales como operaciones lógicas y aritméticas entre imágenes, manipulación de contraste, convolución, Análisis de Fourier, nitidez, suavizado, detección de bordes y filtrado de mediana. Hace transformaciones geométricas como ampliar, rotación y flips. El programa es compatible con cualquier número de imágenes al mismo tiempo, limitado solamente por la memoria disponible.
+
 Preferimos usar ImageJ frente a otras opciones, como OpenGL, principalmente por su buena documentación (\textit{JavaDoc}), cosa que facilita mucho la programación.
 
 \subsection{Diagramas de Gantt}
-El diagrama de Gantt [63], gráfica de Gantt o carta Gantt es una popular herramienta gráfica
-cuyo objetivo es mostrar el tiempo de dedicación previsto para diferentes tareas o actividades a lo largo de un tiempo total determinado. A pesar de que, en principio, el diagrama de Gantt no indica las relaciones existentes entre actividades, la posición de cada tarea a lo largo del tiempo hace que se puedan identificar dichas relaciones e interdependencias. Fue Henry Laurence Gantt quien, entre 1910 y 1915, desarrolló y popularizó este tipo de diagrama en Occidente.
-Por esta razón, para la planificación del desarrollo de proyectos complejos (superiores a 25
-actividades) se requiere además el uso de técnicas basadas en redes de precedencia como CPM
-o los grafos PERT. Estas redes relacionan las actividades de manera que se puede visualizar el
-camino crítico del proyecto y permiten reflejar una escala de tiempos para facilitar la asignación de recursos y la determinación del presupuesto. El diagrama de Gantt, sin embargo, resulta útil para la relación entre tiempo y carga de trabajo.
-En gestión de proyectos, el diagrama de Gantt muestra el origen y el final de las diferentes
-unidades mínimas de trabajo y los grupos de tareas (llamados summary elements en la imagen) o
-las dependencias entre unidades mínimas de trabajo (no mostradas en la imagen).
-Desde su introducción los diagramas de Gantt se han convertido en una herramienta básica en
-la gestión de proyectos de todo tipo, con la finalidad de representar las diferentes fases, tareas y actividades programadas como parte de un proyecto o para mostrar una línea de tiempo en las diferentes actividades haciendo el método más eficiente.
-Básicamente el diagrama está compuesto por un eje vertical donde se establecen las actividades
-que constituyen el trabajo que se va a ejecutar, y un eje horizontal que muestra en un calendario la duración de cada una de ellas.
+El diagrama de Gantt [63], gráfica de Gantt o carta Gantt es una popular herramienta gráfica cuyo objetivo es mostrar el tiempo de dedicación previsto para diferentes tareas o actividades a lo largo de un tiempo total determinado. A pesar de que, en principio, el diagrama de Gantt no indica las relaciones existentes entre actividades, la posición de cada tarea a lo largo del tiempo hace que se puedan identificar dichas relaciones e interdependencias. Fue Henry Laurence Gantt quien, entre 1910 y 1915, desarrolló y popularizó este tipo de diagrama en Occidente.
+
+Por esta razón, para la planificación del desarrollo de proyectos complejos (superiores a 25 actividades) se requiere además el uso de técnicas basadas en redes de precedencia como CPM o los grafos PERT. Estas redes relacionan las actividades de manera que se puede visualizar el camino crítico del proyecto y permiten reflejar una escala de tiempos para facilitar la asignación de recursos y la determinación del presupuesto. El diagrama de Gantt, sin embargo, resulta útil para la relación entre tiempo y carga de trabajo.
+
+En gestión de proyectos, el diagrama de Gantt muestra el origen y el final de las diferentes unidades mínimas de trabajo y los grupos de tareas (llamados summary elements en la imagen) o las dependencias entre unidades mínimas de trabajo (no mostradas en la imagen).
+
+Desde su introducción los diagramas de Gantt se han convertido en una herramienta básica en la gestión de proyectos de todo tipo, con la finalidad de representar las diferentes fases, tareas y actividades programadas como parte de un proyecto o para mostrar una línea de tiempo en las diferentes actividades haciendo el método más eficiente.
+
+Básicamente el diagrama está compuesto por un eje vertical donde se establecen las actividades que constituyen el trabajo que se va a ejecutar, y un eje horizontal que muestra en un calendario la duración de cada una de ellas.
 
 
 
@@ -291,3 +313,30 @@ Una de sus características es la posibilidad de trazabilidad de código desde P
 En el enlace \url{http://en.wikipedia.org/wiki/Comparison_of_TeX_editors} aparece una comparativa entre diversos editores disponibles.
 
 Página web de la herramienta: \url{http://www.xm1math.net/texmaker/}.
+
+\subsection{WindowBuilder}
+WindowBuilder es un \textit{plugin} de Eclipse que permite diseñar de una forma fácil y rápida interfaces gráficas basadas en \textit{Swing}.
+
+Hemos elegido este editor de interfaces gráficas debido a su facilidad para crearlas, ya que incluye un editor \textit{WYSIWYG}, con el que podemos arrastrar los elementos a la ventana que estamos creando y moverlos hasta dejarlos en la posición deseada.
+
+La otra parte interesante de este \textit{plugin} es que genera el código automáticamente, con lo que nos ahorra mucho trabajo. Además, el código que genera está bien agrupado, con lo que después es muy fácil refactorizarlo.
+
+Página web del \textit{plugin}: \url{http://www.eclipse.org/windowbuilder/}.
+
+\subsection{Auto Local Threshold}
+Auto Local Threshold es un \textit{plugin} de ImageJ que implementa la segmentación de imágenes mediante los filtros de umbrales locales.
+
+Por defecto, ImageJ no tiene esta funcionalidad, así que tuvimos que descargarnos e instalar este \textit{plugin}, que permite realizar estas opciones de forma muy sencilla.
+
+Para poder usarlo en el proyecto, tuvimos que cambiar alguna cosa de la clase del \textit{plugin} para poder usarlo con nuestro código.
+
+Página web del \textit{plugin}: \url{http://fiji.sc/wiki/index.php/Auto_Local_Threshold}.
+
+\subsection{Apache Commons IO}
+Apache Commons IO es una librería de utilidades para asistir al desarrollo de funcionalidad relacionada con entrada/salida.
+
+Hemos decidido utlizarla debido a que simplifica mucho el realizar algunas operaciones con ficheros, como es la fusión de uno o más ficheros de texto, o la exportación de un cierto texto a un fichero externo.
+
+La página web de la herramienta es: \url{http://commons.apache.org/proper/commons-io/}.
+
+
