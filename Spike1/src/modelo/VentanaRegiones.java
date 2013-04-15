@@ -73,6 +73,7 @@ public class VentanaRegiones extends VentanaAbstracta {
 						ejecutarCalculos(coordX, coordY, getImage());								
 						double clase = clasificar();
 						imprimeRes(coordX, coordY, clase);
+						tablaPixelsConsideradosRoi.put(index, (tablaPixelsConsideradosRoi.get(index))+1);
 					}
 				}
 			}
