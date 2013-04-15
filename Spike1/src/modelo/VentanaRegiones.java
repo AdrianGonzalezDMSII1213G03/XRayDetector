@@ -1,14 +1,17 @@
 package modelo;
 
 import java.awt.Rectangle;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JProgressBar;
 
 import utils.Graphic;
 import ij.ImagePlus;
 import ij.gui.Roi;
+import ij.measure.ResultsTable;
+import ij.plugin.filter.Analyzer;
 import ij.process.ImageProcessor;
 
 public class VentanaRegiones extends VentanaAbstracta {
@@ -17,6 +20,8 @@ public class VentanaRegiones extends VentanaAbstracta {
 	private Graphic imgPanel;
 	private Rectangle selection;
 	private Roi[] arrayRois;
+	
+	private static int MIN = 8;
 	
 	public VentanaRegiones(ImagePlus img, ImagePlus saliency,
 			ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle selection, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix, List<int[]> pixeles) {
@@ -32,7 +37,50 @@ public class VentanaRegiones extends VentanaAbstracta {
 	@Override
 	public void run() {
 		ImageProcessor ip = getImage().getProcessor();
+		Hashtable <Integer, Integer> tablaPixelsPorRoi = new Hashtable<Integer, Integer>();
+		Hashtable <Integer, Integer> tablaPixelsConsideradosRoi = new Hashtable<Integer, Integer>();
+		Random rand = new Random();
 		
+		for (int i = 0; i < arrayRois.length; i++ ){
+			ip.setRoi(arrayRois[i]);
+			Analyzer an = new Analyzer(getImage());
+			an.measure();
+			Analyzer.getResultsTable();
+			int numPixelPorRoi = (int) (ResultsTable.AREA * 0.1);
+			if (numPixelPorRoi < MIN){
+				numPixelPorRoi = MIN;
+			}
+			tablaPixelsPorRoi.put(i, numPixelPorRoi);
+			tablaPixelsConsideradosRoi.put(i, 0);
+			ip.resetRoi();
+		}
+		
+		while(!listaPixeles.isEmpty()){
+			int randIndex = rand.nextInt(listaPixeles.size());
+			int[] coord = listaPixeles.get(randIndex);
+			int coordX = (coord[0] - selection.x) - getAnchuraVentana()/2;
+			int coordY = (coord[1] - selection.y) - getAlturaVentana()/2;
+			
+			if(coordX >= 0 && coordY >= 0 && coordX <= (getImage().getProcessor().getWidth() - getAnchuraVentana())
+					&& coordY <= (getImage().getProcessor().getHeight() - getAlturaVentana())){
+				//comprobar a qué región pertenece el píxel
+				int index = getIndexRoi(coordX, coordY);
+				
+				if(index != -1){
+					if(tablaPixelsConsideradosRoi.get(index) < tablaPixelsPorRoi.get(index)){
+						pintarVentana(coordX, coordY);
+						ip.setRoi(coordX, coordY, getAnchuraVentana(), getAlturaVentana());
+						ejecutarCalculos(coordX, coordY, getImage());								
+						double clase = clasificar();
+						imprimeRes(coordX, coordY, clase);
+					}
+				}
+			}
+			listaPixeles.remove(randIndex);
+			setPorcentajeBarra();
+		}
+		
+/*		
 		Iterator<int[]> it = listaPixeles.iterator();
 		while(it.hasNext()){
 			int[] coord = it.next();
@@ -65,6 +113,7 @@ public class VentanaRegiones extends VentanaAbstracta {
 			}
 			setPorcentajeBarra();
 		}
+*/
 	}
 
 	private int getIndexRoi(int coordX, int coordY) {

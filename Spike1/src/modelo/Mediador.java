@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -788,10 +789,10 @@ public class Mediador {
 		for (int ithread = 0; ithread < t.length; ++ithread){
 			List<int[]> pixeles = new ArrayList<int[]>();
 			if(ithread == t.length-1){
-				pixeles = blancos.subList(ithread*tamListas, blancos.size());
+				pixeles.addAll(blancos.subList(ithread*tamListas, blancos.size()));
 			}
 			else{
-				pixeles = blancos.subList(ithread*tamListas, ((ithread+1)*tamListas)-1);
+				pixeles.addAll(blancos.subList(ithread*tamListas, ((ithread+1)*tamListas)-1));
 			}
 			
             t[ithread] = new VentanaRegiones(imagenes[0], saliency[0], convolucion[0], convolucionSaliency[0],
