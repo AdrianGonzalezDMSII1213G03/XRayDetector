@@ -44,9 +44,9 @@ public class VentanaRegiones extends VentanaAbstracta {
 		for (int i = 0; i < arrayRois.length; i++ ){
 			ip.setRoi(arrayRois[i]);
 			Analyzer an = new Analyzer(getImage());
-			an.measure();
-			Analyzer.getResultsTable();
-			int numPixelPorRoi = (int) (ResultsTable.AREA * 0.1);
+			an.measure();			
+			ResultsTable rt = Analyzer.getResultsTable();
+			int numPixelPorRoi = (int) (rt.getValueAsDouble(ResultsTable.AREA, 0) * 0.1);
 			if (numPixelPorRoi < MIN){
 				numPixelPorRoi = MIN;
 			}
