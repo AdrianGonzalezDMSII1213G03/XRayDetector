@@ -1,15 +1,28 @@
 package utils;
 
 
-import ij.*;
-import ij.gui.*;
-import ij.process.*;
-import ij.measure.*;
+import ij.CompositeImage;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.LookUpTable;
+import ij.Macro;
+import ij.Prefs;
+import ij.Undo;
+import ij.gui.GenericDialog;
+import ij.gui.Toolbar;
+import ij.measure.Measurements;
 import ij.plugin.PlugIn;
 import ij.plugin.frame.Recorder;
-import ij.plugin.filter.PlugInFilter;
-import java.awt.*;
-import java.awt.event.*;
+import ij.process.AutoThresholder;
+import ij.process.ByteProcessor;
+import ij.process.ImageProcessor;
+import ij.process.StackProcessor;
+
+import java.awt.Choice;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Vector;
 
 /** This plugin implements the Process/Binary/Make Binary 
@@ -33,6 +46,7 @@ public class Thresholder implements PlugIn, Measurements, ItemListener {
 	private static String staticMethod = methods[0];
 	private static String staticBackground = backgrounds[0];
 	private ImagePlus imp;
+	@SuppressWarnings("rawtypes")
 	private Vector choices;
 
 	public void run(String arg) {
@@ -195,6 +209,7 @@ public class Thresholder implements PlugIn, Measurements, ItemListener {
 		int width = imp.getWidth();
 		int height = imp.getHeight();
 		int size = width*height;
+		@SuppressWarnings("unused")
 		boolean isFloat = imp.getType()==ImagePlus.GRAY32;
 		int nSlices = imp.getStackSize();
 		ImageStack stack1 = imp.getStack();

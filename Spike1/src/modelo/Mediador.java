@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,6 +55,8 @@ public class Mediador {
 	private static Propiedades prop;
 	private ArrayList<int[]> listaCoordenadas;
 	private Roi[] arrayRois;
+	private BufferedImage imgBin;
+	private ResultsTable myRT;
 	
 	private Mediador() {
 		ir = new ImageReader();
@@ -518,11 +519,12 @@ public class Mediador {
 		// This provides the characteristics of the particle measurements
 		//int myMeasurements = ParticleAnalyzer.AREA+ ParticleAnalyzer.PERIMETER+ParticleAnalyzer.CIRCULARITY+ParticleAnalyzer.ELLIPSE;
 		//int myMeasurements = ParticleAnalyzer.FERET+ParticleAnalyzer.LIMIT;
-		int myMeasurements =0;
+		//int myMeasurements =0;
+		int myMeasurements = ParticleAnalyzer.AREA+ ParticleAnalyzer.PERIMETER+ParticleAnalyzer.CIRCULARITY+ParticleAnalyzer.ELLIPSE+ParticleAnalyzer.FERET;
 		
 		/* This variable defines the results provided in the table */
 
-		ResultsTable myRT = new ResultsTable(); // Here we create our empty
+		myRT = new ResultsTable(); // Here we create our empty
 		// results table
 		ParticleAnalyzer pa = new ParticleAnalyzer(myOptions, myMeasurements, myRT, myMinSize, myMaxSize, myMinCirc, myMaxCirc);  
 		/** In this method we create our particle analyzer with our properties */
@@ -580,6 +582,8 @@ public class Mediador {
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
 		guardarMapaCalor();
+		
+		calcularCaracteristicasGeometricas();
 	}
 	
 	//duplicado
@@ -602,6 +606,8 @@ public class Mediador {
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
 		guardarMapaCalor();
+		
+		calcularCaracteristicasGeometricas();
 	}
 
 	private int[][] obtenerMatrizInterseccion(int[][] defectsMatrix,
@@ -632,6 +638,7 @@ public class Mediador {
 
 		// Poner fondo transparente
 		BufferedImage transparentImage = makeColorTransparent(bufferedEdgesImage, Color.white);
+		
 
 		// Superponer las dos imagenes
 		BufferedImage bufferedResult = overlayImages(backgroundImage, transparentImage);
@@ -641,15 +648,21 @@ public class Mediador {
 	public BufferedImage crearMascara(int[][] defectsMatrix2) {
 		BufferedImage bfrdImage = new BufferedImage(getImagen().getWidth(),
 				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);
+		imgBin = new BufferedImage(getImagen().getWidth(),
+				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);
 		for (int i = 0; i < getImagen().getHeight(); i++) {
 			for (int j = 0; j < getImagen().getWidth(); j++) {
-				if (defectsMatrix2[j][i] == 0)
+				if (defectsMatrix2[j][i] == 0){
 					// Color blanco
 					bfrdImage.setRGB(j, i, new Color(255, 255, 255).getRGB());
+					imgBin.setRGB(j, i, Color.WHITE.getRGB());
+				}
 
-				if (defectsMatrix2[j][i] == 1)
+				if (defectsMatrix2[j][i] == 1){
 					// Color amarillo
 					bfrdImage.setRGB(j, i, new Color(255, 255, 0).getRGB());
+					imgBin.setRGB(j, i, Color.BLACK.getRGB());
+				}
 			}
 		}
 		return bfrdImage;
@@ -809,5 +822,31 @@ public class Mediador {
              
         }
         drawEdgeRegiones(imgPanel);
+	}
+	
+	public void calcularCaracteristicasGeometricas(){
+		Thresholder th = new Thresholder();
+		ImagePlus bin = new ImagePlus("bin", imgBin);
+		th.setImage(bin);
+		th.run("");
+		getArrayRois(bin);
+		
+		for(int i=0; i<arrayRois.length; i++){
+	
+			System.out.println("Región " +i);
+			System.out.println("\tArea " + myRT.getValueAsDouble(ResultsTable.AREA, i));
+			System.out.println("\tAngulo " + myRT.getValueAsDouble(ResultsTable.ANGLE, i));
+			System.out.println("\tCirculartidad " + myRT.getValueAsDouble(ResultsTable.CIRCULARITY, i));
+			System.out.println("\tFeret " + myRT.getValueAsDouble(ResultsTable.FERET, i));
+			System.out.println("\tPerimetro " + myRT.getValueAsDouble(ResultsTable.PERIMETER, i));
+			System.out.println("\tRedondez " + myRT.getValueAsDouble(ResultsTable.ROUNDNESS, i));
+			System.out.println("\tEje Mayor " + myRT.getValueAsDouble(ResultsTable.MAJOR, i));
+			System.out.println("\tEje menor " + myRT.getValueAsDouble(ResultsTable.MINOR, i));
+			System.out.println();
+			System.out.println();
+			System.out.println();
+
+		}
+		
 	}
 }
