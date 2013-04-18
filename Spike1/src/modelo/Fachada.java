@@ -29,6 +29,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -45,10 +46,10 @@ import weka.core.Instances;
 import datos.GestorArff;
 import datos.ImageReader;
 
-public class Mediador {
+public class Fachada {
 	
 	private int[][] defectMatrix;
-	private static Mediador INSTANCE = null;
+	private static Fachada INSTANCE = null;
 	private ImageReader ir;
 	private Thread[] t;
 	private ImagePlus imagen;
@@ -57,8 +58,9 @@ public class Mediador {
 	private Roi[] arrayRois;
 	private BufferedImage imgBin;
 	private ResultsTable myRT;
+	private DefaultTableModel tableModel;
 	
-	private Mediador() {
+	private Fachada() {
 		ir = new ImageReader();
 		prop = Propiedades.getInstance();
 	}
@@ -78,9 +80,9 @@ public class Mediador {
 		return t.length;
 	}
 	
-	public static Mediador getInstance(){	//Singleton
+	public static Fachada getInstance(){	//Singleton
 		if(INSTANCE == null){
-			return new Mediador();
+			return new Fachada();
 		}
 		else{
 			return INSTANCE;
@@ -508,7 +510,7 @@ public class Mediador {
 		ImagePlus im = im2.duplicate();
 		
 		int myMinSize = 8; // This is the minimum size of the particles
-		int myMaxSize = 999; // This is the maximum size of the particles
+		int myMaxSize = 2000; // This is the maximum size of the particles
 		double myMinCirc = 0.00; // This is the minimum circularity of the
 		// particles
 		double myMaxCirc = 1.00; // This is the maximum circularity of the
@@ -831,22 +833,29 @@ public class Mediador {
 		th.run("");
 		getArrayRois(bin);
 		
+		tableModel = new DefaultTableModel(	new Object[][] {}, new String[] {"Regi\u00F3n", "\u00C1rea", "Per\u00EDmetro", "Circularidad", "Redondez", "Semieje Mayor", "Semieje Menor", "\u00C1ngulo", "Distancia Feret"}){				
+				private static final long serialVersionUID = 1L;
+				@SuppressWarnings("rawtypes")
+				Class[] columnTypes = new Class[] {Integer.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class};
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+				
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
+			
 		for(int i=0; i<arrayRois.length; i++){
-	
-			System.out.println("Región " +i);
-			System.out.println("\tArea " + myRT.getValueAsDouble(ResultsTable.AREA, i));
-			System.out.println("\tAngulo " + myRT.getValueAsDouble(ResultsTable.ANGLE, i));
-			System.out.println("\tCirculartidad " + myRT.getValueAsDouble(ResultsTable.CIRCULARITY, i));
-			System.out.println("\tFeret " + myRT.getValueAsDouble(ResultsTable.FERET, i));
-			System.out.println("\tPerimetro " + myRT.getValueAsDouble(ResultsTable.PERIMETER, i));
-			System.out.println("\tRedondez " + myRT.getValueAsDouble(ResultsTable.ROUNDNESS, i));
-			System.out.println("\tEje Mayor " + myRT.getValueAsDouble(ResultsTable.MAJOR, i));
-			System.out.println("\tEje menor " + myRT.getValueAsDouble(ResultsTable.MINOR, i));
-			System.out.println();
-			System.out.println();
-			System.out.println();
-
+			Object[] fila = {i, myRT.getValueAsDouble(ResultsTable.AREA, i), myRT.getValueAsDouble(ResultsTable.PERIMETER, i), myRT.getValueAsDouble(ResultsTable.CIRCULARITY, i), myRT.getValueAsDouble(ResultsTable.ROUNDNESS, i), myRT.getValueAsDouble(ResultsTable.MAJOR, i), myRT.getValueAsDouble(ResultsTable.MINOR, i), myRT.getValueAsDouble(ResultsTable.ANGLE, i), myRT.getValueAsDouble(ResultsTable.FERET, i)};
+			tableModel.addRow(fila);
 		}
 		
+	}
+	
+	public DefaultTableModel getTableModel(){
+		return tableModel;
 	}
 }

@@ -44,13 +44,15 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import modelo.Mediador;
+import modelo.Fachada;
 
 import org.apache.commons.io.FileUtils;
 
 import utils.Graphic;
 import utils.MyLogHandler;
 import utils.Propiedades;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PanelAplicacion{
 
@@ -59,7 +61,7 @@ public class PanelAplicacion{
 	private Graphic imgPanel;
 	private JTextPane txtLog;
 	private JButton btnAnalizar;
-	private static Mediador mediador;
+	private static Fachada fachada;
 	private Thread thread;
 	private Rectangle selection;
 	private File model;
@@ -81,6 +83,8 @@ public class PanelAplicacion{
     private JPanel panelLog_1;
     private JButton btnLimpiarLog;
     private JButton btnExportarLog;
+    private JTable tablaResultados;
+    private JPanel panelTabla_1;
     
 
 	/**
@@ -105,7 +109,7 @@ public class PanelAplicacion{
 	public PanelAplicacion() {
 		initialize();
 		prop = Propiedades.getInstance();
-		mediador = Mediador.getInstance();		
+		fachada = Fachada.getInstance();		
 	}
 	
 	public JFrame getFrameXRayDetector(){
@@ -177,19 +181,74 @@ public class PanelAplicacion{
 		
 		getSlider(panelSlider);
 		
+		panelTabla_1 = new JPanel();
+		panelTabla_1.setBorder(new TitledBorder(null, "Tabla de resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelTabla_1.setBounds(256, 572, 750, 173);
+		frmXraydetector.getContentPane().add(panelTabla_1);
 		
+		getTablaResultados(panelTabla_1);
+		
+		
+	}
+
+	public void getTablaResultados(JPanel panelTabla) {
+		tablaResultados = new JTable();
+		tablaResultados.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Regi\u00F3n", "\u00C1rea", "Per\u00EDmetro", "Circularidad", "Redondez", "Semieje Mayor", "Semieje Menor", "\u00C1ngulo", "Distancia Feret"
+			}
+		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+				Integer.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class
+			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
+		resizeColumnas();
+		tablaResultados.setEnabled(false);
+		panelTabla_1.setLayout(null);
+		JScrollPane scrlPane = new JScrollPane(tablaResultados);
+		scrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrlPane.setBounds(10, 21, 730, 141);
+		panelTabla.add(scrlPane);
+	}
+
+	public void resizeColumnas() {
+		tablaResultados.getColumnModel().getColumn(0).setPreferredWidth(60);
+		tablaResultados.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaResultados.getColumnModel().getColumn(7).setPreferredWidth(60);
+		tablaResultados.getColumnModel().getColumn(8).setPreferredWidth(100);
 	}
 
 	public void getBotonLimpiarLog() {
 		btnLimpiarLog = new JButton("Limpiar Log");
-		btnLimpiarLog.setBounds(10, 212, 107, 36);
+		btnLimpiarLog.setBounds(10, 401, 107, 36);
 		btnLimpiarLog.addActionListener(new LimpiarLogListener());
 		panelLog_1.add(btnLimpiarLog);
 	}
 
 	public void getBotonExportarLog() {
 		btnExportarLog = new JButton("Exportar Log");
-		btnExportarLog.setBounds(120, 212, 107, 36);
+		btnExportarLog.setBounds(120, 401, 107, 36);
 		btnExportarLog.addActionListener(new ExportarLogListener());
 		panelLog_1.add(btnExportarLog);
 	}
@@ -228,7 +287,7 @@ public class PanelAplicacion{
 
 	private JTextPane getTxtLog(JPanel panelLog) {
 		JTextPane textPaneLog = new JTextPane();
-		textPaneLog.setBounds(4, 4, 209, 186);
+		textPaneLog.setBounds(4, 4, 209, 195);
 		textPaneLog.setEditable(false);
 		panelLog.add(textPaneLog);
 		textPaneLog.setContentType("text/html");
@@ -250,7 +309,7 @@ public class PanelAplicacion{
 							"</head>"+
 							"<body>");
 		JScrollPane scroll = new JScrollPane(textPaneLog);
-		scroll.setBounds(10, 16, 217, 186);
+		scroll.setBounds(10, 16, 217, 374);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panelLog.add(scroll);
 		return textPaneLog;
@@ -259,7 +318,7 @@ public class PanelAplicacion{
 	private JPanel getPanelLog() {
 		panelLog_1 = new JPanel();
 		panelLog_1.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelLog_1.setBounds(10, 302, 236, 259);
+		panelLog_1.setBounds(10, 302, 236, 443);
 		frmXraydetector.getContentPane().add(panelLog_1);
 		return panelLog_1;
 	}
@@ -325,7 +384,7 @@ public class PanelAplicacion{
 	public void getJFramePrincipal() {
 		frmXraydetector = new JFrame();
 		frmXraydetector.setTitle("XRayDetector");
-		frmXraydetector.setBounds(100, 100, 1024, 619);
+		frmXraydetector.setBounds(100, 100, 1024, 800);
 		frmXraydetector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXraydetector.getContentPane().setLayout(null);
 		frmXraydetector.setLocationRelativeTo(null);
@@ -347,7 +406,7 @@ public class PanelAplicacion{
 			}
 			if(image != null){
 				imagenAbierta = true;
-				mediador.cargaImagen(image.getAbsolutePath());
+				fachada.cargaImagen(image.getAbsolutePath());
 				img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
 				imgPanel.repaint();
@@ -387,15 +446,17 @@ public class PanelAplicacion{
 				
 				switch(opcion){
 					case 0:
-						mediador.drawEdge(imgPanel);	//normal
+						fachada.drawEdge(imgPanel);	//normal
 						break;
 					case 1:
-						mediador.drawEdge(imgPanel);	//normal + umbrales locales
+						fachada.drawEdge(imgPanel);	//normal + umbrales locales
 						break;
 					case 2:
-						mediador.drawEdgeRegiones(imgPanel);	//blancos en umbrales locales
+						fachada.drawEdgeRegiones(imgPanel);	//blancos en umbrales locales
 						break;
 				}
+				tablaResultados.setModel(fachada.getTableModel());
+				resizeColumnas();
 			}
 			
 		}		
@@ -458,8 +519,13 @@ public class PanelAplicacion{
 					btnAbrirImagen.setEnabled(false);
 					btnAnalizar.setEnabled(false);
 					btnStop.setEnabled(true);
+					btnExportarLog.setEnabled(false);
+					btnLimpiarLog.setEnabled(false);
+					tablaResultados.setEnabled(false);
 					imgPanel.setImage(img.getImage());
 					imgPanel.repaint();
+					((DefaultTableModel) (tablaResultados.getModel())).getDataVector().clear();
+					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
 			    	thread = new Thread(threadAnalizar);
 			    	thread.start();
@@ -494,18 +560,19 @@ public class PanelAplicacion{
 			
 			switch(opcion){
 				case 0:
-					mediador.ejecutaVentana(selection, imgPanel, progressBar); //normal
+					fachada.ejecutaVentana(selection, imgPanel, progressBar); //normal
 					break;
 				case 1:
-					mediador.ejecutaVentana(selection, imgPanel, progressBar); //normal + umbrales locales -> la llamada es igual
+					fachada.ejecutaVentana(selection, imgPanel, progressBar); //normal + umbrales locales -> la llamada es igual
 					break;
 				case 2:
-					mediador.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción
+					fachada.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción
 					break;
 			}
 			
 			if(!parado){
-				
+				tablaResultados.setModel(fachada.getTableModel());
+				resizeColumnas();
 				try {
 					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
@@ -530,6 +597,9 @@ public class PanelAplicacion{
 			btnStop.setEnabled(false);
 			slider.setValue(prop.getUmbral());
 			slider.setEnabled(true);
+			btnExportarLog.setEnabled(true);
+			btnLimpiarLog.setEnabled(true);
+			tablaResultados.setEnabled(true);
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
 			}
@@ -544,13 +614,16 @@ public class PanelAplicacion{
 		public void actionPerformed (ActionEvent e){
 	    	if (thread != null){
 	    		parado = true;
-	    		if(mediador.getNumThreads() > 0){
-	    			mediador.stop();
+	    		if(fachada.getNumThreads() > 0){
+	    			fachada.stop();
 	    		}
 	    		slider.setEnabled(false);
 	    		btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
+				btnExportarLog.setEnabled(true);
+				btnLimpiarLog.setEnabled(true);
+				tablaResultados.setEnabled(false);
 				if(imagenAbierta){
 					btnAnalizar.setEnabled(true);
 				}
@@ -787,6 +860,9 @@ public class PanelAplicacion{
 	        				btnAnalizar.setEnabled(false);
 	        				btnStop.setEnabled(true);
 	        				slider.setEnabled(false);
+	        				btnExportarLog.setEnabled(false);
+	    					btnLimpiarLog.setEnabled(false);
+	    					tablaResultados.setEnabled(false);
 	        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 	        		    	    public void uncaughtException(Thread th, Throwable ex) {
 	        		    	    	JOptionPane.showMessageDialog(
@@ -887,7 +963,7 @@ public class PanelAplicacion{
 					throw new RuntimeException(e);
 				}
 				
-				mediador.ejecutaEntrenamiento(arff, null);
+				fachada.ejecutaEntrenamiento(arff, null);
 				
 				if(!parado){
 					
@@ -904,6 +980,9 @@ public class PanelAplicacion{
 				btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
+				btnExportarLog.setEnabled(true);
+				btnLimpiarLog.setEnabled(true);
+				tablaResultados.setEnabled(false);
 				if(imagenAbierta){
 					btnAnalizar.setEnabled(true);
 				}
@@ -975,7 +1054,7 @@ public class PanelAplicacion{
 							throw new RuntimeException(e);
 						}
 						
-						mediador.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog, kit, doc);
+						fachada.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog, kit, doc);
 						
 						if(!parado){
 														
@@ -995,6 +1074,9 @@ public class PanelAplicacion{
 				btnEntrenarClasificador.setEnabled(true);
 				btnAbrirImagen.setEnabled(true);
 				btnStop.setEnabled(false);
+				btnExportarLog.setEnabled(true);
+				btnLimpiarLog.setEnabled(true);
+				tablaResultados.setEnabled(false);
 				if(imagenAbierta){
 					btnAnalizar.setEnabled(true);
 				}
