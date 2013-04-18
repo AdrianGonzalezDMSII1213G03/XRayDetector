@@ -279,6 +279,32 @@ Para determinar a qué región pertenece el píxel, se comprueba con el umbral. 
 En este caso, el umbral es la media de la distribución local en escala de grises. Por lo tanto, para determinar a qué región pertenece el píxel, se compara con la media de la región de vecinos (menos el parámetro $c$, en caso de que se especifique). Si es mayor, es parte del objeto. Si no, es parte del fondo.
 
 
+\section{Características geométricas}
+Además de los descriptores de regiones que ya hemos visto, pensamos en la posibilidad de realizar algunos cálculos de características geométricas sobre las regiones segmentadas, con la mirada puesta en poder clasificar mediante ellas a los defectos en distintos tipos.
+
+Las características geométricas que hemos calculado son:
+
+\begin{itemize}
+
+\item \textbf{Área:} es la superficie de la región de interés medida en píxeles cuadrados.
+
+\item \textbf{Perímetro:} es la longitud del límite exterior de la región.
+
+\item \textbf{Circularidad:} descriptor de forma dado por la fórmula $\frac{4\pi \times area}{perimetro^2}$. Un valor de 1 indica que se trata de un círculo perfecto. Según se acerca a cero, indica que la forma es cada vez más alargada.
+
+\item \textbf{Redondez:} descriptor de forma dado por la fórmula $\frac{4\pi\times area}{\pi \times semieje\_mayor^2}$. Es el inverso del cociente entre el semieje mayor y el menor de la mejor elipse que puede ser dibujada en la región.
+
+\item \textbf{Semieje mayor:} semieje mayor de la mejor elipse que puede ser dibujada en la región.
+
+\item \textbf{Semieje menor:} semieje menor de la mejor elipse que puede ser dibujada en la región.
+
+\item \textbf{Ángulo:} es el ángulo entre el semieje mayor y una línea paralela al eje x.
+
+\item \textbf{Distancia Feret:} también llamada diámetro de Feret. Es la máxima distancia entre dos puntos cualesquiera de la región.
+
+\end{itemize}
+
+
 
 
 \section{Reconocimiento e interpretación de imágenes}
@@ -485,3 +511,8 @@ El dibujado de los defectos se realiza con la misma matriz que en la primera ver
 La parte de analizar las regiones para determinar si hay que considerar la coordenada o no fue añadida después de una primera versión de esta opción, en la que se consideraba toda la lista de píxeles blancos. Se decidió cambiar porque si considerábamos toda la lista obteníamos muchísimos falsos positivos, con lo que la precisión no era buena.
 
 Para aumentar el rendimiento, antes de empezar a calcular características, se divide la lista de píxeles blancos en tantas partes como procesadores disponibles haya. Después, habrá tantos hilos como partes, en los que en cada uno de ellos se iterará sobre cada una de las partes, de forma paralela.
+
+\subsection{Cálculo de características geométricas}
+Una vez que se ha realizado el proceso de detección y dibujado de defectos, podemos calcular los descriptores geométricos de estos defectos. Para ello, se usa la imagen binarizada con la región de defectos para aplicar sobre ella un proceso de segmentación, a través del cual vamos a poder obtener una serie de regiones, sobre las cuales se puede aplicar el cálculo de las características geométricas ya mencionadas. Con estos resultados creamos una tabla que se irá refrescando si el usuario selecciona otro umbral de detección.
+
+Estas características permitirán, en un futuro, aplicar un proceso de clasificación sobre las regiones detectadas como defecto en distintos tipos (burbuja, rotura...).

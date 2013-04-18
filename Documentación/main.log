@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  14 APR 2013 13:02
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  18 APR 2013 18:10
 entering extended mode
 **main.tex
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.tex
@@ -855,6 +855,8 @@ yecto.aux)
 os.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
 ientas.aux)
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
+tes.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
 ectoSoftware.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo2Especifica
@@ -929,7 +931,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 45.
 
-<imgs/escudo.pdf, id=218, 98.2805pt x 163.92221pt>
+<imgs/escudo.pdf, id=302, 98.2805pt x 163.92221pt>
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 45.
@@ -1038,7 +1040,7 @@ Cap\'{\i }tulo 2.
 
 
 
-] <imgs/adquisicion_imagen.png, id=381, 726.46407pt x 482.55281pt>
+] <imgs/adquisicion_imagen.png, id=496, 726.46407pt x 482.55281pt>
 File: imgs/adquisicion_imagen.png Graphic file (type png)
 
 <use imgs/adquisicion_imagen.png>
@@ -1051,7 +1053,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 28.
 
 [6 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/adquisic
-ion_imagen.png>] [7] <imgs/saliency.png, id=392, 249.93375pt x 124.21407pt>
+ion_imagen.png>] [7] <imgs/saliency.png, id=507, 249.93375pt x 124.21407pt>
 File: imgs/saliency.png Graphic file (type png)
 
 <use imgs/saliency.png>
@@ -1062,7 +1064,7 @@ Package pdftex.def Info: imgs/saliency.png used on input line 76.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 76.
 
 [8 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/saliency
-.png>] [9] [10] [11] [12] <imgs/lbp.png, id=436, 767.11594pt x 355.3275pt>
+.png>] [9] [10] [11] [12] <imgs/lbp.png, id=551, 767.11594pt x 355.3275pt>
 File: imgs/lbp.png Graphic file (type png)
 
 <use imgs/lbp.png>
@@ -1073,7 +1075,7 @@ Package pdftex.def Info: imgs/lbp.png used on input line 237.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 237.
 
 [13 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/lbp.png
->] <imgs/vecindades_lbp.png, id=442, 429.10312pt x 179.92218pt>
+>] <imgs/vecindades_lbp.png, id=557, 429.10312pt x 179.92218pt>
 File: imgs/vecindades_lbp.png Graphic file (type png)
 
 <use imgs/vecindades_lbp.png>
@@ -1088,69 +1090,71 @@ des_lbp.png>] [15]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [16]
-[17] <imgs/extraccion.png, id=469, 496.10344pt x 141.52875pt>
+[17] [18] <imgs/extraccion.png, id=592, 496.10344pt x 141.52875pt>
 File: imgs/extraccion.png Graphic file (type png)
 
 <use imgs/extraccion.png>
-Package pdftex.def Info: imgs/extraccion.png used on input line 382.
+Package pdftex.def Info: imgs/extraccion.png used on input line 408.
 (pdftex.def)             Requested size: 390.79141pt x 111.48686pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 382.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 408.
 
-
-Underfull \vbox (badness 4229) has occurred while \output is active []
-
- [18]
 [19 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/extracc
-ion.png>] <imgs/ventana_deslizante.png, id=482, 496.85625pt x 118.19156pt>
+ion.png>] <imgs/ventana_deslizante.png, id=598, 496.85625pt x 118.19156pt>
 File: imgs/ventana_deslizante.png Graphic file (type png)
 
 <use imgs/ventana_deslizante.png>
-Package pdftex.def Info: imgs/ventana_deslizante.png used on input line 409.
+Package pdftex.def Info: imgs/ventana_deslizante.png used on input line 435.
 (pdftex.def)             Requested size: 390.79141pt x 92.96272pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 409.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 435.
 
-[20 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ventana
-_deslizante.png>]
-<imgs/dibujado_defectos.png, id=487, 331.2375pt x 283.0575pt>
+
+Underfull \vbox (badness 2205) has occurred while \output is active []
+
+ [20 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ventan
+a_deslizante.png>] [21] <imgs/dibujado_defectos.png, id=607, 331.2375pt x 283.0
+575pt>
 File: imgs/dibujado_defectos.png Graphic file (type png)
 
 <use imgs/dibujado_defectos.png>
-Package pdftex.def Info: imgs/dibujado_defectos.png used on input line 444.
+Package pdftex.def Info: imgs/dibujado_defectos.png used on input line 470.
 (pdftex.def)             Requested size: 390.79141pt x 333.96606pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 444.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 470.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 4647) has occurred while \output is active []
 
- [21]
-[22 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibujad
-o_defectos.png>] [23]
-<imgs/segunda_opcion.png, id=500, 203.25937pt x 158.09062pt>
+ [22 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibuja
+do_defectos.png>] [23] <imgs/segunda_opcion.png, id=616, 203.25937pt x 158.0906
+2pt>
 File: imgs/segunda_opcion.png Graphic file (type png)
 
 <use imgs/segunda_opcion.png>
-Package pdftex.def Info: imgs/segunda_opcion.png used on input line 481.
+Package pdftex.def Info: imgs/segunda_opcion.png used on input line 507.
 (pdftex.def)             Requested size: 390.79141pt x 303.9599pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 481.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 507.
 
-) [24 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/segun
-da_opcion.png>]
+[24 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/segunda
+_opcion.png>]) [25]
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
-ientas.tex
+ientas.tex [26
+
+
+
+]
 Cap\'{\i }tulo 3.
 
-LaTeX Warning: Citation `scrum' on page 25 undefined on input line 16.
+LaTeX Warning: Citation `scrum' on page 27 undefined on input line 16.
 
 
-LaTeX Warning: Citation `controlchaos' on page 25 undefined on input line 18.
+LaTeX Warning: Citation `controlchaos' on page 27 undefined on input line 18.
 
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 35.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
@@ -1158,16 +1162,12 @@ File: omsptm.fd
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 35.
- [25
+ [27]
 
-
-
-]
-
-LaTeX Warning: Citation `scrum_process_image' on page 26 undefined on input lin
+LaTeX Warning: Citation `scrum_process_image' on page 28 undefined on input lin
 e 46.
 
-<imgs/ScrumProcess.jpg, id=511, 529.22719pt x 335.75438pt>
+<imgs/ScrumProcess.jpg, id=635, 529.22719pt x 335.75438pt>
 File: imgs/ScrumProcess.jpg Graphic file (type jpg)
 
 <use imgs/ScrumProcess.jpg>
@@ -1180,13 +1180,13 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 49.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumP
+ [28 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumP
 rocess.jpg>]
 
-LaTeX Warning: Citation `scrum_stages_image' on page 27 undefined on input line
+LaTeX Warning: Citation `scrum_stages_image' on page 29 undefined on input line
  58.
 
-<imgs/ScrumDiagram.png, id=517, 770.88pt x 481.8pt>
+<imgs/ScrumDiagram.png, id=641, 770.88pt x 481.8pt>
 File: imgs/ScrumDiagram.png Graphic file (type png)
 
 <use imgs/ScrumDiagram.png>
@@ -1194,45 +1194,76 @@ Package pdftex.def Info: imgs/ScrumDiagram.png used on input line 61.
 (pdftex.def)             Requested size: 426.79141pt x 266.74051pt.
 
 
-LaTeX Warning: Citation `scrum_wiki' on page 27 undefined on input line 64.
+LaTeX Warning: Citation `scrum_wiki' on page 29 undefined on input line 64.
 
-[27 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumDi
-agram.png (PNG copy)>] [28] [29] [30]
-Underfull \vbox (badness 4819) has occurred while \output is active []
+[29 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumDi
+agram.png (PNG copy)>] [30] [31] [32] [33]
 
- [31]
+LaTeX Warning: Citation `epl' on page 34 undefined on input line 223.
 
-LaTeX Warning: Citation `epl' on page 32 undefined on input line 226.
-
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 230.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 227.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd"
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [32]
-Overfull \hbox (7.94908pt too wide) in paragraph at lines 258--259
+) [34]
+Overfull \hbox (7.94908pt too wide) in paragraph at lines 255--256
 []\T1/ptm/m/n/10.95 P�gina web de la he-rra-mien-ta: [][]$\T1/pcr/m/n/10.95 htt
 p : / / www . campwoodsw . com / sourcemonitor . html$[][]\T1/ptm/m/n/10.95 . 
  []
 
-[33] [34]
-Overfull \hbox (16.1183pt too wide) in paragraph at lines 333--334
+[35] [36]
+Overfull \hbox (16.1183pt too wide) in paragraph at lines 330--331
 []\T1/ptm/m/n/10.95 P�gina web del \T1/ptm/m/it/10.95 plu-gin\T1/ptm/m/n/10.95 
 : [][]$\T1/pcr/m/n/10.95 http : / / fiji . sc / wiki / index . php / Auto _ Loc
 al _ Threshold$[][]\T1/ptm/m/n/10.95 . 
  []
 
 
-Overfull \hbox (32.67027pt too wide) in paragraph at lines 340--341
+Overfull \hbox (32.67027pt too wide) in paragraph at lines 337--338
 []\T1/ptm/m/n/10.95 La p�-gi-na web de la he-rra-mien-ta es: [][]$\T1/pcr/m/n/1
 0.95 http : / / commons . apache . org / proper / commons-[]io/$[][]\T1/ptm/m/n
 /10.95 . 
  []
 
-) [35] [36
+) [37]
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
+tes.tex [38
+
+
+
+]
+Cap\'{\i }tulo 4.
+<imgs/radiografia_articulos.png, id=711, 343.2825pt x 357.58594pt>
+File: imgs/radiografia_articulos.png Graphic file (type png)
+
+<use imgs/radiografia_articulos.png>
+Package pdftex.def Info: imgs/radiografia_articulos.png used on input line 22.
+(pdftex.def)             Requested size: 390.79141pt x 407.07382pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 22.
+
+<imgs/radiografia_antolin.png, id=712, 554.07pt x 429.10312pt>
+File: imgs/radiografia_antolin.png Graphic file (type png)
+
+<use imgs/radiografia_antolin.png>
+Package pdftex.def Info: imgs/radiografia_antolin.png used on input line 24.
+(pdftex.def)             Requested size: 390.79141pt x 302.64868pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 24.
+
+[39] [40 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ra
+diografia_articulos.png>] [41 <C:/Users/Adrián/Documents/GitHub/XRayDetector/D
+ocumentación/imgs/radiografia_antolin.png>] [42]
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 76.
+) [43] [44
 
 
 ]
 File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
+
+<use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 72.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
 
@@ -1240,25 +1271,58 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--72
 
  []
 
-[37]
-No file anexo1PlanDeProyectoSoftware.tex.
-[38
-
+[45]
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
+ectoSoftware.tex [46
 
 
 ]
+Ap\'{e}ndice A.
+[47] [48] [49]
+
+LaTeX Warning: Command \textordmasculine invalid in math mode on input line 98.
+
+
+[50]
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 124.
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 124.
+
+
+LaTeX Warning: Citation `scrum' on page 51 undefined on input line 129.
+
+
+LaTeX Warning: Reference `scrumProcess' on page 51 undefined on input line 146.
+
+
+<imgs/ScrumProcess.png, id=773, 801.99625pt x 356.33125pt>
+File: imgs/ScrumProcess.png Graphic file (type png)
+
+<use imgs/ScrumProcess.png>
+Package pdftex.def Info: imgs/ScrumProcess.png used on input line 149.
+(pdftex.def)             Requested size: 390.79141pt x 173.63602pt.
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 149.
+
+[51] [52 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Sc
+rumProcess.png>]
+Underfull \hbox (badness 7273) in paragraph at lines 188--188
+[]\T1/ptm/m/n/10.95 C�sar, Juan
+ []
+
+[53]) [54]
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 75.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
+ [55
 
-Underfull \hbox (badness 10000) in paragraph at lines 75--75
 
- []
-
-[39]
+]
 No file anexo2EspecificacionDeRequisitos.tex.
-[40
+[56
 
 
 
@@ -1267,14 +1331,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 78.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
-
- []
-
-[41]
+ [57]
 No file anexo3EspecificacionDeDisenno.tex.
-[42
+[58
 
 
 
@@ -1283,14 +1342,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 81.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 81--81
-
- []
-
-[43]
+ [59]
 No file anexo4ManualDelProgramador.tex.
-[44
+[60
 
 
 
@@ -1299,14 +1353,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 84.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--84
-
- []
-
-[45]
+ [61]
 No file anexo5ManualDelUsuario.tex.
-[46
+[62
 
 
 
@@ -1315,14 +1364,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 95.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 95--95
-
- []
-
-[47]
+ [63]
 No file apendiceA.tex.
-[48
+[64
 
 
 
@@ -1331,14 +1375,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 98.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 98--98
-
- []
-
-[49]
+ [65]
 No file apendiceB.tex.
-[50
+[66
 
 
 
@@ -1354,6 +1393,8 @@ yecto.aux)
 os.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
 ientas.aux)
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
+tes.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
 ectoSoftware.aux)
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo2Especifica
@@ -1369,7 +1410,7 @@ suario.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 109.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 109.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6D355A27DD8E34665C37F066ED42C83B;3807.
+(rerunfilecheck)             Checksum: 85DD25F7507E9A6E334A0E124A991937;5418.
 
 
 LaTeX Warning: There were undefined references.
@@ -1377,31 +1418,33 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 109.
  ) 
 Here is how much of TeX's memory you used:
- 12545 strings out of 494045
- 181926 string characters out of 3148381
- 317243 words of memory out of 3000000
- 15340 multiletter control sequences out of 15000+200000
- 70282 words of font info for 76 fonts, out of 3000000 for 9000
+ 12684 strings out of 494045
+ 184530 string characters out of 3148381
+ 324086 words of memory out of 3000000
+ 15413 multiletter control sequences out of 15000+200000
+ 80731 words of font info for 88 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 55i,9n,45p,967b,611s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,13n,45p,967b,611s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcirclew.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/ut
-mb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (62 pages, 1094095 bytes).
+/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcirclew.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helv
+etic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (78 pages, 1680096 bytes).
 PDF statistics:
- 739 PDF objects out of 1000 (max. 8388607)
- 170 named destinations out of 1000 (max. 500000)
- 488 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 960 PDF objects out of 1000 (max. 8388607)
+ 220 named destinations out of 1000 (max. 500000)
+ 671 words of extra memory for PDF output out of 10000 (max. 10000000)
 
