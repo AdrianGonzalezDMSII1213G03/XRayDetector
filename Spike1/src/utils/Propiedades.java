@@ -78,6 +78,7 @@ public class Propiedades {
 		propiedades.setProperty("umbral", "8");
 		propiedades.setProperty("tipoDeteccion", "0");
 		propiedades.setProperty("tipoEntrenamiento", "0");
+		propiedades.setProperty("tipoClasificacion", "0");
 		propiedades.setProperty("pathArff", "./res/arff/Arff_entrenamiento.arff");
 		propiedades.setProperty("pathModel", ".res/model/todas_24.model");
 		
@@ -118,6 +119,10 @@ public class Propiedades {
 		return Integer.parseInt(propiedades.getProperty("tipoEntrenamiento"));
 	}
 	
+	public int getTipoClasificacion(){		
+		return Integer.parseInt(propiedades.getProperty("tipoClasificacion"));
+	}
+	
 	public void setUmbral(int umbral){
 		propiedades.setProperty("umbral", String.valueOf(umbral));
 		try {
@@ -139,6 +144,25 @@ public class Propiedades {
 	
 	public void setTipoEntrenamiento(int tipo){
 		propiedades.setProperty("tipoEntrenamiento", String.valueOf(tipo));
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTipoClasificacion(int tipo){
+		propiedades.setProperty("tipoClasificacion", String.valueOf(tipo));
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {

@@ -41,6 +41,7 @@ import utils.Thresholder;
 
 import utils.Propiedades;
 import weka.classifiers.Classifier;
+import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
 import weka.core.Instances;
 import datos.GestorArff;
@@ -414,26 +415,31 @@ public class Fachada {
 	public void createModel(Instances data, String sizeWindow) {
 
 		// se crea, opciones, setiputformat
-		Classifier cls;
+		Classifier cls = null;
 		//String separator = System.getProperty("file.separator");
 		//String path = System.getProperty("user.dir");
 		String path = "./res/model/";
 
 		
+		int opcionClasificacion = prop.getTipoClasificacion();
+		
+		switch(opcionClasificacion){
+			case 0:
+				//CLASIFICADOR CLASES NOMINALES (TRUE,FALSE)
+				Classifier base;
+				base = new REPTree();
+				cls = new Bagging();
+				((Bagging) cls).setNumIterations(25);
+				((Bagging) cls).setBagSizePercent(100);
+				((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());
+				((Bagging) cls).setClassifier(base);
+				break;
+			case 1:
+				//REGRESIÓN LINEAL (CLASES NUMÉRICAS, 1,0)
+				cls = new REPTree();
+				break;
+		}
 
-		//CLASIFICADOR CLASES NOMINALES (TRUE,FALSE)
-		/*Classifier base;
-		base = new REPTree();
-		cls = new Bagging();
-		((Bagging) cls).setNumIterations(25);
-		((Bagging) cls).setBagSizePercent(100);
-		((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());
-		((Bagging) cls).setClassifier(base);
-		*/
-		
-		//REGRESIÓN LINEAL (CLASES NUMÉRICAS, 1,0)
-		cls = new REPTree();
-		
 		ObjectOutputStream oos = null;
 
 		try {

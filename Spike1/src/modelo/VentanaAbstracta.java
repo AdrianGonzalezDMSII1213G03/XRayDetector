@@ -641,17 +641,23 @@ public abstract class VentanaAbstracta extends Thread{
 			}
 		}
 		
-		//CLASIFICACIÓN CLASE NOMINAL (TRUE, FALSE)
-		//features += defect;
+		int opcionClasificacion = prop.getTipoClasificacion();
 		
-		//REGRESIÓN (CLASE 1,0)
-		if(defect){
-			features += "1";
+		switch(opcionClasificacion){
+			case 0:
+				//CLASIFICACIÓN CLASE NOMINAL (TRUE, FALSE)
+				features += defect;
+				break;
+			case 1:
+				//REGRESIÓN (CLASE 1,0)
+				if(defect){
+					features += "1";
+				}
+				else{
+					features += "0";
+				}
+				break;
 		}
-		else{
-			features += "0";
-		}
-	
 		return features;
 	}
 
@@ -676,12 +682,18 @@ public abstract class VentanaAbstracta extends Thread{
 		header += getHaralickAttributes();
 		header += getLbpAttributes();
 		
-		//CLASIFICACIÓN CON CLASE NOMINAL
-		//header += "@ATTRIBUTE class {true, false}\n";
+		int opcionClasificacion = prop.getTipoClasificacion();
 		
-		//REGRESIÓN
-		header += "@ATTRIBUTE class numeric\n";
-		
+		switch(opcionClasificacion){
+			case 0:
+				//CLASIFICACIÓN CON CLASE NOMINAL
+				header += "@ATTRIBUTE class {true, false}\n";
+				break;
+			case 1:
+				//REGRESIÓN (CLASE 1,0)
+				header += "@ATTRIBUTE class numeric\n";
+				break;
+		}
 		header += "@data\n";
 		return header;
 	}

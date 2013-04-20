@@ -37,6 +37,7 @@ public class BarraMenu extends JMenuBar {
 	private int tamVentanaOpciones;
 	private int tipoDeteccion;
 	private int tipoEntrenamiento;
+	private int tipoClasificacion;
 	private double saltoOpciones;
 	private static Propiedades prop;
 	
@@ -85,6 +86,7 @@ public class BarraMenu extends JMenuBar {
 			private JComboBox<String> comboBoxVentana;
 			private JComboBox<String> comboBoxTipo;
 			private JComboBox<String> comboBoxEntrenamiento;
+			private JComboBox<String> comboBoxClasificacion;
 			
 			public OpcionesAvanzadasListener(Frame fr) {
 				frame = fr;
@@ -117,8 +119,30 @@ public class BarraMenu extends JMenuBar {
 				
 				getComboBoxEntrenamiento(frmOpcionesAvanzadas);
 				
+				getLabelClasificacion(frmOpcionesAvanzadas);
+				
+				getComboBoxClasificacion(frmOpcionesAvanzadas);
+				
+				
 				getDesktopPane(dialogo, frmOpcionesAvanzadas);	
 				
+			}
+
+			public void getComboBoxClasificacion(
+					JInternalFrame frmOpcionesAvanzadas) {
+				comboBoxClasificacion = new JComboBox<String>();
+				comboBoxClasificacion.setModel(new DefaultComboBoxModel<String>(new String[] {"Clases Nominales", "Regresi\u00F3n"}));
+				comboBoxClasificacion.setBounds(149, 176, 205, 20);
+				comboBoxClasificacion.setSelectedIndex(prop.getTipoClasificacion());
+				comboBoxClasificacion.addActionListener(new ComboBoxTipoClasificacionListener());
+				frmOpcionesAvanzadas.getContentPane().add(comboBoxClasificacion);
+			}
+
+			public void getLabelClasificacion(
+					JInternalFrame frmOpcionesAvanzadas) {
+				JLabel lblTipoDeClasificacion = new JLabel("Tipo de clasificaci\u00F3n");
+				lblTipoDeClasificacion.setBounds(22, 179, 119, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblTipoDeClasificacion);
 			}
 
 			public void getComboBoxEntrenamiento(
@@ -152,7 +176,7 @@ public class BarraMenu extends JMenuBar {
 			public JInternalFrame getInternalFrame() {
 				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();
 				frmOpcionesAvanzadas.setTitle("Opciones avanzadas");
-				frmOpcionesAvanzadas.setBounds(100, 100, 380, 240);
+				frmOpcionesAvanzadas.setBounds(100, 100, 380, 300);
 				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmOpcionesAvanzadas.getContentPane().setLayout(null);
 				return frmOpcionesAvanzadas;
@@ -163,7 +187,7 @@ public class BarraMenu extends JMenuBar {
 				JDesktopPane desktoppane = new JDesktopPane();
 				desktoppane.add(frmOpcionesAvanzadas);
 				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());
-				dialogo.setMinimumSize(new Dimension(380, 240));
+				dialogo.setMinimumSize(new Dimension(380, 300));
 				dialogo.setResizable(false);
 				dialogo.pack();
 				dialogo.setLocationRelativeTo(frame);
@@ -173,7 +197,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnCancelar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(193, 178, 89, 23);
+				btnCancelar.setBounds(193, 238, 89, 23);
 				btnCancelar.addActionListener(new CancelarListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);
 			}
@@ -181,7 +205,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnAceptar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnAceptar = new JButton("Aceptar");
-				btnAceptar.setBounds(94, 178, 89, 23);
+				btnAceptar.setBounds(94, 238, 89, 23);
 				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);
 			}
@@ -260,6 +284,14 @@ public class BarraMenu extends JMenuBar {
 					tipoEntrenamiento = comboBoxEntrenamiento.getSelectedIndex();					
 				}
 			}
+			
+			private class ComboBoxTipoClasificacionListener implements ActionListener{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tipoClasificacion = comboBoxClasificacion.getSelectedIndex();					
+				}
+			}
 	}
 	
 	private class AceptarOpcionesListener implements ActionListener{
@@ -275,6 +307,7 @@ public class BarraMenu extends JMenuBar {
 	    	prop.setTamVentana(tamVentanaOpciones);
 	    	prop.setTipoDeteccion(tipoDeteccion);
 	    	prop.setTipoEntrenamiento(tipoEntrenamiento);
+	    	prop.setTipoClasificacion(tipoClasificacion);
 	    	dialog.dispose();
 	    }
 	}
