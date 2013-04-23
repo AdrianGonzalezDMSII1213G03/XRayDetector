@@ -474,13 +474,34 @@ public class Fachada {
 			int height = selection.height + (alt.getRadius()*2);
 			int width = selection.width + (alt.getRadius()*2);
 			
+			//Salirse por la izquierda
+			if(x < 0){
+				x = 0;
+				width = selection.width + alt.getRadius();
+			}
+			//Salirse por arriba
+			if(y < 0){
+				y = 0;
+				height = selection.height + alt.getRadius();
+			}
+			//Salirse por abajo
+			if(y + height > getImagen().getHeight()){
+				height = selection.height + alt.getRadius();
+			}
+			//Salirse por la derecha
+			if(x + width > getImagen().getWidth()){
+				width = selection.width + alt.getRadius();
+			}
+
+			/*
 			if(x < 0 || y < 0 || height + y > getImagen().getHeight() || width + x > getImagen().getWidth()){
 				ip.setRoi(selection); //si no entra la seleccion+radio, cogemos la selección normal
 			}
-			else{				
-				Rectangle rec = new Rectangle(x, y, width, height);
-				ip.setRoi(rec);
-			}
+			*/
+//			else{				
+			Rectangle rec = new Rectangle(x, y, width, height);
+			ip.setRoi(rec);
+//			}
 			
 			ip = ip.crop();
 			BufferedImage croppedImage = ip.getBufferedImage();
