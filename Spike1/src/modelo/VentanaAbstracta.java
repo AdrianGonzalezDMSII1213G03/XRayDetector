@@ -358,29 +358,9 @@ public abstract class VentanaAbstracta extends Thread{
 				count++;
 			}
 		}
-		// newVals es el vector de doubles donde tienes los datos de las medias
-		// etc.
+		// newVals es el vector de doubles donde tienes los datos de las medias etc.
 		Instance instance = new DenseInstance(1, newVals);
 		instance.setDataset(getHeader());
-		
-//		synchronized(this){
-//			System.out.print("Hilo " + getNumHilo() + ": ");
-//			for(int i=0; i<instance.numAttributes();i++){
-//				System.out.print(instance.value(i) + ", ");
-//			}
-//			System.out.println("");
-//		}
-		
-//		synchronized(this){
-//		System.out.println("Hilo " + getNumHilo() + ":");
-//		System.out.println("std: " + ftStandard.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftStandard.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("std sal: " + ftStandardSaliency.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftStandardSaliency.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("lbp: " + ftLbp.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftLbp.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("lbp sal: " + ftLbpSaliency.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftLbpSaliency.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("har: " + ftHaralick.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftHaralick.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("har sal: " + ftHaralickSaliency.getImagen().getProcessor().getRoi().getBounds().x + ", " + ftHaralickSaliency.getImagen().getProcessor().getRoi().getBounds().y);
-//		System.out.println("---------------------------------------------------");
-//		}
 		return instance;
 	}
 
@@ -810,74 +790,60 @@ public abstract class VentanaAbstracta extends Thread{
 	 */
 	protected boolean getDefecto(ImagePlus img) {
 	
-			//boolean defect = false;
-			int defectVector[];
-	
-			
-			//	1 Pixel mal	 			COMO EL CULO
-			/*
-			for (int y = 0; y < img.getHeight(); y++) {
-				for (int x = 0; x < img.getWidth(); x++) {
-					defectVector = img.getPixel(x, y);
-					//System.out.println("Valor pixel: [" + defectVector[1] + "," + defectVector[2] + "," + defectVector[3] + "]");
-					// El valor 0 del vector, guarda el valor en escala de grises.
-					// Por eso no nos interesa.
-					if ((defectVector[1] != 255 && defectVector[1] != 0)
-							|| (defectVector[2] != 255 && defectVector[2] != 0)) {
-						return true;
-					}
-				}
-			}
-			*/
-			
-			//	>50% Pixel mal			BASTANTE BIEN
-			/*
-			int numPixVentana = getAlturaVentana() * getAnchuraVentana();
-			int pixelDef = 0;
-			for (int y = 0; y < img.getHeight(); y++) {
-				for (int x = 0; x < img.getWidth(); x++) {
-					defectVector = img.getPixel(x, y);
-					//System.out.println("Valor pixel: [" + defectVector[1] + "," + defectVector[2] + "," + defectVector[3] + "]");
-					// El valor 0 del vector, guarda el valor en escala de grises.
-					// Por eso no nos interesa.
-					if ((defectVector[1] != 255 && defectVector[1] != 0)
-							|| (defectVector[2] != 255 && defectVector[2] != 0)) {
-						pixelDef++;
-						if(pixelDef>(numPixVentana/2)){
-							return true;
-						}					
-					}
-				}
-			}
-			*/
-			
-			//Pixel Central malo	ACEPTABLE PERO FALTA PRECISION	
-	//		int x = (int) img.getProcessor().getRoi().getCenterX();
-	//		int y = (int) img.getProcessor().getRoi().getCenterY();
-	//		defectVector = img.getPixel(x, y);
-	//		if ((defectVector[1] != 255 && defectVector[1] != 0)
-	//				|| (defectVector[2] != 255 && defectVector[2] != 0)) {
-	//			return true;
-	//		}					
-			
-			//Pixel Central + Vecinos Malo	BASTANTE BIEN
-			int x = (int) img.getProcessor().getRoi().getCenterX();
-			int y = (int) img.getProcessor().getRoi().getCenterY();
-			int pixelDef = 0;
-			//región de vecinos de 3x3
-			for (int i=-1; i<2;  i++){
-				for (int j=-1; j<2;  j++){
-					defectVector = img.getPixel(x+j, y+i);
-					if ((defectVector[1] != 255 && defectVector[1] != 0)
-							|| (defectVector[2] != 255 && defectVector[2] != 0)) {
-						pixelDef++;
-						if(pixelDef> 5){	//porcentaje de la región del centro de la ventana
-							return true;
-						}				
-					}
-				}
-			}
-			return false;
+		int heuristica = prop.getTipoVentanaDefectuosa();
+
+		switch (heuristica) {
+			case 0:
+				return porcentajeVentanaMal(img);
+			case 1:
+				return porcentajeVecinosMal(img);
 		}
+		
+		return false;
+	}
+
+	public boolean porcentajeVecinosMal(ImagePlus img) {
+		int[] defectVector;
+		//Pixel Central + Vecinos Malo
+		int x = (int) img.getProcessor().getRoi().getCenterX();
+		int y = (int) img.getProcessor().getRoi().getCenterY();
+		int pixelDef = 0;
+		//región de vecinos de 3x3
+		for (int i=-1; i<2;  i++){
+			for (int j=-1; j<2;  j++){
+				defectVector = img.getPixel(x+j, y+i);
+				if ((defectVector[1] != 255 && defectVector[1] != 0)
+						|| (defectVector[2] != 255 && defectVector[2] != 0)) {
+					pixelDef++;
+					if(pixelDef > (prop.getPorcentajePixeles()*9)){	//porcentaje de la región del centro de la ventana
+						return true;
+					}				
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean porcentajeVentanaMal(ImagePlus img) {
+		int[] defectVector;
+		// Porcentaje de Pixel mal
+		int numPixVentana = getAlturaVentana() * getAnchuraVentana();
+		int pixelDef = 0;
+		for (int y = 0; y < img.getHeight(); y++) {
+			for (int x = 0; x < img.getWidth(); x++) {
+				defectVector = img.getPixel(x, y);
+				// El valor 0 del vector, guarda el valor en escala de grises.
+				// Por eso no nos interesa.
+				if ((defectVector[1] != 255 && defectVector[1] != 0)
+						|| (defectVector[2] != 255 && defectVector[2] != 0)) {
+					pixelDef++;
+					if(pixelDef>(prop.getPorcentajePixeles()*numPixVentana)){
+						return true;
+					}					
+				}
+			}
+		}
+		return false;
+	}
 	
 }

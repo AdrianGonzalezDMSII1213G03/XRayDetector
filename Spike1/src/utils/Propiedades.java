@@ -79,6 +79,8 @@ public class Propiedades {
 		propiedades.setProperty("tipoDeteccion", "0");
 		propiedades.setProperty("tipoEntrenamiento", "0");
 		propiedades.setProperty("tipoClasificacion", "0");
+		propiedades.setProperty("tipoVentanaDefectuosa", "0");
+		propiedades.setProperty("porcentajePixeles", "0.5");
 		propiedades.setProperty("pathArff", "./res/arff/Arff_entrenamiento.arff");
 		propiedades.setProperty("pathModel", ".res/model/todas_24.model");
 		
@@ -103,7 +105,7 @@ public class Propiedades {
 		return Integer.parseInt(propiedades.getProperty("tamVentana"));
 	}
 	
-	public float getSalto(){
+	public double getSalto(){
 		return Float.parseFloat(propiedades.getProperty("salto"));
 	}
 	
@@ -121,6 +123,14 @@ public class Propiedades {
 	
 	public int getTipoClasificacion(){		
 		return Integer.parseInt(propiedades.getProperty("tipoClasificacion"));
+	}
+	
+	public int getTipoVentanaDefectuosa(){
+		return Integer.parseInt(propiedades.getProperty("tipoVentanaDefectuosa"));
+	}
+	
+	public double getPorcentajePixeles(){
+		return Float.parseFloat(propiedades.getProperty("porcentajePixeles"));
 	}
 	
 	public void setUmbral(int umbral){
@@ -247,6 +257,44 @@ public class Propiedades {
 	
 	public void setPathModel(String model){
 		propiedades.setProperty("pathModel", model);
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTipoVentanaDefectuosa(int tipo){
+		propiedades.setProperty("tipoVentanaDefectuosa", String.valueOf(tipo));
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Date date = new Date();
+			StringWriter sWriter = new StringWriter();
+			e.printStackTrace(new PrintWriter(sWriter));
+			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPorcentajePixeles(double porcentaje){
+		propiedades.setProperty("porcentajePixeles", String.valueOf(porcentaje));
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {

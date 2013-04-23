@@ -38,7 +38,9 @@ public class BarraMenu extends JMenuBar {
 	private int tipoDeteccion;
 	private int tipoEntrenamiento;
 	private int tipoClasificacion;
+	private int heuristicaVentanaDefectuosa;
 	private double saltoOpciones;
+	private double porcentajePixelesMalos;
 	private static Propiedades prop;
 	
 	public BarraMenu(PanelAplicacion pan){
@@ -82,11 +84,13 @@ public class BarraMenu extends JMenuBar {
 	private class OpcionesAvanzadasListener implements ActionListener{
 		    
 			private Frame frame;
-			private JSlider slider;
+			private JSlider sliderSalto;
 			private JComboBox<String> comboBoxVentana;
 			private JComboBox<String> comboBoxTipo;
 			private JComboBox<String> comboBoxEntrenamiento;
 			private JComboBox<String> comboBoxClasificacion;
+			private JComboBox <String> comboBoxTipoVentanaDefectuosa;
+			private JSlider sliderPxDefectuosos;
 			
 			public OpcionesAvanzadasListener(Frame fr) {
 				frame = fr;
@@ -123,33 +127,72 @@ public class BarraMenu extends JMenuBar {
 				
 				getComboBoxClasificacion(frmOpcionesAvanzadas);
 				
+				getLabelHeuristica(frmOpcionesAvanzadas);
 				
-				getDesktopPane(dialogo, frmOpcionesAvanzadas);	
+				getComboBoxHeuristica(frmOpcionesAvanzadas);
+				
+				getLabelPorcentajePixelesMal(frmOpcionesAvanzadas);
+				
+				getSliderPorcentajePixelesMal(frmOpcionesAvanzadas);
+				
+				getDesktopPane(dialogo, frmOpcionesAvanzadas);
 				
 			}
 
-			public void getComboBoxClasificacion(
-					JInternalFrame frmOpcionesAvanzadas) {
+			public void getSliderPorcentajePixelesMal(JInternalFrame frmOpcionesAvanzadas) {
+				sliderPxDefectuosos = new JSlider();
+				sliderPxDefectuosos.setPaintTicks(true);
+				sliderPxDefectuosos.setPaintLabels(true);
+				sliderPxDefectuosos.setMinorTickSpacing(1);
+				sliderPxDefectuosos.setMinimum(10);
+				sliderPxDefectuosos.setMajorTickSpacing(10);
+				sliderPxDefectuosos.setBounds(169, 212, 213, 44);
+				sliderPxDefectuosos.addChangeListener(new SliderPorcentajePixelesListener());				
+				porcentajePixelesMalos = prop.getPorcentajePixeles();
+				sliderPxDefectuosos.setValue((int)(porcentajePixelesMalos*100));
+				frmOpcionesAvanzadas.getContentPane().add(sliderPxDefectuosos);
+			}
+
+			public void getLabelPorcentajePixelesMal(JInternalFrame frmOpcionesAvanzadas) {
+				JLabel lblPorcentajePixelesDefectuosos = new JLabel("Porcentaje pxs defectuosos");
+				lblPorcentajePixelesDefectuosos.setBounds(22, 220, 147, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblPorcentajePixelesDefectuosos);
+			}
+
+			public void getComboBoxHeuristica(JInternalFrame frmOpcionesAvanzadas) {
+				comboBoxTipoVentanaDefectuosa = new JComboBox <String> ();
+				comboBoxTipoVentanaDefectuosa.setModel(new DefaultComboBoxModel <String> (new String[] {"Porcentaje pixeles malos en ventana", "Porcentaje vecinos malos pixel central"}));
+				comboBoxTipoVentanaDefectuosa.setBounds(179, 184, 205, 20);
+				comboBoxTipoVentanaDefectuosa.setSelectedIndex(prop.getTipoVentanaDefectuosa());
+				comboBoxTipoVentanaDefectuosa.addActionListener(new ComboBoxHeuristicaVentanaListener());
+				frmOpcionesAvanzadas.getContentPane().add(comboBoxTipoVentanaDefectuosa);
+			}
+
+			public void getLabelHeuristica(JInternalFrame frmOpcionesAvanzadas) {
+				JLabel lblHeursticaVentanaDefectuosa = new JLabel("Heur\u00EDstica ventana defectuosa");
+				lblHeursticaVentanaDefectuosa.setBounds(22, 187, 147, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblHeursticaVentanaDefectuosa);
+			}
+
+			public void getComboBoxClasificacion(JInternalFrame frmOpcionesAvanzadas) {
 				comboBoxClasificacion = new JComboBox<String>();
 				comboBoxClasificacion.setModel(new DefaultComboBoxModel<String>(new String[] {"Clases Nominales", "Regresi\u00F3n"}));
-				comboBoxClasificacion.setBounds(149, 176, 205, 20);
+				comboBoxClasificacion.setBounds(179, 153, 205, 20);
 				comboBoxClasificacion.setSelectedIndex(prop.getTipoClasificacion());
 				comboBoxClasificacion.addActionListener(new ComboBoxTipoClasificacionListener());
 				frmOpcionesAvanzadas.getContentPane().add(comboBoxClasificacion);
 			}
 
-			public void getLabelClasificacion(
-					JInternalFrame frmOpcionesAvanzadas) {
+			public void getLabelClasificacion(JInternalFrame frmOpcionesAvanzadas) {
 				JLabel lblTipoDeClasificacion = new JLabel("Tipo de clasificaci\u00F3n");
-				lblTipoDeClasificacion.setBounds(22, 179, 119, 14);
+				lblTipoDeClasificacion.setBounds(22, 156, 147, 14);
 				frmOpcionesAvanzadas.getContentPane().add(lblTipoDeClasificacion);
 			}
 
-			public void getComboBoxEntrenamiento(
-					JInternalFrame frmOpcionesAvanzadas) {
+			public void getComboBoxEntrenamiento(JInternalFrame frmOpcionesAvanzadas) {
 				comboBoxEntrenamiento = new JComboBox<String>();
 				comboBoxEntrenamiento.setModel(new DefaultComboBoxModel<String>(new String[] {"Ventana aleatoria", "Ventana deslizante"}));
-				comboBoxEntrenamiento.setBounds(149, 135, 205, 20);
+				comboBoxEntrenamiento.setBounds(179, 122, 205, 20);
 				comboBoxEntrenamiento.setSelectedIndex(prop.getTipoEntrenamiento());
 				comboBoxEntrenamiento.addActionListener(new ComboBoxTipoEntrenamientoListener());
 				frmOpcionesAvanzadas.getContentPane().add(comboBoxEntrenamiento);
@@ -157,26 +200,26 @@ public class BarraMenu extends JMenuBar {
 
 			public void getLblEntrenamiento(JInternalFrame frmOpcionesAvanzadas) {
 				JLabel lblEntrenamiento = new JLabel("Ventana entrenamiento");
-				lblEntrenamiento.setBounds(22, 141, 119, 14);
+				lblEntrenamiento.setBounds(22, 125, 147, 14);
 				frmOpcionesAvanzadas.getContentPane().add(lblEntrenamiento);
 			}
 
 			public void getLabelSalto(JInternalFrame frmOpcionesAvanzadas) {
 				JLabel lblTamaoDelSalto = new JLabel("Tama\u00F1o del salto (%)");
-				lblTamaoDelSalto.setBounds(22, 46, 119, 20);
+				lblTamaoDelSalto.setBounds(22, 45, 147, 20);
 				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDelSalto);
 			}
 
 			public void getLabelVentana(JInternalFrame frmOpcionesAvanzadas) {
 				JLabel lblTamaoDeVentana = new JLabel("Tama\u00F1o de ventana");
-				lblTamaoDeVentana.setBounds(22, 11, 119, 14);
+				lblTamaoDeVentana.setBounds(22, 11, 147, 14);
 				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDeVentana);
 			}
 
 			public JInternalFrame getInternalFrame() {
 				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();
 				frmOpcionesAvanzadas.setTitle("Opciones avanzadas");
-				frmOpcionesAvanzadas.setBounds(100, 100, 380, 300);
+				frmOpcionesAvanzadas.setBounds(100, 100, 400, 330);
 				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmOpcionesAvanzadas.getContentPane().setLayout(null);
 				return frmOpcionesAvanzadas;
@@ -187,7 +230,7 @@ public class BarraMenu extends JMenuBar {
 				JDesktopPane desktoppane = new JDesktopPane();
 				desktoppane.add(frmOpcionesAvanzadas);
 				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());
-				dialogo.setMinimumSize(new Dimension(380, 300));
+				dialogo.setMinimumSize(new Dimension(400, 330));
 				dialogo.setResizable(false);
 				dialogo.pack();
 				dialogo.setLocationRelativeTo(frame);
@@ -197,7 +240,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnCancelar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(193, 238, 89, 23);
+				btnCancelar.setBounds(220, 268, 89, 23);
 				btnCancelar.addActionListener(new CancelarListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);
 			}
@@ -205,30 +248,30 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnAceptar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnAceptar = new JButton("Aceptar");
-				btnAceptar.setBounds(94, 238, 89, 23);
+				btnAceptar.setBounds(80, 268, 89, 23);
 				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);
 			}
 
 			public void getSliderSalto(JInternalFrame frmOpcionesAvanzadas) {
-				slider = new JSlider();
-				slider.setMajorTickSpacing(10);
-				slider.setMinorTickSpacing(1);
-				slider.setMinimum(10);
-				slider.setPaintLabels(true);
-				slider.setPaintTicks(true);
-				slider.setBounds(141, 36, 213, 44);
-				slider.addChangeListener(new SliderSaltoListener());				
+				sliderSalto = new JSlider();
+				sliderSalto.setMajorTickSpacing(10);
+				sliderSalto.setMinorTickSpacing(1);
+				sliderSalto.setMinimum(10);
+				sliderSalto.setPaintLabels(true);
+				sliderSalto.setPaintTicks(true);
+				sliderSalto.setBounds(171, 36, 213, 44);
+				sliderSalto.addChangeListener(new SliderSaltoListener());				
 				saltoOpciones = prop.getSalto();
-				slider.setValue((int)(saltoOpciones*100));
-				frmOpcionesAvanzadas.getContentPane().add(slider);
+				sliderSalto.setValue((int)(saltoOpciones*100));
+				frmOpcionesAvanzadas.getContentPane().add(sliderSalto);
 			}
 
 			public void getComboBoxVentana(JInternalFrame frmOpcionesAvanzadas) {
 				comboBoxVentana = new JComboBox<String>();
 				comboBoxVentana.setModel(new DefaultComboBoxModel<String>(new String[] {"8", "12", "16", "24", "32", "48"}));
 				comboBoxVentana.setSelectedItem(String.valueOf(prop.getTamVentana()));
-				comboBoxVentana.setBounds(149, 8, 52, 20);
+				comboBoxVentana.setBounds(179, 8, 52, 20);
 				comboBoxVentana.addActionListener(new ComboBoxTamVentanaListener());
 				frmOpcionesAvanzadas.getContentPane().add(comboBoxVentana);
 				tamVentanaOpciones = Integer.parseInt(comboBoxVentana.getSelectedItem().toString());
@@ -236,7 +279,7 @@ public class BarraMenu extends JMenuBar {
 			
 			public void getLabelTipo(JInternalFrame frmOpcionesAvanzadas) {
 				JLabel lblTipoDeDeteccion = new JLabel("Tipo de detecci\u00F3n");
-				lblTipoDeDeteccion.setBounds(22, 99, 104, 14);
+				lblTipoDeDeteccion.setBounds(22, 94, 147, 14);
 				frmOpcionesAvanzadas.getContentPane().add(lblTipoDeDeteccion);
 			}
 			
@@ -245,7 +288,7 @@ public class BarraMenu extends JMenuBar {
 				comboBoxTipo.setModel(new DefaultComboBoxModel<String>(new String[] {"Normal", "Normal + umbrales locales", "Blancos en umbrales locales"}));
 				comboBoxTipo.setSelectedIndex(prop.getTipoDeteccion());
 				comboBoxTipo.addActionListener(new ComboBoxTipoDeteccionListener());
-				comboBoxTipo.setBounds(149, 96, 205, 20);
+				comboBoxTipo.setBounds(179, 91, 205, 20);
 				frmOpcionesAvanzadas.getContentPane().add(comboBoxTipo);
 			}
 			
@@ -254,8 +297,20 @@ public class BarraMenu extends JMenuBar {
 				@Override
 				public void stateChanged(ChangeEvent arg0) {
 					
-					if (!slider.getValueIsAdjusting()) {
-						saltoOpciones = (double)slider.getValue()/100;
+					if (!sliderSalto.getValueIsAdjusting()) {
+						saltoOpciones = (double)sliderSalto.getValue()/100;
+					}
+					
+				}		
+			}
+			
+			private class SliderPorcentajePixelesListener implements ChangeListener{
+
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					
+					if (!sliderPxDefectuosos.getValueIsAdjusting()) {
+						porcentajePixelesMalos = (double)sliderPxDefectuosos.getValue()/100;
 					}
 					
 				}		
@@ -292,6 +347,14 @@ public class BarraMenu extends JMenuBar {
 					tipoClasificacion = comboBoxClasificacion.getSelectedIndex();					
 				}
 			}
+			
+			private class ComboBoxHeuristicaVentanaListener implements ActionListener{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					heuristicaVentanaDefectuosa = comboBoxTipoVentanaDefectuosa.getSelectedIndex();					
+				}
+			}
 	}
 	
 	private class AceptarOpcionesListener implements ActionListener{
@@ -308,6 +371,8 @@ public class BarraMenu extends JMenuBar {
 	    	prop.setTipoDeteccion(tipoDeteccion);
 	    	prop.setTipoEntrenamiento(tipoEntrenamiento);
 	    	prop.setTipoClasificacion(tipoClasificacion);
+	    	prop.setTipoVentanaDefectuosa(heuristicaVentanaDefectuosa);
+	    	prop.setPorcentajePixeles(porcentajePixelesMalos);
 	    	dialog.dispose();
 	    }
 	}
