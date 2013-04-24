@@ -164,60 +164,60 @@ En este caso, todas las reuniones requieren de la presencia de los tutores y del
 
 %Product backlog
 \section{Product Backlog del proyecto}
-En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada una de los \productitem{} y el \textit{sprint} al que pertenecen. Hemos decidido incluir también los \textit{bugs} que se han ido localizando[INSERTAR CITA].
+En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada una de los \productitem{}, el \textit{sprint} al que pertenecen y la estimación que les dimos en su momento, basándonos en una escala de puntos tipo Fibonacci (1, 2, 3, 5, 8). Hemos decidido incluir también los \textit{bugs} que se han ido localizando[INSERTAR CITA].
 
 \scrum{} no define un método o herramienta para llevar el día a día del trabajo realizado, por lo que el seguimiento se puede realizar con una simple hoja de cálculo, o con herramientas de gestión especializadas en este tipo de desarrollos.
 
 En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotaltracker.com/}) para el seguimiento. Es un software potente al que se accede mediante un navegador y sirve de control de tareas y defectos. Su licencia ha sido gratuita por tratarse de un proyecto público.
 
 %Tabla que contiene el Product Backlog
-\tabla{Product Backlog}{c p{7.5cm} p{2cm} c c}{4}{productBacklog}{
-  \multicolumn{1}{c}{ID} & \multicolumn{1}{c}{Backlog Item} & \multicolumn{1}{c}{Propietario} & \multicolumn{1}{c}{Prioridad} & \multicolumn{1}{c}{Sprint} \\
+\tabla{Product Backlog}{c p{5cm} p{2cm} c c c}{4}{productBacklog}{
+  \multicolumn{1}{c}{ID} & \multicolumn{1}{c}{Backlog Item} & \multicolumn{1}{c}{Propietario} & \multicolumn{1}{c}{Prioridad} & \multicolumn{1}{c}{Estimación} & \multicolumn{1}{c}{Sprint} \\
  }
  {
-  S-01001 & Se debe poder cargar una imagen y sacar información de sus píxeles & César, José & Alta & Sprint 1 \\
-  S-01002 & Se debe poder analizar una imagen y extraer sus características & César, José & Alta & Sprint 2  \\
-  S-01003 & La aplicación debe ser capaz de calcular una imagen Saliency Map & César, José & Alta & Sprint 3 \\
-  S-01004 & La aplicación debe poder calcular las características de Haralick & César, José & Alta & Sprint 3 \\
-  S-01005 & La aplicación debe ser capaz de generar ficheros ARFF & César, José & Alta & Sprint 3 \\
-  S-01006 & La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT & César, José & Baja & Sprint 4 \\
-  S-01007 & La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas  & César, José & Alta & Sprint 4  \\
-  S-01008 & La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media & César, José & Media & Sprint 4  \\
-  S-01009 & La aplicación debe ser capaz de albergar varios tipos de ventana & César, José & Alta & Sprint 4  \\
-  S-01010 & La aplicación debe ser capaz de entrenar un clasificador y clasificar & César, José & Alta & Sprint 4  \\
-  S-01011 & La aplicación debe ser capaz de mostrar un GUI con las principales opciones & César, José & Alta & Sprint 4  \\
-  S-01012 & La aplicación debe mostrar el progreso en una Progress Bar & César, José & Baja & Sprint 5  \\
-  S-01013 & La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar & César, José & Baja & Sprint 5  \\
-  S-01014 & La ventana de resultados se debe limpiar después de cada análisis & César, José & Media & Sprint 5  \\
-  S-01015 & La aplicación debe escribir un ARFF por cada hilo, uniéndolos al terminar el proceso & César, José & Alta & Sprint 5  \\
-  S-01016 & La aplicación debe mostrar eventos de funcionamiento en la interfaz & César, José & Media & Sprint 5  \\
-  S-01017 & La aplicación debe guardar y cargar en un fichero las opciones & César, José & Media & Sprint 5  \\
-  S-01018 & La aplicación debe ser capaz de guardar un log de errores & César, José & Baja & Sprint 5  \\
-  S-01019 & La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar & César, José & Alta & Sprint 5  \\
-  S-01020 & La aplicación debe usar la convolución de la imagen completa, en el caso de que no se elija región, o toda la región más un margen & César, José & Alta & Sprint 5  \\
-  S-01021 & La aplicación debe poder dibujar los defectos encontrados & César, José & Alta & Sprint 5  \\
-  S-01022 & La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no & César, José & Alta & Sprint 5  \\
-  S-01023 & La aplicación debe mostrar un slider para seleccionar el umbral de detección & César, José & Alta & Sprint 5  \\
-  S-01024 & La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log & César, José & Baja & Sprint 6  \\
-  S-01025 & La aplicación debe ser capaz de exportar el log en formato HTML & César, José & Baja & Sprint 6  \\
-  S-01026 & La aplicación debe tener un menú con varias opciones & César, José & Media & Sprint 6  \\
-  S-01027 & La aplicación debe usar REPTree para regresión lineal & César, José & Media & Sprint 6  \\
-  S-01028 & La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara & César, José & Alta & Sprint 6  \\
-  S-01029 & La aplicación debe dirigir la búsqueda de defectos usando filtros de umbrales locales & César, José & Alta & Sprint 6  \\
-  B-01001 & BUG: la primera y segunda derivadas deben estar bien calculadas  & César, José & Alta & Sprint 6  \\
-  S-01030 & La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos & César, José & Media & Sprint 7  \\
-  S-01031 & La aplicación debe calcular los umbrales locales con un pequeño margen & César, José & Media & Sprint 7  \\
-  S-01032 & La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante & César, José & Alta & Sprint 7  \\
-  S-01033 & La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos & César, José & Alta & Sprint 7  \\
-  S-01034 & La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas & César, José & Alta & Sprint 7  \\
-  S-01035 & Se debe poder mostrar una tabla resumen de los defectos & César, José & Alta & Sprint 7  \\
-  S-01036 & La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & Sprint 8  \\
-  S-01037 & La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen & César, José & Media & Sprint 8  \\
-  S-01038 & La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar  & César, José & Media & Sprint 8  \\
-  S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & Sprint 8  \\
-  S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & Sprint 8  \\
-  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores  & César, José & Media & Sprint 8  \\
-  B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & Sprint 8  \\
+  S-01001 & Se debe poder cargar una imagen y sacar información de sus píxeles & César, José & Alta & 2 & Sprint 1 \\
+  S-01002 & Se debe poder analizar una imagen y extraer sus características & César, José & Alta & 5 & Sprint 2  \\
+  S-01003 & La aplicación debe ser capaz de calcular una imagen Saliency Map & César, José & Alta & 5 & Sprint 3 \\
+  S-01004 & La aplicación debe poder calcular las características de Haralick & César, José & Alta & 8 & Sprint 3 \\
+  S-01005 & La aplicación debe ser capaz de generar ficheros ARFF & César, José & Alta & 5 & Sprint 3 \\
+  S-01006 & La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT & César, José & Baja & 1 & Sprint 4 \\
+  S-01007 & La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas  & César, José & Alta & 1 & Sprint 4  \\
+  S-01008 & La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media & César, José & Media & 3 & Sprint 4  \\
+  S-01009 & La aplicación debe ser capaz de albergar varios tipos de ventana & César, José & Alta & 1 & Sprint 4  \\
+  S-01010 & La aplicación debe ser capaz de entrenar un clasificador y clasificar & César, José & Alta & 5 & Sprint 4  \\
+  S-01011 & La aplicación debe ser capaz de mostrar un GUI con las principales opciones & César, José & Alta & 5 & Sprint 4  \\
+  S-01012 & La aplicación debe mostrar el progreso en una Progress Bar & César, José & Baja & 2 & Sprint 5  \\
+  S-01013 & La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar & César, José & Baja & 1 & Sprint 5  \\
+  S-01014 & La ventana de resultados se debe limpiar después de cada análisis & César, José & Media & 1 & Sprint 5  \\
+  S-01015 & La aplicación debe escribir un ARFF por cada hilo, uniéndolos al terminar el proceso & César, José & Alta & 3 & Sprint 5  \\
+  S-01016 & La aplicación debe mostrar eventos de funcionamiento en la interfaz & César, José & Media & 2 & Sprint 5  \\
+  S-01017 & La aplicación debe guardar y cargar en un fichero las opciones & César, José & Media & 3 & Sprint 5  \\
+  S-01018 & La aplicación debe ser capaz de guardar un log de errores & César, José & Baja & 2 & Sprint 5  \\
+  S-01019 & La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar & César, José & Alta & 3 & Sprint 5  \\
+  S-01020 & La aplicación debe usar la convolución de la imagen completa, en el caso de que no se elija región, o toda la región más un margen & César, José & Alta & 3 & Sprint 5  \\
+  S-01021 & La aplicación debe poder dibujar los defectos encontrados & César, José & Alta & 3 & Sprint 5  \\
+  S-01022 & La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no & César, José & Alta & 8 & Sprint 5  \\
+  S-01023 & La aplicación debe mostrar un slider para seleccionar el umbral de detección & César, José & Alta & 3 & Sprint 5  \\
+  S-01024 & La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log & César, José & Baja & 3 & Sprint 6  \\
+  S-01025 & La aplicación debe ser capaz de exportar el log en formato HTML & César, José & Baja & 2 & Sprint 6  \\
+  S-01026 & La aplicación debe tener un menú con varias opciones & César, José & Media & 2 & Sprint 6  \\
+  S-01027 & La aplicación debe usar REPTree para regresión lineal & César, José & Media & 1 & Sprint 6  \\
+  S-01028 & La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara & César, José & Alta & 5 & Sprint 6  \\
+  S-01029 & La aplicación debe dirigir la búsqueda de defectos usando filtros de umbrales locales & César, José & Alta & 5 & Sprint 6  \\
+  B-01001 & BUG: la primera y segunda derivadas deben estar bien calculadas  & César, José & Alta & - & Sprint 6  \\
+  S-01030 & La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos & César, José & Media & 2 & Sprint 7  \\
+  S-01031 & La aplicación debe calcular los umbrales locales con un pequeño margen & César, José & Media & 2 & Sprint 7  \\
+  S-01032 & La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante & César, José & Alta & 3 & Sprint 7  \\
+  S-01033 & La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos & César, José & Alta & 5 & Sprint 7  \\
+  S-01034 & La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas & César, José & Alta & 5 & Sprint 7  \\
+  S-01035 & Se debe poder mostrar una tabla resumen de los defectos & César, José & Alta & 5 & Sprint 7  \\
+  S-01036 & La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & 2 & Sprint 8  \\
+  S-01037 & La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen & César, José & Media & 3 & Sprint 8  \\
+  S-01038 & La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar  & César, José & Media & 3 & Sprint 8  \\
+  S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & 3 & Sprint 8  \\
+  S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & 5 & Sprint 8  \\
+  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores  & César, José & Media & 3 & Sprint 8  \\
+  B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & - & Sprint 8  \\
  }
 \newpage
 
@@ -233,3 +233,223 @@ En esta sección aparece el listado de los diversos \sprints{} del proyecto. La 
 \end{itemize}
 
 Debido a la falta de conocimiento inicial y a la incertidumbre sobre el desarrollo, se inicia el proyecto con \sprints{} de corta duración, aproximadamente dos semanas. Se ha intentado mantener siempre esta duración, aunque a veces nos ha podido el optimismo y hemos metido demasiado trabajo o no se han tenido en cuenta ciertos problemas de tiempo.
+
+Las reuniones inicial y final de cada \sprint{} se solaparon para poder hacerlas el mismo día, debido a problemas de tiempo y de disponibilidad. Así, media parte de esta reunión se centraba en la \textit{Planning meeting} y la otra en la \textit{Retrospective meeting}.
+
+
+\subsection{Sprint 1: Spike Arquitectónico 1}
+\subsubsection*{Planning meeting}
+En este primer \sprint{} se pretende comenzar el proyecto, empezar a usar ImageJ, familiarizarnos con el proyecto del año pasado... Se empiezan a poner en práctica algunas de las ideas que teníamos para el diseño de la aplicación. Lo llamamos \textit{spike arquitectónico} debido a que es una primera aproximación al proyecto, tomando prestado el nombre de otra metodología ágil (\textit{Extreme Programming}).
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este primer \sprint{} comienza el 19/11/2012 y su fecha límite es el 27/11/2012. Es un \sprint{} muy corto debido a que es una primera aproximación. Los puntos totales estimados en este \sprint{} son de 2, con lo pensamos que vamos a dedicarle 4 horas/hombre.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+\item  S-01001: Se debe poder cargar una imagen y sacar información de sus píxeles.
+	\begin{itemize}
+	\item TK-00001: Carga y manejo de la imagen con ImageJ (1.5 horas).
+	\item TK-00002: Creación de la ventana deslizante (simple) (1.5 horas).
+	\item TK-00003: Creación de una pequeña interfaz que muestre los resultados (1 hora).
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+Para este \sprint{} no disponemos de \burndownchart{} debido a un fallo en el uso de \textit{Pivotal Tracker}. Como aún no estábamos familiarizados con él, finalizamos antes la \textit{release} que la historia de usuario, con lo que no se ve reflejado en el \burndownchart{}.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item La lectura de artículos y comprensión del proyecto avanza por buen camino.
+ \item Nos vamos familiarizando con ImageJ y el resto de nuevas herramientas.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Familiarizarse con ImageJ es difícil. Por ello, llegamos a plantearnos el uso de alguna otra librería, como \textit{OpenCL}, pero acabamos descartándolo debido a que ImageJ tienen muy buena documentación, cosa que el resto no.
+ \item Adaptación a la nueva metodología.
+\end{itemize}
+
+
+\subsection{Sprint 2: Spike Arquitectónico 2}
+\subsubsection*{Planning meeting}
+Como seguimos probando cosas más que implementar funcionalidad nueva, consideramos a este \sprint{} otro \textit{spike}, aunque este está ya más orientado a nueva funcionalidad. Básicamente, lo que buscamos en este \sprint{} es:
+
+\begin{enumerate}
+\item Seguir familiarizándonos con ImageJ.
+\item Convertir la aplicación en multihilo, dividiendo la imagen a analizar en tantas partes como procesadores tenga la máquina y analizando cada trozo en un hilo separado.
+\item Implementar los algoritmos de extracción de características, usando lo que se pueda del proyecto del año pasado.
+\end{enumerate}
+
+También comentamos otras cosas como que, de momento, vamos a sacar los resultados por pantalla, pero que hay que ir pensando en sacarlos a un fichero. También tenemos que pensar que hay que usar \textit{Saliency Map} para el preprocesamiento.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} comienza el 27/11/2012 y la fecha límite es el 11/12/2012. El número total de puntos estimado es de 5, con lo que pensamos que vamos a dedicarle 12 horas/hombre.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+\item S-01002: Se debe poder analizar una imagen y extraer sus características.
+	\begin{itemize}
+	\item TK-00004: Implementación de la ventana deslizante multihilo (6 horas).
+	\item TK-00005: Implementación de los algoritmos de selección de características (5 horas).
+	\item TK-00006: Implementación de las llamadas a los algoritmos de selección de características y muestra de los resultados (1 hora).
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint2} podemos ver 2 cosas:
+
+\begin{enumerate}
+\item Hay una incoherencia en las fecha de inicio, ya que, de nuevo, por la falta de conocimientos del uso de \textit{PivotalTracker}, metimos una historia de usuario antes de tiempo y después nos limitamos a cambiar el nombre, dándonos cuenta mucho después de que lo habíamos hecho mal.
+\item Tuvimos ciertos problemas de tiempo y de implementación, por lo que hay un tiempo totalmente plano en el que no pudimos terminar ninguna tarea, lo que llevó a pasarnos de fecha hasta el 18/12/2012.
+\end{enumerate}
+
+%Burndown chart del Sprint 2.
+\figura{1}{imgs/burndownChartSprint2.png}{Burndown Chart del segundo Sprint}{burndownChartSprint2}{}
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Cada vez dominamos más ImageJ.
+ \item Hemos conseguido implementar con éxito el multihilo.
+ \item Las implementaciones de los algoritmos de extracción de características del año pasado parece que van bien, por lo que decidimos mantenerlas.
+ \item El diseño que habíamos pensado se está probando ser bueno.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Hemos planificado mal este \sprint{}, ya que fuimos muy optimistas respecto al tiempo y a las dificultades. Tuvimos mucha carga de trabajo de otras asignaturas.
+ \item Tuvimos problemas con las coordenadas, lo que nos quitó mucho tiempo.
+\end{itemize}
+
+\subsection{Sprint 3}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{enumerate}
+\item Implementar las características de Haralick, que por ser muy pesadas, no se hicieron en el anterior \sprint{}.
+\item Calcular el \textit{Saliency Map} para el preprocesamiento de la imagen.
+\item Generar un fichero ARFF con el resultado de los análisis.
+\end{enumerate}
+
+Como vemos, algunas de las cosas que se hablaron en anteriores reuniones se ponen en práctica en este \sprint{}.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se planificó de manera especial, ya que por medio están las vacaciones de Navidad y el periodo de exámenes del primer cuatrimestre. Por eso es más largo de lo normal: del 19/12/2012 al 24/01/2013. El número total de puntos estimado es de 18 y creemos que vamos a dedicarle 20 horas/hombre.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01003: La aplicación debe ser capaz de calcular una imagen Saliency Map.
+ \begin{itemize}
+  \item TK-00007: Implementar el cálculo de Saliency Map (3 horas).
+  \item TK-00008: Adición de los Saliency Map a la estructura del programa (0.5 horas).
+ \end{itemize} 
+ \item S-01004: La aplicación debe poder calcular las características de Haralick.
+ \begin{itemize}
+  \item TK-00009: Implementar características de Haralick (7 horas).
+  \item TK-00010: Añadirlo a la estructura del patrón Estrategia de algoritmos (1 hora).
+ \end{itemize}
+ \item S-01005: La aplicación debe ser capaz de generar ficheros ARFF.
+ \begin{itemize}
+  \item TK-00011: Generación de ARFF a partir de los datos de las características (8.5 horas).
+ \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint3} podemos ver que hay un gran periodo totalmente plano, en el que no pudimos prácticamente hacer nada del proyecto. Esto estaba previsto y controlado, y por eso planificamos este \sprint{} con tanto tiempo.
+
+%Burndown chart del Sprint 3.
+\figura{1}{imgs/burndownChartSprint3.png}{Burndown Chart del tercer Sprint}{burndownChartSprint3}{}
+
+Por lo demás, vemos que en este \sprint{} no nos pasamos de la fecha límte.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Los nuevos algoritmos parecen funcionar bien lo que había el año pasado, por lo que decidimos mantenerlo (excepto una cosa, de la que hablaremos más tarde).
+ \item El diseño que habíamos pensado se vuelve a probar ser bueno, ya que permite añadir nuevos algoritmos muy fácilmente.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item La implementación de la última característica de Haralick es muy lenta. Hemos observado que los alumnos del año pasado hicieron su propia clase de cálculos de matrices, cosa que nos pareció absurda y contraproducente. De hecho, ellos anularon esta característica para presentar el proyecto.
+ \item En este \sprint{} quizás nos pasamos estimando el tiempo de cada tarea, debido en parte a lo que nos pasó en el anterior \sprint{}.
+\end{itemize}
+
+
+\subsection{Sprint 4}
+\subsubsection*{Planning meeting}
+En este \sprint{} planeamos hacer:
+
+\begin{itemize}
+\item Probar implementaciones alternativas para los autovalores de una matriz (Weka, COLT...).
+\item Añadir un solapamiento al dividir las imágenes para el multihilo, para tener en cuenta la importancia de los pixeles de la división, ya que pueden ser importantes en la otra parte de la imagen.
+\item Modificar la convolución de las imágenes para hacerlo con la imagen completa.
+\item Entrenar un clasificador, para lo que hace falta una ventana aleatoria.
+\item Implementar la interfaz de usuario.
+\end{itemize}
+
+Además, se habló de otras cosas, como el ir probando los umbrales adaptitivos en ImageJ, o cosas que deben ir en la memoria (la metodología debe aparecer en el apartado de técnicas, resaltar los aspectos relevantes y nuevos del proyecto de este año \textit{versus} la versión del año pasado...). Llegamos incluso a hablar de la idea de clasificar los defectos en tipo, para lo cual es necesario calcular características geométricas.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 26/01/2013 y tiene como fecha límite el 15/02/2013. Tiene un total de puntos estimados de 20, con lo que planeamos dedicarle 27 horas/hombre.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01006: La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT.
+ \begin{itemize}
+  \item TK-00012: Añadir las librerías necesarias (0.5 horas).
+  \item TK-00013: Sustituir la llamada a eigenvalues por el método correspondiente de las nuevas librerías (1.5 horas).
+ \end{itemize}
+ \item S-01007: La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas.
+ \begin{itemize}
+  \item TK-00014: Modificar la división de las imágenes para permitir un solapamiento (1 hora).
+ \end{itemize}
+ \item S-01008: La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media.
+ \begin{itemize}
+  \item TK-00015: Calcular la convolución de la imagen completa (1.5 horas).
+  \item TK-00016: Calcular sobre la convolución la primera y segunda derivadas (1.5 horas).
+ \end{itemize}
+ \item S-01009: La aplicación debe ser capaz de albergar varios tipos de ventana.
+ \begin{itemize}
+  \item TK-00017: Crear el patrón estrategia (1 hora).
+  \item TK-00018: Creación de la clase de la ventana aleatoria (1 hora).
+ \end{itemize}
+ \item S-01010: La aplicación debe ser capaz de entrenar un clasificador y clasificar.
+ \begin{itemize}
+  \item TK-00019: Crear 2 listas de píxeles centrales: una con defectos y otra sin defectos (2 horas).
+  \item TK-00020: Seleccionar de forma aleatoria ventanas sobre las que calcular características, a partir de las 2 listas (1 hora).
+  \item TK-00021: Entrenar a un clasificador y guardar el modelo obtenido (4 horas).
+  \item TK-00022: Clasificar defectos (2 horas).
+ \end{itemize}
+ \item S-01011: La aplicación debe ser capaz de mostrar un GUI con las principales opciones.
+ \begin{itemize}
+  \item TK-00023: Implementación de la GUI (8 horas).
+  \item YK-00024: Adaptación del resto del código (2 horas).
+ \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint4} podemos ver que el desarrollo fue bastante escalonado, teniendo periodos planos en los que no podíamos avanzar debido a las dificultades.
+
+%Burndown chart del Sprint 4.
+\figura{1}{imgs/burndownChartSprint4.png}{Burndown Chart del cuarto Sprint}{burndownChartSprint4}{}
+
+Todo esto al final hizo que nos pasáramos de fecha, ya que acabamos el 21 de febrero.
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item El diseño que habíamos pensado se vuelve a probar ser bueno, ya que, usando la misma idea para las ventanas que para los algoritmos, nos permite añadir nuevos tipos de ventana fácilmente.
+ \item El entrenamiento funciona bien. Esto nos permitió ganar mucha comprensión acerca de cómo funciona esta parte del proyecto.
+ \item La GUI implementada es más intuitiva que la del año pasado.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Los autovalores siguen siendo muy lentos.
+ \item Mala planificación: nos pasamos metiendo historias en este \sprint{}, por lo que nos ha llevado algo más de tiempo del previsto.
+ \item Fallo extraño al crear el ARFF de entrenamiento: hay veces que los hilos no lo hacen bien.
+\end{itemize}

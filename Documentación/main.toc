@@ -72,5 +72,9 @@
 \contentsline {subsection}{\numberline {A.3.1}Actores}{51}{subsection.136}
 \contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{51}{subsection.137}
 \contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{53}{section.139}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{56}{section.141}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{64}{section.141}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{57}{section.141}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{57}{subsection.142}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{58}{subsection.143}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{59}{subsection.150}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.155}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{74}{figure.156}
