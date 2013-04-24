@@ -72,5 +72,5 @@
 \contentsline {subsection}{\numberline {A.3.1}Actores}{51}{subsection.136}
 \contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{51}{subsection.137}
 \contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{53}{section.139}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{54}{section.141}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{62}{section.141}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{56}{section.141}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{64}{section.141}

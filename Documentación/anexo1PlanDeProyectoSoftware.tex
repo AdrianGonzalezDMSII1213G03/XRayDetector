@@ -164,30 +164,62 @@ En este caso, todas las reuniones requieren de la presencia de los tutores y del
 
 %Product backlog
 \section{Product Backlog del proyecto}
-En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada una de los \productitem{}.
+En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada una de los \productitem{} y el \textit{sprint} al que pertenecen. Hemos decidido incluir también los \textit{bugs} que se han ido localizando[INSERTAR CITA].
 
 \scrum{} no define un método o herramienta para llevar el día a día del trabajo realizado, por lo que el seguimiento se puede realizar con una simple hoja de cálculo, o con herramientas de gestión especializadas en este tipo de desarrollos.
 
 En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotaltracker.com/}) para el seguimiento. Es un software potente al que se accede mediante un navegador y sirve de control de tareas y defectos. Su licencia ha sido gratuita por tratarse de un proyecto público.
 
-[METER NUESTRA TABLA CUANDO ESTÉ COMPLETA]
-
 %Tabla que contiene el Product Backlog
-\tabla{Product Backlog}{c p{8.5cm} p{2cm} c}{4}{productBacklog}{
-  \multicolumn{1}{c}{ID} & \multicolumn{1}{c}{Backlog Item} & \multicolumn{1}{c}{Propietario} & \multicolumn{1}{c}{Prioridad} \\
+\tabla{Product Backlog}{c p{7.5cm} p{2cm} c c}{4}{productBacklog}{
+  \multicolumn{1}{c}{ID} & \multicolumn{1}{c}{Backlog Item} & \multicolumn{1}{c}{Propietario} & \multicolumn{1}{c}{Prioridad} & \multicolumn{1}{c}{Sprint} \\
  }
  {
-  S-01004 & Generar una librería con los principales algoritmos clásicos de Selección de Instancias & César                   & Alta  \\
-  S-01008 & Añadir a la librería el algoritmo \demois{}                                             & César                   & Alta  \\
-  S-01006 & Documentar el proyecto de final de carrera                                              & César                   & Alta  \\
-  S-01007 & Reuniones internas exigidas por \scrum{}                                                & César                   & Alta  \\
-  S-01012 & Presentación y defensa del proyecto                                                     & César, Juan José, Álvar & Alta  \\
-  S-01005 & Generar una interfaz gráfica para manejar la librería                                   & César                   & Media \\
-  S-01011 & Generar una interfaz en línea de comandos para manejar la librería                      & César                   & Baja  \\
-  S-01009 & Aprender \LaTeX                                                                         & Álvar                   & Baja  \\
+  S-01001 & Se debe poder cargar una imagen y sacar información de sus píxeles & César, José & Alta & Sprint 1 \\
+  S-01002 & Se debe poder analizar una imagen y extraer sus características & César, José & Alta & Sprint 2  \\
+  S-01003 & La aplicación debe ser capaz de calcular una imagen Saliency Map & César, José & Alta & Sprint 3 \\
+  S-01004 & La aplicación debe poder calcular las características de Haralick & César, José & Alta & Sprint 3 \\
+  S-01005 & La aplicación debe ser capaz de generar ficheros ARFF & César, José & Alta & Sprint 3 \\
+  S-01006 & La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT & César, José & Baja & Sprint 4 \\
+  S-01007 & La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas  & César, José & Alta & Sprint 4  \\
+  S-01008 & La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media & César, José & Media & Sprint 4  \\
+  S-01009 & La aplicación debe ser capaz de albergar varios tipos de ventana & César, José & Alta & Sprint 4  \\
+  S-01010 & La aplicación debe ser capaz de entrenar un clasificador y clasificar & César, José & Alta & Sprint 4  \\
+  S-01011 & La aplicación debe ser capaz de mostrar un GUI con las principales opciones & César, José & Alta & Sprint 4  \\
+  S-01012 & La aplicación debe mostrar el progreso en una Progress Bar & César, José & Baja & Sprint 5  \\
+  S-01013 & La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar & César, José & Baja & Sprint 5  \\
+  S-01014 & La ventana de resultados se debe limpiar después de cada análisis & César, José & Media & Sprint 5  \\
+  S-01015 & La aplicación debe escribir un ARFF por cada hilo, uniéndolos al terminar el proceso & César, José & Alta & Sprint 5  \\
+  S-01016 & La aplicación debe mostrar eventos de funcionamiento en la interfaz & César, José & Media & Sprint 5  \\
+  S-01017 & La aplicación debe guardar y cargar en un fichero las opciones & César, José & Media & Sprint 5  \\
+  S-01018 & La aplicación debe ser capaz de guardar un log de errores & César, José & Baja & Sprint 5  \\
+  S-01019 & La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar & César, José & Alta & Sprint 5  \\
+  S-01020 & La aplicación debe usar la convolución de la imagen completa, en el caso de que no se elija región, o toda la región más un margen & César, José & Alta & Sprint 5  \\
+  S-01021 & La aplicación debe poder dibujar los defectos encontrados & César, José & Alta & Sprint 5  \\
+  S-01022 & La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no & César, José & Alta & Sprint 5  \\
+  S-01023 & La aplicación debe mostrar un slider para seleccionar el umbral de detección & César, José & Alta & Sprint 5  \\
+  S-01024 & La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log & César, José & Baja & Sprint 6  \\
+  S-01025 & La aplicación debe ser capaz de exportar el log en formato HTML & César, José & Baja & Sprint 6  \\
+  S-01026 & La aplicación debe tener un menú con varias opciones & César, José & Media & Sprint 6  \\
+  S-01027 & La aplicación debe usar REPTree para regresión lineal & César, José & Media & Sprint 6  \\
+  S-01028 & La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara & César, José & Alta & Sprint 6  \\
+  S-01029 & La aplicación debe dirigir la búsqueda de defectos usando filtros de umbrales locales & César, José & Alta & Sprint 6  \\
+  B-01001 & BUG: la primera y segunda derivadas deben estar bien calculadas  & César, José & Alta & Sprint 6  \\
+  S-01030 & La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos & César, José & Media & Sprint 7  \\
+  S-01031 & La aplicación debe calcular los umbrales locales con un pequeño margen & César, José & Media & Sprint 7  \\
+  S-01032 & La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante & César, José & Alta & Sprint 7  \\
+  S-01033 & La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos & César, José & Alta & Sprint 7  \\
+  S-01034 & La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas & César, José & Alta & Sprint 7  \\
+  S-01035 & Se debe poder mostrar una tabla resumen de los defectos & César, José & Alta & Sprint 7  \\
+  S-01036 & La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & Sprint 8  \\
+  S-01037 & La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen & César, José & Media & Sprint 8  \\
+  S-01038 & La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar  & César, José & Media & Sprint 8  \\
+  S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & Sprint 8  \\
+  S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & Sprint 8  \\
+  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores  & César, José & Media & Sprint 8  \\
+  B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & Sprint 8  \\
  }
 \newpage
-
 
 
 %Planificación por Sprint
