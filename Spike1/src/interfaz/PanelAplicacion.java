@@ -1,8 +1,11 @@
 package interfaz;
 
 import ij.ImagePlus;
+import ij.gui.Overlay;
+import ij.gui.Roi;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -10,6 +13,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,6 +36,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
@@ -39,6 +45,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.html.HTMLDocument;
@@ -51,8 +58,6 @@ import org.apache.commons.io.FileUtils;
 import utils.Graphic;
 import utils.MyLogHandler;
 import utils.Propiedades;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class PanelAplicacion{
 
@@ -85,6 +90,7 @@ public class PanelAplicacion{
     private JButton btnExportarLog;
     private JTable tablaResultados;
     private JPanel panelTabla_1;
+    private ImagePlus copiaEdges;
     
 
 	/**
@@ -187,8 +193,8 @@ public class PanelAplicacion{
 		frmXraydetector.getContentPane().add(panelTabla_1);
 		
 		getTablaResultados(panelTabla_1);
-		
-		
+		imgPanel.setFocusable(true);
+	
 	}
 
 	public void getTablaResultados(JPanel panelTabla) {
@@ -220,11 +226,14 @@ public class PanelAplicacion{
 		});
 		resizeColumnas();
 		tablaResultados.setEnabled(false);
+		tablaResultados.setRowSelectionAllowed(true);
+		tablaResultados.addMouseListener(new TableMouseListener());
 		panelTabla_1.setLayout(null);
 		JScrollPane scrlPane = new JScrollPane(tablaResultados);
 		scrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrlPane.setBounds(10, 21, 730, 141);
 		panelTabla.add(scrlPane);
+		imgPanel.setTablaResultados(tablaResultados);
 	}
 
 	public void resizeColumnas() {
@@ -457,6 +466,10 @@ public class PanelAplicacion{
 				}
 				tablaResultados.setModel(fachada.getTableModel());
 				resizeColumnas();
+				copiaEdges = new ImagePlus("copiaEdges", imgPanel.getImage());
+				imgPanel.setImageCopy(copiaEdges.getImage());
+				imgPanel.grabFocus();
+				imgPanel.setArrayRois(fachada.getArrayRoisCompleto());
 			}
 			
 		}		
@@ -573,6 +586,10 @@ public class PanelAplicacion{
 			if(!parado){
 				tablaResultados.setModel(fachada.getTableModel());
 				resizeColumnas();
+				copiaEdges = new ImagePlus("copiaEdges", imgPanel.getImage());
+				imgPanel.setImageCopy(copiaEdges.getImage());
+				imgPanel.grabFocus();
+				imgPanel.setArrayRois(fachada.getArrayRoisCompleto());
 				try {
 					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
@@ -1161,5 +1178,29 @@ public class PanelAplicacion{
 				}
 			}
 		}		
+	}
+	
+	private class TableMouseListener extends MouseAdapter{ 
+		public void mouseClicked(MouseEvent e){
+			
+			//restaurar imagen original
+			imgPanel.setImage(copiaEdges.getImage());
+			imgPanel.repaint();
+			
+			//pintar la selección
+			int fila = tablaResultados.rowAtPoint(e.getPoint());
+			Roi roi = fachada.getRoi(fila);
+			int alpha = 63;
+			Color c = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
+			roi.setFillColor(c);
+			ImagePlus im = copiaEdges.duplicate();
+			im.setOverlay(new Overlay(roi));
+			im = im.flatten();
+			im.updateAndDraw();
+			imgPanel.setImage(im.getImage());
+			imgPanel.repaint();
+			
+			imgPanel.grabFocus();
+	    }
 	}
 }

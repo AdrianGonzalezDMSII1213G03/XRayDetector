@@ -885,4 +885,12 @@ public class Fachada {
 	public DefaultTableModel getTableModel(){
 		return tableModel;
 	}
+	
+	public Roi getRoi(int index){
+		return arrayRois[index];
+	}
+	
+	public Roi[] getArrayRoisCompleto(){
+		return arrayRois;
+	}
 }
