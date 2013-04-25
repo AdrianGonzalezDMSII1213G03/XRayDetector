@@ -541,6 +541,47 @@ public class PanelAplicacion{
 					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
 			    	thread = new Thread(threadAnalizar);
+			    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+    		    	    public void uncaughtException(Thread th, Throwable ex) {
+    		    	    	JOptionPane.showMessageDialog(
+    		    	    			   null,
+    		    	    			   "Se ha producido un error: "+ ex.getMessage(),
+    		    	    			   "Error",
+    		    	    			   JOptionPane.ERROR_MESSAGE);
+    		    	    	parado = false;
+    		    			btnEntrenarClasificador.setEnabled(true);
+    		    			btnAbrirImagen.setEnabled(true);
+    		    			btnStop.setEnabled(false);
+    		    			slider.setValue(prop.getUmbral());
+    		    			slider.setEnabled(true);
+    		    			btnExportarLog.setEnabled(true);
+    		    			btnLimpiarLog.setEnabled(true);
+    		    			tablaResultados.setEnabled(true);
+    		    			if(imagenAbierta){
+    		    				btnAnalizar.setEnabled(true);
+    		    			}
+    		    			else{
+    		    				btnAnalizar.setEnabled(false);
+    		    			}
+    						try {
+								kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
+								txtLog.setCaretPosition(txtLog.getDocument().getLength());
+							} catch (BadLocationException e) {
+								Date date = new Date();
+								StringWriter sWriter = new StringWriter();
+								e.printStackTrace(new PrintWriter(sWriter));
+								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+								e.printStackTrace();
+							} catch (IOException e) {
+								Date date = new Date();
+								StringWriter sWriter = new StringWriter();
+								e.printStackTrace(new PrintWriter(sWriter));
+								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+								e.printStackTrace();
+							}
+    		    	    }
+    		    	};
+    		    	thread.setUncaughtExceptionHandler(h);
 			    	thread.start();
 				}
 	    	}
@@ -583,31 +624,39 @@ public class PanelAplicacion{
 					break;
 			}
 			
-			if(!parado){
-				tablaResultados.setModel(fachada.getTableModel());
-				resizeColumnas();
-				copiaEdges = new ImagePlus("copiaEdges", imgPanel.getImage());
-				imgPanel.setImageCopy(copiaEdges.getImage());
-				imgPanel.grabFocus();
-				imgPanel.setArrayRois(fachada.getArrayRoisCompleto());
-				try {
-					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
-					txtLog.setCaretPosition(txtLog.getDocument().getLength());
-				} catch (BadLocationException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
-					e1.printStackTrace();
+			if(fachada.getExcepcion() != null){	//se han producido excepciones
+				RuntimeException e = fachada.getExcepcion();
+				fachada.setExcepcion(null);
+				throw e;				
+			}
+			else{
+				
+				if(!parado){
+					tablaResultados.setModel(fachada.getTableModel());
+					resizeColumnas();
+					copiaEdges = new ImagePlus("copiaEdges", imgPanel.getImage());
+					imgPanel.setImageCopy(copiaEdges.getImage());
+					imgPanel.grabFocus();
+					imgPanel.setArrayRois(fachada.getArrayRoisCompleto());
+					try {
+						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
+						txtLog.setCaretPosition(txtLog.getDocument().getLength());
+					} catch (BadLocationException e1) {
+						Date date = new Date();
+						StringWriter sWriter = new StringWriter();
+						e1.printStackTrace(new PrintWriter(sWriter));
+						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						Date date = new Date();
+						StringWriter sWriter = new StringWriter();
+						e1.printStackTrace(new PrintWriter(sWriter));
+						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						e1.printStackTrace();
+					}
 				}
 			}
-			
+				
 			parado = false;
 			btnEntrenarClasificador.setEnabled(true);
 			btnAbrirImagen.setEnabled(true);
@@ -799,7 +848,6 @@ public class PanelAplicacion{
 		        		    	thread = new Thread(threadEntrenar);
 		        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 		        		    	    public void uncaughtException(Thread th, Throwable ex) {
-		        		    	    	System.out.println("Excepcion capturada en interfaz");
 		        		    	    	JOptionPane.showMessageDialog(
 		        		    	    			   null,
 		        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
@@ -982,29 +1030,37 @@ public class PanelAplicacion{
 				
 				fachada.ejecutaEntrenamiento(arff, null);
 				
-				if(!parado){
-					
-					try {
-						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo entrenado correctamente" +
-								"con el ARFF especificado</p><br>", 0, 0, null);
-						txtLog.setCaretPosition(txtLog.getDocument().getLength());
-					} catch (BadLocationException e) {
-						throw new RuntimeException(e);
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-				btnEntrenarClasificador.setEnabled(true);
-				btnAbrirImagen.setEnabled(true);
-				btnStop.setEnabled(false);
-				btnExportarLog.setEnabled(true);
-				btnLimpiarLog.setEnabled(true);
-				tablaResultados.setEnabled(false);
-				if(imagenAbierta){
-					btnAnalizar.setEnabled(true);
+				if(fachada.getExcepcion() != null){	//se han producido excepciones
+					RuntimeException e = fachada.getExcepcion();
+					fachada.setExcepcion(null);
+					throw e;				
 				}
 				else{
-					btnAnalizar.setEnabled(false);
+					
+					if(!parado){
+						
+						try {
+							kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo entrenado correctamente" +
+									"con el ARFF especificado</p><br>", 0, 0, null);
+							txtLog.setCaretPosition(txtLog.getDocument().getLength());
+						} catch (BadLocationException e) {
+							throw new RuntimeException(e);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+					btnEntrenarClasificador.setEnabled(true);
+					btnAbrirImagen.setEnabled(true);
+					btnStop.setEnabled(false);
+					btnExportarLog.setEnabled(true);
+					btnLimpiarLog.setEnabled(true);
+					tablaResultados.setEnabled(false);
+					if(imagenAbierta){
+						btnAnalizar.setEnabled(true);
+					}
+					else{
+						btnAnalizar.setEnabled(false);
+					}
 				}
 			}
 			else{	//entrenar con imágenes
@@ -1073,17 +1129,22 @@ public class PanelAplicacion{
 						
 						fachada.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog, kit, doc);
 						
-						if(!parado){
-														
-							try {
-								kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de entrenamiento finalizado con éxito </p><br>", 0, 0, null);
-								txtLog.setCaretPosition(txtLog.getDocument().getLength());
-							} catch (BadLocationException e) {
-								throw new RuntimeException(e);
-							} catch (IOException e) {
-								throw new RuntimeException(e);
+						if(fachada.getExcepcion() != null){	//se han producido excepciones
+							RuntimeException e = fachada.getExcepcion();
+							fachada.setExcepcion(null);
+							throw e;				
+						}
+						else{						
+							if(!parado){															
+								try {
+									kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de entrenamiento finalizado con éxito </p><br>", 0, 0, null);
+									txtLog.setCaretPosition(txtLog.getDocument().getLength());
+								} catch (BadLocationException e) {
+									throw new RuntimeException(e);
+								} catch (IOException e) {
+									throw new RuntimeException(e);
+								}								
 							}
-							
 						}
 					}
 				}

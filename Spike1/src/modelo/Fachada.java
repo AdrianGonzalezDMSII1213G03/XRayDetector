@@ -25,7 +25,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
@@ -60,6 +59,7 @@ public class Fachada {
 	private BufferedImage imgBin;
 	private ResultsTable myRT;
 	private DefaultTableModel tableModel;
+	private RuntimeException excepcion = null;
 	
 	private Fachada() {
 		ir = new ImageReader();
@@ -93,8 +93,9 @@ public class Fachada {
 	@SuppressWarnings("deprecation")
 	public void stop(){
 		 for (int ithread = 0; ithread < t.length; ithread++){ 
-             //((VentanaAbstracta)t[ithread]).parar();
-			 t[ithread].stop();
+             if(t[ithread].isAlive()){
+            	 t[ithread].stop(); 
+             }
 		 }
 	}
 
@@ -176,10 +177,17 @@ public class Fachada {
 		t = new VentanaAbstracta[processors];
 		
 		setMaxProgressBar(imagenes, progressBar);
+		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+    	    public void uncaughtException(Thread th, Throwable ex) {
+    	    	excepcion = new RuntimeException(ex);
+    	    	stop();
+    	    }
+    	};
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
             		ithread, selection, imgPanel, progressBar, defectMatrix, false);
+            t[ithread].setUncaughtExceptionHandler(h);
             t[ithread].start();
         }  
   
@@ -188,7 +196,7 @@ public class Fachada {
                 t[ithread].join();  
         }
         catch (InterruptedException ie){  
-            throw new RuntimeException(ie);  
+             
         }
         drawEdge(imgPanel);
 	}
@@ -265,10 +273,17 @@ public class Fachada {
 			
 			t = new VentanaAbstracta[processors];
 			
+			Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+	    	    public void uncaughtException(Thread th, Throwable ex) {
+	    	    	excepcion = new RuntimeException(ex);
+	    	    	stop();
+	    	    }
+	    	};			
 					
 			for (int ithread = 0; ithread < t.length; ++ithread){    
 	            t[ithread] = new VentanaAleatoria(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread], ithread);
 	            ((VentanaAbstracta) t[ithread]).setImagenCompleta(imagenes[ithread]);
+	            t[ithread].setUncaughtExceptionHandler(h);
 	            t[ithread].start();
 	        }  
 	  
@@ -277,7 +292,7 @@ public class Fachada {
 	                t[ithread].join();  
 	        }
 	        catch (InterruptedException ie){  
-	            throw new RuntimeException(ie);  
+	            
 	        }
 	  
 		}
@@ -364,11 +379,19 @@ public class Fachada {
 		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, r, imgSaliency);
 		
 		t = new VentanaAbstracta[processors];
+		
+		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
+    	    public void uncaughtException(Thread th, Throwable ex) {
+    	    	excepcion = new RuntimeException(ex);
+    	    	stop();
+    	    }
+    	};
 				
 		for (int ithread = 0; ithread < t.length; ++ithread){    
             t[ithread] = new VentanaDeslizante(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],
             		ithread, r, null, null, defectMatrix, true);
             ((VentanaAbstracta) t[ithread]).setImagenCompleta(imagenes[ithread]);
+            t[ithread].setUncaughtExceptionHandler(h);
             t[ithread].start();
         }  
   
@@ -377,7 +400,7 @@ public class Fachada {
                 t[ithread].join();  
         }
         catch (InterruptedException ie){  
-            throw new RuntimeException(ie);  
+             
         }
 	}
 	
@@ -892,5 +915,13 @@ public class Fachada {
 	
 	public Roi[] getArrayRoisCompleto(){
 		return arrayRois;
+	}
+	
+	public RuntimeException getExcepcion(){
+		return excepcion;
+	}
+	
+	public void setExcepcion(RuntimeException e){
+		excepcion = e;
 	}
 }

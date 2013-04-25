@@ -80,41 +80,6 @@ public class VentanaRegiones extends VentanaAbstracta {
 			listaPixeles.remove(randIndex);
 			setPorcentajeBarra();
 		}
-		
-/*		
-		Iterator<int[]> it = listaPixeles.iterator();
-		while(it.hasNext()){
-			int[] coord = it.next();
-			int coordX = (coord[0] - selection.x) - getAnchuraVentana()/2;
-			int coordY = (coord[1] - selection.y) - getAlturaVentana()/2;
-			
-//			synchronized(this){
-//			for(int i=0; i<arrayRois.length; i++){
-//				imgPanel.addRectangle(arrayRois[i].getBounds().x + selection.x, arrayRois[i].getBounds().y + selection.y, arrayRois[i].getBounds().width, arrayRois[i].getBounds().height);
-//				imgPanel.repaint();
-//			}
-//			}
-			
-			if(coordX >= 0 && coordY >= 0 && coordX <= (getImage().getProcessor().getWidth() - getAnchuraVentana())
-					&& coordY <= (getImage().getProcessor().getHeight() - getAlturaVentana())){
-				//comprobar a qué región pertenece el píxel
-				int index = getIndexRoi(coordX, coordY);
-				System.out.println("Coord0: " + coordX + " Coord1: " + coordY + " index: " + index);
-				
-				if(index != -1){				
-					pintarVentana(coordX, coordY);
-					ip.setRoi(coordX, coordY, getAnchuraVentana(), getAlturaVentana());
-					ejecutarCalculos(coordX, coordY, getImage());								
-					double clase = clasificar();
-					imprimeRes(coordX, coordY, clase);
-				}
-				else{
-					System.out.println("No encontrado");
-				}
-			}
-			setPorcentajeBarra();
-		}
-*/
 	}
 
 	private int getIndexRoi(int coordX, int coordY) {
@@ -147,19 +112,30 @@ public class VentanaRegiones extends VentanaAbstracta {
 //			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 //		}
 		
-		//CLASIFICACIÓN CLASE NOMINAL
-		if(prob == 0){
-			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
-			imgPanel.repaint();
-			rellenarMatrizDefectos(coordX+ selection.x, y);
+		int opcion = getPropiedades().getTipoClasificacion();
+		
+		switch (opcion) {
+			case 0:
+				//CLASIFICACIÓN CLASE NOMINAL
+				if(prob == 0){
+					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
+					imgPanel.repaint();
+					rellenarMatrizDefectos(coordX+ selection.x, y);
+				}
+				break;
+	
+			case 1:
+				//REGRESIÓN
+				if(prob >= 0.5){
+					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
+					imgPanel.repaint();
+					rellenarMatrizDefectos(coordX+ selection.x, y);
+				}
+				break;
 		}
 		
-		//REGRESIÓN
-//		if(prob >= 0.5){
-//			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
-//			imgPanel.repaint();
-//			rellenarMatrizDefectos(coordX+ selection.x, y);
-//		}
+		
+
 	}
 	
 	public void setArrayRois(Roi[] array){

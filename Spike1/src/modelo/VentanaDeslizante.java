@@ -72,18 +72,26 @@ public class VentanaDeslizante extends VentanaAbstracta{
 			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
 		}
 		
-		//CLASIFICACIÓN CLASE NOMINAL
-		if(prob == 0){
-			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
-			imgPanel.repaint();
-			rellenarMatrizDefectos(coordX+ selection.x, y);
-		}
+		int opcion = getPropiedades().getTipoClasificacion();
 		
-		//REGRESIÓN
-//		if(prob >= 0.5){
-//			imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
-//			imgPanel.repaint();
-//			rellenarMatrizDefectos(coordX+ selection.x, y);
-//		}
+		switch (opcion) {
+			case 0:
+				//CLASIFICACIÓN CLASE NOMINAL
+				if(prob == 0){
+					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
+					imgPanel.repaint();
+					rellenarMatrizDefectos(coordX+ selection.x, y);
+				}
+				break;
+	
+			case 1:
+				//REGRESIÓN
+				if(prob >= 0.5){
+					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
+					imgPanel.repaint();
+					rellenarMatrizDefectos(coordX+ selection.x, y);
+				}
+				break;
+		}
 	}
 }

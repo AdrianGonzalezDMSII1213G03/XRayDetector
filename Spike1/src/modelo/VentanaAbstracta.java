@@ -5,19 +5,13 @@ import ij.ImagePlus;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-
 import javax.swing.JProgressBar;
 
 import datos.GestorArff;
 
-import utils.MyLogHandler;
 import utils.Propiedades;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
@@ -255,46 +249,26 @@ public abstract class VentanaAbstracta extends Thread{
 		try {
 			url = model.toURI().toURL();
 		} catch (MalformedURLException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		ObjectInputStream file = null;
 		try {
 			file = new ObjectInputStream(url.openStream());
 		} catch (IOException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		Classifier classifier = null;
 		try {
 			classifier = (AbstractClassifier) file.readObject();
 		} catch (IOException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (ClassNotFoundException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		try {
 			file.close();
 		} catch (IOException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return classifier;
 	}
@@ -536,11 +510,7 @@ public abstract class VentanaAbstracta extends Thread{
 		try {
 			clase = clas.classifyInstance(instancia);
 		} catch (Exception e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return clase;
 	}
