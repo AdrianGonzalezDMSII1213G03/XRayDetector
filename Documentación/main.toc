@@ -77,4 +77,6 @@
 \contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{58}{subsection.143}
 \contentsline {subsection}{\numberline {A.5.3}Sprint 3}{59}{subsection.150}
 \contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.155}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{74}{figure.156}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{66}{subsection.157}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{70}{subsection.159}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{82}{figure.160}
