@@ -217,6 +217,7 @@ En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotalt
   S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & 3 & Sprint 8  \\
   S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & 5 & Sprint 8  \\
   S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores  & César, José & Media & 3 & Sprint 8  \\
+  S-01042 & La aplicación debe tratar las excepciones de forma correcta, mostrando avisos  & César, José & Media & 3 & Sprint 8  \\
   B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & - & Sprint 8  \\
  }
 \newpage
@@ -647,7 +648,7 @@ Este \sprint{} se inicia el 12/03/2013 y tiene como fecha límite el 26/03/2013.
 En el \burndownchart{} \ver{burndownChartSprint6} podemos ver que el desarrollo fue cercano a la recta de "ideal".
 
 %Burndown chart del Sprint 6.
-\figura{1}{imgs/burndownChartSprint6.png}{Burndown Chart del quinto Sprint}{burndownChartSprint6}{}
+\figura{1}{imgs/burndownChartSprint6.png}{Burndown Chart del sexto Sprint}{burndownChartSprint6}{}
 
 Esto hizo que terminásemos dentro de tiempo. Es más, podríamos incluso haber metido más carga de trabajo, ya que terminamos algo antes de tiempo. La planificación no fue mala.
 
@@ -668,3 +669,156 @@ Esto hizo que terminásemos dentro de tiempo. Es más, podríamos incluso haber 
 \begin{itemize}
  \item La segunda aproximación de la detección de defectos (lista de píxeles blancos) no devuelve tan buenos resultados como pensábamos.
 \end{itemize}
+
+
+\subsection{Sprint 7}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Permitir al usuario elegir más opciones.
+\item Mejorar el cálculo de los umbrales locales.
+\item Calcular características geométricas sobre los defectos dibujados.
+\item Mostrar una tabla resumen.
+\item Intentar encontrar una buena solución para el problema de los autovalores.
+\item Solucionar el problema de la lista de píxeles blancos.
+\end{itemize}
+
+Como vemos, se van a poner en práctica ideas ya comentadas en reuniones anteriores.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013. Lo hemos planificado con una semana extra debido a que están las vacaciones de Semana Santa de por medio y nos puede dar problemas. Tiene un total de puntos estimados de 22.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01030: La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos.
+  \begin{itemize}
+   \item TK-00068: Adición de las opciones a la interfaz.
+   \item TK-00069: Lanzamiento de una opción u otra según la selección.
+  \end{itemize}
+ \item S-01031: La aplicación debe calcular los umbrales locales con un pequeño margen.
+  \begin{itemize}
+   \item TK-00070: Generación de la imagen a calcular, partiendo de la selección más el radio del algoritmo.
+  \end{itemize}
+ \item S-01032: La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante.
+ \begin{itemize}
+   \item TK-00071: Generación de un arff a partir de la ventana deslizante.
+   \item TK-00072: Inclusión de la opción en la interfaz.
+  \end{itemize}  
+ \item S-01033: La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos.
+ \begin{itemize}
+   \item TK-00073: Sacar una lista de ROIs marcados como blancos en los umbrales locales.
+   \item TK-00074: Crear una regla para decidir si el píxel que toca realmente se va a considerar o no.
+  \end{itemize}
+ \item S-01034: La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas.
+ \begin{itemize}
+  \item TK-00075: Cambiar la llamada a ParticleAnalyzer para que calcule características geométricas.
+  \item TK-00076: Creación de un método para mostrar los resultados por cada ROI.
+ \end{itemize}
+ \item S-01035: Se debe poder mostrar una tabla resumen de los defectos.
+  \begin{itemize}
+   \item TK-00077: Generación de una JTable en la interfaz que contenga una fila por cada región.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint7} podemos ver que hubo una primera parte en la que la curve es totalmente plana. Coincide con las vacaciones.
+
+%Burndown chart del Sprint 7.
+\figura{1}{imgs/burndownChartSprint7.png}{Burndown Chart del séptimo Sprint}{burndownChartSprint7}{}
+
+Pese a ello, terminamos a tiempo. Esto es debido a que tuvimos en cuenta esta eventualidad, dando lugar a una buena planificación.
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Se vuelve a ver que el fichero de opciones nos da muchas posibilidades para personalizar el funcionamiento de la aplicación.
+ \item El cálculo de las características geométricas funciona perfectamente.
+ \item Se ha encontrado una buena solución al problema de los autovalores con \textit{EJML}, aunque sigue siendo algo lento. Tendremos que decidir si lo usamos finalmente o no.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item No se ha solucionado del todo el problema del remuestreo de píxeles blancos. Lo que hemos hecho es considerar aleatoriamente píxeles de cada región, hasta un máximo del 10\% del área de la misma. Esto provoca que se consideren muy pocos píxeles, por lo que habrá que probar con un porcentaje mayor.
+\end{itemize}
+
+
+\subsection{Sprint 8}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Dejar el código limpio y bien refactorizado, ya que se pretende que sea la ultima iteración.
+\item Añadir las últimas funcionalidades: permitir seleccionar una fila de la tabla resumen e iluminar el defecto al que pertenece y viceversa, es decir, seleccionar un defecto en la imagen e iluminar la fila a la que pertenece.
+\item Mejorar el margen de la selección al calcular umbrales locales.
+\item Permitir al usuario seleccionar más opciones.
+\item Permitir el cálculo de sólo las mejores características.
+\item Incluir un módulo de ayuda en línea, que el año pasado no existía.
+\item Solucionar algún BUG.
+\end{itemize}
+
+Además, se dan algunas ideas para líneas futuras, ya que a nosotros ya no nos da tiempo a meter más funcionalidad. Por ejemplo, se propone dar la opción al usuario de elegir él mismo qué características quiere calcular, automatizar la selección de las mejores características... También se propone comprobar qué tal funcionan las operaciones morfológicas de ImageJ, para ver si se puede incluir algo en nuestro proyecto o dejarlo como línea futura.
+
+Se habla también de aspectos de la memoria, ya que tenemos que añadir unas breves descripciones de los algoritmos de clasificación utilizados y se determina que debemos incluir una extensa comparativa con el proyecto del año pasado en un anexo propio.
+
+Por lo tanto, en este último \sprint{} pretendemos cerrar (o prácticamente dejarlo cerrado) toda la parte del código del proyecto, para dedicarnos a partir de aquí a finalizar la memoria y realizar una extensa comparativa con el año pasado (métricas, rendimiento...).
+
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 01/05/2013. Tiene un total de 22 puntos estimados.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01036: La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión.
+  \begin{itemize}
+   \item TK-00078: Añadir la opción al fichero de propiedades, junto con su set y su get.
+   \item TK-00079: Añadir la opción al diálogo de opciones avanzadas.
+  \end{itemize}
+ \item S-01037: La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen.
+  \begin{itemize}
+   \item TK-00080: Modificar margen umbrales locales.
+  \end{itemize}
+ \item S-01038: La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar.
+  \begin{itemize}
+   \item TK-00081: Añadir la opción al fichero de opciones, junto con su set y su get.
+   \item TK-00082: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00083: Añadir un Slider para seleccionar el porcentaje.
+  \end{itemize}
+ \item S-01039: Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1).
+  \begin{itemize}
+   \item TK-00084: Implementación del módulo de ayuda en línea.
+   \item TK-00085: Crear un buscador.
+   \item TK-00086: Implementar el acceso a la ayuda desde el menú y desde teclas rápidas (F1).
+  \end{itemize}
+ \item S-01040: La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente.
+  \begin{itemize}
+   \item TK-00087: Al seleccionar una fila, dibujar sólo el ROI al que pertenece.
+   \item TK-00088: Al seleccionar un defecto en la imagen, mostrar a qué fila de la tabla pertenece.
+  \end{itemize}
+ \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores.
+  \begin{itemize}
+   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su get y su set.
+   \item TK-00090: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00091: En función de la opción, seleccionar todas las características o sólo las mejores.
+  \end{itemize}
+ \item S-01042: La aplicación debe tratar las excepciones de forma correcta, mostrando avisos.
+  \begin{itemize}
+   \item TK-00092: Capturar las excepciones de los hilos y almacenarlas..
+   \item TK-00093: Parar los hilos que aún estén en ejecución.
+   \item TK-00094: En el hilo de la interfaz comprobar si hay excepciones lanzadas. En caso positivo mostrar un mensaje con la excepción pertinente.
+  \end{itemize}
+ \item B-01002: BUG: la aplicación debe impedir la reselección mientras se analiza.
+  \begin{itemize}
+   \item TK-00095: Deshabilitar la selección de regiones mientras se analiza.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{Burndown chart}
+Aún no hay.
+
+
+\subsubsection*{Retrospective meeting}
+Aún no hay.

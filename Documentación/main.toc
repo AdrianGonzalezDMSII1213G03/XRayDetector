@@ -79,4 +79,6 @@
 \contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.155}
 \contentsline {subsection}{\numberline {A.5.5}Sprint 5}{66}{subsection.157}
 \contentsline {subsection}{\numberline {A.5.6}Sprint 6}{70}{subsection.159}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{82}{figure.160}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{73}{subsection.161}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{76}{subsection.163}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{86}{subsection.163}
