@@ -53,6 +53,10 @@ public class Graphic extends JPanel {
 	private JTable tablaResultados;
 	private Roi[] arrayRois;
 	private Image copia;
+<<<<<<< HEAD
+=======
+	private boolean trabajando = true;
+>>>>>>> origin/FIXES
 
 	/**
 	 * Create the panel.
@@ -103,6 +107,13 @@ public class Graphic extends JPanel {
 	public void setArrayRois(Roi[] array){
 		arrayRois = array;
 	}
+<<<<<<< HEAD
+=======
+	
+	public void setFlagTrabajando(boolean t){
+		trabajando = t;
+	}
+>>>>>>> origin/FIXES
 
 	/**
 	 * Creates a mouse listener to save the area of selection in the image.
@@ -113,7 +124,7 @@ public class Graphic extends JPanel {
 		MouseMotionListener adapter = new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				if (isSelectionMode) {
+				if (isSelectionMode && !trabajando) {
 					if (e.getPoint().x > initialPoint.x)
 						selection.width = e.getPoint().x - initialPoint.x;
 					if (e.getPoint().y > initialPoint.y)
@@ -156,12 +167,70 @@ public class Graphic extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				isSelectionMode = true;
-				selection.setLocation(e.getPoint());
-				selection.setSize(0, 0);
-				initialPoint = e.getPoint();
+				if(!trabajando && !ctrlPresionado){
+					isSelectionMode = true;
+					selection.setLocation(e.getPoint());
+					selection.setSize(0, 0);
+					initialPoint = e.getPoint();
+	
+					repaint();
+				}
+			}
+			
+			public void mouseClicked(MouseEvent e){
+				if(ctrlPresionado && !trabajando){
+					Point coordenadas = e.getPoint();
+					int index = getRoi(coordenadas);
+					if(index != -1){
+						tablaResultados.setRowSelectionInterval(index, index);
+						
+						//restaurar imagen original
+						setImage(copia);
+						repaint();
+						
+						//pintar la selección
+						Roi roi = arrayRois[index];
+						int alpha = 63;
+						Color c = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
+						roi.setFillColor(c);
+						ImagePlus im = new ImagePlus("overlay", copia);
+						im.setOverlay(new Overlay(roi));
+						im = im.flatten();
+						im.updateAndDraw();
+						setImage(im.getImage());
+						repaint();
+					}
+				}
+			}
+		};
+		return adapter;
+	}
+	
+	public int getRoi(Point coordenadas) {
+		Roi roi;
+		if(arrayRois != null){
+			for(int i=0; i<arrayRois.length; i++){
+				roi = arrayRois[i];
+				if(roi.contains(coordenadas.x, coordenadas.y)){
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 
-				repaint();
+	private KeyListener createKeyListener(){
+		KeyAdapter adapter = new KeyAdapter(){
+			public void keyPressed(KeyEvent e){
+				if(e.isControlDown() && !trabajando){
+					ctrlPresionado = true;
+					e.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			}
+			
+			public void keyReleased(KeyEvent e){
+				ctrlPresionado = false;
+				e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			
 			public void mouseClicked(MouseEvent e){

@@ -419,6 +419,10 @@ public class PanelAplicacion{
 				img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
 				imgPanel.repaint();
+<<<<<<< HEAD
+=======
+				imgPanel.setFlagTrabajando(false);
+>>>>>>> origin/FIXES
 				selection = imgPanel.coordenates();
 				btnAnalizar.setEnabled(true);
 				slider.setEnabled(false);
@@ -537,6 +541,10 @@ public class PanelAplicacion{
 					tablaResultados.setEnabled(false);
 					imgPanel.setImage(img.getImage());
 					imgPanel.repaint();
+<<<<<<< HEAD
+=======
+					imgPanel.setFlagTrabajando(true);
+>>>>>>> origin/FIXES
 					((DefaultTableModel) (tablaResultados.getModel())).getDataVector().clear();
 					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
@@ -666,6 +674,10 @@ public class PanelAplicacion{
 			btnExportarLog.setEnabled(true);
 			btnLimpiarLog.setEnabled(true);
 			tablaResultados.setEnabled(true);
+<<<<<<< HEAD
+=======
+			imgPanel.setFlagTrabajando(false);
+>>>>>>> origin/FIXES
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
 			}
