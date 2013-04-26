@@ -1,12 +1,20 @@
 package utils;
 
+import ij.ImagePlus;
+import ij.gui.Overlay;
+import ij.gui.Roi;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,6 +28,7 @@ import java.util.Date;
 import java.util.logging.Level;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 /**
  * This class draws the graphics on a panel and handles mouse listeners for the
@@ -40,6 +49,11 @@ public class Graphic extends JPanel {
 	private Image image;
 	private ArrayList<Rectangle2D.Double> rectangleList;
 	private Rectangle2D window;
+	private boolean ctrlPresionado = false;
+	private JTable tablaResultados;
+	private Roi[] arrayRois;
+	private Image copia;
+	private boolean trabajando = true;
 
 	/**
 	 * Create the panel.
@@ -51,6 +65,7 @@ public class Graphic extends JPanel {
 		this.image = image;
 		this.addMouseMotionListener(createMouseMotionListener());
 		this.addMouseListener(createMouseListener());
+		this.addKeyListener(createKeyListener());
 
 		w = image.getWidth(null);
 		h = image.getHeight(null);
@@ -71,6 +86,28 @@ public class Graphic extends JPanel {
 		w = image.getWidth(null);
 		h = image.getHeight(null);
 	}
+	
+	public void setImageCopy(Image image) {
+		copia = image;
+		setImage(copia);
+	}
+	
+	/**
+	 * Sets a Table Results.
+	 * 
+	 * @param tabla table to be set
+	 */
+	public void setTablaResultados(JTable tabla) {
+		tablaResultados = tabla;
+	}
+	
+	public void setArrayRois(Roi[] array){
+		arrayRois = array;
+	}
+	
+	public void setFlagTrabajando(boolean t){
+		trabajando = t;
+	}
 
 	/**
 	 * Creates a mouse listener to save the area of selection in the image.
@@ -81,7 +118,7 @@ public class Graphic extends JPanel {
 		MouseMotionListener adapter = new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				if (isSelectionMode) {
+				if (isSelectionMode && !trabajando) {
 					if (e.getPoint().x > initialPoint.x)
 						selection.width = e.getPoint().x - initialPoint.x;
 					if (e.getPoint().y > initialPoint.y)
@@ -124,12 +161,70 @@ public class Graphic extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				isSelectionMode = true;
-				selection.setLocation(e.getPoint());
-				selection.setSize(0, 0);
-				initialPoint = e.getPoint();
+				if(!trabajando && !ctrlPresionado){
+					isSelectionMode = true;
+					selection.setLocation(e.getPoint());
+					selection.setSize(0, 0);
+					initialPoint = e.getPoint();
+	
+					repaint();
+				}
+			}
+			
+			public void mouseClicked(MouseEvent e){
+				if(ctrlPresionado && !trabajando){
+					Point coordenadas = e.getPoint();
+					int index = getRoi(coordenadas);
+					if(index != -1){
+						tablaResultados.setRowSelectionInterval(index, index);
+						
+						//restaurar imagen original
+						setImage(copia);
+						repaint();
+						
+						//pintar la selección
+						Roi roi = arrayRois[index];
+						int alpha = 63;
+						Color c = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
+						roi.setFillColor(c);
+						ImagePlus im = new ImagePlus("overlay", copia);
+						im.setOverlay(new Overlay(roi));
+						im = im.flatten();
+						im.updateAndDraw();
+						setImage(im.getImage());
+						repaint();
+					}
+				}
+			}
+		};
+		return adapter;
+	}
+	
+	public int getRoi(Point coordenadas) {
+		Roi roi;
+		if(arrayRois != null){
+			for(int i=0; i<arrayRois.length; i++){
+				roi = arrayRois[i];
+				if(roi.contains(coordenadas.x, coordenadas.y)){
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
 
-				repaint();
+	private KeyListener createKeyListener(){
+		KeyAdapter adapter = new KeyAdapter(){
+			public void keyPressed(KeyEvent e){
+				if(e.isControlDown() && !trabajando){
+					ctrlPresionado = true;
+					e.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			}
+			
+			public void keyReleased(KeyEvent e){
+				ctrlPresionado = false;
+				e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		};
 		return adapter;
@@ -178,22 +273,11 @@ public class Graphic extends JPanel {
 
 		if (ended == false) {
 
-			// Rectangle2D rectangle = new
-			// Rectangle2D.Double(seleccion.getX(),seleccion.getY(),seleccion.getWidth(),seleccion.getHeight());
 			rectangle = new Rectangle2D.Double(coorX, coorY, width, height);
 			g2d.setColor(Color.yellow);
-			// g2d.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND,
-			// BasicStroke.JOIN_ROUND, 1f, new float[] { 2f }, 0f));
-			// g2d3.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND,
-			// BasicStroke.JOIN_ROUND, 1f, new float[] { 2f }, 0f));
 
 			g2d.draw(rectangle);
 
-/*			selection2.x = (int) coorX;
-			selection2.y = (int) coorY;
-			selection2.width = (int) width;
-			selection2.height = (int) height;
-*/
 			if (window != null) {
 				g2d.setColor(Color.yellow);
 				g2d.draw(window);

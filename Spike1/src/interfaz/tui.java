@@ -1,19 +1,19 @@
 package interfaz;
 
-import modelo.Mediador;
+import modelo.Fachada;
 
 public class Tui {
 
 	private static String img = "./res/img/img1.BMP";
 	private static String img_mask = "./res/img/img1_mask.jpg";
-	private static Mediador mediador;
+	private static Fachada mediador;
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		System.out.println("Se cargará la imagen " + img_mask);
-		mediador = Mediador.getInstance();
+		mediador = Fachada.getInstance();
 		try{
 			System.out.println(mediador.cargaImagen(img));
 			//mediador.ejecutaVentana();
