@@ -337,9 +337,25 @@ Un clasificador puede ser, según los tipos de aprendizaje:
 de sus salidas.
 \end{itemize}
 
-Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio que hicieron los alumnos del año pasado con varios tipo de clasificadores, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}. [¿INCLUIR LA INFO DE BAGGING?]
+Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio que hicieron los alumnos del año pasado con varios tipo de clasificadores, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}.
 
-Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión. [¿METER LO DE REPTREE?]
+Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión.
+
+\subsection{REPTree}
+El algoritmo de \textit{REPTree} permite construir tanto un árbol de decisión como un árbol de regresión, usando las medidas de \textit{ganancia de información} y de \textit{reducción de la varianza}. Puede podar los árboles generados usado la \textit{poda de error reducido}. Optimizado para la velocidad, sólo ordena valores para atributos numéricos una única vez.
+
+Considera los valores desconocidos partiendo instancias en pedazos, como hace \textit{C4.5}. Se puede especificar el mínimo número de instancias por hoja, profundidad máxima del árbol (útil cuando se utiliza la técnica de \textit{boosting}), la mínima proporción de la varianza de los datos del conjunto de entrenamiento que se consideran para partir (sólo para clases numéricas), y el número de pliegues por poda.[INSERTAR CITA].
+
+\subsection{Bagging}
+\textit{Bagging} (de \textit{Bootstrap Aggregating}) es un algoritmo que busca combinar predicciones de un cierto tipo de modelo (en nuestro caso, \textit{REPTree}) mediante votación o media, teniendo los modelos el mismo peso.
+
+Lo que se hace es, teniendo un conjunto de datos, generar a partir de él un cierto número de conjuntos de datos mediante muestreo con reemplazamiento, para entrenar con ellos un cierto número de modelos. Después, se combinan las predicciones de todos los clasificadores entrenados para obtener la predicción final.
+
+El cómo se combinan estas predicciones se puede hacer con una media de las salidas (regresión) o con una votación de mayoría (clasificación).
+
+Con esto conseguimos que métodos inestables, como árboles de decisión, mejoren su rendimiento.
+
+
 
 \section{Ensayos no destructivos}
 Los ensayos no destructivos [65] son pruebas que, practicadas sobre un material, no alteran de forma permanente sus propiedades físicas, químicas, mecánicas o dimensionales. Los ensayos no destructivos implican un daño imperceptible o nulo.
@@ -467,7 +483,11 @@ Dicho esto, en el proyecto utilizamos un factor variable. Por defecto el factor 
 
 Como ya se ha descrito, el proceso de binarización recae en el factor de un píxel. Si el factor es 8 o mayor, al pixel se le asigna un 1 (defecto), si es menor que 8 se le asigna un 0 (no defecto). Al tener una matriz de ceros y unos es sencillo obtener una imagen binaria con la región de defectos.
 
-\figuraConPosicion{1}{imgs/dibujado_defectos.png}{Proceso de dibujado de defectos en nuestro proyecto.}{dibujado_defectos}{}{H}
+\figuraConPosicion{0.7}{imgs/dibujado_defectos.png}{Proceso de dibujado de defectos en nuestro proyecto. \newline
+a)Imagen con defectos marcados \newline
+b)Imagen binarizada con el área de defectos \newline
+c)Imagen con filtro de detección de bordes\newline
+d)Resultado final}{procesoBorde}{}{h}
 
 Una vez obtenida la imagen binarizada con la región de defectos se le aplica un filtro de detección de bordes para marcar una línea que rodee el defecto mostrando su ubicación. En este caso se ha utilizado el filtro por defecto de detección de bordes de ImageJ.
 
@@ -504,7 +524,11 @@ Después, binarizamos la imagen de umbrales locales para aplicar un análisis de
 
 Cuando tenemos la lista y las regiones, vamos sacando coordenadas de la lista y vamos determinando la región a la que pertenecen. Dependiendo del tamaño de la región y el tamaño de la ventana, se considera la coordenada o se desecha. En caso de que se considere, centramos una ventana sobre ella y aplicamos el cálculo de características y clasificación ya vistos anteriormente.
 
-\figuraConPosicion{1}{imgs/segunda_opcion.png}{Proceso de detección en la segunda opción.}{segunda_opcion}{}{H}
+\figuraConPosicion{0.85}{imgs/segunda_opcion.png}{Proceso de detección en la segunda opción \newline
+a)Imagen original \newline
+b)Imagen segmentada con los umbrales locales \newline
+c)Binarización de los umbrales locales\newline
+d)Identificación de las regiones candidatas}{segunda_opcion}{}{h}
 
 El dibujado de los defectos se realiza con la misma matriz que en la primera versión del proyecto.
 

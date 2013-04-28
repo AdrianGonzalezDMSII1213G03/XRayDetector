@@ -16,68 +16,70 @@
 \BOOKMARK [2][-]{subsection.42}{Mean}{section.40}% 16
 \BOOKMARK [1][-]{section.43}{Caracter\355sticas geom\351tricas}{chapter.12}% 17
 \BOOKMARK [1][-]{section.44}{Reconocimiento e interpretaci\363n de im\341genes}{chapter.12}% 18
-\BOOKMARK [1][-]{section.45}{Ensayos no destructivos}{chapter.12}% 19
-\BOOKMARK [2][-]{subsection.46}{Radiograf\355a}{section.45}% 20
-\BOOKMARK [2][-]{subsection.47}{Ventajas del ensayo radiogr\341fico}{section.45}% 21
-\BOOKMARK [2][-]{subsection.52}{Limitaciones del ensayo radiogr\341fico}{section.45}% 22
-\BOOKMARK [2][-]{subsection.59}{Objetivos del ensayo radiogr\341fico}{section.45}% 23
-\BOOKMARK [2][-]{subsection.63}{Principios del ensayo radiogr\341fico}{section.45}% 24
-\BOOKMARK [1][-]{section.64}{Fundamentos te\363ricos de la versi\363n inicial}{chapter.12}% 25
-\BOOKMARK [2][-]{subsection.65}{Preproceso}{section.64}% 26
-\BOOKMARK [2][-]{subsection.67}{Extracci\363n de caracter\355sticas}{section.64}% 27
-\BOOKMARK [2][-]{subsection.69}{Determinaci\363n de cu\341ndo una ventana es defectuosa}{section.64}% 28
-\BOOKMARK [2][-]{subsection.70}{Detecci\363n de defectos}{section.64}% 29
-\BOOKMARK [2][-]{subsection.72}{Multihilo}{section.64}% 30
-\BOOKMARK [1][-]{section.73}{Fundamentos te\363ricos de la versi\363n final}{chapter.12}% 31
-\BOOKMARK [2][-]{subsection.74}{Primera opci\363n: detecci\363n normal con posterior intersecci\363n con umbrales locales}{section.73}% 32
-\BOOKMARK [2][-]{subsection.75}{Segunda opci\363n: p\355xeles blancos en umbrales locales}{section.73}% 33
-\BOOKMARK [2][-]{subsection.77}{C\341lculo de caracter\355sticas geom\351tricas}{section.73}% 34
-\BOOKMARK [0][-]{chapter.78}{T\351cnicas y herramientas}{}% 35
-\BOOKMARK [1][-]{section.79}{T\351cnicas}{chapter.78}% 36
-\BOOKMARK [2][-]{subsection.80}{Metodolog\355a Scrum}{section.79}% 37
-\BOOKMARK [2][-]{subsection.83}{Java}{section.79}% 38
-\BOOKMARK [2][-]{subsection.84}{UML}{section.79}% 39
-\BOOKMARK [2][-]{subsection.85}{Weka}{section.79}% 40
-\BOOKMARK [2][-]{subsection.95}{ImageJ}{section.79}% 41
-\BOOKMARK [2][-]{subsection.96}{Patrones de dise\361o}{section.79}% 42
-\BOOKMARK [1][-]{section.97}{Herramientas}{chapter.78}% 43
-\BOOKMARK [2][-]{subsection.98}{Eclipse}{section.97}% 44
-\BOOKMARK [2][-]{subsection.99}{JUnit}{section.97}% 45
-\BOOKMARK [2][-]{subsection.100}{JDepend}{section.97}% 46
-\BOOKMARK [2][-]{subsection.101}{Source Monitor}{section.97}% 47
-\BOOKMARK [2][-]{subsection.102}{Astah}{section.97}% 48
-\BOOKMARK [2][-]{subsection.103}{GitHub}{section.97}% 49
-\BOOKMARK [2][-]{subsection.104}{PivotalTracker}{section.97}% 50
-\BOOKMARK [2][-]{subsection.105}{MiKTeX}{section.97}% 51
-\BOOKMARK [2][-]{subsection.106}{TeXMaker}{section.97}% 52
-\BOOKMARK [2][-]{subsection.107}{WindowBuilder}{section.97}% 53
-\BOOKMARK [2][-]{subsection.108}{Auto Local Threshold}{section.97}% 54
-\BOOKMARK [2][-]{subsection.109}{Apache Commons IO}{section.97}% 55
-\BOOKMARK [2][-]{subsection.110}{Zotero}{section.97}% 56
-\BOOKMARK [0][-]{chapter.111}{Aspectos relevantes del desarrollo del proyecto}{}% 57
-\BOOKMARK [1][-]{section.112}{Problemas y retos}{chapter.111}% 58
-\BOOKMARK [1][-]{section.117}{Mejoras respecto al a\361o pasado}{chapter.111}% 59
-\BOOKMARK [1][-]{section.124}{Conocimientos adquiridos}{chapter.111}% 60
-\BOOKMARK [2][-]{subsection.125}{Miner\355a de datos}{section.124}% 61
-\BOOKMARK [2][-]{subsection.126}{Weka}{section.124}% 62
-\BOOKMARK [2][-]{subsection.127}{Metodolog\355a Scrum}{section.124}% 63
-\BOOKMARK [2][-]{subsection.128}{Programaci\363n multihilo}{section.124}% 64
-\BOOKMARK [2][-]{subsection.129}{Documentaci\363n en LaTeX}{section.124}% 65
-\BOOKMARK [0][-]{appendix.130}{Plan del proyecto software}{}% 66
-\BOOKMARK [1][-]{section.131}{Introducci\363n}{appendix.130}% 67
-\BOOKMARK [1][-]{section.132}{Planificaci\363n temporal del proyecto}{appendix.130}% 68
-\BOOKMARK [2][-]{subsection.133}{Estimaci\363n temporal a partir de casos de uso}{section.132}% 69
-\BOOKMARK [1][-]{section.135}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.130}% 70
-\BOOKMARK [2][-]{subsection.136}{Actores}{section.135}% 71
-\BOOKMARK [2][-]{subsection.137}{Ciclo de desarrollo}{section.135}% 72
-\BOOKMARK [1][-]{section.139}{Product Backlog del proyecto}{appendix.130}% 73
-\BOOKMARK [1][-]{section.141}{Planificaci\363n por Sprint}{appendix.130}% 74
-\BOOKMARK [2][-]{subsection.142}{Sprint 1: Spike Arquitect\363nico 1}{section.141}% 75
-\BOOKMARK [2][-]{subsection.143}{Sprint 2: Spike Arquitect\363nico 2}{section.141}% 76
-\BOOKMARK [2][-]{subsection.150}{Sprint 3}{section.141}% 77
-\BOOKMARK [2][-]{subsection.155}{Sprint 4}{section.141}% 78
-\BOOKMARK [2][-]{subsection.157}{Sprint 5}{section.141}% 79
-\BOOKMARK [2][-]{subsection.159}{Sprint 6}{section.141}% 80
-\BOOKMARK [2][-]{subsection.161}{Sprint 7}{section.141}% 81
-\BOOKMARK [2][-]{subsection.163}{Sprint 8}{section.141}% 82
-\BOOKMARK [0][-]{subsection.163}{Ap\351ndices}{}% 83
+\BOOKMARK [2][-]{subsection.45}{REPTree}{section.44}% 19
+\BOOKMARK [2][-]{subsection.46}{Bagging}{section.44}% 20
+\BOOKMARK [1][-]{section.47}{Ensayos no destructivos}{chapter.12}% 21
+\BOOKMARK [2][-]{subsection.48}{Radiograf\355a}{section.47}% 22
+\BOOKMARK [2][-]{subsection.49}{Ventajas del ensayo radiogr\341fico}{section.47}% 23
+\BOOKMARK [2][-]{subsection.54}{Limitaciones del ensayo radiogr\341fico}{section.47}% 24
+\BOOKMARK [2][-]{subsection.61}{Objetivos del ensayo radiogr\341fico}{section.47}% 25
+\BOOKMARK [2][-]{subsection.65}{Principios del ensayo radiogr\341fico}{section.47}% 26
+\BOOKMARK [1][-]{section.66}{Fundamentos te\363ricos de la versi\363n inicial}{chapter.12}% 27
+\BOOKMARK [2][-]{subsection.67}{Preproceso}{section.66}% 28
+\BOOKMARK [2][-]{subsection.69}{Extracci\363n de caracter\355sticas}{section.66}% 29
+\BOOKMARK [2][-]{subsection.71}{Determinaci\363n de cu\341ndo una ventana es defectuosa}{section.66}% 30
+\BOOKMARK [2][-]{subsection.72}{Detecci\363n de defectos}{section.66}% 31
+\BOOKMARK [2][-]{subsection.74}{Multihilo}{section.66}% 32
+\BOOKMARK [1][-]{section.75}{Fundamentos te\363ricos de la versi\363n final}{chapter.12}% 33
+\BOOKMARK [2][-]{subsection.76}{Primera opci\363n: detecci\363n normal con posterior intersecci\363n con umbrales locales}{section.75}% 34
+\BOOKMARK [2][-]{subsection.77}{Segunda opci\363n: p\355xeles blancos en umbrales locales}{section.75}% 35
+\BOOKMARK [2][-]{subsection.79}{C\341lculo de caracter\355sticas geom\351tricas}{section.75}% 36
+\BOOKMARK [0][-]{chapter.80}{T\351cnicas y herramientas}{}% 37
+\BOOKMARK [1][-]{section.81}{T\351cnicas}{chapter.80}% 38
+\BOOKMARK [2][-]{subsection.82}{Metodolog\355a Scrum}{section.81}% 39
+\BOOKMARK [2][-]{subsection.85}{Java}{section.81}% 40
+\BOOKMARK [2][-]{subsection.86}{UML}{section.81}% 41
+\BOOKMARK [2][-]{subsection.87}{Weka}{section.81}% 42
+\BOOKMARK [2][-]{subsection.97}{ImageJ}{section.81}% 43
+\BOOKMARK [2][-]{subsection.98}{Patrones de dise\361o}{section.81}% 44
+\BOOKMARK [1][-]{section.99}{Herramientas}{chapter.80}% 45
+\BOOKMARK [2][-]{subsection.100}{Eclipse}{section.99}% 46
+\BOOKMARK [2][-]{subsection.101}{JUnit}{section.99}% 47
+\BOOKMARK [2][-]{subsection.102}{JDepend}{section.99}% 48
+\BOOKMARK [2][-]{subsection.103}{Source Monitor}{section.99}% 49
+\BOOKMARK [2][-]{subsection.104}{Astah}{section.99}% 50
+\BOOKMARK [2][-]{subsection.105}{GitHub}{section.99}% 51
+\BOOKMARK [2][-]{subsection.106}{PivotalTracker}{section.99}% 52
+\BOOKMARK [2][-]{subsection.107}{MiKTeX}{section.99}% 53
+\BOOKMARK [2][-]{subsection.108}{TeXMaker}{section.99}% 54
+\BOOKMARK [2][-]{subsection.109}{WindowBuilder}{section.99}% 55
+\BOOKMARK [2][-]{subsection.110}{Auto Local Threshold}{section.99}% 56
+\BOOKMARK [2][-]{subsection.111}{Apache Commons IO}{section.99}% 57
+\BOOKMARK [2][-]{subsection.112}{Zotero}{section.99}% 58
+\BOOKMARK [0][-]{chapter.113}{Aspectos relevantes del desarrollo del proyecto}{}% 59
+\BOOKMARK [1][-]{section.114}{Problemas y retos}{chapter.113}% 60
+\BOOKMARK [1][-]{section.119}{Mejoras respecto al a\361o pasado}{chapter.113}% 61
+\BOOKMARK [1][-]{section.126}{Conocimientos adquiridos}{chapter.113}% 62
+\BOOKMARK [2][-]{subsection.127}{Miner\355a de datos}{section.126}% 63
+\BOOKMARK [2][-]{subsection.128}{Weka}{section.126}% 64
+\BOOKMARK [2][-]{subsection.129}{Metodolog\355a Scrum}{section.126}% 65
+\BOOKMARK [2][-]{subsection.130}{Programaci\363n multihilo}{section.126}% 66
+\BOOKMARK [2][-]{subsection.131}{Documentaci\363n en LaTeX}{section.126}% 67
+\BOOKMARK [0][-]{appendix.132}{Plan del proyecto software}{}% 68
+\BOOKMARK [1][-]{section.133}{Introducci\363n}{appendix.132}% 69
+\BOOKMARK [1][-]{section.134}{Planificaci\363n temporal del proyecto}{appendix.132}% 70
+\BOOKMARK [2][-]{subsection.135}{Estimaci\363n temporal a partir de casos de uso}{section.134}% 71
+\BOOKMARK [1][-]{section.137}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.132}% 72
+\BOOKMARK [2][-]{subsection.138}{Actores}{section.137}% 73
+\BOOKMARK [2][-]{subsection.139}{Ciclo de desarrollo}{section.137}% 74
+\BOOKMARK [1][-]{section.141}{Product Backlog del proyecto}{appendix.132}% 75
+\BOOKMARK [1][-]{section.143}{Planificaci\363n por Sprint}{appendix.132}% 76
+\BOOKMARK [2][-]{subsection.144}{Sprint 1: Spike Arquitect\363nico 1}{section.143}% 77
+\BOOKMARK [2][-]{subsection.145}{Sprint 2: Spike Arquitect\363nico 2}{section.143}% 78
+\BOOKMARK [2][-]{subsection.152}{Sprint 3}{section.143}% 79
+\BOOKMARK [2][-]{subsection.157}{Sprint 4}{section.143}% 80
+\BOOKMARK [2][-]{subsection.159}{Sprint 5}{section.143}% 81
+\BOOKMARK [2][-]{subsection.161}{Sprint 6}{section.143}% 82
+\BOOKMARK [2][-]{subsection.163}{Sprint 7}{section.143}% 83
+\BOOKMARK [2][-]{subsection.165}{Sprint 8}{section.143}% 84
+\BOOKMARK [0][-]{subsection.165}{Ap\351ndices}{}% 85

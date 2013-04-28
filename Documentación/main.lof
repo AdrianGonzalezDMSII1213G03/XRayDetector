@@ -5,21 +5,21 @@
 \contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map. La imagen original a la izquierda, con el correspondiente saliency map a la derecha}}{8}{figure.20}
 \contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Ejemplo del funcionamiento de los Local Binary Patterns [16]}}{13}{figure.38}
 \contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Vecindades de distinto tama\IeC {\~n}o en los LBP [16]}}{14}{figure.39}
-\contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas [38]}}{19}{figure.66}
-\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Esquema de la ventana deslizante [38]}}{20}{figure.68}
-\contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto.}}{22}{figure.71}
-\contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Proceso de detecci\IeC {\'o}n en la segunda opci\IeC {\'o}n.}}{24}{figure.76}
+\contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas [38]}}{20}{figure.68}
+\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Esquema de la ventana deslizante [38]}}{21}{figure.70}
+\contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto. \newline a)Imagen con defectos marcados \newline b)Imagen binarizada con el \IeC {\'a}rea de defectos \newline c)Imagen con filtro de detecci\IeC {\'o}n de bordes\newline d)Resultado final}}{23}{figure.73}
+\contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Proceso de detecci\IeC {\'o}n en la segunda opci\IeC {\'o}n \newline a)Imagen original \newline b)Imagen segmentada con los umbrales locales \newline c)Binarizaci\IeC {\'o}n de los umbrales locales\newline d)Identificaci\IeC {\'o}n de las regiones candidatas}}{25}{figure.78}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Diagrama de la metodolog\IeC {\'\i }a Scrum}}{28}{figure.81}
-\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Diagrama de etapas en Scrum}}{29}{figure.82}
+\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Diagrama de la metodolog\IeC {\'\i }a Scrum}}{28}{figure.83}
+\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Diagrama de etapas en Scrum}}{29}{figure.84}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Radiograf\IeC {\'\i }as usadas en otros art\IeC {\'\i }culos[5] [36] [38]}}{40}{figure.115}
-\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Ejemplo de radiograf\IeC {\'\i }a usada en nuestro proyecto}}{41}{figure.116}
+\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Radiograf\IeC {\'\i }as usadas en otros art\IeC {\'\i }culos[5] [36] [38]}}{40}{figure.117}
+\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Ejemplo de radiograf\IeC {\'\i }a usada en nuestro proyecto}}{41}{figure.118}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{52}{figure.138}
-\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{60}{figure.149}
-\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{62}{figure.154}
-\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{65}{figure.156}
-\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{69}{figure.158}
-\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{72}{figure.160}
-\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{75}{figure.162}
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{52}{figure.140}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{60}{figure.151}
+\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{62}{figure.156}
+\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{65}{figure.158}
+\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{69}{figure.160}
+\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{72}{figure.162}
+\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{75}{figure.164}

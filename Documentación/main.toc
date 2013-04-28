@@ -17,68 +17,70 @@
 \contentsline {subsection}{\numberline {2.4.2}Mean}{15}{subsection.42}
 \contentsline {section}{\numberline {2.5}Caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{15}{section.43}
 \contentsline {section}{\numberline {2.6}Reconocimiento e interpretaci\IeC {\'o}n de im\IeC {\'a}genes}{16}{section.44}
-\contentsline {section}{\numberline {2.7}Ensayos no destructivos}{17}{section.45}
-\contentsline {subsection}{\numberline {2.7.1}Radiograf\IeC {\'\i }a}{17}{subsection.46}
-\contentsline {subsection}{\numberline {2.7.2}Ventajas del ensayo radiogr\IeC {\'a}fico}{17}{subsection.47}
-\contentsline {subsection}{\numberline {2.7.3}Limitaciones del ensayo radiogr\IeC {\'a}fico}{18}{subsection.52}
-\contentsline {subsection}{\numberline {2.7.4}Objetivos del ensayo radiogr\IeC {\'a}fico}{18}{subsection.59}
-\contentsline {subsection}{\numberline {2.7.5}Principios del ensayo radiogr\IeC {\'a}fico}{18}{subsection.63}
-\contentsline {section}{\numberline {2.8}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n inicial}{19}{section.64}
-\contentsline {subsection}{\numberline {2.8.1}Preproceso}{19}{subsection.65}
-\contentsline {subsection}{\numberline {2.8.2}Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{19}{subsection.67}
-\contentsline {subsection}{\numberline {2.8.3}Determinaci\IeC {\'o}n de cu\IeC {\'a}ndo una ventana es defectuosa}{21}{subsection.69}
-\contentsline {subsection}{\numberline {2.8.4}Detecci\IeC {\'o}n de defectos}{21}{subsection.70}
-\contentsline {subsection}{\numberline {2.8.5}Multihilo}{23}{subsection.72}
-\contentsline {section}{\numberline {2.9}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{23}{section.73}
-\contentsline {subsection}{\numberline {2.9.1}Primera opci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{23}{subsection.74}
-\contentsline {subsection}{\numberline {2.9.2}Segunda opci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{24}{subsection.75}
-\contentsline {subsection}{\numberline {2.9.3}C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{25}{subsection.77}
-\contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{27}{chapter.78}
-\contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{27}{section.79}
-\contentsline {subsection}{\numberline {3.1.1}Metodolog\IeC {\'\i }a Scrum}{27}{subsection.80}
-\contentsline {subsection}{\numberline {3.1.2}Java}{31}{subsection.83}
-\contentsline {subsection}{\numberline {3.1.3}UML}{31}{subsection.84}
-\contentsline {subsection}{\numberline {3.1.4}Weka}{32}{subsection.85}
-\contentsline {subsection}{\numberline {3.1.5}ImageJ}{32}{subsection.95}
-\contentsline {subsection}{\numberline {3.1.6}Patrones de dise\IeC {\~n}o}{33}{subsection.96}
-\contentsline {section}{\numberline {3.2}Herramientas}{34}{section.97}
-\contentsline {subsection}{\numberline {3.2.1}Eclipse}{34}{subsection.98}
-\contentsline {subsection}{\numberline {3.2.2}JUnit}{34}{subsection.99}
-\contentsline {subsection}{\numberline {3.2.3}JDepend}{34}{subsection.100}
-\contentsline {subsection}{\numberline {3.2.4}Source Monitor}{35}{subsection.101}
-\contentsline {subsection}{\numberline {3.2.5}Astah}{35}{subsection.102}
-\contentsline {subsection}{\numberline {3.2.6}GitHub}{35}{subsection.103}
-\contentsline {subsection}{\numberline {3.2.7}PivotalTracker}{35}{subsection.104}
-\contentsline {subsection}{\numberline {3.2.8}MiK\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}}{36}{subsection.105}
-\contentsline {subsection}{\numberline {3.2.9}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}Maker}{36}{subsection.106}
-\contentsline {subsection}{\numberline {3.2.10}WindowBuilder}{36}{subsection.107}
-\contentsline {subsection}{\numberline {3.2.11}Auto Local Threshold}{37}{subsection.108}
-\contentsline {subsection}{\numberline {3.2.12}Apache Commons IO}{37}{subsection.109}
-\contentsline {subsection}{\numberline {3.2.13}Zotero}{37}{subsection.110}
-\contentsline {chapter}{\numberline {4}Aspectos relevantes del desarrollo del proyecto}{39}{chapter.111}
-\contentsline {section}{\numberline {4.1}Problemas y retos}{39}{section.112}
-\contentsline {section}{\numberline {4.2}Mejoras respecto al a\IeC {\~n}o pasado}{39}{section.117}
-\contentsline {section}{\numberline {4.3}Conocimientos adquiridos}{42}{section.124}
-\contentsline {subsection}{\numberline {4.3.1}Miner\IeC {\'\i }a de datos}{42}{subsection.125}
-\contentsline {subsection}{\numberline {4.3.2}Weka}{42}{subsection.126}
-\contentsline {subsection}{\numberline {4.3.3}Metodolog\IeC {\'\i }a Scrum}{43}{subsection.127}
-\contentsline {subsection}{\numberline {4.3.4}Programaci\IeC {\'o}n multihilo}{43}{subsection.128}
-\contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{43}{subsection.129}
-\contentsline {chapter}{\numberline {A}Plan del proyecto software}{47}{appendix.130}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{47}{section.131}
-\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{48}{section.132}
-\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{48}{subsection.133}
-\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{51}{section.135}
-\contentsline {subsection}{\numberline {A.3.1}Actores}{51}{subsection.136}
-\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{51}{subsection.137}
-\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{53}{section.139}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{57}{section.141}
-\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{57}{subsection.142}
-\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{58}{subsection.143}
-\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{59}{subsection.150}
-\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.155}
-\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{66}{subsection.157}
-\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{70}{subsection.159}
-\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{73}{subsection.161}
-\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{76}{subsection.163}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{86}{subsection.163}
+\contentsline {subsection}{\numberline {2.6.1}REPTree}{17}{subsection.45}
+\contentsline {subsection}{\numberline {2.6.2}Bagging}{17}{subsection.46}
+\contentsline {section}{\numberline {2.7}Ensayos no destructivos}{17}{section.47}
+\contentsline {subsection}{\numberline {2.7.1}Radiograf\IeC {\'\i }a}{18}{subsection.48}
+\contentsline {subsection}{\numberline {2.7.2}Ventajas del ensayo radiogr\IeC {\'a}fico}{18}{subsection.49}
+\contentsline {subsection}{\numberline {2.7.3}Limitaciones del ensayo radiogr\IeC {\'a}fico}{18}{subsection.54}
+\contentsline {subsection}{\numberline {2.7.4}Objetivos del ensayo radiogr\IeC {\'a}fico}{19}{subsection.61}
+\contentsline {subsection}{\numberline {2.7.5}Principios del ensayo radiogr\IeC {\'a}fico}{19}{subsection.65}
+\contentsline {section}{\numberline {2.8}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n inicial}{19}{section.66}
+\contentsline {subsection}{\numberline {2.8.1}Preproceso}{20}{subsection.67}
+\contentsline {subsection}{\numberline {2.8.2}Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{20}{subsection.69}
+\contentsline {subsection}{\numberline {2.8.3}Determinaci\IeC {\'o}n de cu\IeC {\'a}ndo una ventana es defectuosa}{21}{subsection.71}
+\contentsline {subsection}{\numberline {2.8.4}Detecci\IeC {\'o}n de defectos}{22}{subsection.72}
+\contentsline {subsection}{\numberline {2.8.5}Multihilo}{23}{subsection.74}
+\contentsline {section}{\numberline {2.9}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{24}{section.75}
+\contentsline {subsection}{\numberline {2.9.1}Primera opci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{24}{subsection.76}
+\contentsline {subsection}{\numberline {2.9.2}Segunda opci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{24}{subsection.77}
+\contentsline {subsection}{\numberline {2.9.3}C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{25}{subsection.79}
+\contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{27}{chapter.80}
+\contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{27}{section.81}
+\contentsline {subsection}{\numberline {3.1.1}Metodolog\IeC {\'\i }a Scrum}{27}{subsection.82}
+\contentsline {subsection}{\numberline {3.1.2}Java}{31}{subsection.85}
+\contentsline {subsection}{\numberline {3.1.3}UML}{31}{subsection.86}
+\contentsline {subsection}{\numberline {3.1.4}Weka}{32}{subsection.87}
+\contentsline {subsection}{\numberline {3.1.5}ImageJ}{32}{subsection.97}
+\contentsline {subsection}{\numberline {3.1.6}Patrones de dise\IeC {\~n}o}{33}{subsection.98}
+\contentsline {section}{\numberline {3.2}Herramientas}{34}{section.99}
+\contentsline {subsection}{\numberline {3.2.1}Eclipse}{34}{subsection.100}
+\contentsline {subsection}{\numberline {3.2.2}JUnit}{34}{subsection.101}
+\contentsline {subsection}{\numberline {3.2.3}JDepend}{34}{subsection.102}
+\contentsline {subsection}{\numberline {3.2.4}Source Monitor}{35}{subsection.103}
+\contentsline {subsection}{\numberline {3.2.5}Astah}{35}{subsection.104}
+\contentsline {subsection}{\numberline {3.2.6}GitHub}{35}{subsection.105}
+\contentsline {subsection}{\numberline {3.2.7}PivotalTracker}{35}{subsection.106}
+\contentsline {subsection}{\numberline {3.2.8}MiK\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}}{36}{subsection.107}
+\contentsline {subsection}{\numberline {3.2.9}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}Maker}{36}{subsection.108}
+\contentsline {subsection}{\numberline {3.2.10}WindowBuilder}{36}{subsection.109}
+\contentsline {subsection}{\numberline {3.2.11}Auto Local Threshold}{37}{subsection.110}
+\contentsline {subsection}{\numberline {3.2.12}Apache Commons IO}{37}{subsection.111}
+\contentsline {subsection}{\numberline {3.2.13}Zotero}{37}{subsection.112}
+\contentsline {chapter}{\numberline {4}Aspectos relevantes del desarrollo del proyecto}{39}{chapter.113}
+\contentsline {section}{\numberline {4.1}Problemas y retos}{39}{section.114}
+\contentsline {section}{\numberline {4.2}Mejoras respecto al a\IeC {\~n}o pasado}{39}{section.119}
+\contentsline {section}{\numberline {4.3}Conocimientos adquiridos}{42}{section.126}
+\contentsline {subsection}{\numberline {4.3.1}Miner\IeC {\'\i }a de datos}{42}{subsection.127}
+\contentsline {subsection}{\numberline {4.3.2}Weka}{42}{subsection.128}
+\contentsline {subsection}{\numberline {4.3.3}Metodolog\IeC {\'\i }a Scrum}{43}{subsection.129}
+\contentsline {subsection}{\numberline {4.3.4}Programaci\IeC {\'o}n multihilo}{43}{subsection.130}
+\contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{43}{subsection.131}
+\contentsline {chapter}{\numberline {A}Plan del proyecto software}{47}{appendix.132}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{47}{section.133}
+\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{48}{section.134}
+\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{48}{subsection.135}
+\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{51}{section.137}
+\contentsline {subsection}{\numberline {A.3.1}Actores}{51}{subsection.138}
+\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{51}{subsection.139}
+\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{53}{section.141}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{57}{section.143}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{57}{subsection.144}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{58}{subsection.145}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{59}{subsection.152}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.157}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{66}{subsection.159}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{70}{subsection.161}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{73}{subsection.163}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{76}{subsection.165}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{86}{subsection.165}
