@@ -19,11 +19,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -194,6 +199,20 @@ public class PanelAplicacion{
 		
 		getTablaResultados(panelTabla_1);
 		imgPanel.setFocusable(true);
+		
+		try {
+			File fichero = new File("./res/ayuda/ayuda.hs");
+			URL hsURL = fichero.toURI().toURL();
+			HelpSet hs =  new HelpSet(null, hsURL);
+			HelpBroker hb = hs.createHelpBroker();
+			hb.enableHelpKey(frmXraydetector.getContentPane(), "ventanaentrenamientodeteccion", hs);
+		}
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		} 
+		catch (HelpSetException e) {
+			e.printStackTrace();
+		}
 	
 	}
 
@@ -394,6 +413,7 @@ public class PanelAplicacion{
 		frmXraydetector = new JFrame();
 		frmXraydetector.setTitle("XRayDetector");
 		frmXraydetector.setBounds(100, 100, 1024, 800);
+		frmXraydetector.setResizable(false);
 		frmXraydetector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXraydetector.getContentPane().setLayout(null);
 		frmXraydetector.setLocationRelativeTo(null);
@@ -419,10 +439,7 @@ public class PanelAplicacion{
 				img = new ImagePlus(image.getAbsolutePath());
 				imgPanel.setImage(img.getImage());
 				imgPanel.repaint();
-<<<<<<< HEAD
-=======
 				imgPanel.setFlagTrabajando(false);
->>>>>>> origin/FIXES
 				selection = imgPanel.coordenates();
 				btnAnalizar.setEnabled(true);
 				slider.setEnabled(false);
@@ -541,10 +558,7 @@ public class PanelAplicacion{
 					tablaResultados.setEnabled(false);
 					imgPanel.setImage(img.getImage());
 					imgPanel.repaint();
-<<<<<<< HEAD
-=======
 					imgPanel.setFlagTrabajando(true);
->>>>>>> origin/FIXES
 					((DefaultTableModel) (tablaResultados.getModel())).getDataVector().clear();
 					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
@@ -674,10 +688,7 @@ public class PanelAplicacion{
 			btnExportarLog.setEnabled(true);
 			btnLimpiarLog.setEnabled(true);
 			tablaResultados.setEnabled(true);
-<<<<<<< HEAD
-=======
 			imgPanel.setFlagTrabajando(false);
->>>>>>> origin/FIXES
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
 			}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<toc version="1.0" categoryclosedimage =  "FolderClosed" categoryopenimage = "FolderOpened" topicimage = "ItemIco">
+   <tocitem text="Aplicación" target="aplicacion"/>
+   <tocitem text="Entrenamiento y detección">
+		<tocitem text="Ventana de entrenamiento y detección"    target="ventanaentrenamientodeteccion"/>
+        <tocitem text="Entrenamiento">
+			<tocitem text="Entrenamiento"    target="entrenamiento"/>
+		</tocitem>
+        <tocitem text="Análisis de imágenes">
+			<tocitem text="Abrir una imagen"    target="abririmagen"/>
+			<tocitem text="Analizar una imagen"    target="analizar"/>
+			<tocitem text="Resultados de la detección"    target="resultados"/>
+		</tocitem>
+		<tocitem text="Visor de log">
+			<tocitem text="Registro log"    target="registrolog"/>
+		</tocitem>
+		<tocitem text="Menú">
+			<tocitem text="Menú de entrenamiento y detección"    target="menuentrenamientodeteccion"/>
+			<tocitem text="Opciones avanzadas"    target="opcionesavanzadas"/>
+		</tocitem>
+   </tocitem>
+</toc>

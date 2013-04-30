@@ -1,0 +1,55 @@
+<html>
+	<head>
+      <title>Entrenar un clasificador</title>
+   </head>
+   <body>
+   <h1>Introducción</h1>
+		<p>
+			XRayDetector permite entrenar un clasificador a partir de un conjunto de imágenes de ejemplo. En este documento se incluye la ayuda acerca de esta funcionalidad.
+		</p>
+		
+	<h1>Entrenamiento de un clasificador</h1>
+		<p>
+			Antes de entrenar un clasificador, XRayDetector permite crear un clasificador a partir de archivo .ARFF existente, o en su defecto crear un archivo .ARFF nuevo a partir de un conjunto de imágenes de ejemplo. <br>
+			Para elegir entre ambas opciones haga click en el botón (Entrenar Clasificador) [INCLUIR PANTALLAZO], a continuacíon XRayDetector le propondrá entrenar un clasificador a partir de las 2 opciones mencionadas: <br>
+			[INCLUIR PANTALLAZO]<br>
+			Una vez seleccionada la opción, pulse el botón <b>ACEPTAR</b>.
+		</p>
+				
+	<h1>Entrenamiento a partir de un ARFF existente</h1>
+		<p>
+			Si selecciona la opción <b>Entrenar Clasificador a partir de un ARFF exsistente</b>, XRayDetector le pedirá que seleccione cual será el archivo .ARFF desde el que tomar los datos para entrenar el clasificador.<br>
+			Se abrirá un cuadro de diálogo en el que puede navegar por su sistema, pudiendo así elegir el archivo que considere necesario.<br>
+			[INCLUIR PANTALLAZO]
+		</p>
+		<p>
+			Una vez que ha encontrado el archivo que desea, pulse el botón <b>ACEPTAR</b>. La aplicación iniciará el proceso de entrenamiento a partir del archivo seleccionado por usted.
+		</p>
+		
+	<h1>Entrenamiento a partir de un ARFF nuevo</h1>
+		<p>
+			Si selecciona la opción <b>Entrenar Clasificador a partir de un ARFF nuevo</b>, XRayDetector le pedirá que seleccione cual será la carpeta de imágenes desde donde tomará los datos a partir de un proceso de extracción de datos a partir de los píxeles de la imágen.<br>
+			Se abrirá un cuadro de diálogo en el que puede navegar por su sistema, pudiendo así elegir la carpeta con el conjunto de imágenes junto con sus máscaras que tomará como datos de entrada a partir d elas cuales generará un nuevo archivo .ARFF desde el que realizar posterior mente el <a href="./analizar.html"> proceso de análisis y detección de defectos sobre imágenes </a>.<br>
+			[INCLUIR PANTALLAZO]
+		</p>
+		<p>
+			Una vez especificado el directorio con el conjunto de imágenes que se desea utilizar para este proceso, pulse el botón <b>ACEPTAR</b>. La aplicación iniciará el proceso de entrenamiento.
+		</p>
+
+
+	<h1>Deteniendo el proceso</h1>
+		<p>
+			En cualquier momento, puede parar el proceso de detección pulsando el botón [INSERTAR PANTALLAZO]. La aplicación volverá al estado inicial.
+		</p>
+
+	<h1>Resultados</h1>
+		<p>
+			Cuando el proceso acaba, se indica si el proceso de entrenamiento ha concluido de forma satisfactoria.</a>.
+		</p>
+		
+	<h1>Cambiando opciones</h1>
+		<p>
+			Se pueden cambiar algunas opciones del proceso de entrenamiento, como el tipo de ventana utilizado durante el entrenamiento y el tipo de clasificación <b>(NOMINAL o de REGRESIÓN)</b>. Para más información, consulte la <a href="./opcionesavanzadas.html">ayuda sobre las opciones avanzadas</a>.
+		</p>	
+   </body>
+</html>

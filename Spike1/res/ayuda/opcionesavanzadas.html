@@ -1,0 +1,94 @@
+<html>
+	<head>
+      <title>Opciones avanzadas</title>
+   </head>
+   <body>
+   <h1>Introducción</h1>
+		<p>
+			XRayDetector permite configurar una serie de parámetros que permite ajustar la aplicación en función al tipo de análisis o entrenamiento deseado.<br>
+			A continuación se especifican con detenimiento los diferentes parámetros y sus posibles opciones a elegir.
+			[INCLUIR PANTALLAZO]
+		</p>
+		
+	<h1>Tamaño de la ventana</h1>
+		<p>
+			XRayDetector permite establecer diferentes tamaños de ventana para realizar el proceso de análisis de la imagen así como para determinar el tamaño de la ventana utilizado para el proceso de entrenamiento.<br>
+			Los posibles valores entre los que se permite elegir son:
+			<UL type = circle>
+			<LI><b>8 x 8</b>
+			<LI><b>12 x 12</b><br>
+			<LI><b>16 x 16</b><br>
+			<LI><b>24 x 24</b><br>
+			<LI><b>32 x 32</b><br>
+			<LI><b>48 x 48</b><br>
+			</UL>
+			[INCLUIR PANTALLAZO]<br>
+		</p>
+		<p>
+		<b>NOTA: </b>Este parámetro influye en el tiempo que le llevará a la aplicación analizar una imagen o entrenar un clasificador. A mayor tamaño de ventana menor tiempo y viceversa.
+		</p>
+		
+	<h1>Tamaño del salto</h1>
+	<p>
+		XRayDetector permite definir el tamaño del salto que efectuará la ventana entre ventana y ventana.<br>
+		Este valor puede ser definido mediante una barra de desplazamiento que permite definir un valor entre un tamaño mínimo de un <b>10%</b> de la ventana y un máximo del <b>100%</b> de la ventana.<br>
+		[INCLUIR PANTALLAZO]
+	</p>
+	<p>
+		<b>NOTA: </b>Este parámetro influye en el tiempo que le llevará a la aplicación analizar una imagen o entrenar un clasificador. A mayor tamaño del salto menor tiempo y viceversa.
+	</p>
+   
+   	<h1>Tipo de detección</h1>
+	<p>
+		XRayDetector permite establecer que tipo de detección se va a llevar a cabo.<br>
+		Las opciones a elegir son las siguientes:
+		<UL type = circle>
+		<LI><b>Normal:</b> Se realiza el cálculo de características de texturas sobre una ventana deslizante, que va recorriendo la imagen.
+		<LI><b>Normal + Umbrales locales:</b> Se realiza el cálculo de texturas de forma normal, pero al terminar se calculan los umbrales locales y se marcan como defecto aquellas zonas que fueron marcadas como defecto en la detección normal y que, además, fueron marcadas como blancos en los umbrales locales.
+		<LI><b>Blancos en Umbrales locales:</b> Se saca la imagen segmentada con los umbrales locales y se centra un número de ventanas sobre las zonas que fueron marcadas como blancos. En estas ventanas se calculan las características de texturas.
+		</UL>
+		[INCLUIR PANTALLAZO]<br>
+	</p>
+	
+	<h1>Ventana de entrenamiento</h1>
+	</b>
+		Se puede determinar el tipo de entrenamiento a realizar mediante la selección del tipo de ventana que llevará a cabo este proceso.<br>
+		Las opciones a elegir son las siguientes:
+		<UL type = circle>
+		<LI><b>Ventana aleatoria:</b> Una ventana extrae la información de un conjunto de pixeles en la imagen. La posición de esta ventana en la imagen es aleatorio. Este proceso se repite hasta que se genere un conjunto de datos de entrenamiento suficientemente grande para poder ser utilizado por la aplicación.
+		<LI><b>Ventana deslizante:</b> Una ventana extrae la información de un conjunto de pixeles en la imagen. Este proceso a diferencia de la ventana aleatoria se realiza de forma secuencial, es decir, la ventana recorrerá la imagen de principio a fin de forma secuencial hasta completarla generando un conjunto de datos con los que entrenar un clasificador.
+		</UL>
+		[INCLUIR PANTALLAZO]<br>
+	</p>
+	
+	<h1>Tipo de clasificación</h1>
+	</b>
+		Cuando se realiza el proceso de entrenamiento y detección de defectos, puede determinarse el tipo de clasificación que la aplicación determinará a la hora de definir si una ventana ha sido marcada como defectuosa o no. Esto determina si el ARFF generado contendrá un parametro numérico o booleano para definir si se ha encontrado un defecto o no dentro de la ventana.<br>
+		Las opciones a elegir son las siguientes:
+		<UL type = circle>
+		<LI><b>Clases Nominales:</b> Una ventana será clasificada como defectuosa o no mediante en indicador <b>TRUE</b> o <b>FALSE</b>.
+		<LI><b>Regresión:</b> Una ventana será considerada o no como defectuosa según el número de píxeles detectados como defectuosos dentro de la misma. En este caso lo que se almacena serán el número de píxeles detectados como defectuosos.
+		</UL>
+		[INCLUIR PANTALLAZO]<br>
+	</p>
+	
+	<h1>Heurística ventana defectuosa</h1>
+	</b>
+		XRayDetector permite elegir entre diferentes heurísticas a seguir para decidir si una ventana será clasificada como defectuosa o no.<br>
+		Las opciones a elegir son las siguientes:
+		<UL type = circle>
+		<LI><b>Porcentaje píxeles malos en la ventana:</b> Si el número de píxeles defectuosos encontrados en la ventana supera un umbral mínimo definido por el usuario, la ventana entera será marcada como defectuosa.
+		<LI><b>Porcentaje vecinos malos píxel central:</b> Determina qué porcentaje de vecinos con respecto al pixel central dela ventana pueden ser considerados como defectuosos. Este umbral puede ser definido por el usuario.  Si se supera dicho umbral, la ventana entera será marcada como defectuosa.
+		</UL>
+		[INCLUIR PANTALLAZO]<br>
+	</p>
+	
+	<h1>Porcentaje píxeles defectuosos</h1>
+	</b>
+		Permite definir el porcentaje de píxeles defectuosos utilizados como umbral. Esto permitira determinar si una ventana será clasificada o no como defectuosa durante el proceso de análisis de la imagen.<br>
+		Este valor puede ser definido mediante una barra de desplazamiento que permite definir un valor entre un tamaño mínimo de un <b>10%</b> de la ventana y un máximo del <b>100%</b> de la ventana.<br>
+		[INCLUIR PANTALLAZO]<br>
+	</p>
+	
+	</body>
+</html>

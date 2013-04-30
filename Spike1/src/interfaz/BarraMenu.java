@@ -4,7 +4,13 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -69,6 +75,20 @@ public class BarraMenu extends JMenuBar {
 
 		mntmAyudaEnLnea = new JMenuItem("Ayuda en l\u00EDnea");
 		mnAyuda.add(mntmAyudaEnLnea);
+		
+		try {
+			File fichero = new File("./res/ayuda/ayuda.hs");
+			URL hsURL = fichero.toURI().toURL();
+			HelpSet hs =  new HelpSet(null, hsURL);
+			HelpBroker hb = hs.createHelpBroker();
+			hb.enableHelpOnButton(mntmAyudaEnLnea, "ventanaentrenamientodeteccion", hs);
+		}
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		} 
+		catch (HelpSetException e) {
+			e.printStackTrace();
+		}
 
 		mntmAcercaDe = new JMenuItem("Acerca de");
 		mnAyuda.add(mntmAcercaDe);
