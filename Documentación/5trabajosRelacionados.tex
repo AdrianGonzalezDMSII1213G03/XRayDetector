@@ -1,0 +1,204 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Trabajos relacionados}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este apartado se hablará de algunos trabajos relacionados con los temas que se tratan en el proyecto.
+
+\section{Artículos Estudiados}
+A la hora de comenzar el proyecto, necesitamos leer el artículo principal sobre el que estaba basado el proyecto anterior. Además, durante el desarrollo del mismo, fue necesario leer otros artículos para buscar nueva información, como por ejemplo, cómo clasificar defectos a través de características geométricas. A continuación se muestra un listado de todos los artículos, junto con una tabla comparativa \vertabla{tablaComparativa} de aquellos artículos que nos han parecido más interesantes. Para ver un resumen más detallado de estos artículos, se puede ir a la sección \ref{estadoArte} de la memoria. 
+
+\begin{itemize}
+		\item\textit{Automated Detection of Welding Defects without Segmentation} \cite{DomingoMery}
+		\item \textit{An automatic system of classification of weld defects in radiographic images} \cite{vilar2009automatic}
+		\item \textit{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine Classifier} \cite{wang2010recognition}
+		\item \textit{Image thresholding based on the EM algorithm and the generalized Gaussian distribution} \cite{bazi2007image}
+		\item \textit{Weld defect classification using EM algorithm for Gaussian mixture model} \cite{Tridi}
+		\item \textit{Multiclass defect detection and classification in weld radiographic images
+using geometric and texture features}[CITA]
+	\end{itemize}
+
+
+%Tabla comparativa de artículos
+\tablaSinColores{Tabla comparativa de artículos}{| p{3.5cm} | p{2cm} | p{0.75cm} | p{2.5cm} | p{1.75cm} | p{1.75cm} |}{6}{tablaComparativa}{
+\multicolumn{1}{c}{Título} & \multicolumn{1}{c}{Autores} & \multicolumn{1}{c}{Año} & \multicolumn{1}{c}{Preprocesamiento} & \multicolumn{1}{c}{Características} & \multicolumn{1}{c}{Clasificador} \\
+ }
+ {
+  An automatic system of classification of weld defects in radiographic images & Rafael Vilar et al. & 2009 & Filtro adaptativo de Wiener de 7 x 7. \newline Filtro gausiano de paso bajo de 3 x 3. \newline Método de Otsu. & Área, centroide, eje mayor, eje menor, excentricidad, etc. & Red neuronal artificial (ANN) \\ \hline
+  Weld defect classification using EM algorithm for Gaussian mixture model & M.Tridi et al. & 2005 & Segmentación de la imagen & Geométricas: Área, longitud, anchura, elongación, perímetro, etc. & k-medias \\ \hline
+  Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine & X.Wang et al. & 2010 & Binarización adaptativa basada en wavelet \newline Igualización adaptativa del histograma & Características de Haralick, de Gabor, de matriz de co-ocurrencia y morfológicas & Máquina de vector de soporte (SVM) \\ \hline
+  Automated Detection of Welding Defects without Segmentation & Domingo Mery   		& 2011 & Saliency Map & Características estándar, de Haralick y LBP & Máquina de vector de soporte (SVM)  \\ \hline
+  Multiclass defect detection and classification in weld radiographic images using geometric and texture features & Ioannis Valavanis et al. & 2010 & Umbrales locales de Savuola. \newline Método de segmentación basado en grafos. & De texturas (2º momento angular, contraste, correlación, suma de cuadrados, etc) y geométricas (posición, ratio de aspecto, área, longitud, redondez...). & SVM y red neuronal artificial \\
+ }
+ 
+ \newpage
+\section{Revisión del estado del arte}\label{estadoArte}
+En este apartado se examina brevemente el estado del arte relevante para el tema de este proyecto. Es importante realizar una revisión bibliográfica ya que nos permitirá saber si el problema que nos planteamos está ya resuelto, así como conocer lo que otros investigadores han aportado en nuestra línea de trabajo y cómo han planteado y realizado sus investigaciones. Además, es necesario conocer con detalle las técnicas experimentales que otros han usado en problemas parecidos al nuestro, para seguirlas o para modificarlas.
+
+A continuación, se incluyen resúmenes de aquellos artículos que nos han parecido más interesantes para ayudarnos en el desarrollo del proyecto.
+
+[¿QUÉ ARTÍCULOS PONEMOS?]
+
+
+\subsection{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}
+En este artículo \cite{vilar2009automatic} se estudia la forma de detectar defectos de soldadura en radiografías. Se utilizan imágenes de 8 bits con una resolución de 2900$\times$1950 píxeles. Consta de las siguientes fases:
+
+
+\subsubsection{Preprocesado de las imágenes}
+Para reducir el ruido se utilizan dos técnicas:
+	\begin{itemize}
+	\item Filtro adaptativo de Wiener de 7$\times$7 \cite{wiener1949extrapolation}. Ver apartado \ref{suavizadoImagen}.
+	\item Filtro gausiano de paso bajo de 3$\times$3.
+	\end{itemize}
+También se utilizan técnicas para mejorar el contraste.
+Finalmente, la imagen se divide en bandas de 640$\times$480 píxeles. 
+
+
+\subsubsection{Segmentación de las regiones de soldadura}
+El objetivo de esta fase es aislar la región de soldadura del resto de elementos. El proceso se desarrolla en tres fases. 
+En la primera se busca un umbral óptimo que permite binarizar la imagen, separando los píxeles de los objetos de los píxeles del fondo. Para ello se utiliza el método de Otsu \cite{otsu1979threshold}.
+En la segunda se etiquetan los componentes conectados de la imagen binarizada. Se utiliza el procedimiento propuesto por Haralick y Shapiro \cite{haralick1992computer}, que devuelve una matriz con el mismo tamaño que la imagen. Los píxeles etiquetados como <<0>> son el fondo, los píxeles etiquetados como <<1>> representan un objeto, los píxeles etiquetados como <<2>> representan un segundo objeto y así sucesivamente.
+Para concluir, en la tercera fase, como un criterio para seleccionar entre los objetos etiquetados, el área máxima es establecida. De esta manera, se identifica la región de soldadura de entre todos los objetos de la imagen.
+
+
+\subsubsection{Segmentación de heterogeneidades}
+Se toma como entrada la imagen producida por la fase anterior. 
+La salida obtenida es una imagen que contiene únicamente defectos potenciales.
+Primero se binariza la imagen utilizando el método de Otsu para obtener el umbral óptimo. Después se traza el borde exterior de los objetos. Una vez que se ha hecho esto, se deduce que los defectos son objetos situados dentro de una región de soldadura.
+
+
+\subsubsection{Extracción de características}
+La salida de esta fase es una descripción de cada defecto candidato de la imagen. Las características extraídas son: área, centroide (coordenadas $X$ e $Y$), eje mayor, eje menor, excentricidad, orientación, número de Euler \cite{dunham1999euler}, diámetro equivalente, solidez, extensión y posición. Se genera un vector de entrada (12 componentes) para cada defecto candidato y expertos humanos en defectos de soldadura producen un vector objetivo asociado.
+
+
+\subsubsection{Análisis de componentes principales}
+En esta fase se reduce el tamaño de los vectores de características de entrada. Para ello se utiliza la técnica PCA \cite{PCA} (ver apartado \ref{pca}).
+
+
+\subsubsection{Predicción utilizando una red neuronal multicapa}
+Se utiliza una red neuronal multicapa para clasificar los defectos.
+Se implementan clasificadores de patrones no lineales de tipo supervisado utilizando ANN.
+
+Con los datos de entrenamiento, el error es pequeño, pero cuando se introducen nuevos datos a la red el error es grande. La red ha memorizado los ejemplos de entrenamiento pero no ha aprendido a generalizar en nuevas situaciones. Para mejorar la generalización se utilizan tres técnicas:
+	\begin{enumerate}
+	\item Regularización.
+	\item Regularización de Bayes.
+	\item Early stopping o bootstrap.
+	\end{enumerate}
+
+Para evaluar el rendimiento de la red, se realiza un análisis de regresión entre la respuesta de la red y los objetivos correspondientes. El coeficiente de correlación obtenido entre las salidas y los objetivos es una medida de cómo de bien es explicada la variación de la salida por los objetivos. Si este número es igual a 1, entonces hay correlación perfecta entre los objetivos y las salidas. Para determinar el coeficiente de correlación se emplea una regresión lineal usando el método least square.
+
+
+\subsection{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}
+En este articulo \cite{Tridi}, se proponen dos algoritmos de clasificación de los defectos de soldadura  \textit{(El algoritmo Fuzzy-C-Means Iterativo: FCMI y el algoritmo Expectation maximization: EM)}.
+El primer algoritmo se basa en el concepto de distancia y lógica difusa, y el segundo está basado en conceptos estadísticos. 
+
+
+\subsubsection{Algoritmo Fuzzy-C-Means Iterativo} 
+El algoritmo \textit{Fuzzy-C-Means Iterativo} \cite{kandel1999introduction} utiliza el concepto de lógica difusa y distancia para la clasificación. Está dada por el siguiente algoritmo:
+	\begin{enumerate}
+	\item Los centros de los clusters M son inicializados en un conjunto de ejemplos
+	\item Cálculo de la distancia euclidiana entre cada muestra y cada centro de cluster
+	\item Cálculo de la función de pertenencia (Fuzzification) 
+	\end{enumerate}
+
+
+\subsubsection{The EM algorithm}
+El algoritmo \textit{Expectation maximization (EM)} \cite{zhang2003algorithms}, es una extensa clase de algoritmos iterativos usada para estimación de máxima verosimilitud o máxima probabilidad a posteriori en problemas en los que faltan datos.
+
+
+\subsubsection{Aplicación en la clasificación de defectos de soldadura}
+En esta aplicación se ha tomado una base de datos formada por 72 radiografías con defectos.
+Para poder clasificar un patrón (imagen segmentada), es esencial caracterizarlas por un vector de características. La elección de este vector está basada en el conocimiento obtenido por un experto en radiografías. Se pueden encontrar varios tipos de características, como por ejemplo: momentos Zernik, momentos Legendre, momentos Geométricos, coeficientes de Fourier etc.
+Las características usadas en esta aplicación son parámetros o características geométricas. Este tipo de características consisten en caracterizar un objeto acorde al vector cuyos elementos son característicos, como por el perímetro, superficie, dirección principal de la inercia inercia y elongación.
+
+Se advierte el hecho de que los centros de los clusters representan eficientemente las cuatro clases (Y1 para roturas, Y2 para falta de penetración, Y3 para inclusión de gas e Y4 para inclusión de óxido), y son diferentes entre si. 
+
+
+\subsubsection{Conclusión}
+Se describe un nuevo enfoque para clasificar el defecto de soldadura para las imágenes de radiografía usando el algoritmo EM. El algoritmo EM es muy sensible a la elección de los valores iniciales de los parámetros. En este caso, se ha utilizado el algoritmo de $k$-medias para la inicialización. La principal contribución es una comparación entre los algoritmos EM y FCMI. Los resultados experimentales indican que este algoritmo ha dado mejores resultados que el algoritmo FCMI.
+
+
+\subsection{Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}
+En este artículo \cite{sargunar2010automatic} se describe un proceso que consiste en clasificar los defectos de soldadura en cuatro categorías de acuerdo con sus características morfológicas, utilizando para ello redes neuronales. Los autores usaron el ANN (Red Neuronal Artificial) en bordes y regiones respectivamente. 
+
+La imagen de entrada puede ser en color o en escala de grises. La fase de preprocesamiento busca corregir el problema de la variación de iluminación que ocurre al tomar las fotos. También se mejora el contraste. Para ello se utilizan las siguientes técnicas:
+
+\begin{itemize}
+\item \emph{Colour Space Conversion}
+\item \emph{Zero Padding of Image Edges}
+\item \emph{Median Filtering}
+\item \emph{Windowed Based Adaptive Histogram Equalization with Overlap Mean}
+\end{itemize}
+
+Se utiliza el método adaptativo de detección de bordes.
+
+La imagen de salida resultante de esta fase se pasa a la etapa de segmentación. Se segmenta el píxel del fondo del defecto y de la red neuronal usando \textit{Gaussian Mixture Model}.
+
+Se utiliza una ventana en la que el píxel central se clasifica usando la información en escala de grises de la ventana.
+
+El Defecto y el centro de la clase clase de la red neuronal contendrá algo de ruido que sera eliminado en la siguiente fase llamada <<Fase de classificación de defecto>>.
+
+Clasificación mediante SVM (ver apartado \ref{svm}).
+
+
+\subsection{Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}
+En este artículo \cite{anand2009flaw} se aplica la técnica \emph{watershed segmentation} \cite{Watershed79} (en español <<línea de división de aguas>>) para detectar defectos en imágenes de rayos X.
+
+Primero se preprocesa la imagen, reduciendo el ruido y corrigiendo el sombreado de fondo. Para ello se utilizan filtros como <<filtro de mediana>> (ver apartado \ref{suavizadoImagen}) e <<igualación del histograma>> (ver apartado \ref{realzadoImagen}).
+
+La imagen preprocesada se usa para cálculo de gradientes. En esta segmentación se usa cualquiera de los filtros de detección de bordes (ver apartado \ref{deteccionBordes}) como Sobel, Prewitt o derivada Gaussiana.
+
+Se utiliza watershed multi-etapa para evitar la sobre-segmentación producida por la segmentación watershed de una sola etapa. Además, da buenos resultados a la hora de determinar la forma y el tamaño del defecto. Los defectos como falta de penetración, falta de fusión, cavidades de gas, porosidades y agujeros de gusano son fácilmente detectados por este método.
+La implementación utilizada consta de dos fases:
+\begin{enumerate}
+\item Se aplica watershed transformation a una imagen de rayos X y la imagen resultante es tratada con el método de Otsu para obtener una imagen binarizada.
+\item Se realizan la transformación de morfología y top-hat a la imagen binaria para separar los objetos parcialmente solapados. Se calcula el mapa de distancia Euclidea (EDM) para cada cuenca (\emph{basins}) para etiquetar los segmentos resultantes de forma única y separar las crestas. Después se realiza la segunda fase de watershed segmentation para obtener bordes mejor definidos y eliminar las regiones sobre-segmentadas. Estas regiones son pequeñas zonas que están mezcladas en una misma región homogénea dado que tienen características de intensidad similares.
+\end{enumerate}
+Para saber más sobre la morfología matemática se puede consultar el libro \cite{gonzalez2008digital}.
+
+\subsection{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}
+En este artículo \cite{wang2010recognition} se describe un método para detectar defectos en imágenes de rayos X basado en Support Vector Machine (SVM) (ver apartado \ref{svm}).
+El método está compuesto por tres fases:
+
+
+\subsubsection{Preprocesado de las imágenes}
+ Las imágenes que se van a analizar tienen bajo contraste, mucho ruido y fondo no uniforme. Para mejorar estas condiciones se utilizan dos métodos: \textit{Binarización adaptativa basada en wavelet e Igualación adaptativa del histograma}. 
+Después se segmenta la imagen utilizando \textit{Umbralización multi-nivel basada en entropía máxima borrosa}.
+Se segmentan los defectos hipotéticos (algunos son falsas alarmas).
+
+
+\subsubsection{Extracción de características}
+Este apartado se centra en la medición de las propiedades de las regiones. Se extraen dos tipos de características:
+	\begin{enumerate}
+	\item Características de textura
+	Se extraen la matriz de co-ocurrencia y los filtros de Gabor \cite{daugman1988complete}. Para medir estas características, se utilizan 4 de las 14 medidas propuestas por Haralick \cite{haralick1973textural}:
+		\begin{itemize}
+		\item \emph{Shannon Entropy}
+		\item \emph{Contrast}
+		\item \emph{Angular Second Moment}
+		\item \emph{Inverse Difference Moment}
+		\end{itemize}
+	Se extraen 64 características de Gabor y 16 a partir de la matriz de co-ocurrencia.
+
+	\item Características morfológicas
+		\begin{itemize}
+		\item Área
+		\item Longitud
+		\item Anchura
+		\item Elongación
+		\item Orientación
+		\item Ratio entre la anchura y el área (RWA).
+		\item Compacidad
+		\end{itemize}
+	
+	Estas características, sumadas a las de textura, nos dan un total de 87 características
+	\end{enumerate}
+
+
+\subsubsection{Clasificación de patrones}
+Se dividen las imágenes en regiones específicas de acuerdo a las características extraídas, clasificándolas en dos grupos (<<defecto>> o <<no defecto>>).
+Se seleccionan 16 características combinando las 12 mejores obtenidas mediante la aplicación de un algoritmo basado en SVM y las 12 mejores obtenidas con un análisis ROC.
+Se entrena la SVM con los vectores formados por esas características.
+Después, se preprocesa la imagen de prueba para extraer las 16 características, y entonces se aplica la SVM entrenado para que decida entre <<defecto>> y <<no defecto>>.

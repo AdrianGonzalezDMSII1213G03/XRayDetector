@@ -66,21 +66,46 @@
 \contentsline {subsection}{\numberline {4.3.3}Metodolog\IeC {\'\i }a Scrum}{43}{subsection.129}
 \contentsline {subsection}{\numberline {4.3.4}Programaci\IeC {\'o}n multihilo}{43}{subsection.130}
 \contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{43}{subsection.131}
-\contentsline {chapter}{\numberline {A}Plan del proyecto software}{47}{appendix.132}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{47}{section.133}
-\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{48}{section.134}
-\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{48}{subsection.135}
-\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{51}{section.137}
-\contentsline {subsection}{\numberline {A.3.1}Actores}{51}{subsection.138}
-\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{51}{subsection.139}
-\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{53}{section.141}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{57}{section.143}
-\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{57}{subsection.144}
-\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{58}{subsection.145}
-\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{59}{subsection.152}
-\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{63}{subsection.157}
-\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{66}{subsection.159}
-\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{70}{subsection.161}
-\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{73}{subsection.163}
-\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{76}{subsection.165}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{86}{subsection.165}
+\contentsline {chapter}{\numberline {5}Trabajos relacionados}{45}{chapter.132}
+\contentsline {section}{\numberline {5.1}Art\IeC {\'\i }culos Estudiados}{45}{section.133}
+\contentsline {section}{\numberline {5.2}Revisi\IeC {\'o}n del estado del arte}{47}{section.135}
+\contentsline {subsection}{\numberline {5.2.1}An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{47}{subsection.136}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{47}{subsubsection*.137}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de las regiones de soldadura}{47}{subsubsection*.138}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de heterogeneidades}{48}{subsubsection*.139}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{48}{subsubsection*.140}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de componentes principales}{48}{subsubsection*.141}
+\contentsline {subsubsection}{Predicci\IeC {\'o}n utilizando una red neuronal multicapa}{48}{subsubsection*.142}
+\contentsline {subsection}{\numberline {5.2.2}Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{48}{subsection.146}
+\contentsline {subsubsection}{Algoritmo Fuzzy-C-Means Iterativo}{49}{subsubsection*.147}
+\contentsline {subsubsection}{The EM algorithm}{49}{subsubsection*.151}
+\contentsline {subsubsection}{Aplicaci\IeC {\'o}n en la clasificaci\IeC {\'o}n de defectos de soldadura}{49}{subsubsection*.152}
+\contentsline {subsubsection}{Conclusi\IeC {\'o}n}{49}{subsubsection*.153}
+\contentsline {subsection}{\numberline {5.2.3}Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{50}{subsection.154}
+\contentsline {subsection}{\numberline {5.2.4}Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{50}{subsection.155}
+\contentsline {subsection}{\numberline {5.2.5}Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{51}{subsection.158}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{51}{subsubsection*.159}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{51}{subsubsection*.160}
+\contentsline {subsubsection}{Clasificaci\IeC {\'o}n de patrones}{52}{subsubsection*.163}
+\contentsline {chapter}{\numberline {6}Conclusiones y l\IeC {\'\i }neas de trabajo futuras}{53}{chapter.164}
+\contentsline {section}{\numberline {6.1}Aspectos que han complicado la realizaci\IeC {\'o}n del proyecto}{53}{section.165}
+\contentsline {section}{\numberline {6.2}Conclusiones}{54}{section.166}
+\contentsline {section}{\numberline {6.3}L\IeC {\'\i }neas de trabajo futuras}{55}{section.167}
+\contentsline {chapter}{\numberline {A}Plan del proyecto software}{59}{appendix.168}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{59}{section.169}
+\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{60}{section.170}
+\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{60}{subsection.171}
+\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{63}{section.173}
+\contentsline {subsection}{\numberline {A.3.1}Actores}{63}{subsection.174}
+\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{63}{subsection.175}
+\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{65}{section.177}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{69}{section.179}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{69}{subsection.180}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{70}{subsection.181}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{71}{subsection.188}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{75}{subsection.193}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{78}{subsection.195}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{82}{subsection.197}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.199}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{88}{subsection.201}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{98}{subsection.201}

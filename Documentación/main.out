@@ -65,21 +65,33 @@
 \BOOKMARK [2][-]{subsection.129}{Metodolog\355a Scrum}{section.126}% 65
 \BOOKMARK [2][-]{subsection.130}{Programaci\363n multihilo}{section.126}% 66
 \BOOKMARK [2][-]{subsection.131}{Documentaci\363n en LaTeX}{section.126}% 67
-\BOOKMARK [0][-]{appendix.132}{Plan del proyecto software}{}% 68
-\BOOKMARK [1][-]{section.133}{Introducci\363n}{appendix.132}% 69
-\BOOKMARK [1][-]{section.134}{Planificaci\363n temporal del proyecto}{appendix.132}% 70
-\BOOKMARK [2][-]{subsection.135}{Estimaci\363n temporal a partir de casos de uso}{section.134}% 71
-\BOOKMARK [1][-]{section.137}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.132}% 72
-\BOOKMARK [2][-]{subsection.138}{Actores}{section.137}% 73
-\BOOKMARK [2][-]{subsection.139}{Ciclo de desarrollo}{section.137}% 74
-\BOOKMARK [1][-]{section.141}{Product Backlog del proyecto}{appendix.132}% 75
-\BOOKMARK [1][-]{section.143}{Planificaci\363n por Sprint}{appendix.132}% 76
-\BOOKMARK [2][-]{subsection.144}{Sprint 1: Spike Arquitect\363nico 1}{section.143}% 77
-\BOOKMARK [2][-]{subsection.145}{Sprint 2: Spike Arquitect\363nico 2}{section.143}% 78
-\BOOKMARK [2][-]{subsection.152}{Sprint 3}{section.143}% 79
-\BOOKMARK [2][-]{subsection.157}{Sprint 4}{section.143}% 80
-\BOOKMARK [2][-]{subsection.159}{Sprint 5}{section.143}% 81
-\BOOKMARK [2][-]{subsection.161}{Sprint 6}{section.143}% 82
-\BOOKMARK [2][-]{subsection.163}{Sprint 7}{section.143}% 83
-\BOOKMARK [2][-]{subsection.165}{Sprint 8}{section.143}% 84
-\BOOKMARK [0][-]{subsection.165}{Ap\351ndices}{}% 85
+\BOOKMARK [0][-]{chapter.132}{Trabajos relacionados}{}% 68
+\BOOKMARK [1][-]{section.133}{Art\355culos Estudiados}{chapter.132}% 69
+\BOOKMARK [1][-]{section.135}{Revisi\363n del estado del arte}{chapter.132}% 70
+\BOOKMARK [2][-]{subsection.136}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.135}% 71
+\BOOKMARK [2][-]{subsection.146}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.135}% 72
+\BOOKMARK [2][-]{subsection.154}{Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{section.135}% 73
+\BOOKMARK [2][-]{subsection.155}{Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{section.135}% 74
+\BOOKMARK [2][-]{subsection.158}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.135}% 75
+\BOOKMARK [0][-]{chapter.164}{Conclusiones y l\355neas de trabajo futuras}{}% 76
+\BOOKMARK [1][-]{section.165}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.164}% 77
+\BOOKMARK [1][-]{section.166}{Conclusiones}{chapter.164}% 78
+\BOOKMARK [1][-]{section.167}{L\355neas de trabajo futuras}{chapter.164}% 79
+\BOOKMARK [0][-]{appendix.168}{Plan del proyecto software}{}% 80
+\BOOKMARK [1][-]{section.169}{Introducci\363n}{appendix.168}% 81
+\BOOKMARK [1][-]{section.170}{Planificaci\363n temporal del proyecto}{appendix.168}% 82
+\BOOKMARK [2][-]{subsection.171}{Estimaci\363n temporal a partir de casos de uso}{section.170}% 83
+\BOOKMARK [1][-]{section.173}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.168}% 84
+\BOOKMARK [2][-]{subsection.174}{Actores}{section.173}% 85
+\BOOKMARK [2][-]{subsection.175}{Ciclo de desarrollo}{section.173}% 86
+\BOOKMARK [1][-]{section.177}{Product Backlog del proyecto}{appendix.168}% 87
+\BOOKMARK [1][-]{section.179}{Planificaci\363n por Sprint}{appendix.168}% 88
+\BOOKMARK [2][-]{subsection.180}{Sprint 1: Spike Arquitect\363nico 1}{section.179}% 89
+\BOOKMARK [2][-]{subsection.181}{Sprint 2: Spike Arquitect\363nico 2}{section.179}% 90
+\BOOKMARK [2][-]{subsection.188}{Sprint 3}{section.179}% 91
+\BOOKMARK [2][-]{subsection.193}{Sprint 4}{section.179}% 92
+\BOOKMARK [2][-]{subsection.195}{Sprint 5}{section.179}% 93
+\BOOKMARK [2][-]{subsection.197}{Sprint 6}{section.179}% 94
+\BOOKMARK [2][-]{subsection.199}{Sprint 7}{section.179}% 95
+\BOOKMARK [2][-]{subsection.201}{Sprint 8}{section.179}% 96
+\BOOKMARK [0][-]{subsection.201}{Ap\351ndices}{}% 97
