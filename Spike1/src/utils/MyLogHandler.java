@@ -1,7 +1,11 @@
 package utils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Date;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -59,5 +63,12 @@ public class MyLogHandler {
 			log = new MyLogHandler();
 		}
 		return logger;
+	}
+	
+	public static void writeException(Exception e){
+		Date date = new Date();
+		StringWriter sWriter = new StringWriter();
+		e.printStackTrace(new PrintWriter(sWriter));
+		logger.logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 	}
 }

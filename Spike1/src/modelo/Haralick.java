@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.Roi;
 
 import weka.core.matrix.EigenvalueDecomposition;
 import weka.core.matrix.Matrix;
@@ -28,10 +29,8 @@ public class Haralick extends Feature {
 	private double[] p_x = new double[SIZE]; // p_x statistics
 	private double[] p_y = new double[SIZE]; // p_y statistics
 	private double[] haralickVector;
-	private String[] headVector;
-	
-	public Haralick(ImagePlus image) {
-		super(image);
+	public Haralick() {
+		super();
 	}
 
 	/**
@@ -44,8 +43,8 @@ public class Haralick extends Feature {
 	 * @param step
 	 *            Step
 	 */
-	public Haralick(ImagePlus image, String selectedStep, int step) {
-		super(image, selectedStep, step);
+	public Haralick(String selectedStep, int step) {
+		super(selectedStep, step);
 		
 	}
 
@@ -60,25 +59,16 @@ public class Haralick extends Feature {
 	}
 
 	/**
-	 * Return a string vector with the header of haralick features.
-	 * 
-	 * @return string vector with the header of haralick features
-	 */
-	public String[] getHead() {
-		return headVector;
-	}
-
-	/**
 	 * Calculates a gray level co-occurrence matrix.
 	 */
-	public void glcm() {
+	public void glcm(Roi roi, ImagePlus image) {
 
 		// This part get all the pixel values into the pixel [ ] array via the
 		// Image Processor
-		IJ.run(getImagen(), "8-bit", "");
-		byte[] pixels = (byte[]) (getImagen().getProcessor().getPixels());
-		int width = getImagen().getWidth();
-		Rectangle r = getImagen().getProcessor().getRoi();
+		IJ.run(image, "8-bit", "");
+		byte[] pixels = (byte[]) (image.getProcessor().getPixels());
+		int width = image.getWidth();
+		Rectangle r = roi.getBounds();
 
 		// The variable a holds the value of the pixel where the Image Processor
 		// is sitting its attention
@@ -102,7 +92,7 @@ public class Haralick extends Feature {
 					i = offset + x;
 
 					a = 0xff & pixels[i];
-					b = 0xff & (getImagen().getProcessor().getPixel(x + getStep(), y));
+					b = 0xff & (image.getProcessor().getPixel(x + getStep(), y));
 
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
@@ -117,7 +107,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImagen().getProcessor().getPixel(x, y - getStep()));
+					b = 0xff & (image.getProcessor().getPixel(x, y - getStep()));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;
@@ -131,7 +121,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImagen().getProcessor().getPixel(x - getStep(), y));
+					b = 0xff & (image.getProcessor().getPixel(x - getStep(), y));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;
@@ -145,7 +135,7 @@ public class Haralick extends Feature {
 				for (int x = r.x; x < (r.x + r.width); x++) {
 					i = offset + x;
 					a = 0xff & pixels[i];
-					b = 0xff & (getImagen().getProcessor().getPixel(x, y + getStep()));
+					b = 0xff & (image.getProcessor().getPixel(x, y + getStep()));
 					glcm[a][b] += 1;
 					glcm[b][a] += 1;
 					pixelCounter += 2;
@@ -211,8 +201,6 @@ public class Haralick extends Feature {
 				asm = asm + (glcm[a][b] * glcm[a][b]);
 			}
 		}
-		headVector[count] = "angularSecondMoment";
-		count++;
 		return asm;
 	}
 
@@ -228,9 +216,7 @@ public class Haralick extends Feature {
 				contrast = contrast + (a - b) * (a - b) * (glcm[a][b]);
 			}
 		}
-		headVector[count] = "contrast";
-		count++;
-
+		
 		return contrast;
 	}
 
@@ -264,9 +250,7 @@ public class Haralick extends Feature {
 
 		// Calcula el parametro de correlacion
 		correlation = calcularParametroCorrelacion(correlation, px, py, stdevx,	stdevy);
-		headVector[count] = "correlation";
-		count++;
-
+		
 		return correlation;
 	}
 
@@ -300,9 +284,6 @@ public class Haralick extends Feature {
 			for (int a = 0; a < SIZE; a++)
 				variance += (a - mean) * (a - mean) * glcm[a][b];
 
-		headVector[count] = "sumOfSquares";
-		count++;
-
 		return variance;
 	}
 
@@ -318,9 +299,7 @@ public class Haralick extends Feature {
 				idm = idm + (glcm[a][b] / (1 + (a - b) * (a - b)));
 			}
 		}
-		headVector[count] = "inverseDifferenceMoment";
-		count++;
-
+		
 		return idm;
 	}
 
@@ -333,9 +312,6 @@ public class Haralick extends Feature {
 		double sumAvg = 0;
 		for (int k = 2; k < 2 * SIZE - 1; k++)
 			sumAvg += k * pxy[k];
-
-		headVector[count] = "sumAverage";
-		count++;
 
 		return sumAvg;
 	}
@@ -354,9 +330,7 @@ public class Haralick extends Feature {
 		}
 
 		entropysrc *= -1;
-		headVector[count] = "sumEntropy";
-		count++;
-
+		
 		return entropysrc;
 	}
 
@@ -375,9 +349,7 @@ public class Haralick extends Feature {
 		for (int k = 2; k < 2 * SIZE - 1; k++)
 			sumVar += (k - sumAvg) * (k - sumAvg) * pxy[k];
 
-		headVector[count] = "sumVariance";
-		count++;
-
+		
 		return sumVar;
 
 	}
@@ -399,9 +371,6 @@ public class Haralick extends Feature {
 		}
 		entropy *= -1;
 
-		headVector[count] = "entropy";
-		count++;
-
 		return entropy;
 
 	}
@@ -422,9 +391,6 @@ public class Haralick extends Feature {
 		for (k = 0; k < SIZE - 1; k++)
 			difVar += (k - mean) * (k - mean) * px_y[k];
 
-		headVector[count] = "differenceVariance";
-		count++;
-
 		return difVar;
 
 	}
@@ -442,9 +408,7 @@ public class Haralick extends Feature {
 			entropydiff += px_y[k] * Math.log(px_y[k]);
 		}
 		entropydiff *= -1;
-		headVector[count] = "differenceEntropy";
-		count++;
-
+		
 		return entropydiff;
 	}
 
@@ -464,10 +428,7 @@ public class Haralick extends Feature {
 			}
 		}
 		entropy *= -1;
-
-		headVector[count] = "imc_1";
-		count++;
-
+		
 		return (entropy - hxy1) / Math.max(hx, hy);
 	}
 
@@ -487,9 +448,6 @@ public class Haralick extends Feature {
 			}
 		}
 		entropy *= -1;
-
-		headVector[count] = "imc_2";
-		count++;
 
 		return Math.sqrt(1 - Math.exp(-2 * (hxy2 - entropy)));
 
@@ -547,9 +505,6 @@ public class Haralick extends Feature {
 		else
 			mcc = Math.sqrt(secondMax);
 
-		headVector[count] = "maximalCorrelationCoefficient";
-		count++;
-
 		return mcc;
 	}
 
@@ -563,37 +518,43 @@ public class Haralick extends Feature {
 	}
 
 	@Override
-	public void calcular() {
+	public void calcular(Roi roi, ImagePlus image, ImagePlus imageFd, ImagePlus imageSd) {
 		haralickVector = new double[14]; // Cambiar si se descomenta la ultima
 		headVector = new String[14]; // Cambiar si se descomenta la ultima
 
-		glcm();
+		glcm(roi, image);
 		calculateStatistics();
-		haralickVector[0] = angularSecondMoment();
-		haralickVector[1] = contrast();
-		haralickVector[2] = correlation();
-		haralickVector[3] = sumOfSquares();
-		haralickVector[4] = inverseDifferenceMoment();
-		haralickVector[5] = sumAverage();
-		haralickVector[6] = sumEntropy();
-		haralickVector[7] = sumVariance();
-		haralickVector[8] = entropy();
-		haralickVector[9] = differenceVariance();
-		haralickVector[10] = differenceEntropy();
-		haralickVector[11] = imc_1();
-		haralickVector[12] = imc_2();
-		//haralickVector[13] = maximalCorrelationCoefficient();
-		haralickVector[13] = 0;
+		headVector[count] = "angularSecondMoment";
+		haralickVector[count++] = angularSecondMoment();
+		headVector[count] = "contrast";
+		haralickVector[count++] = contrast();
+		headVector[count] = "correlation";
+		haralickVector[count++] = correlation();
+		headVector[count] = "sumOfSquares";
+		haralickVector[count++] = sumOfSquares();
+		headVector[count] = "inverseDifferenceMoment";
+		haralickVector[count++] = inverseDifferenceMoment();
+		headVector[count] = "sumAverage";
+		haralickVector[count++] = sumAverage();
+		headVector[count] = "sumEntropy";
+		haralickVector[count++] = sumEntropy();
+		headVector[count] = "sumVariance";
+		haralickVector[count++] = sumVariance();
+		headVector[count] = "entropy";
+		haralickVector[count++] = entropy();
+		headVector[count] = "differenceVariance";
+		haralickVector[count++] = differenceVariance();
+		headVector[count] = "differenceEntropy";
+		haralickVector[count++] = differenceEntropy();
+		headVector[count] = "imc_1";
+		haralickVector[count++] = imc_1();
+		headVector[count] = "imc_2";
+		haralickVector[count++] = imc_2();
+		headVector[count] = "maximalCorrelationCoefficient";
+		//haralickVector[count++] = maximalCorrelationCoefficient();
+		haralickVector[count++] = 0;
 		
 		setVectorResultados(haralickVector);
-		//imprimeResultados();
 	}
-	
-	//sólo para probar que hace algo
-	/*private void imprimeResultados() {
-		for(int i = 0; i < haralickVector.length; i++){
-			System.out.println("Valor de " + headVector[i] + ": " + haralickVector[i]);
-		}
-	}*/
 
 }

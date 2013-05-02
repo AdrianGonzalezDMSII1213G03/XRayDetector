@@ -6,14 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.logging.Level;
-
 import org.apache.commons.io.FileUtils;
 
-import utils.MyLogHandler;
 import utils.Propiedades;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -95,11 +89,7 @@ public class GestorArff {
 			arffFile.write(featuresString + "\n");
 			arffFile.close();
 		} catch (IOException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 }

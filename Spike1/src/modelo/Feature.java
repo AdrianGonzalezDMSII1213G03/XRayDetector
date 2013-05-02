@@ -1,28 +1,23 @@
 package modelo;
 
 import ij.ImagePlus;
+import ij.gui.Roi;
 
 
 public abstract class Feature {
 	
-	private ImagePlus image;
 	private int step;
 	private String selectedStep;
 	private double[] vectorResultados;
-	private ImagePlus imagenConvolucion;
+	protected String[] headVector;
 
-	public Feature(ImagePlus image){
-		this.image = image;
+	public Feature(){
+		
 	}
 	
-	public Feature(ImagePlus image, String selectedStep, int step){
-		this.image = image;
+	public Feature(String selectedStep, int step){
 		this.selectedStep = selectedStep;
 		this.step = step;
-	}
-		
-	public ImagePlus getImagen(){
-		return image;
 	}
 	
 	public int getStep(){
@@ -41,15 +36,10 @@ public abstract class Feature {
 		vectorResultados = v;
 	}
 	
-	public void setImagenConvolucion(ImagePlus img){
-		imagenConvolucion = img;
+	public abstract void calcular(Roi roi, ImagePlus image, ImagePlus imageFd,
+			ImagePlus imageSd);
+
+	public String[] getHead() {
+		return headVector;
 	}
-	
-	public ImagePlus getImagenConvolucion(){
-		return imagenConvolucion;
-	}
-	
-	public abstract void calcular();
-	public abstract String[] getHead();
-	
 }

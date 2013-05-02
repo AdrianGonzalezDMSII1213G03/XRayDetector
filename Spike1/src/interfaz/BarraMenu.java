@@ -26,6 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import utils.MyLogHandler;
 import utils.Propiedades;
 
 public class BarraMenu extends JMenuBar {
@@ -56,6 +57,30 @@ public class BarraMenu extends JMenuBar {
 	}
 
 	private void initialize() {
+		getMenu();
+		
+		try {
+			File fichero = new File("./res/ayuda/ayuda.hs");
+			URL hsURL = fichero.toURI().toURL();
+			HelpSet hs =  new HelpSet(null, hsURL);
+			HelpBroker hb = hs.createHelpBroker();
+			hb.enableHelpOnButton(mntmAyudaEnLnea, "ventanaentrenamientodeteccion", hs);
+		}
+		catch (MalformedURLException e) {
+			MyLogHandler.writeException(e);
+			e.printStackTrace();
+		} 
+		catch (HelpSetException e) {
+			MyLogHandler.writeException(e);
+			e.printStackTrace();
+		}
+
+		mntmAcercaDe = new JMenuItem("Acerca de");
+		mnAyuda.add(mntmAcercaDe);
+		
+	}
+
+	public void getMenu() {
 		JMenu mnArchivo = new JMenu("Archivo");
 		this.add(mnArchivo);
 		
@@ -75,24 +100,6 @@ public class BarraMenu extends JMenuBar {
 
 		mntmAyudaEnLnea = new JMenuItem("Ayuda en l\u00EDnea");
 		mnAyuda.add(mntmAyudaEnLnea);
-		
-		try {
-			File fichero = new File("./res/ayuda/ayuda.hs");
-			URL hsURL = fichero.toURI().toURL();
-			HelpSet hs =  new HelpSet(null, hsURL);
-			HelpBroker hb = hs.createHelpBroker();
-			hb.enableHelpOnButton(mntmAyudaEnLnea, "ventanaentrenamientodeteccion", hs);
-		}
-		catch (MalformedURLException e) {
-			e.printStackTrace();
-		} 
-		catch (HelpSetException e) {
-			e.printStackTrace();
-		}
-
-		mntmAcercaDe = new JMenuItem("Acerca de");
-		mnAyuda.add(mntmAcercaDe);
-		
 	}
 	
 	private class SalirListener implements ActionListener{

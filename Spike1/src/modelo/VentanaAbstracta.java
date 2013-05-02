@@ -1,6 +1,7 @@
 package modelo;
 
 import ij.ImagePlus;
+import ij.gui.Roi;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.swing.JProgressBar;
 
 import datos.GestorArff;
 
+import utils.Differentials_;
 import utils.Propiedades;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
@@ -142,45 +144,61 @@ public abstract class VentanaAbstracta extends Thread{
 
 	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
 			int step, int w) {
-		ftHaralickSaliency = new Haralick(getSaliency(), grades[w], step);
-		ftHaralickSaliency.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftHaralickSaliency.calcular();
+		ftHaralickSaliency = new Haralick(grades[w], step);
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralickSaliency.calcular(roi, getSaliency(), null, null);
 	}
 
 	public void calcularHaralick(int coordenadaX, int coordenadaY, int step, int w, ImagePlus imagen) {
-		ftHaralick = new Haralick(imagen, grades[w], step);
-		ftHaralick.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftHaralick.calcular();
+		ftHaralick = new Haralick(grades[w], step);
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftHaralick.calcular(roi, imagen, null, null);
 	}
 
 	public void calcularLbpSaliency(int coordenadaX, int coordenadaY) {
-		ftLbpSaliency = new Lbp(getSaliency());
-		ftLbpSaliency.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbpSaliency.calcular();
+		ftLbpSaliency = new Lbp();
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbpSaliency.calcular(roi, getSaliency(), null, null);
 		lbpSaliency = ftLbpSaliency.getVectorResultados();
 	}
 
 	public void calcularLbp(int coordenadaX, int coordenadaY, ImagePlus imagen) {
-		ftLbp = new Lbp(imagen);
-		ftLbp.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftLbp.calcular();
+		ftLbp = new Lbp();
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftLbp.calcular(roi, imagen, null, null);
 		lbp = ftLbp.getVectorResultados();
 	}
 
 	public void calcularStandardSaliency(int coordenadaX, int coordenadaY) {
 		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();
-		ftStandardSaliency = new Standard(getSaliency());
-		ftStandardSaliency.setImagenConvolucion(copiaStandardSaliency);
-		ftStandardSaliency.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandardSaliency.calcular();
+		ftStandardSaliency = new Standard();
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandardSaliency.calcular(roi, getSaliency(), getImageFd(copiaStandardSaliency), getImageSd(copiaStandardSaliency));
 	}
 
 	public void calcularStandard(int coordenadaX, int coordenadaY, ImagePlus imagen) {
 		ImagePlus copiaStandard = getConvolucion().duplicate();
-		ftStandard = new Standard(imagen);
-		ftStandard.setImagenConvolucion(copiaStandard);
-		ftStandard.getImagen().setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
-		ftStandard.calcular();
+		ftStandard = new Standard();
+		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());
+		ftStandard.calcular(roi, imagen, getImageFd(copiaStandard), getImageSd(copiaStandard));
+	}
+	
+	public ImagePlus getImageFd(ImagePlus image){
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+		Differentials_ diff = new Differentials_();
+        diff.setImp(image.duplicate());
+        Differentials_.setOperation(Differentials_.GRADIENT_MAGNITUDE);
+        diff.run("");
+        return diff.getImp();
+	}
+	
+	public ImagePlus getImageSd(ImagePlus image){
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+		Differentials_ diff = new Differentials_();
+        diff.setImp(image.duplicate());
+        Differentials_.setOperation(Differentials_.LAPLACIAN);
+        diff.run("");
+        return diff.getImp();
 	}
 
 	/**

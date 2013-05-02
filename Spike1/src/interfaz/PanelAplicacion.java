@@ -17,15 +17,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.logging.Level;
-
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
@@ -99,22 +94,6 @@ public class PanelAplicacion{
     
 
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					PanelAplicacion window = new PanelAplicacion();
-//					window.frmXraydetector.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
 	 * Create the application.
 	 */
 	public PanelAplicacion() {
@@ -135,28 +114,16 @@ public class PanelAplicacion{
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			Date date = new Date();
-			StringWriter sWriter = new StringWriter();
-			e.printStackTrace(new PrintWriter(sWriter));
-			MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		}
 		
@@ -192,10 +159,7 @@ public class PanelAplicacion{
 		
 		getSlider(panelSlider);
 		
-		panelTabla_1 = new JPanel();
-		panelTabla_1.setBorder(new TitledBorder(null, "Tabla de resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTabla_1.setBounds(256, 572, 750, 173);
-		frmXraydetector.getContentPane().add(panelTabla_1);
+		getPanelTabla();
 		
 		getTablaResultados(panelTabla_1);
 		imgPanel.setFocusable(true);
@@ -208,12 +172,21 @@ public class PanelAplicacion{
 			hb.enableHelpKey(frmXraydetector.getContentPane(), "ventanaentrenamientodeteccion", hs);
 		}
 		catch (MalformedURLException e) {
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		} 
 		catch (HelpSetException e) {
+			MyLogHandler.writeException(e);
 			e.printStackTrace();
 		}
 	
+	}
+
+	public void getPanelTabla() {
+		panelTabla_1 = new JPanel();
+		panelTabla_1.setBorder(new TitledBorder(null, "Tabla de resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelTabla_1.setBounds(256, 572, 750, 173);
+		frmXraydetector.getContentPane().add(panelTabla_1);
 	}
 
 	public void getTablaResultados(JPanel panelTabla) {
@@ -448,16 +421,10 @@ public class PanelAplicacion{
 					kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Imagen abierta correctamente</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -535,16 +502,10 @@ public class PanelAplicacion{
 						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo cargado correctamente</p><br>", 0, 0, null);
 						txtLog.setCaretPosition(txtLog.getDocument().getLength());
 					} catch (BadLocationException e1) {
-						Date date = new Date();
-						StringWriter sWriter = new StringWriter();
-						e1.printStackTrace(new PrintWriter(sWriter));
-						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						MyLogHandler.writeException(e1);
 						e1.printStackTrace();
 					} catch (IOException e1) {
-						Date date = new Date();
-						StringWriter sWriter = new StringWriter();
-						e1.printStackTrace(new PrintWriter(sWriter));
-						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						MyLogHandler.writeException(e1);
 						e1.printStackTrace();
 					}
 					
@@ -589,16 +550,10 @@ public class PanelAplicacion{
 								kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
 								txtLog.setCaretPosition(txtLog.getDocument().getLength());
 							} catch (BadLocationException e) {
-								Date date = new Date();
-								StringWriter sWriter = new StringWriter();
-								e.printStackTrace(new PrintWriter(sWriter));
-								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+								MyLogHandler.writeException(e);
 								e.printStackTrace();
 							} catch (IOException e) {
-								Date date = new Date();
-								StringWriter sWriter = new StringWriter();
-								e.printStackTrace(new PrintWriter(sWriter));
-								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+								MyLogHandler.writeException(e);
 								e.printStackTrace();
 							}
     		    	    }
@@ -619,16 +574,10 @@ public class PanelAplicacion{
 				kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Iniciando proceso de análisis</p><br>", 0, 0, null);
 				txtLog.setCaretPosition(txtLog.getDocument().getLength());
 			} catch (BadLocationException e1) {
-				Date date = new Date();
-				StringWriter sWriter = new StringWriter();
-				e1.printStackTrace(new PrintWriter(sWriter));
-				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				Date date = new Date();
-				StringWriter sWriter = new StringWriter();
-				e1.printStackTrace(new PrintWriter(sWriter));
-				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 			}
 			
@@ -664,16 +613,10 @@ public class PanelAplicacion{
 						kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Proceso de análisis finalizado correctamente</p><br>", 0, 0, null);
 						txtLog.setCaretPosition(txtLog.getDocument().getLength());
 					} catch (BadLocationException e1) {
-						Date date = new Date();
-						StringWriter sWriter = new StringWriter();
-						e1.printStackTrace(new PrintWriter(sWriter));
-						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						MyLogHandler.writeException(e1);
 						e1.printStackTrace();
 					} catch (IOException e1) {
-						Date date = new Date();
-						StringWriter sWriter = new StringWriter();
-						e1.printStackTrace(new PrintWriter(sWriter));
-						MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+						MyLogHandler.writeException(e1);
 						e1.printStackTrace();
 					}
 				}
@@ -729,16 +672,10 @@ public class PanelAplicacion{
 					kit.insertHTML(doc, doc.getLength(), "<p class=\"stop\"> Proceso detenido</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				}
 				
@@ -846,16 +783,10 @@ public class PanelAplicacion{
 									kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Directorio incorrecto</p><br>", 0, 0, null);
 									txtLog.setCaretPosition(txtLog.getDocument().getLength());
 								} catch (BadLocationException e1) {
-									Date date = new Date();
-									StringWriter sWriter = new StringWriter();
-									e1.printStackTrace(new PrintWriter(sWriter));
-									MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+									MyLogHandler.writeException(e1);
 									e1.printStackTrace();
 								} catch (IOException e1) {
-									Date date = new Date();
-									StringWriter sWriter = new StringWriter();
-									e1.printStackTrace(new PrintWriter(sWriter));
-									MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+									MyLogHandler.writeException(e1);
 									e1.printStackTrace();
 								}
 
@@ -880,16 +811,10 @@ public class PanelAplicacion{
 											kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
 											txtLog.setCaretPosition(txtLog.getDocument().getLength());
 										} catch (BadLocationException e) {
-											Date date = new Date();
-											StringWriter sWriter = new StringWriter();
-											e.printStackTrace(new PrintWriter(sWriter));
-											MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+											MyLogHandler.writeException(e);
 											e.printStackTrace();
 										} catch (IOException e) {
-											Date date = new Date();
-											StringWriter sWriter = new StringWriter();
-											e.printStackTrace(new PrintWriter(sWriter));
-											MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+											MyLogHandler.writeException(e);
 											e.printStackTrace();
 										}
 		        		    	    }
@@ -928,16 +853,10 @@ public class PanelAplicacion{
 								kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> ARFF abierto correctamente</p><br>", 0, 0, null);
 								txtLog.setCaretPosition(txtLog.getDocument().getLength());
 							} catch (BadLocationException e1) {
-								Date date = new Date();
-								StringWriter sWriter = new StringWriter();
-								e1.printStackTrace(new PrintWriter(sWriter));
-								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+								MyLogHandler.writeException(e1);
 								e1.printStackTrace();
 							} catch (IOException e1) {
-								Date date = new Date();
-								StringWriter sWriter = new StringWriter();
-								e1.printStackTrace(new PrintWriter(sWriter));
-								MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+								MyLogHandler.writeException(e1);
 								e1.printStackTrace();
 							}
 
@@ -962,16 +881,10 @@ public class PanelAplicacion{
 										kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
 										txtLog.setCaretPosition(txtLog.getDocument().getLength());
 									} catch (BadLocationException e) {
-										Date date = new Date();
-										StringWriter sWriter = new StringWriter();
-										e.printStackTrace(new PrintWriter(sWriter));
-										MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+										MyLogHandler.writeException(e);
 										e.printStackTrace();
 									} catch (IOException e) {
-										Date date = new Date();
-										StringWriter sWriter = new StringWriter();
-										e.printStackTrace(new PrintWriter(sWriter));
-										MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+										MyLogHandler.writeException(e);
 										e.printStackTrace();
 									}
 	        		    	    }
@@ -1013,16 +926,20 @@ public class PanelAplicacion{
 				kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Log exportado con éxito</p><br>", 0, 0, null);
 				txtLog.setCaretPosition(txtLog.getDocument().getLength());
 			} catch (IOException e1) {
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 				try {
 					kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Fallo al exportar el log</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e2) {
+					MyLogHandler.writeException(e2);
 					e2.printStackTrace();
 				} catch (IOException e2) {
+					MyLogHandler.writeException(e2);
 					e2.printStackTrace();
 				}				
 			} catch (BadLocationException e1) {
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 			}
 	    }
@@ -1198,16 +1115,10 @@ public class PanelAplicacion{
 						"Los nombres de las imágenes originales no coinciden con los de las máscaras</p><br>", 0, 0, null);
 				txtLog.setCaretPosition(txtLog.getDocument().getLength());
 			} catch (BadLocationException e1) {
-				Date date = new Date();
-				StringWriter sWriter = new StringWriter();
-				e1.printStackTrace(new PrintWriter(sWriter));
-				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				Date date = new Date();
-				StringWriter sWriter = new StringWriter();
-				e1.printStackTrace(new PrintWriter(sWriter));
-				MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+				MyLogHandler.writeException(e1);
 				e1.printStackTrace();
 			}
 		}
@@ -1225,16 +1136,10 @@ public class PanelAplicacion{
 							"Faltan máscaras</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -1248,16 +1153,10 @@ public class PanelAplicacion{
 							"Faltan imágenes originales</p><br>", 0, 0, null);
 					txtLog.setCaretPosition(txtLog.getDocument().getLength());
 				} catch (BadLocationException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					Date date = new Date();
-					StringWriter sWriter = new StringWriter();
-					e1.printStackTrace(new PrintWriter(sWriter));
-					MyLogHandler.getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e1.toString());
+					MyLogHandler.writeException(e1);
 					e1.printStackTrace();
 				}
 			}
