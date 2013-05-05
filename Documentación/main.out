@@ -55,43 +55,60 @@
 \BOOKMARK [2][-]{subsection.109}{WindowBuilder}{section.99}% 55
 \BOOKMARK [2][-]{subsection.110}{Auto Local Threshold}{section.99}% 56
 \BOOKMARK [2][-]{subsection.111}{Apache Commons IO}{section.99}% 57
-\BOOKMARK [2][-]{subsection.112}{Zotero}{section.99}% 58
-\BOOKMARK [0][-]{chapter.113}{Aspectos relevantes del desarrollo del proyecto}{}% 59
-\BOOKMARK [1][-]{section.114}{Problemas y retos}{chapter.113}% 60
-\BOOKMARK [1][-]{section.119}{Mejoras respecto al a\361o pasado}{chapter.113}% 61
-\BOOKMARK [1][-]{section.126}{Conocimientos adquiridos}{chapter.113}% 62
-\BOOKMARK [2][-]{subsection.127}{Miner\355a de datos}{section.126}% 63
-\BOOKMARK [2][-]{subsection.128}{Weka}{section.126}% 64
-\BOOKMARK [2][-]{subsection.129}{Metodolog\355a Scrum}{section.126}% 65
-\BOOKMARK [2][-]{subsection.130}{Programaci\363n multihilo}{section.126}% 66
-\BOOKMARK [2][-]{subsection.131}{Documentaci\363n en LaTeX}{section.126}% 67
-\BOOKMARK [0][-]{chapter.132}{Trabajos relacionados}{}% 68
-\BOOKMARK [1][-]{section.133}{Art\355culos Estudiados}{chapter.132}% 69
-\BOOKMARK [1][-]{section.135}{Revisi\363n del estado del arte}{chapter.132}% 70
-\BOOKMARK [2][-]{subsection.136}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.135}% 71
-\BOOKMARK [2][-]{subsection.146}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.135}% 72
-\BOOKMARK [2][-]{subsection.154}{Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{section.135}% 73
-\BOOKMARK [2][-]{subsection.155}{Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{section.135}% 74
-\BOOKMARK [2][-]{subsection.158}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.135}% 75
-\BOOKMARK [0][-]{chapter.164}{Conclusiones y l\355neas de trabajo futuras}{}% 76
-\BOOKMARK [1][-]{section.165}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.164}% 77
-\BOOKMARK [1][-]{section.166}{Conclusiones}{chapter.164}% 78
-\BOOKMARK [1][-]{section.167}{L\355neas de trabajo futuras}{chapter.164}% 79
-\BOOKMARK [0][-]{appendix.168}{Plan del proyecto software}{}% 80
-\BOOKMARK [1][-]{section.169}{Introducci\363n}{appendix.168}% 81
-\BOOKMARK [1][-]{section.170}{Planificaci\363n temporal del proyecto}{appendix.168}% 82
-\BOOKMARK [2][-]{subsection.171}{Estimaci\363n temporal a partir de casos de uso}{section.170}% 83
-\BOOKMARK [1][-]{section.173}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.168}% 84
-\BOOKMARK [2][-]{subsection.174}{Actores}{section.173}% 85
-\BOOKMARK [2][-]{subsection.175}{Ciclo de desarrollo}{section.173}% 86
-\BOOKMARK [1][-]{section.177}{Product Backlog del proyecto}{appendix.168}% 87
-\BOOKMARK [1][-]{section.179}{Planificaci\363n por Sprint}{appendix.168}% 88
-\BOOKMARK [2][-]{subsection.180}{Sprint 1: Spike Arquitect\363nico 1}{section.179}% 89
-\BOOKMARK [2][-]{subsection.181}{Sprint 2: Spike Arquitect\363nico 2}{section.179}% 90
-\BOOKMARK [2][-]{subsection.188}{Sprint 3}{section.179}% 91
-\BOOKMARK [2][-]{subsection.193}{Sprint 4}{section.179}% 92
-\BOOKMARK [2][-]{subsection.195}{Sprint 5}{section.179}% 93
-\BOOKMARK [2][-]{subsection.197}{Sprint 6}{section.179}% 94
-\BOOKMARK [2][-]{subsection.199}{Sprint 7}{section.179}% 95
-\BOOKMARK [2][-]{subsection.201}{Sprint 8}{section.179}% 96
-\BOOKMARK [0][-]{subsection.201}{Ap\351ndices}{}% 97
+\BOOKMARK [2][-]{subsection.112}{EJML}{section.99}% 58
+\BOOKMARK [2][-]{subsection.113}{Zotero}{section.99}% 59
+\BOOKMARK [0][-]{chapter.114}{Aspectos relevantes del desarrollo del proyecto}{}% 60
+\BOOKMARK [1][-]{section.115}{Problemas y retos}{chapter.114}% 61
+\BOOKMARK [1][-]{section.120}{Mejoras respecto al a\361o pasado}{chapter.114}% 62
+\BOOKMARK [1][-]{section.127}{Conocimientos adquiridos}{chapter.114}% 63
+\BOOKMARK [2][-]{subsection.128}{Miner\355a de datos}{section.127}% 64
+\BOOKMARK [2][-]{subsection.129}{Weka}{section.127}% 65
+\BOOKMARK [2][-]{subsection.130}{Metodolog\355a Scrum}{section.127}% 66
+\BOOKMARK [2][-]{subsection.131}{Programaci\363n multihilo}{section.127}% 67
+\BOOKMARK [2][-]{subsection.132}{Documentaci\363n en LaTeX}{section.127}% 68
+\BOOKMARK [0][-]{chapter.133}{Trabajos relacionados}{}% 69
+\BOOKMARK [1][-]{section.134}{Art\355culos Estudiados}{chapter.133}% 70
+\BOOKMARK [1][-]{section.136}{Revisi\363n del estado del arte}{chapter.133}% 71
+\BOOKMARK [2][-]{subsection.137}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.136}% 72
+\BOOKMARK [2][-]{subsection.147}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.136}% 73
+\BOOKMARK [2][-]{subsection.155}{Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{section.136}% 74
+\BOOKMARK [2][-]{subsection.156}{Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{section.136}% 75
+\BOOKMARK [2][-]{subsection.159}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.136}% 76
+\BOOKMARK [0][-]{chapter.165}{Conclusiones y l\355neas de trabajo futuras}{}% 77
+\BOOKMARK [1][-]{section.166}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.165}% 78
+\BOOKMARK [1][-]{section.167}{Conclusiones}{chapter.165}% 79
+\BOOKMARK [1][-]{section.168}{L\355neas de trabajo futuras}{chapter.165}% 80
+\BOOKMARK [0][-]{appendix.169}{Plan del proyecto software}{}% 81
+\BOOKMARK [1][-]{section.170}{Introducci\363n}{appendix.169}% 82
+\BOOKMARK [1][-]{section.171}{Planificaci\363n temporal del proyecto}{appendix.169}% 83
+\BOOKMARK [2][-]{subsection.172}{Estimaci\363n temporal a partir de casos de uso}{section.171}% 84
+\BOOKMARK [1][-]{section.174}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.169}% 85
+\BOOKMARK [2][-]{subsection.175}{Actores}{section.174}% 86
+\BOOKMARK [2][-]{subsection.176}{Ciclo de desarrollo}{section.174}% 87
+\BOOKMARK [1][-]{section.178}{Product Backlog del proyecto}{appendix.169}% 88
+\BOOKMARK [1][-]{section.180}{Planificaci\363n por Sprint}{appendix.169}% 89
+\BOOKMARK [2][-]{subsection.181}{Sprint 1: Spike Arquitect\363nico 1}{section.180}% 90
+\BOOKMARK [2][-]{subsection.182}{Sprint 2: Spike Arquitect\363nico 2}{section.180}% 91
+\BOOKMARK [2][-]{subsection.189}{Sprint 3}{section.180}% 92
+\BOOKMARK [2][-]{subsection.194}{Sprint 4}{section.180}% 93
+\BOOKMARK [2][-]{subsection.196}{Sprint 5}{section.180}% 94
+\BOOKMARK [2][-]{subsection.198}{Sprint 6}{section.180}% 95
+\BOOKMARK [2][-]{subsection.200}{Sprint 7}{section.180}% 96
+\BOOKMARK [2][-]{subsection.202}{Sprint 8}{section.180}% 97
+\BOOKMARK [0][-]{appendix.203}{Especificaci\363n de requisitos}{}% 98
+\BOOKMARK [1][-]{section.204}{Introducci\363n}{appendix.203}% 99
+\BOOKMARK [1][-]{section.205}{Objetivos del proyecto}{appendix.203}% 100
+\BOOKMARK [1][-]{section.206}{Usuarios participantes}{appendix.203}% 101
+\BOOKMARK [1][-]{section.207}{Descripci\363n del sistema actual}{appendix.203}% 102
+\BOOKMARK [1][-]{section.208}{Factores de riesgo}{appendix.203}% 103
+\BOOKMARK [1][-]{section.209}{Cat\341logo de requisitos del sistema}{appendix.203}% 104
+\BOOKMARK [2][-]{subsection.210}{Funciones del producto}{section.209}% 105
+\BOOKMARK [2][-]{subsection.232}{Requisitos de usuario}{section.209}% 106
+\BOOKMARK [2][-]{subsection.233}{Requisitos de sistema}{section.209}% 107
+\BOOKMARK [1][-]{section.234}{Especificaci\363n de los requisitos}{appendix.203}% 108
+\BOOKMARK [2][-]{subsection.235}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.234}% 109
+\BOOKMARK [2][-]{subsection.236}{Especificaci\363n de requisitos de informaci\363n}{section.234}% 110
+\BOOKMARK [2][-]{subsection.238}{Requisitos funcionales}{section.234}% 111
+\BOOKMARK [2][-]{subsection.264}{Requisitos no funcionales}{section.234}% 112
+\BOOKMARK [1][-]{section.265}{Interfaz de usuario}{appendix.203}% 113
+\BOOKMARK [0][-]{section.265}{Ap\351ndices}{}% 114
