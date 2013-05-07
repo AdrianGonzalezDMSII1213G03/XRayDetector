@@ -69,63 +69,66 @@
 \contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{43}{subsection.132}
 \contentsline {chapter}{\numberline {5}Trabajos relacionados}{45}{chapter.133}
 \contentsline {section}{\numberline {5.1}Art\IeC {\'\i }culos Estudiados}{45}{section.134}
-\contentsline {section}{\numberline {5.2}Revisi\IeC {\'o}n del estado del arte}{48}{section.136}
-\contentsline {subsection}{\numberline {5.2.1}An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{48}{subsection.137}
-\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{48}{subsubsection*.138}
-\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de las regiones de soldadura}{48}{subsubsection*.139}
-\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de heterogeneidades}{49}{subsubsection*.140}
-\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{49}{subsubsection*.141}
-\contentsline {subsubsection}{An\IeC {\'a}lisis de componentes principales}{49}{subsubsection*.142}
-\contentsline {subsubsection}{Predicci\IeC {\'o}n utilizando una red neuronal multicapa}{49}{subsubsection*.143}
-\contentsline {subsection}{\numberline {5.2.2}Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{49}{subsection.147}
-\contentsline {subsubsection}{Algoritmo Fuzzy-C-Means Iterativo}{50}{subsubsection*.148}
-\contentsline {subsubsection}{The EM algorithm}{50}{subsubsection*.152}
-\contentsline {subsubsection}{Aplicaci\IeC {\'o}n en la clasificaci\IeC {\'o}n de defectos de soldadura}{50}{subsubsection*.153}
-\contentsline {subsubsection}{Conclusi\IeC {\'o}n}{50}{subsubsection*.154}
-\contentsline {subsection}{\numberline {5.2.3}Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{51}{subsection.155}
-\contentsline {subsection}{\numberline {5.2.4}Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{51}{subsection.156}
-\contentsline {subsection}{\numberline {5.2.5}Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{52}{subsection.159}
-\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{52}{subsubsection*.160}
-\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{52}{subsubsection*.161}
-\contentsline {subsubsection}{Clasificaci\IeC {\'o}n de patrones}{53}{subsubsection*.164}
-\contentsline {chapter}{\numberline {6}Conclusiones y l\IeC {\'\i }neas de trabajo futuras}{55}{chapter.165}
-\contentsline {section}{\numberline {6.1}Aspectos que han complicado la realizaci\IeC {\'o}n del proyecto}{55}{section.166}
-\contentsline {section}{\numberline {6.2}Conclusiones}{56}{section.167}
-\contentsline {section}{\numberline {6.3}L\IeC {\'\i }neas de trabajo futuras}{57}{section.168}
-\contentsline {chapter}{\numberline {A}Plan del proyecto software}{61}{appendix.169}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{61}{section.170}
-\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{62}{section.171}
-\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{62}{subsection.172}
-\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{65}{section.174}
-\contentsline {subsection}{\numberline {A.3.1}Actores}{65}{subsection.175}
-\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{65}{subsection.176}
-\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{67}{section.178}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{71}{section.180}
-\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{71}{subsection.181}
-\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{72}{subsection.182}
-\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{73}{subsection.189}
-\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{77}{subsection.194}
-\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{80}{subsection.196}
-\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{84}{subsection.198}
-\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{87}{subsection.200}
-\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{90}{subsection.202}
-\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.203}
-\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.204}
-\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.205}
-\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.206}
-\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{98}{section.207}
-\contentsline {section}{\numberline {B.5}Factores de riesgo}{99}{section.208}
-\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{100}{section.209}
-\contentsline {subsection}{\numberline {B.6.1}Funciones del producto}{100}{subsection.210}
-\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{100}{subsubsection*.211}
-\contentsline {subsubsection}{Entrenar el clasificador}{101}{subsubsection*.230}
-\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{102}{subsubsection*.231}
-\contentsline {subsection}{\numberline {B.6.2}Requisitos de usuario}{102}{subsection.232}
-\contentsline {subsection}{\numberline {B.6.3}Requisitos de sistema}{102}{subsection.233}
-\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{104}{section.234}
-\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{104}{subsection.235}
-\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{104}{subsection.236}
-\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{105}{subsection.238}
-\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{124}{subsection.264}
-\contentsline {section}{\numberline {B.8}Interfaz de usuario}{125}{section.265}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{132}{section.265}
+\contentsline {section}{\numberline {5.2}Revisi\IeC {\'o}n del estado del arte}{47}{section.136}
+\contentsline {subsection}{\numberline {5.2.1}An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{47}{subsection.137}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{47}{subsubsection*.138}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de las regiones de soldadura}{47}{subsubsection*.139}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de heterogeneidades}{48}{subsubsection*.140}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{48}{subsubsection*.141}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de componentes principales}{48}{subsubsection*.142}
+\contentsline {subsubsection}{Predicci\IeC {\'o}n utilizando una red neuronal multicapa}{48}{subsubsection*.143}
+\contentsline {subsection}{\numberline {5.2.2}Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{48}{subsection.147}
+\contentsline {subsubsection}{Algoritmo Fuzzy-C-Means Iterativo}{49}{subsubsection*.148}
+\contentsline {subsubsection}{The EM algorithm}{49}{subsubsection*.152}
+\contentsline {subsubsection}{Aplicaci\IeC {\'o}n en la clasificaci\IeC {\'o}n de defectos de soldadura}{49}{subsubsection*.153}
+\contentsline {subsubsection}{Conclusi\IeC {\'o}n}{49}{subsubsection*.154}
+\contentsline {subsection}{\numberline {5.2.3}Automatic detection of weld defects in pressure vessels using fuzzy neural network - PN.Sargunar y R.Sukanesh}{50}{subsection.155}
+\contentsline {subsection}{\numberline {5.2.4}Flaw detection in radiographic weldment images using morphological watershed segmentation technique - RS.Anand et al.}{50}{subsection.156}
+\contentsline {subsection}{\numberline {5.2.5}Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{51}{subsection.159}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{51}{subsubsection*.160}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{51}{subsubsection*.161}
+\contentsline {subsubsection}{Clasificaci\IeC {\'o}n de patrones}{52}{subsubsection*.164}
+\contentsline {chapter}{\numberline {6}Conclusiones y l\IeC {\'\i }neas de trabajo futuras}{53}{chapter.165}
+\contentsline {section}{\numberline {6.1}Aspectos que han complicado la realizaci\IeC {\'o}n del proyecto}{53}{section.166}
+\contentsline {section}{\numberline {6.2}Conclusiones}{54}{section.167}
+\contentsline {section}{\numberline {6.3}L\IeC {\'\i }neas de trabajo futuras}{55}{section.168}
+\contentsline {chapter}{\numberline {A}Plan del proyecto software}{59}{appendix.169}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{59}{section.170}
+\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{60}{section.171}
+\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{60}{subsection.172}
+\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{63}{section.174}
+\contentsline {subsection}{\numberline {A.3.1}Actores}{63}{subsection.175}
+\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{63}{subsection.176}
+\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{65}{section.178}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{69}{section.180}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{69}{subsection.181}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{70}{subsection.182}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{71}{subsection.189}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{75}{subsection.194}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{78}{subsection.196}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{82}{subsection.198}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.200}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{88}{subsection.202}
+\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{93}{appendix.203}
+\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{93}{section.204}
+\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{94}{section.205}
+\contentsline {section}{\numberline {B.3}Usuarios participantes}{95}{section.206}
+\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{96}{section.207}
+\contentsline {section}{\numberline {B.5}Factores de riesgo}{97}{section.208}
+\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{98}{section.209}
+\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{98}{subsection.210}
+\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{99}{subsection.212}
+\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{99}{subsection.214}
+\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{100}{subsubsection*.215}
+\contentsline {subsubsection}{Entrenar el clasificador}{101}{subsubsection*.234}
+\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{101}{subsubsection*.235}
+\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{102}{subsection.236}
+\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{102}{subsection.237}
+\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{103}{section.238}
+\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{103}{subsection.239}
+\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{103}{subsection.240}
+\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{104}{subsection.242}
+\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{114}{subsection.254}
+\contentsline {subsection}{\numberline {B.7.5}Matrices}{116}{subsection.255}
+\contentsline {section}{\numberline {B.8}Interfaz de usuario}{116}{section.256}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{124}{figure.258}

@@ -102,13 +102,16 @@
 \BOOKMARK [1][-]{section.207}{Descripci\363n del sistema actual}{appendix.203}% 102
 \BOOKMARK [1][-]{section.208}{Factores de riesgo}{appendix.203}% 103
 \BOOKMARK [1][-]{section.209}{Cat\341logo de requisitos del sistema}{appendix.203}% 104
-\BOOKMARK [2][-]{subsection.210}{Funciones del producto}{section.209}% 105
-\BOOKMARK [2][-]{subsection.232}{Requisitos de usuario}{section.209}% 106
-\BOOKMARK [2][-]{subsection.233}{Requisitos de sistema}{section.209}% 107
-\BOOKMARK [1][-]{section.234}{Especificaci\363n de los requisitos}{appendix.203}% 108
-\BOOKMARK [2][-]{subsection.235}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.234}% 109
-\BOOKMARK [2][-]{subsection.236}{Especificaci\363n de requisitos de informaci\363n}{section.234}% 110
-\BOOKMARK [2][-]{subsection.238}{Requisitos funcionales}{section.234}% 111
-\BOOKMARK [2][-]{subsection.264}{Requisitos no funcionales}{section.234}% 112
-\BOOKMARK [1][-]{section.265}{Interfaz de usuario}{appendix.203}% 113
-\BOOKMARK [0][-]{section.265}{Ap\351ndices}{}% 114
+\BOOKMARK [2][-]{subsection.210}{Objetivos del proyecto}{section.209}% 105
+\BOOKMARK [2][-]{subsection.212}{Descripci\363n de los actores}{section.209}% 106
+\BOOKMARK [2][-]{subsection.214}{Funciones del producto}{section.209}% 107
+\BOOKMARK [2][-]{subsection.236}{Requisitos de usuario}{section.209}% 108
+\BOOKMARK [2][-]{subsection.237}{Requisitos de sistema}{section.209}% 109
+\BOOKMARK [1][-]{section.238}{Especificaci\363n de los requisitos}{appendix.203}% 110
+\BOOKMARK [2][-]{subsection.239}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.238}% 111
+\BOOKMARK [2][-]{subsection.240}{Especificaci\363n de requisitos de informaci\363n}{section.238}% 112
+\BOOKMARK [2][-]{subsection.242}{Requisitos funcionales}{section.238}% 113
+\BOOKMARK [2][-]{subsection.254}{Requisitos no funcionales}{section.238}% 114
+\BOOKMARK [2][-]{subsection.255}{Matrices}{section.238}% 115
+\BOOKMARK [1][-]{section.256}{Interfaz de usuario}{appendix.203}% 116
+\BOOKMARK [0][-]{figure.258}{Ap\351ndices}{}% 117

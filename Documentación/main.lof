@@ -18,17 +18,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{66}{figure.177}
-\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{74}{figure.188}
-\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{76}{figure.193}
-\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{79}{figure.195}
-\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{83}{figure.197}
-\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{86}{figure.199}
-\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{89}{figure.201}
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{64}{figure.177}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{72}{figure.188}
+\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{74}{figure.193}
+\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{77}{figure.195}
+\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{81}{figure.197}
+\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{84}{figure.199}
+\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{87}{figure.201}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax B.1}{\ignorespaces Diagrama de casos de uso principal}}{107}{figure.239}
-\contentsline {figure}{\numberline {\relax B.2}{\ignorespaces Caso de uso Visualizar Imagen}}{108}{figure.240}
-\contentsline {figure}{\numberline {\relax B.3}{\ignorespaces Caso de uso Calcular Caracter\IeC {\'\i }sticas}}{109}{figure.241}
-\contentsline {figure}{\numberline {\relax B.4}{\ignorespaces Caso de uso Dibujar Caracteristicas}}{110}{figure.242}
-\contentsline {figure}{\numberline {\relax B.5}{\ignorespaces Caso de uso Entrenar Clasificador}}{111}{figure.243}
-\contentsline {figure}{\numberline {\relax B.6}{\ignorespaces Caso de uso Detectar Defectos}}{112}{figure.244}
+\contentsline {figure}{\numberline {\relax B.1}{\ignorespaces Diagrama de casos de uso principal}}{105}{figure.243}
+\contentsline {figure}{\numberline {\relax B.2}{\ignorespaces Prototipo de la ventana principal}}{116}{figure.257}
+\contentsline {figure}{\numberline {\relax B.3}{\ignorespaces Prototipo de la ventana de opciones avanzadas}}{117}{figure.258}
