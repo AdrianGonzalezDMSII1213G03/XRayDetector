@@ -8,17 +8,18 @@ Los objetivos principales del proyecto son principalmente cuatro:
 \begin{enumerate}
  \item Rediseñar completamente la aplicación que presentaron los alumnos del año pasado, buscando un diseño mucho más modular y reutilizable.
  \item Refactorizar todo el código que reutilicemos, buscando un mejor estilo para favorecer su comprensión y reutilización.
- \item Mejorar el rendimiento de la aplicación anterior, buscando que la misma se pueda aprovechar de los procesadores actuales de más de un núcleo de proceso.
+ \item Mejorar el rendimiento de la aplicación anterior, buscando que la misma se pueda aprovechar de los procesadores actuales de más de un núcleo de proceso. También se usan nuevas técnicas heurísticas para dirigir la búsqueda y acelerar el proceso.
  \item Mejorar la precisión a la hora de localizar los defectos.
+ \item Mejorar la usabilidad de la interfaz de usuario.
  \item Ampliación de la funcionalidad de la aplicación anterior en diversos aspectos, como la implementación de algoritmos de segmentación que permitan obtener un resumen de las características geométricas de los defectos encontrados que, en un futuro, permitirán clasificar los defectos en varios y tipos y decidir si la pieza es defectuosa y debe ser retirada o si es correcta.
 \end{enumerate}
 
-En el proyecto se van a implementar los algoritmos de selección de características más relevantes o significativos que hemos encontrado, prestando especial atención al diseño para que sea fácil la inclusión de nuevos algoritmos en el futuro. Esto posibilitará que el proyecto crezca en el tiempo y amplíe su capacidad.
+En el proyecto se van a implementar los algoritmos de extracción de características más relevantes o significativos que hemos encontrado, prestando especial atención al diseño para que sea fácil la inclusión de nuevos algoritmos en el futuro. Esto posibilitará que el proyecto crezca en el tiempo y amplíe su capacidad.
 
 \section{Objetivos Técnicos}
 Este proyecto se va a desarrollar utilizando el paradigma de la \textit{Orientacion a Objetos} el cual nos permitirá un diseño fácilmente comprensible por futuros desarrolladores que deseen proseguir con el presente trabajo. 
 
-El lenguaje de programación escogido para el proyecto es \javaversion{}. El motivo de su elección ha sido el conocimiento del mismo, su sencillez, portabilidad, extensa documentación y la posibilidad de utilizar la librería de \weka{}. La completa \textit{API (Application Programming Interface)} con la que cuenta y los conocimientos adquiridos durante la carrera sobre este lenguaje de programación harán posible que el desarrollo se base en el estudio e implementación de los algoritmos evitando retrasos por tener que aprender un nuevo lenguaje de programación
+El lenguaje de programación escogido para el proyecto es \textit{Java 7}. El motivo de su elección ha sido el conocimiento del mismo, su sencillez, portabilidad, extensa documentación y la posibilidad de utilizar la librería de \weka{} e \textit{ImageJ}. La completa \textit{API (Application Programming Interface)} con la que cuenta y los conocimientos adquiridos durante la carrera sobre este lenguaje de programación harán posible que el desarrollo se base en el estudio e implementación de los algoritmos evitando retrasos por tener que aprender un nuevo lenguaje de programación
 
 El lenguaje de modelado escogido ha sido \uml{} (\textit{Unified Modeling Language}) que se trata de un lenguaje unificado y muy extendido en el diseño de aplicaciones Orientadas a Objetos (OO).
 
@@ -32,7 +33,7 @@ Para la memoria se va a utilizar \LaTeX{} \citeotras{definicion_latex}. Las vent
 
 Dado que nunca se ha trabajado con \LaTeX{} ha sido necesaria la utilización de documentación \citeotras{cervantex}, manuales \citeotras{introduccion_latex} y \citeotras{latex_wikibook} que han facilitado el aprendizaje del mismo. Como plantilla para la memoria se utilizará la de la Universidad de Deusto \citeotras{plantilla_deusto} modificándola para adaptarla a la Universidad de Burgos.
 
-Para trabajar con las radiografías se ha elegido la librería de ImageJ. Se trata de un programa de procesamiento de imagen digital desarrollado en Java que permite analizar y procesar imágenes, mediante la utilización de diversas técnicas como filtros e histogramas.
+Para trabajar con las radiografías se ha elegido la librería ImageJ. Se trata de un programa de procesamiento de imagen digital desarrollado en Java que permite analizar y procesar imágenes, mediante la utilización de diversas técnicas como filtros e histogramas.
 
 \section{Objetivos personales}
 Además de los objetivos propios de la realización de la aplicación, también se pretende conseguir una serie de objetivos personales.
