@@ -62,6 +62,7 @@ public class Propiedades {
 		propiedades.setProperty("tipoEntrenamiento", "0");
 		propiedades.setProperty("tipoClasificacion", "0");
 		propiedades.setProperty("tipoVentanaDefectuosa", "0");
+		propiedades.setProperty("tipoCaracteristicas", "0");
 		propiedades.setProperty("porcentajePixeles", "0.5");
 		propiedades.setProperty("pathArff", "./res/arff/Arff_entrenamiento.arff");
 		propiedades.setProperty("pathModel", ".res/model/todas_24.model");
@@ -107,6 +108,10 @@ public class Propiedades {
 	
 	public double getPorcentajePixeles(){
 		return Float.parseFloat(propiedades.getProperty("porcentajePixeles"));
+	}
+	
+	public int getTipoCaracteristicas(){
+		return Integer.parseInt(propiedades.getProperty("tipoCaracteristicas"));
 	}
 	
 	public void setUmbral(int umbral){
@@ -223,6 +228,19 @@ public class Propiedades {
 	
 	public void setPorcentajePixeles(double porcentaje){
 		propiedades.setProperty("porcentajePixeles", String.valueOf(porcentaje));
+		try {
+			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
+		} catch (FileNotFoundException e) {
+			MyLogHandler.writeException(e);
+			e.printStackTrace();
+		} catch (IOException e) {
+			MyLogHandler.writeException(e);
+			e.printStackTrace();
+		}
+	}
+	
+	public void setTipoCaracteristicas(int tipo){
+		propiedades.setProperty("tipoCaracteristicas", String.valueOf(tipo));
 		try {
 			propiedades.store(new FileOutputStream("./res/config/config.properties"), null);
 		} catch (FileNotFoundException e) {

@@ -46,6 +46,7 @@ public class BarraMenu extends JMenuBar {
 	private int tipoEntrenamiento;
 	private int tipoClasificacion;
 	private int heuristicaVentanaDefectuosa;
+	private int caracteristicas;
 	private double saltoOpciones;
 	private double porcentajePixelesMalos;
 	private static Propiedades prop;
@@ -117,6 +118,7 @@ public class BarraMenu extends JMenuBar {
 			private JComboBox<String> comboBoxEntrenamiento;
 			private JComboBox<String> comboBoxClasificacion;
 			private JComboBox <String> comboBoxTipoVentanaDefectuosa;
+			private JComboBox<String> comboBoxCaracteristicas;
 			private JSlider sliderPxDefectuosos;
 			
 			public OpcionesAvanzadasListener(Frame fr) {
@@ -162,8 +164,29 @@ public class BarraMenu extends JMenuBar {
 				
 				getSliderPorcentajePixelesMal(frmOpcionesAvanzadas);
 				
+				getLabelCaracteristicas(frmOpcionesAvanzadas);
+				
+				getComboBoxCaracteristicas(frmOpcionesAvanzadas);
+				
 				getDesktopPane(dialogo, frmOpcionesAvanzadas);
 				
+			}
+
+			public void getComboBoxCaracteristicas(
+					JInternalFrame frmOpcionesAvanzadas) {
+				comboBoxCaracteristicas = new JComboBox<String>();
+				comboBoxCaracteristicas.setModel(new DefaultComboBoxModel<String>(new String[] {"Todas", "Mejores"}));
+				comboBoxCaracteristicas.setBounds(179, 267, 205, 20);
+				comboBoxCaracteristicas.setSelectedIndex(prop.getTipoCaracteristicas());
+				comboBoxCaracteristicas.addActionListener(new ComboBoxCaracteristicasListener());
+				frmOpcionesAvanzadas.getContentPane().add(comboBoxCaracteristicas);
+			}
+
+			public void getLabelCaracteristicas(
+					JInternalFrame frmOpcionesAvanzadas) {
+				JLabel lblCaractersticas = new JLabel("Caracter\u00EDsticas");
+				lblCaractersticas.setBounds(22, 270, 147, 14);
+				frmOpcionesAvanzadas.getContentPane().add(lblCaractersticas);
 			}
 
 			public void getSliderPorcentajePixelesMal(JInternalFrame frmOpcionesAvanzadas) {
@@ -246,7 +269,7 @@ public class BarraMenu extends JMenuBar {
 			public JInternalFrame getInternalFrame() {
 				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();
 				frmOpcionesAvanzadas.setTitle("Opciones avanzadas");
-				frmOpcionesAvanzadas.setBounds(100, 100, 400, 330);
+				frmOpcionesAvanzadas.setBounds(100, 100, 400, 380);
 				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frmOpcionesAvanzadas.getContentPane().setLayout(null);
 				return frmOpcionesAvanzadas;
@@ -257,7 +280,7 @@ public class BarraMenu extends JMenuBar {
 				JDesktopPane desktoppane = new JDesktopPane();
 				desktoppane.add(frmOpcionesAvanzadas);
 				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());
-				dialogo.setMinimumSize(new Dimension(400, 330));
+				dialogo.setMinimumSize(new Dimension(400, 380));
 				dialogo.setResizable(false);
 				dialogo.pack();
 				dialogo.setLocationRelativeTo(frame);
@@ -267,7 +290,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnCancelar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(220, 268, 89, 23);
+				btnCancelar.setBounds(220, 318, 89, 23);
 				btnCancelar.addActionListener(new CancelarListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);
 			}
@@ -275,7 +298,7 @@ public class BarraMenu extends JMenuBar {
 			public void getBtnAceptar(JDialog dialogo,
 					JInternalFrame frmOpcionesAvanzadas) {
 				JButton btnAceptar = new JButton("Aceptar");
-				btnAceptar.setBounds(80, 268, 89, 23);
+				btnAceptar.setBounds(80, 318, 89, 23);
 				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));
 				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);
 			}
@@ -382,6 +405,14 @@ public class BarraMenu extends JMenuBar {
 					heuristicaVentanaDefectuosa = comboBoxTipoVentanaDefectuosa.getSelectedIndex();					
 				}
 			}
+			
+			private class ComboBoxCaracteristicasListener implements ActionListener{
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					caracteristicas = comboBoxCaracteristicas.getSelectedIndex();					
+				}
+			}
 	}
 	
 	private class AceptarOpcionesListener implements ActionListener{
@@ -400,6 +431,7 @@ public class BarraMenu extends JMenuBar {
 	    	prop.setTipoClasificacion(tipoClasificacion);
 	    	prop.setTipoVentanaDefectuosa(heuristicaVentanaDefectuosa);
 	    	prop.setPorcentajePixeles(porcentajePixelesMalos);
+	    	prop.setTipoCaracteristicas(caracteristicas);
 	    	dialog.dispose();
 	    }
 	}

@@ -69,6 +69,6 @@ public class MyLogHandler {
 		Date date = new Date();
 		StringWriter sWriter = new StringWriter();
 		e.printStackTrace(new PrintWriter(sWriter));
-		logger.logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
+		getLogger().logrb(Level.SEVERE, date.toString(), "Error: ", sWriter.getBuffer().toString(), e.toString());
 	}
 }

@@ -981,7 +981,7 @@ public class PanelAplicacion{
 						
 						try {
 							kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Modelo entrenado correctamente" +
-									"con el ARFF especificado</p><br>", 0, 0, null);
+									" con el ARFF especificado</p><br>", 0, 0, null);
 							txtLog.setCaretPosition(txtLog.getDocument().getLength());
 						} catch (BadLocationException e) {
 							throw new RuntimeException(e);
@@ -1038,8 +1038,7 @@ public class PanelAplicacion{
 					}
 					else {						
 						try {
-							kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Directorio abierto correctamente" +
-									"con el ARFF especificado</p><br>", 0, 0, null);
+							kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Directorio abierto correctamente</p><br>", 0, 0, null);
 							txtLog.setCaretPosition(txtLog.getDocument().getLength());
 						} catch (BadLocationException e) {
 							throw new RuntimeException(e);
@@ -1059,7 +1058,7 @@ public class PanelAplicacion{
 						
 						try {
 							kit.insertHTML(doc, doc.getLength(), "<p class=\"normal\"> Iniciando proceso de entrenamiento" +
-									"con el ARFF especificado</p><br>", 0, 0, null);
+									" con el nuevo ARFF especificado</p><br>", 0, 0, null);
 							txtLog.setCaretPosition(txtLog.getDocument().getLength());
 						} catch (BadLocationException e) {
 							throw new RuntimeException(e);

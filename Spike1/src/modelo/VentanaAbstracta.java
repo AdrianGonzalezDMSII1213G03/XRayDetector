@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JProgressBar;
 
 import datos.GestorArff;
@@ -352,7 +354,14 @@ public abstract class VentanaAbstracta extends Thread{
 		}
 		// newVals es el vector de doubles donde tienes los datos de las medias etc.
 		Instance instance = new DenseInstance(1, newVals);
-		instance.setDataset(getHeader());
+		List<String> feat;
+		if(prop.getTipoCaracteristicas() == 0){ //todas
+			feat = null;
+		}
+		else{	//mejores
+			feat = obtainFeatures();
+		}
+		instance.setDataset(getHeader(feat));
 		return instance;
 	}
 
@@ -360,17 +369,17 @@ public abstract class VentanaAbstracta extends Thread{
 	 * This method gets the header of the features.
 	 * @return header with features features header
 	 */
-	public Instances getHeader() {
+	public Instances getHeader(List<String> features) {
 		int capacity = 100000;
 	
-		//List<String> featuresCopy = null;
+		List<String> featuresCopy = null;
 		ArrayList<Attribute> atts = new ArrayList<Attribute>();
 		ArrayList<String> defect = new ArrayList<String>();
 	
 		defect.add("true");
 		defect.add("false");
 	
-		/*if (features != null) {
+		if (features != null) {
 			featuresCopy = new ArrayList<String>(features);
 	
 			for (int i = 0; i < featuresCopy.size(); i++) {
@@ -378,42 +387,41 @@ public abstract class VentanaAbstracta extends Thread{
 				char first = featuresCopy.get(i).charAt(0);
 				first = Character.toLowerCase(first);
 				featuresCopy.set(i, (first + rest).replaceAll(" ", ""));
-				featuresCopy.set(i, featuresCopy.get(i).replace("lbp", "LBP"));
 			}
-		}*/
+		}
 	
 		for (int j = 0; j < ftStandard.getHead().length; j++) {
-			//if (features == null
-				//	|| featuresCopy.contains(ftStandard.getHead()[j]))
+			if (features == null
+					|| featuresCopy.contains(ftStandard.getHead()[j]))
 				atts.add(new Attribute(ftStandard.getHead()[j]));
 		}
 	
 		for (int j = 0; j < ftStandardSaliency.getHead().length; j++) {
-			//if (features == null
-					//|| featuresCopy.contains(ftStandard.getHead()[j] + "(S)"))
+			if (features == null
+					|| featuresCopy.contains(ftStandard.getHead()[j] + "(S)"))
 				atts.add(new Attribute(ftStandardSaliency.getHead()[j] + "(S)"));
 		}
 	
 		for (int j = 1; j < 6; j++) {
 			for (int i = 0; i < ftHaralick.getHead().length; i++) {
-				//if (features == null
-					//	|| featuresCopy.contains(ftHaralick.getHead()[i]))
+				if (features == null
+						|| featuresCopy.contains(ftHaralick.getHead()[i]))
 					atts.add(new Attribute(ftHaralick.getHead()[i] + "_mean" + j));
 			}
 		}
 	
 		for (int j = 1; j < 6; j++) {
 			for (int i = 0; i < ftHaralick.getHead().length; i++) {
-				//if (features == null
-					//	|| featuresCopy.contains(ftHaralick.getHead()[i]))
+				if (features == null
+						|| featuresCopy.contains(ftHaralick.getHead()[i]))
 					atts.add(new Attribute(ftHaralick.getHead()[i] + "_range" + j));
 			}
 		}
 	
 		for (int j = 1; j < 6; j++) {
 			for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
-				//if (features == null
-					//	|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
+				if (features == null
+						|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
 					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + "_mean" + j
 							+ "(S)"));
 			}
@@ -421,22 +429,22 @@ public abstract class VentanaAbstracta extends Thread{
 	
 		for (int j = 1; j < 6; j++) {
 			for (int i = 0; i < ftHaralickSaliency.getHead().length; i++) {
-				//if (features == null
-					//	|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
+				if (features == null
+						|| featuresCopy.contains(ftHaralick.getHead()[i] + "(S)"))
 					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + "_range" + j
 							+ "(S)"));
 			}
 		}
 	
 		for (int j = 1; j < 60; j++) {
-			//if (features == null
-				//	|| featuresCopy.contains(ftLbp.getHead() + "_" + j))
+			if (features == null
+					|| featuresCopy.contains(ftLbp.getHead() + "_" + j))
 				atts.add(new Attribute(ftLbp.getHead() + "(" + j + ")"));
 		}
 	
 		for (int j = 1; j < 60; j++) {
-			//if (features == null
-				//	|| featuresCopy.contains(lbp.getHead() + "_" + j + "(S)"))
+			if (features == null
+					|| featuresCopy.contains(ftLbpSaliency.getHead() + "_" + j + "(S)"))
 				atts.add(new Attribute(ftLbpSaliency.getHead() + "(" + j + ")(S)"));
 		}
 	
@@ -448,6 +456,96 @@ public abstract class VentanaAbstracta extends Thread{
 		header.setClassIndex(header.numAttributes() - 1);
 	
 		return header;
+	}
+	
+	/**
+	 * Creates a list of best features.
+	 * 
+	 * @return list with the features
+	 */
+	public List<String> obtainFeatures() {
+		List<String> features = new ArrayList<String>();
+		String[] bestFeatures = null;
+		
+		int tam = prop.getTamVentana();
+		switch(tam){
+		case 12:
+			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana
+				bestFeatures = new String[]{"mean", "firstDerivative", "secondDerivative(S)", "differenceVariance_mean1",
+						"imc_1_mean1", "correlation_mean2", "differenceVariance_mean2", "imc_1_mean4",
+						"correlation_mean5", "correlation_range1", "inverseDifferenceMoment_range1",
+						"sumVariance_range1", "contrast_range2", "inverseDifferenceMoment_range2",
+						"inverseDifferenceMoment_range3", "inverseDifferenceMoment_range4", "imc_1_range4",
+						"contrast_range5", "sumOfSquares_range5", "inverseDifferenceMoment_range5",
+						"differenceEntropy_mean1(S)", "sumEntropy_mean2(S)", "differenceEntropy_mean2(S)",
+						"differenceEntropy_mean3(S)", "LBP(7)", "LBP(30)", "LBP(32)", "LBP(38)", "LBP(31)(S)", "LBP(41)(S)"};
+			}
+			else{	//vecinos
+				bestFeatures = new String[]{"standardDeviation", "differenceVariance_mean1", "correlation_mean2", "sumEntropy_mean2",
+						"correlation_mean4", "inverseDifferenceMoment_mean4", "correlation_mean5", "sumOfSquares_mean5", "correlation_range1",
+						"inverseDifferenceMoment_range2", "inverseDifferenceMoment_range3", "angularSecondMoment_range4", "sumOfSquares_range4",
+						"differenceVariance_range4", "sumOfSquares_range5", "inverseDifferenceMoment_range5", "differenceEntropy_range5",
+						"imc_2_range5", "correlation_mean2(S)", "differenceEntropy_mean2(S)", "inverseDifferenceMoment_mean5(S)",
+						"LBP(37)", "LBP(26)(S)", "LBP(27)(S)", "LBP(40)(S)", "LBP(44)(S)", "LBP(47)(S)", "LBP(52)(S)", "LBP(55)(S)"};
+			}
+			break;
+			
+		case 16:
+			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana
+				bestFeatures = new String[]{"firstDerivative", "secondDerivative", "differenceVariance_mean1", "imc_1_mean1", "correlation_mean2",
+						"differenceEntropy_mean2", "imc_1_mean2", "sumAverage_mean5", "inverseDifferenceMoment_range1", "inverseDifferenceMoment_range2",
+						"inverseDifferenceMoment_range4", "sumVariance_range4", "differenceEntropy_mean1(S)", "inverseDifferenceMoment_mean5(S)",
+						"differenceEntropy_range1(S)", "differenceEntropy_range4(S)", "LBP(4)", "LBP(6)", "LBP(19)", "LBP(30)", "LBP(32)",
+						"LBP(44)", "LBP(15)(S)", "LBP(34)(S)"};
+			}
+			else{	//vecinos
+				bestFeatures = new String[]{"standardDeviation", "imc_1_mean1", "sumAverage_mean2", "imc_2_mean3", "differenceVariance_mean4", "imc_2_mean4",
+						"angularSecondMoment_range1", "correlation_range1", "inverseDifferenceMoment_range1", "inverseDifferenceMoment_range2", "inverseDifferenceMoment_range3",
+						"sumAverage_range3", "sumOfSquares_range4", "inverseDifferenceMoment_range4", "differenceVariance_range4", "sumOfSquares_range5", "inverseDifferenceMoment_range5",
+						"differenceVariance_range5", "correlation_mean2(S)", "differenceEntropy_mean3(S)", "differenceEntropy_mean4(S)", "angularSecondMoment_mean5(S)",
+						"inverseDifferenceMoment_range4(S)", "LBP(7)", "LBP(48)", "LBP(20)(S)", "LBP(26)(S)", "LBP(27)(S)", "LBP(40)(S)", "LBP(47)(S)", "LBP(52)(S)"};
+			}
+			break;
+			
+		case 24:
+			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana
+				bestFeatures = new String[]{"firstDerivative", "secondDerivative", "firstDerivative(S)", "secondDerivative(S)", "sumOfSquares_mean1", "differenceVariance_mean1",
+						"inverseDifferenceMoment_mean3", "sumAverage_mean3", "inverseDifferenceMoment_mean4", "contrast_range1", "inverseDifferenceMoment_range1", "inverseDifferenceMoment_range2",
+						"inverseDifferenceMoment_range3", "imc_1_range4", "inverseDifferenceMoment_range5", "sumVariance_range5", "angularSecondMoment_mean5(S)", "differenceEntropy_range1(S)",
+						"LBP(4)", "LBP(7)", "LBP(14)", "LBP(17)", "LBP(18)", "LBP(18)", "LBP(19)", "LBP(20)", "LBP(21)", "LBP(26)", "LBP(32)", "LBP(38)", "LBP(39)", "LBP(44)", "LBP(6)(S)", "LBP(14)(S)",
+						"LBP(17)(S)", "LBP(23)(S)", "LBP(39)(S)", "LBP(40)(S)"};
+			}
+			else{	//vecinos
+				bestFeatures = new String[]{"firstDerivative", "correlation_mean1", "imc_1_mean3", "differenceVariance_mean4", "imc_1_mean4", "sumOfSquares_mean5", "inverseDifferenceMoment_range1",
+						"differenceVariance_range1", "inverseDifferenceMoment_range2", "inverseDifferenceMoment_range3", "sumOfSquares_range4", "inverseDifferenceMoment_range4", "angularSecondMoment_range5",
+						"inverseDifferenceMoment_range5", "sumAverage_range5", "differenceEntropy_mean2(S)", "differenceEntropy_mean3(S)", "angularSecondMoment_mean4(S)", "angularSecondMoment_range5(S)",
+						"LBP(7)", "LBP(10)", "LBP(38)", "LBP(43)", "LBP(20)(S)", "LBP(21)(S)", "LBP(27)(S)", "LBP(29)(S)", "LBP(40)(S)", "LBP(52)(S)", "LBP(59)(S)"};
+			}
+			break;
+			
+		case 32:
+			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana
+				bestFeatures = new String[]{"firstDerivative", "secondDerivative", "firstDerivative(S)", "secondDerivative(S)", "inverseDifferenceMoment_mean1", "inverseDifferenceMoment_range1",
+						"inverseDifferenceMoment_range4", "imc_1_range4", "sumOfSquares_range5", "LBP(17)", "LBP(18)", "LBP(20)", "LBP(30)", "LBP(34)", "LBP(38)", "LBP(39)", "LBP(8)(S)",
+						"LBP(17)(S)", "LBP(40)(S)"};
+			}
+			else{	//vecinos
+				bestFeatures = new String[]{"secondDerivative", "secondDerivative(S)", "sumOfSquares_mean1", "inverseDifferenceMoment_mean1", "differenceVariance_mean1", "correlation_mean2",
+						"differenceVariance_mean2", "differenceVariance_mean4", "inverseDifferenceMoment_range1", "sumAverage_range1", "imc_1_range1", "inverseDifferenceMoment_range2",
+						"inverseDifferenceMoment_range3", "inverseDifferenceMoment_range4", "imc_1_range4", "inverseDifferenceMoment_range5", "entropy_mean1(S)", "differenceEntropy_mean1(S)",
+						"correlation_mean4(S)", "inverseDifferenceMoment_mean5(S)", "angularSecondMoment_range1(S)", "angularSecondMoment_range2(S)", "angularSecondMoment_range5(S)",
+						"inverseDifferenceMoment_range5(S)", "LBP(7)", "LBP(14)", "LBP(15)", "LBP(38)", "LBP(6)(S)", "LBP(13)(S)", "LBP(14)(S)", "LBP(20)(S)", "LBP(21)(S)", "LBP(34)(S)",
+						"LBP(39)(S)", "LBP(40)(S)", "LBP(52)(S)", "LBP(55)(S)"};
+			}
+			break;
+		}
+
+		features = new ArrayList<String>();
+
+		for (int i = 0; i < bestFeatures.length; i++) {
+			features.add(bestFeatures[i]);
+		}
+		return features;
 	}
 
 	protected synchronized void setPorcentajeBarra() {		
