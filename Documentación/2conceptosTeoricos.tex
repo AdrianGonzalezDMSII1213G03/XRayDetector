@@ -93,7 +93,7 @@ A continuación se explican algunas de las técnicas que comprenden esta etapa.
 
 
 \subsubsection{Binarización}
-La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos: verdadero y falso. En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
+La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos (que podrían interpretarse como falso y verdadero). En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
 
 Para hacer esto, primero se debe convertir la imagen a escala de grises. Después hay que fijar
 un valor umbral entre 0 y 255. Una vez que se tenga dicho umbral, se convertirán a 255 todos
@@ -114,8 +114,8 @@ La saliencia de una posición dada es determinada principalmente por cómo de di
 localización de las que la rodean, en color, orientación, movimiento, profundidad, etc.
 
 La implementación del mapa de saliencia usada en este proyecto está basada en la variante
-descrita en el artículo "Human Detection Using a Mobile Platform and Novel Features Derived
-From a Visual Saliency Mechanism" [40].
+descrita en el artículo \emph{Human Detection Using a Mobile Platform and Novel Features Derived
+From a Visual Saliency Mechanism} [40].
 
 %Figura de Saliency Map
 \figura{1}{imgs/saliency.png}{Ejemplo de Saliency Map. La imagen original a la izquierda,
@@ -146,7 +146,7 @@ Este método selecciona el umbral de acuerdo a la media del máximo y mínimo va
 
 Por lo tanto, el umbral viene dado por la siguiente fórmula:
 
-\[T = (\frac{\max+\min}{2})-c\]
+\[T = \left(\frac{\max+\min}{2}\right)-c\]
 
 Donde $c$ es una constante que sirve para afinar el método. Por defecto, es cero.
 
@@ -158,7 +158,7 @@ En este caso, el umbral es la media de la distribución local en escala de grise
 
 \subsection{Descriptores de regiones}\label{descriptores}
 Una vez realizada la etapa de preprocesamiento, la imagen ya estará lista para ser analizada.
-Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferencia de otros métodos de análisis, que extraen otros tipos de atributos. Para analizar las características de la imagen, se utilizarán los siguientes descriptores:
+Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferencia de otros métodos de análisis, que extraen otros tipos de atributos. Para analizar las características de la imagen, se utilizarán los descriptores que se explican a continuación:
 
 \begin{itemize}
 \item Descriptores simples.
@@ -193,7 +193,7 @@ El análisis de la textura de las imágenes nos ofrecerá datos útiles para nue
 \subsubsection*{Características de Haralick}
 Siguiendo la propuesta de Haralick [25], se extrae información de textura de la distribución de los valores de intensidad de los píxeles. Dichos valores se calculan utilizando matrices de coocurrencia que representan información de textura de segundo orden.
 
-Haralick propuso un conjunto de 14 medidas de textura basada en la dependencia espacial de los tonos de grises. Esas dependencias están especificadas en la matriz de co-ocurrencia espacial (o de niveles de gris). La forma de calcular dicha matriz está definida en el siguiente artículo [46].
+Haralick propuso un conjunto de 14 medidas de textura basada en la dependencia espacial de los tonos de grises. Esas dependencias están especificadas en la matriz de co-ocurrencia espacial (o de niveles de gris). Siguiendo la descripción de [46], la forma de calcular dicha matriz es como sigue.
 
 La matriz de co-ocurrencia, una vez normalizada, tiene las siguientes propiedades:
 
@@ -230,9 +230,9 @@ $N_g$ es la dimensión de la matriz
 
 \item \textbf{Contraste}
 
-Es lo opuesto a la homogeneidad, es decir, es una medida de la variación local en una imagen. Tiene un valor alto cuando la región dentro de la ventana tiene un alto contraste.
+Es lo opuesto a la homogeneidad, es decir, es una medida de la variación local en una imagen. Tiene un valor alto cuando la región tiene un alto contraste.
 
-\[f_2 = \sum_{n=0}^{N_g-1}\sum_{j=1}^{N_g} p(i,j)\]
+\[f_2 =\sum_{n=0}^{N_g-1}n^2 \sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j)\]
 
 \item \textbf{Correlación}
 
@@ -286,13 +286,13 @@ Es alta cuando los elementos de la matriz de co-ocurrencia tienen valores relati
 
 Donde:
 
-\[HXY = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p(i,j))\]
-\[HXY1 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p_x(i) p_y(j))\]
-\[HXY2 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p_x(i) p_y(j)\log(p_x(i) p_y(j))\]
+\[HXY = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log \big(p(i,j)\big)\]
+\[HXY1 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log \big(p_x(i) p_y(j)\big)\]
+\[HXY2 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p_x(i) p_y(j)\log \big(p_x(i) p_y(j)\big)\]
 
 \item \textbf{Medidas de Información de Correlación 2}
 
-\[f_{13} = (1- \exp(-2 |HXY2 - HXY|))^{1/2}\]
+\[f_{13} = \big(1- \exp(-2 |HXY2 - HXY|)\big)^{1/2}\]
 
 \item \textbf{Coeficiente de Correlación Máxima}
 
@@ -324,7 +324,7 @@ Para reducir la longitud del vector de características se utilizan los patrones
 
 Por ejemplo, los patrones 00000000 (0 transiciones), 01110000 (2 transiciones) y 11001111 (2 transiciones) son uniformes mientras que los patrones 11001001 (4 transiciones) y 01010010 (6 transiciones) no lo son. El número de transiciones se guarda en un valor llamado medida de uniformidad \textit{U}.
 
-En el cálculo de los LBP, se utiliza una etiqueta para cada uno de los patrones uniformes, mientras que todos los patrones no uniformes son agrupados en una sola etiqueta. Por ejemplo, cuando se usa una vecindad (8,$R$)(donde $R$ es el radio), hay un total de 256 patrones, 58 de los cuales son uniformes, lo cual produce un total de 59 etiquetas diferentes. Todo esto dará como resultado un histograma con 59 intervalos.
+En el cálculo de los LBP, se utiliza una etiqueta para cada uno de los patrones uniformes, mientras que todos los patrones no uniformes son agrupados en una sola etiqueta. Por ejemplo, cuando se usa una vecindad (8,$R$) (donde $R$ es el radio), hay un total de 256 patrones, 58 de los cuales son uniformes, lo cual produce un total de 59 etiquetas diferentes. Todo esto dará como resultado un histograma con 59 intervalos.
 \newpage
 
 \figura{1}{imgs/vecindades_lbp.png}{Vecindades de distinto tamaño en los LBP [16]}{vecindades_lbp}{}
@@ -344,15 +344,15 @@ Las características geométricas que hemos calculado son:
 
 \item \textbf{Perímetro:} es la longitud del límite exterior de la región.
 
-\item \textbf{Circularidad:} descriptor de forma dado por la fórmula $\frac{4\pi \times area}{perimetro^2}$. Un valor de 1 indica que se trata de un círculo perfecto. Según se acerca a cero, indica que la forma es cada vez más alargada.
+\item \textbf{Circularidad:} descriptor de forma dado por la fórmula $\frac{4\pi \times \acute{a}rea}{per\acute{i}metro^2}$. Un valor de 1 indica que se trata de un círculo perfecto. Según se acerca a cero, indica que la forma es cada vez más alargada.
 
-\item \textbf{Redondez:} descriptor de forma dado por la fórmula $\frac{4\pi\times area}{\pi \times semieje\_mayor^2}$. Es el inverso del cociente entre el semieje mayor y el menor de la mejor elipse que puede ser dibujada en la región.
+\item \textbf{Redondez:} descriptor de forma dado por la fórmula $\frac{4\pi\times \acute{a}rea}{\pi \times semieje\_mayor^2}$. Es el inverso del cociente entre el semieje mayor y el menor de la mejor elipse que puede ser dibujada en la región.
 
-\item \textbf{Semieje mayor:} semieje mayor de la mejor elipse que puede ser dibujada en la región.
+\item \textbf{Semieje mayor:} semieje mayor de la mayor elipse que puede ser dibujada en la región.
 
-\item \textbf{Semieje menor:} semieje menor de la mejor elipse que puede ser dibujada en la región.
+\item \textbf{Semieje menor:} semieje menor de la mayor elipse que puede ser dibujada en la región.
 
-\item \textbf{Ángulo:} es el ángulo entre el semieje mayor y una línea paralela al eje x.
+\item \textbf{Ángulo:} es el ángulo entre el semieje mayor y una línea paralela al eje $x$.
 
 \item \textbf{Distancia Feret:} también llamada diámetro de Feret. Es la máxima distancia entre dos puntos cualesquiera de la región.
 
