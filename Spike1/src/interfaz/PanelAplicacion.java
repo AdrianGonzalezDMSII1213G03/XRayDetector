@@ -7,6 +7,7 @@ import ij.gui.Roi;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -22,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
+
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
@@ -48,7 +50,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -59,7 +60,6 @@ import org.apache.commons.io.FileUtils;
 import utils.Graphic;
 import utils.MyLogHandler;
 import utils.Propiedades;
-import java.awt.Dimension;
 
 public class PanelAplicacion{
 
@@ -71,6 +71,7 @@ public class PanelAplicacion{
 	private static Fachada fachada;
 	private Thread thread;
 	private Rectangle selection;
+	private Rectangle selectionCopy;
 	private File model;
 	private File arff;
 	private JProgressBar progressBar;
@@ -92,7 +93,7 @@ public class PanelAplicacion{
     private JButton btnExportarLog;
     private JButton btnGuardarImagenAnalizada;
     private JButton btnGuardarImagenBinarizada;
-    private JButton btnPrecissionRecall;
+    private JButton btnPrecisionRecall;
     private JTable tablaResultados;
     private JPanel panelTabla_1;
     private ImagePlus copiaEdges;
@@ -175,7 +176,9 @@ public class PanelAplicacion{
 					
 		getButtonGuardarImagenBinarizada(panelAnalizarResultados);
 		
-		getButtonPrecissionRecall(panelAnalizarResultados);
+		getButtonPrecisionRecall(panelAnalizarResultados);
+		
+		selectionCopy = new Rectangle();
 		
 		try {
 			File fichero = new File("./res/ayuda/ayuda.hs");
@@ -195,13 +198,13 @@ public class PanelAplicacion{
 	
 	}
 
-	public void getButtonPrecissionRecall(JPanel panelAnalizarResultados) {
-		btnPrecissionRecall = new JButton("<html><CENTER>Precission & Recall</CENTER></html>");
-		btnPrecissionRecall.setPreferredSize(new Dimension(230, 36));
-		btnPrecissionRecall.setMinimumSize(new Dimension(80, 30));		
-		btnPrecissionRecall.addActionListener(new PrecissionRecallListener());
-		btnPrecissionRecall.setEnabled(false);
-		panelAnalizarResultados.add(btnPrecissionRecall);
+	public void getButtonPrecisionRecall(JPanel panelAnalizarResultados) {
+		btnPrecisionRecall = new JButton("<html><CENTER>Precision & Recall</CENTER></html>");
+		btnPrecisionRecall.setPreferredSize(new Dimension(230, 36));
+		btnPrecisionRecall.setMinimumSize(new Dimension(80, 30));		
+		btnPrecisionRecall.addActionListener(new PrecisionRecallListener());
+		btnPrecisionRecall.setEnabled(false);
+		panelAnalizarResultados.add(btnPrecisionRecall);
 	}
 
 	public void getButtonGuardarImagenBinarizada(JPanel panelAnalizarResultados) {
@@ -571,10 +574,14 @@ public class PanelAplicacion{
 					tablaResultados.setEnabled(false);
 					btnGuardarImagenAnalizada.setEnabled(false);
 					btnGuardarImagenBinarizada.setEnabled(false);
-					btnPrecissionRecall.setEnabled(false);
+					btnPrecisionRecall.setEnabled(false);
 					imgPanel.setImage(img.getImage());
 					imgPanel.repaint();
 					imgPanel.setFlagTrabajando(true);
+					selectionCopy.height = selection.height;
+					selectionCopy.width = selection.width;
+					selectionCopy.x = selection.x;
+					selectionCopy.y = selection.y;
 					((DefaultTableModel) (tablaResultados.getModel())).getDataVector().clear();
 					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();
 					ThreadAnalizar threadAnalizar = new ThreadAnalizar();
@@ -691,7 +698,7 @@ public class PanelAplicacion{
 			tablaResultados.setEnabled(true);
 			btnGuardarImagenAnalizada.setEnabled(true);
 			btnGuardarImagenBinarizada.setEnabled(true);
-			btnPrecissionRecall.setEnabled(true);
+			btnPrecisionRecall.setEnabled(true);
 			imgPanel.setFlagTrabajando(false);
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
@@ -1062,9 +1069,22 @@ public class PanelAplicacion{
 	    }
 	}
 	
-	private class PrecissionRecallListener implements ActionListener{
+	private class PrecisionRecallListener implements ActionListener{
 		
 		public void actionPerformed (ActionEvent e){
+			JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	    	chooser.setDialogTitle("Escoja la máscara correspondiente a la imagen");
+	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes JPG", "jpg");
+	    	chooser.setFileFilter(filter);
+	    	chooser.setAcceptAllFileFilterUsed(false);
+	    	int answer = chooser.showOpenDialog(null);
+			if (answer == JFileChooser.APPROVE_OPTION) {
+				File JFC = chooser.getSelectedFile();
+                String PATH = JFC.getAbsolutePath();
+                PrecisionRecallDialog diag = new PrecisionRecallDialog(fachada.getPrecisionRecall(PATH, selectionCopy));
+                diag.setLocationRelativeTo(frmXraydetector);
+                diag.setVisible(true);                
+			}
 	    }
 	}
 
@@ -1138,10 +1158,8 @@ public class PanelAplicacion{
 				String maskList[] = maskDirectory.list();
 				Arrays.sort(maskList);
 				
-				SimpleAttributeSet sa = new  SimpleAttributeSet();	//Para definir estilos
-				
 				if (originalList.length != maskList.length) {
-					mostrarErrorNumImagenes(originalList, maskList, sa);
+					mostrarErrorNumImagenes(originalList, maskList);
 				} else {
 					sameFiles = true;
 					for (int i = 0; i < originalList.length
@@ -1159,7 +1177,7 @@ public class PanelAplicacion{
 							sameFiles = false;
 					}
 					if (sameFiles == false){
-						mostrarErrorNombresFicheros(sa);
+						mostrarErrorNombresFicheros();
 					}
 					else {						
 						try {
@@ -1228,7 +1246,7 @@ public class PanelAplicacion{
 			}
 		}
 
-		private void mostrarErrorNombresFicheros(SimpleAttributeSet sa) {
+		private void mostrarErrorNombresFicheros() {
 			JOptionPane
 					.showMessageDialog(
 							null,
@@ -1248,7 +1266,7 @@ public class PanelAplicacion{
 		}
 
 		private void mostrarErrorNumImagenes(String[] originalList,
-				String[] maskList, SimpleAttributeSet sa) {
+				String[] maskList) {
 			
 			if (originalList.length > maskList.length){
 				JOptionPane.showMessageDialog(null,

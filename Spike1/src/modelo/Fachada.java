@@ -179,7 +179,6 @@ public class Fachada {
 		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
     	    public void uncaughtException(Thread th, Throwable ex) {
     	    	if(!ex.getClass().toString().contains("ThreadDeath")){
-    	    		System.out.println("1 " + ex.getClass().toString());
 	    	    	excepcion = new RuntimeException(ex);
 	    	    	stop();
     	    	}
@@ -929,5 +928,53 @@ public class Fachada {
 	
 	public ImagePlus getImageBinarizada(){
 		return new ImagePlus("i", imgBin);
+	}
+	
+	public double[] getPrecisionRecall(String path, Rectangle selection){
+		int truePositive = 0, falsePositive = 0, falseNegative = 0;
+		ImagePlus imBin = new ImagePlus("img", imgBin);
+		ir.abrirImagen(path);
+		ImagePlus mask = ir.getImagen();
+		int[] pixelBin, pixelMask;
+		double[] resultado = new double[2];
+		
+		for(int y=0; y<selection.height; y++){
+			for(int x=0; x<selection.width; x++){
+				pixelBin = imBin.getPixel(x+selection.x, y+selection.y);
+				pixelMask = mask.getPixel(x+selection.x, y+selection.y);
+			
+				if(pixelBin[0] != 255 || pixelBin[1] != 255 || pixelBin[2] != 255){	//bin no es blanco
+					if(pixelMask[0] != 255 || pixelMask[1] != 255 || pixelMask[2] != 255){	//mask no es blanco
+						truePositive++;
+					}
+					else{	//mask es blanco
+						falsePositive++;
+					}
+				}
+				else{	//bin es blanco
+					if(pixelMask[0] != 255 || pixelMask[1] != 255 || pixelMask[2] != 255){	//mask no es blanco
+						falseNegative++;
+					}
+				}
+			}
+		}
+		
+		//precision
+		try{
+			resultado[0] = ((double)truePositive/(double)(truePositive+falsePositive));
+		}
+		catch(ArithmeticException e){
+			resultado[0] = Double.NaN;
+		}
+		
+		//recall
+		try{
+			resultado[1] = ((double)truePositive/(double)(truePositive+falseNegative));
+		}
+		catch(ArithmeticException e){
+			resultado[1] = Double.NaN;
+		}
+		
+		return resultado;
 	}
 }

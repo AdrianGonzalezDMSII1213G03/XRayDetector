@@ -99,7 +99,7 @@ public class BarraMenu extends JMenuBar {
 		mnAyuda = new JMenu("Ayuda");
 		this.add(mnAyuda);
 
-		mntmAyudaEnLnea = new JMenuItem("Ayuda en l\u00EDnea");
+		mntmAyudaEnLnea = new JMenuItem("Ayuda en línea");
 		mnAyuda.add(mntmAyudaEnLnea);
 	}
 	
