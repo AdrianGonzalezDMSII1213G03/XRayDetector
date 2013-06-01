@@ -197,19 +197,24 @@ public class PanelAplicacion{
 
 	public void getButtonPrecissionRecall(JPanel panelAnalizarResultados) {
 		btnPrecissionRecall = new JButton("<html><CENTER>Precission & Recall</CENTER></html>");
-		btnPrecissionRecall.setPreferredSize(new Dimension(220, 30));
+		btnPrecissionRecall.setPreferredSize(new Dimension(230, 36));
 		btnPrecissionRecall.setMinimumSize(new Dimension(80, 30));		
+		btnPrecissionRecall.addActionListener(new PrecissionRecallListener());
+		btnPrecissionRecall.setEnabled(false);
 		panelAnalizarResultados.add(btnPrecissionRecall);
 	}
 
 	public void getButtonGuardarImagenBinarizada(JPanel panelAnalizarResultados) {
-		btnGuardarImagenBinarizada = new JButton("<html><CENTER>Guardar imagen<br>binarizada</CENTER></html>");
+		btnGuardarImagenBinarizada = new JButton("<html><CENTER>Guardar defectos<br>binarizados</CENTER></html>");
+		btnGuardarImagenBinarizada.addActionListener(new GuardarImagenBinarizadaListener());
+		btnGuardarImagenBinarizada.setEnabled(false);
 		panelAnalizarResultados.add(btnGuardarImagenBinarizada);
 	}
 
 	public void getButtonGuardarImagenAnalizada(JPanel panelAnalizarResultados) {
 		btnGuardarImagenAnalizada = new JButton("<html><CENTER>Guardar imagen<br>analizada</CENTER></html>");
 		btnGuardarImagenAnalizada.addActionListener(new GuardarImagenAnalizadaListener());
+		btnGuardarImagenAnalizada.setEnabled(false);
 		panelAnalizarResultados.add(btnGuardarImagenAnalizada);
 	}
 
@@ -564,6 +569,9 @@ public class PanelAplicacion{
 					btnExportarLog.setEnabled(false);
 					btnLimpiarLog.setEnabled(false);
 					tablaResultados.setEnabled(false);
+					btnGuardarImagenAnalizada.setEnabled(false);
+					btnGuardarImagenBinarizada.setEnabled(false);
+					btnPrecissionRecall.setEnabled(false);
 					imgPanel.setImage(img.getImage());
 					imgPanel.repaint();
 					imgPanel.setFlagTrabajando(true);
@@ -573,36 +581,38 @@ public class PanelAplicacion{
 			    	thread = new Thread(threadAnalizar);
 			    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
     		    	    public void uncaughtException(Thread th, Throwable ex) {
-    		    	    	JOptionPane.showMessageDialog(
-    		    	    			   null,
-    		    	    			   "Se ha producido un error: "+ ex.getMessage(),
-    		    	    			   "Error",
-    		    	    			   JOptionPane.ERROR_MESSAGE);
-    		    	    	parado = false;
-    		    			btnEntrenarClasificador.setEnabled(true);
-    		    			btnAbrirImagen.setEnabled(true);
-    		    			btnStop.setEnabled(false);
-    		    			slider.setValue(prop.getUmbral());
-    		    			slider.setEnabled(true);
-    		    			btnExportarLog.setEnabled(true);
-    		    			btnLimpiarLog.setEnabled(true);
-    		    			tablaResultados.setEnabled(true);
-    		    			if(imagenAbierta){
-    		    				btnAnalizar.setEnabled(true);
-    		    			}
-    		    			else{
-    		    				btnAnalizar.setEnabled(false);
-    		    			}
-    						try {
-								kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
-								txtLog.setCaretPosition(txtLog.getDocument().getLength());
-							} catch (BadLocationException e) {
-								MyLogHandler.writeException(e);
-								e.printStackTrace();
-							} catch (IOException e) {
-								MyLogHandler.writeException(e);
-								e.printStackTrace();
-							}
+    		    	    	if(!ex.getClass().toString().contains("ThreadDeath")){
+	    		    	    	JOptionPane.showMessageDialog(
+	    		    	    			   null,
+	    		    	    			   "Se ha producido un error: "+ ex.getMessage(),
+	    		    	    			   "Error",
+	    		    	    			   JOptionPane.ERROR_MESSAGE);
+	    		    	    	parado = false;
+	    		    			btnEntrenarClasificador.setEnabled(true);
+	    		    			btnAbrirImagen.setEnabled(true);
+	    		    			btnStop.setEnabled(false);
+	    		    			btnExportarLog.setEnabled(true);
+	    		    			btnLimpiarLog.setEnabled(true);
+	    		    			tablaResultados.setEnabled(true);
+	    		    			imgPanel.setFlagTrabajando(false);
+	    		    			
+	    		    			if(imagenAbierta){
+	    		    				btnAnalizar.setEnabled(true);
+	    		    			}
+	    		    			else{
+	    		    				btnAnalizar.setEnabled(false);
+	    		    			}
+	    						try {
+									kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
+									txtLog.setCaretPosition(txtLog.getDocument().getLength());
+								} catch (BadLocationException e) {
+									MyLogHandler.writeException(e);
+									e.printStackTrace();
+								} catch (IOException e) {
+									MyLogHandler.writeException(e);
+									e.printStackTrace();
+								}
+    		    	    	}
     		    	    }
     		    	};
     		    	thread.setUncaughtExceptionHandler(h);
@@ -643,6 +653,7 @@ public class PanelAplicacion{
 			}
 			
 			if(fachada.getExcepcion() != null){	//se han producido excepciones
+    	    	System.out.println("2 " + fachada.getExcepcion().getClass().toString());
 				RuntimeException e = fachada.getExcepcion();
 				fachada.setExcepcion(null);
 				throw e;				
@@ -678,6 +689,9 @@ public class PanelAplicacion{
 			btnExportarLog.setEnabled(true);
 			btnLimpiarLog.setEnabled(true);
 			tablaResultados.setEnabled(true);
+			btnGuardarImagenAnalizada.setEnabled(true);
+			btnGuardarImagenBinarizada.setEnabled(true);
+			btnPrecissionRecall.setEnabled(true);
 			imgPanel.setFlagTrabajando(false);
 			if(imagenAbierta){
 				btnAnalizar.setEnabled(true);
@@ -1024,6 +1038,27 @@ public class PanelAplicacion{
 	private class GuardarImagenBinarizadaListener implements ActionListener{
 		
 		public void actionPerformed (ActionEvent e){
+			JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	    	chooser.setDialogTitle("Escoja la ubicación para guardar la imagen binarizada");
+	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes JPG", "jpg");
+	    	chooser.setFileFilter(filter);
+	    	chooser.setAcceptAllFileFilterUsed(false);
+	    	int answer = chooser.showSaveDialog(null);
+			if (answer == JFileChooser.APPROVE_OPTION) {
+				File JFC = chooser.getSelectedFile();
+                String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar                
+                IJ.saveAs(fachada.getImageBinarizada(), "JPG", PATH);
+                try {
+    				kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Imagen exportada correctamente</p><br>", 0, 0, null);
+    				txtLog.setCaretPosition(txtLog.getDocument().getLength());
+    			} catch (BadLocationException e1) {
+    				MyLogHandler.writeException(e1);
+    				e1.printStackTrace();
+    			} catch (IOException e1) {
+    				MyLogHandler.writeException(e1);
+    				e1.printStackTrace();
+    			}
+			}
 	    }
 	}
 	

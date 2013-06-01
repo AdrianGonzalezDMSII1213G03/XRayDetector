@@ -7,7 +7,6 @@ import ij.ImagePlus;
 import ij.gui.Roi;
 import ij.measure.ResultsTable;
 import ij.plugin.frame.RoiManager;
-import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
 import java.awt.AlphaComposite;
@@ -25,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
@@ -36,9 +36,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import utils.Auto_Local_Threshold;
 import utils.Graphic;
 import utils.ParticleAnalyzer;
-import utils.Thresholder;
-
 import utils.Propiedades;
+import utils.Thresholder;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.REPTree;
@@ -179,8 +178,11 @@ public class Fachada {
 		setMaxProgressBar(imagenes, progressBar);
 		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
     	    public void uncaughtException(Thread th, Throwable ex) {
-    	    	excepcion = new RuntimeException(ex);
-    	    	stop();
+    	    	if(!ex.getClass().toString().contains("ThreadDeath")){
+    	    		System.out.println("1 " + ex.getClass().toString());
+	    	    	excepcion = new RuntimeException(ex);
+	    	    	stop();
+    	    	}
     	    }
     	};
 				
@@ -633,7 +635,7 @@ public class Fachada {
 		imgPanel.isEnded(true);
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
-		guardarMapaCalor();
+		//guardarMapaCalor();
 		
 		calcularCaracteristicasGeometricas();
 	}
@@ -657,7 +659,7 @@ public class Fachada {
 		imgPanel.isEnded(true);
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
-		guardarMapaCalor();
+		//guardarMapaCalor();
 		
 		calcularCaracteristicasGeometricas();
 	}
@@ -812,12 +814,12 @@ public class Fachada {
 		return bgImage;
 	}
 	
-	//Pruebas
-	public void guardarMapaCalor(){
-		FloatProcessor fp = new FloatProcessor(defectMatrix);
-		ImagePlus i = new ImagePlus("mapa_calor", fp.createImage());
-		IJ.saveAs(i, "BMP", "./res/img/" + i.getTitle());
-	}
+//	//Pruebas
+//	public void guardarMapaCalor(){
+//		FloatProcessor fp = new FloatProcessor(defectMatrix);
+//		ImagePlus i = new ImagePlus("mapa_calor", fp.createImage());
+//		IJ.saveAs(i, "BMP", "./res/img/" + i.getTitle());
+//	}
 	
 	public void ejecutaVentanaOpcionRegiones(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		ArrayList<int[]> blancos = calcularUmbralesLocales(selection);
@@ -923,5 +925,9 @@ public class Fachada {
 	
 	public void setExcepcion(RuntimeException e){
 		excepcion = e;
+	}
+	
+	public ImagePlus getImageBinarizada(){
+		return new ImagePlus("i", imgBin);
 	}
 }
