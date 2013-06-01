@@ -14,9 +14,9 @@ Los diferentes métodos de ensayos no destructivos se basan en la aplicación de
 
 Los datos aportados por este tipo de ensayos suelen ser menos exactos que los de los ensayos destructivos. Sin embargo, suelen ser más baratos, ya que no implican la destrucción de la pieza a examinar. En ocasiones los ensayos no destructivos buscan únicamente verificar la homogeneidad y continuidad del material analizado, por lo que se complementan con los datos provenientes de los ensayos destructivos.
 
-Uno de los aspectos más importantes de cualquier método de ensayo no destructivo es que todo el personal debe estar entrenado, cualificado un negativo fotográfico y certificado. El personal debe estar familiarizado con las técnicas, el equipamiento, el objeto a ensayar y cómo interpretar los resultados.
+Uno de los aspectos más importantes de cualquier método de ensayo no destructivo es que todo el personal debe estar entrenado, cualificado y certificado. El personal debe estar familiarizado con las técnicas, el equipamiento, el objeto a ensayar y cómo interpretar los resultados.
 
-En este proyecto se ha utilizado el ensayo radiográfico.
+El objetivo de este proyecto es proporcionar una herramienta que automatice en la medida de lo posible (o que en última instancia, sirva de asistencia al operador humano) el proceso de ensayo radiográfico.
 
 \subsection{Radiografía}
 Una radiografía [70] es una imagen registrada en una placa o película fotográfica, o de forma digital en una base de datos. La imagen se obtiene al exponer al receptor de imagen radiográfica a una fuente de radiación de alta energía, comúnmente rayos X o radiación gamma procedente de isótopos radiactivos. Al interponer un objeto entre la fuente de radiación y el receptor, las partes más densas aparecen con diferentes tonos dentro de una escala de grises, en función inversa a la densidad del objeto. Por ejemplo, si la radiación incide directamente sobre el receptor, se registra un tono negro.
@@ -26,7 +26,7 @@ Sus usos pueden ser tanto médicos, para detectar fisuras en huesos, como indust
 La radiografía se usa para ensayar una variedad de productos, tales como objetos de fundición, objetos forjados y soldaduras. Es también muy usada en la industria aeroespacial para la detección de grietas (fisuras) en las estructuras de los aviones, la detección de agua en las estructuras tipo panal y detección de objetos extraños. Los objetos a ensayar se exponen a rayos X o gamma y se procesa un film o se visualiza digitalmente. El personal de ensayos radiográficos instala, expone y procesa la película o digitalmente procesa las señales e interpreta las imágenes de acuerdo con códigos.
 
 \subsection{Ventajas del ensayo radiográfico}
-Las ventajas del ensayo radiográfico [70] incluyen lo siguiente:
+Las ventajas del ensayo radiográfico [70] son, entre otras, las siguientes:
 
 \begin{enumerate}
 \item Puede usarse con la mayoría de los materiales.
@@ -102,7 +102,7 @@ los valores de la imagen superiores al umbral, mientras que los inferiores se co
 La binarización es, además, un método de segmentación. Hablaremos más sobre este tema en la sección \ref{segmentacion}.
 
 
-\subsubsection{Saliency}
+\subsubsection{Saliency}\label{saliency}
 El «Saliency Map» o «Mapa de Prominencia» [43] es un mapa topográfico que permite representar
 la prominencia visual de una determinada imagen.
 
@@ -364,18 +364,18 @@ Las características geométricas que hemos calculado son:
 \subsection{Reconocimiento e interpretación de imágenes}\label{reconocimiento}
 Una vez obtenidas las características de la imagen, el siguiente paso será reconocer dichos datos e interpretarlos. Para ello será necesario entrenar un clasificador. Una vez entrenado, podrá predecir dónde estarán los defectos que buscamos.
 
-Un clasificador [58] es un elemento que, tomando un conjunto de características como entrada, proporciona a la salida una clase etiquetada. En nuestro caso la clase sería el «defecto», que podría tomar dos valores: «verdadero» o «falso». En el caso de que sea una regresión, en vez de una clasificación de clases nominales, los valores que devolverá el clasificador serán 0 y 1.
+Un clasificador [58] es un elemento que, tomando un conjunto de características como entrada, proporciona a la salida una etiqueta de clase. En nuestro caso, el atributo de clase sería el «defecto», que podría tomar dos valores: «verdadero» o «falso». En el caso de que sea una regresión, en vez de una clasificación de clases nominales, los valores que devolverá el clasificador serán 0 y 1.
 
 Utilizaremos el clasificador por su capacidad de aprender a partir de imágenes de ejemplo y de generalizar este conocimiento para que se pueda aplicar a nuevas y diferentes imágenes.
 
-Para construir el clasificador utilizaremos un conjunto de imágenes etiquetadas. Para etiquetarlas, se creará una máscara de cada imagen en la que se marcarán a mano los defectos. Estas máscaras permitirán al clasificador saber qué partes de la imagen son defectos y cuales no.
+Para construir el clasificador utilizaremos un conjunto de imágenes etiquetadas. Para etiquetarlas, se creará una máscara de cada imagen en la que se marcarán a mano los defectos. Estas máscaras permitirán al clasificador saber qué partes de la imagen son defectos y cuales no.  Es lo que se denomina \emph{ground truth} en la literatura de procesamiento digital de imágenes.
 
-El clasificador no puede trabajar directamente con imágenes, sino con vectores de características, que serán las que se calculen a partir de las imágenes de ejemplo. Estos vectores de características se guardarán en ficheros \textit{ARFF}, que tendrán una serie de atributos definidos en la cabecera, cada uno de ellos correspondiente a una característica. El fichero contendrá un conjunto de instancias, que son cada serie de valores que toman los atributos. Los ficheros \textit{ARFF} son el formato propio de \textit{Weka}, y en su estructura se pueden diferenciar las siguientes secciones:
+Los clasificadores que hemos utilizado no pueden trabajar directamente con imágenes, sino con vectores de características, que serán las que se calculen a partir de las imágenes de ejemplo. Estos vectores de características se guardarán en ficheros \textit{ARFF}, que tendrán una serie de atributos definidos en la cabecera, cada uno de ellos correspondiente a una característica. El fichero contendrá un conjunto de instancias, que son cada serie de valores que toman los atributos. Los ficheros \textit{ARFF} son el formato propio de \textit{Weka}, y en su estructura se pueden diferenciar las siguientes secciones:
 
 \begin{itemize}
 \item \textbf{@relation:} Los ficheros \textit{ARFF} deben empezar con esta declaración en su primera línea (no puede haber líneas en blanco antes). Será una cadena de caracteres.
 
-\item \textbf{@attribute:} En esta sección hay que poner una línea por cada atributo que vaya a tener el conjunto de datos. Para cada atributo habrá que indicar su nombre y el tipo de dato. El tipo puede ser numeric, string, etc.
+\item \textbf{@attribute:} En esta sección hay que poner una línea por cada atributo que vaya a tener el conjunto de datos. Para cada atributo habrá que indicar su nombre y el tipo de dato. El tipo puede ser \emph{numeric}, \emph{string}, etc.
 
 \item \textbf{@data:} En esta sección se incluyen los datos. Cada columna se separa por comas y todas las
 filas deberán tener el mismo número de columnas, que coincidirá con el número de atributos declarados.
@@ -385,18 +385,20 @@ Al entrenar al clasificador obtendremos un modelo, el cual usaremos cuando quera
 
 Un clasificador puede ser, según los tipos de aprendizaje:
 
-\begin{itemize}
-\item Supervisado: cuando se utilizan ejemplos previamente etiquetados.
-\item No supervisado: cuando se utilizan patrones de entradas para los no se especifican los valores
+\begin{description}
+\item[Supervisado:] cuando se utilizan ejemplos previamente etiquetados.
+\item[No supervisado:] cuando se utilizan patrones de entradas para los no se especifican los valores
 de sus salidas.
-\end{itemize}
+\end{description}
 
-Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio que hicieron los alumnos del año pasado con varios tipo de clasificadores, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}.
+Por lo dicho anteriormente, hemos utilizado clasificadores supervisados. Nos hemos basado en el estudio con varios clasificadores que hicieron los alumnos que desarrollaron la versión de la aplicación que este proyecto esta mejorando y ampliando, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}.
 
 Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión.
 
 \subsubsection{REPTree}
-El algoritmo de \textit{REPTree} permite construir tanto un árbol de decisión como un árbol de regresión, usando las medidas de \textit{ganancia de información} y de \textit{reducción de la varianza}. Puede podar los árboles generados usado la \textit{poda de error reducido}. Optimizado para la velocidad, sólo ordena valores para atributos numéricos una única vez.
+El algoritmo de \textit{REPTree} permite construir tanto un árbol de clasificación como un árbol de regresión, usando las medidas de \textit{ganancia de información} y de \textit{reducción de la varianza}. Puede podar los árboles generados usando la \textit{poda de error reducido}. Además, está optimizado para la rápida ejecución. Sólo ordena valores para atributos numéricos una única vez.
+
+La ganancia de información es una reducción de la entropía esperada (es decir, de la impureza de un conjunto de ejemplos), causada por la partición de los ejemplos de acuerdo al atributo. La reducción de la varianza es una técnica que se usa para aumentar la precisión, disminuyendo el error que se produce cuando se entrena con diferentes conjuntos de datos.
 
 Considera los valores desconocidos partiendo instancias en pedazos, como hace \textit{C4.5}. Se puede especificar el mínimo número de instancias por hoja, profundidad máxima del árbol (útil cuando se utiliza la técnica de \textit{boosting}), la mínima proporción de la varianza de los datos del conjunto de entrenamiento que se consideran para partir (sólo para clases numéricas), y el número de pliegues por poda.[INSERTAR CITA].
 
@@ -405,7 +407,7 @@ Considera los valores desconocidos partiendo instancias en pedazos, como hace \t
 
 Lo que se hace es, teniendo un conjunto de datos, generar a partir de él un cierto número de conjuntos de datos mediante muestreo con reemplazamiento, para entrenar con ellos un cierto número de modelos. Después, se combinan las predicciones de todos los clasificadores entrenados para obtener la predicción final.
 
-El cómo se combinan estas predicciones se puede hacer con una media de las salidas (regresión) o con una votación de mayoría (clasificación).
+La combinación de estas predicciones se puede hacer con una media de las salidas (regresión) o con una votación de mayoría (clasificación).
 
 Con esto conseguimos que métodos inestables, como árboles de decisión, mejoren su rendimiento.
 
@@ -417,10 +419,16 @@ Con esto conseguimos que métodos inestables, como árboles de decisión, mejore
 \subsection{Fundamentos teóricos de la versión inicial}
 En este apartado se describe la primera versión que realizamos de la detección de defectos. Esta primera versión es una versión mejorada de la versión final de los alumnos del año pasado.
 
-Se ha continuado la misma idea que utilizaron los alumnos del año pasado, basada en el artículo «\underline{Automated Detection of Welding Defects without Segmentation}» de Domingo Mery [38]. Se han cambiado, entre otras cosas, el diseño arquitectónico y parte del código y de la interfaz, además de que ahora usamos un enfoque multihilo y se ha cambiado un poco parte del proceso de entrenamiento.
+Se ha continuado la misma idea que utilizaron los desarrolladores de la versión inicial, basada en el artículo «\emph{Automated Detection of Welding Defects without Segmentation}» de Domingo Mery [38]. Los cambios realizadas en esta versión inicial con respecto a la versión de la que se partía han sido:
+\begin{itemize}
+\item Se ha realizado un nuevo diseño artquitectónico.
+\item Se ha cambiado parte del código de la interfaz.
+\item Se ha cambiado el proceso de entrenamiento.
+\item Ahora se utiliza un enfoque multihilo.
+\end{itemize}
 
 \subsubsection{Preproceso}
-Para la realización del análisis de la imagen y su posterior detección de defectos, hay que partir una imagen original en escala de grises. A dicha imagen se la pasa un filtro \textit{«Saliency Map»}. Con todo esto, se obtiene la imagen original y la imagen Saliency que son analizadas paralelamente.
+Para la realización del análisis de la imagen y su posterior detección de defectos, hay que partir una imagen original en escala de grises. A dicha imagen se la pasa un filtro \textit{«Saliency Map»} (ver \ref{saliency}). Con todo esto, se obtiene la imagen original y la imagen Saliency que son analizadas paralelamente.
 
 \figuraConPosicion{1}{imgs/extraccion.png}{Esquema del proceso de extracción de características [38]}{extraccion}{}{H}
 
@@ -429,7 +437,7 @@ Antes de detectar cualquier tipo de defecto, es necesario entrenar un clasificad
 
 \figuraConPosicion{1}{imgs/mascara.png}{Ejemplo de máscara junto a imagen original}{mascara}{}{H}
 
-Para analizar cada imagen se utiliza una ventana que recorre toda la región de interés analizando sus características. En el artículo original sólo aparecía el número total de características, lo cual dificultó la identificación del número que había que calcular para cada tipo, por eso nosotros las hemos desglosado según su clase:
+Para analizar cada imagen se utiliza una ventana que recorre toda la región de interés analizando sus características. En el artículo original de Mery[CITA] sólo aparecía el número total de características, lo cual dificultó la identificación del número que había que calcular para cada tipo, por eso nosotros las hemos desglosado según su clase:
 
 \begin{itemize}
 \item \textbf{Características estándar:} 4 características.
@@ -438,15 +446,17 @@ y 5 de rangos. $14 \times 10 = 140$ características.
 \item \textbf{Características LBP:} Se obtiene un histograma con 59 intervalos, es decir, 59 características.
 \end{itemize}
 
-El número final de características habrá que multiplicarlo por dos, ya que todas las características se calculan tanto para la imagen original como para la imagen con saliency map aplicado. Por lo tanto, el total sería:
+El número final de características habrá que multiplicarlo por dos, ya que todas las características se calculan tanto para la imagen original como para la imagen con \emph{saliency map} aplicado. Por lo tanto, el total sería:
 
+\begin{center}
 ( 4 estándar + 140 haralick + 59 lbp )$\times$2 = 406 CARACTERÍSTICAS
+\end{center}
 
 Estas características serán las que se guarden en los ficheros \textit{ARFF} que se utilicen para entrenar
 al clasificador, junto con la clase, que tendrá valor «true» si la instancia tiene defecto, o «false» si
 no. En caso de que se use regresión lineal serán 0 y 1. El defecto se identificará gracias a las máscaras mencionadas anteriormente.
 
-La ventana irá analizando cada vez una región de la imagen, recorriendo todos y cada uno de sus píxeles, de los que extraerá las características que posteriormente se analizarán. Cada vez que la ventana se mueva y analice una nueva región, se creará una nueva instancia, que se corresponderá con una línea del fichero \textit{ARFF} en el que se guardan las características. Nosotros hemos hecho que el tamaño de la ventana sea configurable, aunque por defecto se utilizará una ventana de 24$\times$24 píxeles, como en el artículo. Utilizamos dos tipos de estrategias de desplazamiento:
+La ventana irá analizando cada vez una región de la imagen, recorriendo todos y cada uno de sus píxeles, de los que extraerá las características que posteriormente se analizarán. Cada vez que la ventana se mueva y analice una nueva región, se creará una nueva instancia, que se corresponderá con una línea del fichero \textit{ARFF} en el que se guardan las características. Nosotros hemos hecho que el tamaño de la ventana sea configurable, aunque por defecto se utilizará una ventana de 24$\times$24 píxeles, como en el artículo de Mery. Utilizamos dos tipos de estrategias de desplazamiento:
 
 \begin{itemize}
 \item Ventana deslizante.
@@ -462,7 +472,7 @@ La ventana comienza desde la esquina superior izquierda de la imagen y se va mov
 Se obtienen 300 muestras de ventanas por imagen, seleccionándolas aleatoriamente entre aquellas que tienen defecto y las que no.
 
 \subsubsection{Estrategias de etiquetado}
-Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto o no, ya que se necesita etiquetar las muestras de cada ventana como «defecto» o «no defecto». Los alumnos del año pasado utilizaron una aproximación muy simple: consideraban que una ventana era defectuosa cuando, al poner esa ventana sobre la máscara coloreada manualmente, al menos un píxel de la misma estaba coloreado. Comprobamos que esto provoca falsos positivos, con lo que se pierde exactitud. Por lo tanto, decidimos implementar otras posibilidades:
+Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto o no, ya que se necesita etiquetar las muestras de cada ventana como «defecto» o «no defecto». Los alumnos que desarrollaron la versión previa utilizaron una aproximación muy simple: consideraban que una ventana era defectuosa cuando, al poner esa ventana sobre la máscara coloreada manualmente, al menos un píxel de la misma estaba coloreado. Comprobamos que esto provoca falsos positivos, con lo que se pierde exactitud. Por lo tanto, decidimos implementar otras posibilidades:
 
 \subsubsection*{Píxel central}
 En este caso, se considera una ventana defectuosa cuando el píxel central de la misma es defectuoso. Es un poco más preciso que la versión del año pasado, pero sigue sin ser demasiado buena.
@@ -475,15 +485,15 @@ En este caso, no sólo consideramos el píxel central, si no que creamos una reg
 
 
 \subsubsection{Detección de defectos}
-El proceso es prácticamente igual al entrenamiento del clasificador. Se genera una imagen Saliency Map a partir de la imagen original, al igual que antes, y a partir de las dos imágenes (la original y la Saliency) se analizan mediante una ventana deslizante.
+El proceso es prácticamente igual al entrenamiento del clasificador. Se genera una imagen \emph{Saliency Map} a partir de la imagen original, al igual que antes, y a partir de las dos imágenes (la original y la \emph{Saliency}) se analizan mediante una ventana deslizante.
 
 Cada vez que la ventana se desplaza se genera una instancia que contiene todas las características analizadas. Esta instancia es utilizada por el modelo que predice si la ventana está situada sobre un defecto.
 
 Si la ventana contiene un defecto, es marcada con un cuadrado verde y a cada uno de sus píxeles se le suma una unidad (este valor de los píxeles desde ahora será llamado factor).
 
-Estos pixeles son almacenados en una matriz global del mismo tamaño que la imagen a analizar, por lo que según se desplaza la ventana deslizante se van actualizando todos los valores de los pixeles que contienen defectos.
+Estos píxeles son almacenados en una matriz global del mismo tamaño que la imagen a analizar, por lo que según se desplaza la ventana deslizante se van actualizando todos los valores de los píxeles que contienen defectos.
 
-Una vez finalizado el proceso de detección, se binariza la matriz resultante según su factor. Para este proceso en el artículo original [38] se utiliza un factor de 24.
+Una vez finalizado el proceso de detección, se binariza la matriz resultante según su factor. Para este proceso en el artículo original [38] se utiliza un umbral de 24.
 
 Este factor es descrito como el número de veces que ha sido marcado un píxel como defecto. Si un píxel tiene un factor menor que 24, dicho pixel se considera como no defecto. En cambio, si un píxel tiene un factor de 24 o más será considerado como defecto.
 
@@ -504,7 +514,7 @@ Observamos que el proceso de detección de bordes invierte los colores, la líne
 Hecho esto, solo queda poner el fondo transparente y superponer la imagen del borde sobre la imagen original.
 
 \subsubsection{Multihilo}
-Como ya hemos dicho varias veces, uno de los objetivos del proyecto es mejorar el rendimiento de la versión del año pasado. Una de las principales modificaciones para conseguir esto ha sido la inclusión de una estrategia multihilo, aprovechando las oportunidades que nos brindan los procesadores actuales.
+Como ya hemos dicho varias veces, uno de los objetivos del proyecto es mejorar el rendimiento de la versión previa. Una de las principales modificaciones para conseguir esto ha sido la inclusión de una estrategia multihilo, aprovechando las oportunidades que nos brindan los procesadores actuales.
 
 Lo que hemos hecho ha sido dividir la imagen en tantas partes como procesadores disponibles tenga la máquina que está ejecutando el programa. Por ejemplo, si tenemos 2 procesadores, la imagen se dividirá en 2, en su dimensión vertical. Hay que tener en cuenta un pequeño margen, necesario para que el cálculo de algunas características sea correcto. Por ello, en el ejemplo anterior, las 2 imágenes no serían exactamente de la mitad de altura que la original, si no que serían un poco más grandes. Hay un pequeño solapamiento.
 
@@ -514,12 +524,12 @@ Una vez que tenemos dividida la imagen, se ejecuta el proceso de detección o de
 \subsection{Fundamentos teóricos de la versión final}
 Con las modificaciones descritas en el apartado anterior, ya observamos que tanto el rendimiento como la precisión habían aumentado con respecto al año pasado. Aún así, teniendo en mente la posibilidad de calcular otra serie de características (como las geométricas) sobre los defectos detectados para, en un futuro, poder clasificarlos en sus diferentes tipos, se decidió intentar mejorar aún más esta precisión.
 
-Se implementaron dos nuevas aproximaciones a la hora de detectar defectos (por lo tanto, el proceso de entrenamiento cambia). En ambas aproximaciones nos valemos de una imagen segmentada con los filtros de umbrales locales que ya hemos visto. Lo que cambia entre ellas es cómo consideramos estos flitros.
+Se implementaron dos nuevas aproximaciones a la hora de detectar defectos (por lo tanto, el proceso de entrenamiento cambia). En ambas aproximaciones nos valemos de una imagen segmentada con los filtros de umbrales locales que ya hemos visto. Lo que cambia entre ellas es cómo consideramos estos filtros.
 
 \subsubsection{Primera innovación: detección normal con posterior intersección con umbrales locales}
 En esta primera aproximación, primero se realiza la detección de defectos como en la primera versión del proyecto. La diferencia está en el dibujado definitivo de los defectos.
 
-Con la detección de defectos normal, obtenemos una matriz del mismo tamaño que la imagen, a partir de la cual se dibujan los defectos. En esta matriz se guarda, en cada posición (es decir, en cada píxel), el número de ventanas que los han cubierto y que se han marcado como defecto. Si este número supera cierto umbral, habrá una nueva matriz, en la que habrá un uno en todos aquellos píxeles que son realmente defecto. A partir de esta matriz, se crea el dibujado definitivo.
+Con la detección de defectos normal, obtenemos una matriz del mismo tamaño que la imagen, a partir de la cual se dibujan los defectos. En esta matriz se guarda, en cada posición (es decir, en cada píxel), el número de ventanas que los han cubierto y que se han marcado como defecto. Si este número supera cierto umbral, habrá una nueva matriz, en la que habrá un uno en todos aquellos píxeles en los que la probabilidad de ser defecto es mayor. A partir de esta matriz, se crea el dibujado definitivo.
 
 En nuestra aproximación, introducimos un paso intermedio antes de generar la matriz definitiva. En vez de poner directamente un uno o un cero, lo que hacemos es segmentar la imagen mediante el filtro de umbrales locales. A continuación, los píxeles que superan el umbral seleccionado son comparados con la imagen de umbrales locales. Si en esta imagen aparecen como blancos, se consideran defecto. Si no, se descarta.
 
@@ -528,7 +538,7 @@ Esta aproximación difiere bastante más respecto a las opciones ya vistas.
 
 En este caso, lo primero que se hace es generar la imagen de umbrales locales. A partir de esta imagen, generamos una lista con las coordenadas de los píxeles que se han marcado como blancos.
 
-Después, binarizamos la imagen de umbrales locales para aplicar un análisis de partículas sobre ella, con el objetivo de obtener todas las regiones que destacan, a las que consideramos regiones candidatas de albergar un defecto.
+Después, binarizamos la imagen de umbrales locales para aplicar un análisis de partículas sobre ella, con el objetivo de obtener todas las regiones que destacan, a las que consideramos regiones candidatas de albergar un defecto. Este análisis de partículas se hace con las clases de \emph{ImageJ}, que va a aplicar ciertas medidas a los objetos que vaya encontrando en una imagen, buscando sus bordes[CITA MANUAL DE IMAGEJ].
 
 Cuando tenemos la lista y las regiones, vamos sacando coordenadas de la lista y vamos determinando la región a la que pertenecen. Dependiendo del tamaño de la región y el tamaño de la ventana, se considera la coordenada o se desecha. En caso de que se considere, centramos una ventana sobre ella y aplicamos el cálculo de características y clasificación ya vistos anteriormente.
 

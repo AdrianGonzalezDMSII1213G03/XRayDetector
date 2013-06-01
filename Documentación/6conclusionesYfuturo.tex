@@ -10,11 +10,11 @@ En este capítulo se van a exponer las conclusiones obtenidas tras el desarrollo
 \section{Aspectos que han complicado la realización del proyecto}
 Los retos más importantes que han surgido durante el proyecto y han complicado la realización del mismo han sido los siguientes:
 \begin{itemize}
- \item \LaTeX{}: La curva de aprendizaje de este lenguaje es bastante dura y esto ha sido especialmente visible en las primeras fases del proyecto.
- \item Desconocimiento del \textit{background} teórico: Los conocimientos previos sobre visión artificial eran muy escasos, por lo que ha sido complicado adaptarse a tantos conocimientos nuevos. 
-\item Programación multihilo: Nos ha dado numerosos quebraderos de cabeza implementar los hilos y aplicarlos al análisis de imágenes paralelamente.
-\item Comprensión del proyecto del año pasado: Entender el proyecto del año pasado ha sido difícil. Por una parte, por lo que ya hemos dicho sobre el desconocimiento del \textit{background} teórico. Por otra parte, porque el código era bastante complicado de entender, no sólo por su complejidad, sino también por la falta de un diseño robusto que facilite el mantenimiento y porque la documentación no siempre era todo lo buena que esperábamos.
-\item Dificultades para planificar: No siempre era sencillo planificar un \sprint{}, ya que hemos tenido una carga de trabajo muy importante a lo largo de todo el curso.
+ \item \LaTeX{}: la curva de aprendizaje de este lenguaje es bastante dura y esto ha sido especialmente visible en las primeras fases del proyecto.
+ \item Desconocimiento del \textit{background} teórico: los conocimientos previos sobre visión artificial eran muy escasos, por lo que ha sido complicado adaptarse a tantos conocimientos nuevos. 
+\item Programación multihilo: nos ha dado numerosos quebraderos de cabeza implementar los hilos y aplicarlos al análisis de imágenes paralelamente.
+\item Comprensión del proyecto del año pasado: entender el proyecto del año pasado ha sido difícil. Por una parte, por lo que ya hemos dicho sobre el desconocimiento del \textit{background} teórico. Por otra parte, porque el código era bastante complicado de entender, no sólo por su complejidad, sino también por la falta de un diseño robusto que facilite el mantenimiento y porque la documentación no siempre era todo lo buena que esperábamos.
+\item Dificultades para planificar: no siempre era sencillo planificar un \sprint{}, ya que hemos tenido una carga de trabajo muy importante a lo largo de todo el curso.
  
 \end{itemize}
 
@@ -22,7 +22,7 @@ Los retos más importantes que han surgido durante el proyecto y han complicado 
 \section{Conclusiones}
 Las conclusiones extraídas tras el desarrollo del proyecto son detalladas a continuación:
 \begin{itemize}
-\item Se ha mejorado la precisión de la herramienta del año pasado mediante la mejora de algunos aspectos (como la determinación de cuándo una ventana es defectuosa o no) o la inclusión de nuevas características, como los filtros de umbrales adaptativos.
+\item Se ha mejorado la precisión de la herramienta del año pasado mediante la mejora de aspectos como la determinación de cuándo una ventana es defectuosa o no, o la inclusión de nuevas características, como los filtros de umbrales adaptativos.
 \item Se ha mejorado el rendimiento de la aplicación, incluyendo la programación multihilo y el cambio de algunos cálculos para que fueran más rápidos.
  \item Se ha mejorado la \gui{} (\textit{Intefaz Gráfica de Usuario}), haciéndola más intuitiva y funcional.
  \item Se ha mejorado el diseño de la aplicación, buscando que sea más fácil de ampliar y mantener.
@@ -31,7 +31,7 @@ Las conclusiones extraídas tras el desarrollo del proyecto son detalladas a con
  \item Se han incluido nuevas funcionalidades, como el cálculo de características geométricas y la tabla de resultados, que permite interactuar con los defectos dibujados.
  \item Durante todo el proceso se han reforzado conceptos y técnicas tratadas durante la carrera.
  \item Se ha perfeccionado el conocimiento sobre \java{}, como por ejemplo, mediante la programación multihilo.
- \item Se ha aprendido un nuevo modo de realizar documentos técnicos con el uso de \LaTeX{}. Aunque en un principio supuso una carga a la documentación, a medida que avanzó el desarrollo, favoreció el interés por la escritura debido a los retos que se presentaron durante su ejecución.
+ \item Se ha aprendido un nuevo modo de realizar documentos técnicos con el uso de \LaTeX{}. Aunque en un principio supuso una carga a la documentación, a medida que avanzó el desarrollo, favoreció el interés por la escritura debido a los retos que se presentaron durante su realización.
  \item Se ha podido aplicar y, así, obtener un conocimiento más profundo, una metodología de desarrollo ágil como es \textit{Scrum}, tan en auge en la actualidad.
  \item Por último, destacar el perfeccionamiento de todas las tareas del desarrollo software: planificación, análisis, diseño, implementación, pruebas y documentación
 \end{itemize}
@@ -41,14 +41,14 @@ Por todo ello, consideramos cumplidos los objetivos del proyecto.
 
 \newpage
 \section{Líneas de trabajo futuras}
-Este proyecto representa un primer prototipo de una herramienta que debe evolucionar y mejorar con los años. Además, el análisis de la bibliografía y de los conceptos teóricos supone un esfuerzo que puede facilitar el trabajo de los alumnos que continúen el desarrollo. 
+Este proyecto representa un prototipo mejorado de una herramienta que debe evolucionar y mejorar con los años. Además, el análisis de la bibliografía y de los conceptos teóricos supone un esfuerzo que puede facilitar el trabajo de los alumnos que continúen el desarrollo. 
 
 Durante la fase de diseño se ha tenido muy en cuenta la realización de una aplicación que permita posteriores ampliaciones y mejoras. Se ha buscado crear una base sobre la que se pueda seguir como referencia a la hora de realizar trabajos parecidos o ampliar el mismo. Ha habido algunas ideas que no han podido ser incorporadas debido a la falta de tiempo, y que podrían ser implementadas en un futuro para ampliar el proyecto. A continuación se proponen algunas:
 
 \begin{itemize}
 \item Clasificar los defectos en tipos: actualmente, la aplicación únicamente detecta los defectos, pero no los clasifica. Sería interesante conseguir que, una vez detectado el defecto, se informara al usuario del tipo al que pertenece. La inclusión del cálculo de características geométricas debería facilitar esto.
 \item Cálculo de nuevas características: Se podrían añadir más características, como los \emph{Filter Banks}, para intentar mejorar la detección aún más.
-\item Inclusión de una nueva forma de detectar defectos, descrita en [INSERTAR ARTÍCULO DE CAEPIA], artículo presentado por nuestros tutores, José Francisco Díez Y César I. García, al CAEPIA'13 (Conferencia de la Asociación Española para la Inteligencia Artificial), en la que primero se utiliza el filtro de umbrales locales ya visto en esta memoria para detectar regiones candidatas a albergar defecto, sobre las cuales se aplican después los cálculos de características, sin utilizar ventanas. Esta aproximación ha demostrado ser muy rápida, pero en ocasiones no se comporta bien. Por ello, se podría incluir en el proyecto y, de forma inteligente, determinar cuál es el mejor método a utilizar.
+\item Inclusión de una nueva forma de detectar defectos, propuesta por nuestros tutores, José Francisco Díez Y César I. García, en la que primero se utiliza el filtro de umbrales locales ya visto en esta memoria para detectar regiones candidatas a albergar defecto, sobre las cuales se aplican después los cálculos de características, sin utilizar ventanas. Esta aproximación ha demostrado ser muy rápida, pero en ocasiones no se comporta bien. Por ello, se podría incluir en el proyecto y, de forma inteligente, determinar cuál es el mejor método a utilizar.
 \item Adaptación de la aplicación para que pueda ser ejecutada en un supercomputador.
 \item Otras aplicaciones: Se podría intentar utilizar las técnicas utilizadas en este proyecto para resolver otros problemas parecidos, como por ejemplo el descrito en el artículo \emph{Automated fish bone detection using X-ray imaging} \cite{mery2011automated}, también de Domingo Mery. En este trabajo se utiliza la misma metodología para detectar espinas de pescado.
 \end{itemize}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  1 JUN 2013 19:50
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  2 JUN 2013 00:19
 entering extended mode
 **main.tex
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.tex
@@ -848,31 +848,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip63
 ))
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\comandosIS.tex)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.aux
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\1objetivosDelPro
-yecto.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\2conceptosTeoric
-os.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
-ientas.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
-tes.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\5trabajosRelacio
-nados.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\6conclusionesYfu
-turo.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
-ectoSoftware.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo2Especifica
-cionDeRequisitos.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo3Especifica
-cionDeDisenno.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo4ManualDelP
-rogramador.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo5ManualDelU
-suario.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\apendiceA.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\apendiceB.aux))
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
@@ -935,27 +911,26 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 54.
 
-<imgs/escudo.pdf, id=403, 98.2805pt x 163.92221pt>
+<imgs/escudo.pdf, id=3, 98.2805pt x 163.92221pt>
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 54.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 54.
-
-[1
+ [1
 
 
 {C:/Users/Adrián/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/
-Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/escudo.pdf>]
-[2
+Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/escudo.pdf>] [2
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 55.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 55.
- [3] [4
+ [3]
+[4
 
 ] [5] [6
 
@@ -963,1432 +938,232 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 56.
 
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.toc
-LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.toc)
+\tf@toc=\write7
 
+[7] [8
+
+] (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.lof
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-) [7] [8])
-\tf@toc=\write7
- [9]
-[10
-
-] (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.lof)
-\tf@lof=\write8
-
-[11] [12
-
-]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.lot)
-\tf@lot=\write9
-
-[13] [14
-
-] ("C:\Program Files\MiKTeX 2.9\tex\latex\titlesec\block.tss"
-File: block.tss 2011/12/15
 )
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\0agradecimientos
-.tex) [1]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\1objetivosDelPro
-yecto.tex [2
+! Extra \or.
+\contentsline ...}{#4}{#2}\hyper@linkend }{#3}\or 
+                                                  \csname l@#1\endcsname {{#...
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+I'm ignoring this; it doesn't match any \if.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \unhbox 
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \unhbox 
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ... \reserved@d =#1\def \reserved@a {
+                                                  #2}\def \reserved@b {#3}\f...
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \HyColor@@@UseColor doesn't match its definition.
+\@ifnextchar ...eserved@d =#1\def \reserved@a {#2}
+                                                  \def \reserved@b {#3}\futu...
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ... \reserved@d =#1\def \reserved@a {
+                                                  #2}\def \reserved@b {#3}\f...
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ...eserved@d =#1\def \reserved@a {#2}
+                                                  \def \reserved@b {#3}\futu...
+l.15 ...ite {scrum_process_image}}}{30}{figure.88}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \unhbox 
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \unhbox 
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ... \reserved@d =#1\def \reserved@a {
+                                                  #2}\def \reserved@b {#3}\f...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \HyColor@@@UseColor doesn't match its definition.
+\@ifnextchar ...eserved@d =#1\def \reserved@a {#2}
+                                                  \def \reserved@b {#3}\futu...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ... \reserved@d =#1\def \reserved@a {
+                                                  #2}\def \reserved@b {#3}\f...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ...eserved@d =#1\def \reserved@a {#2}
+                                                  \def \reserved@b {#3}\futu...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Extra \or.
+\contentsline ...}{#4}{#2}\hyper@linkend }{#3}\or 
+                                                  \csname l@#1\endcsname {{#...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+I'm ignoring this; it doesn't match any \if.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ... \reserved@d =#1\def \reserved@a {
+                                                  #2}\def \reserved@b {#3}\f...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Use of \@citex doesn't match its definition.
+\@ifnextchar ...eserved@d =#1\def \reserved@a {#2}
+                                                  \def \reserved@b {#3}\futu...
+l.16 ...cite {scrum_stages_image}}}{31}{figure.89}
+                                                  
+If you say, e.g., `\def\a1{...}', then you must always
+put `1' after `\a', since control sequence names are
+made up of letters only. The macro here has not been
+followed by the required stuff, so I'm ignoring it.
+
+! Undefined control sequence.
+\GenericError  ...                                
+                                                    #4  \errhelp \@err@     ...
+l.17 \addvspace {10\p@ }
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+\GenericError  ...                                
+                                                  \let \@err@               ...
+l.17 \addvspace {10\p@ }
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+\GenericError  ...                                
+                                                  \@empty \def \MessageBreak...
+l.17 \addvspace {10\p@ }
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-
-]
-Cap\'{\i }tulo 1.
-
-Class scrbook Warning: \float@addtolists detected!
-(scrbook)              You should use the features of package `tocbasic'
-(scrbook)              instead of \float@addtolists.
-(scrbook)              Support for \float@addtolists may be removed from
-(scrbook)              `scrbook' soon .
-
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 23.
-[3]
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 32.
-
-
-LaTeX Warning: Citation `patrones' on page 4 undefined on input line 32.
-
-
-LaTeX Warning: Citation `definicion_latex' on page 4 undefined on input line 36
-.
-
-
-LaTeX Warning: Citation `wysiwyg' on page 4 undefined on input line 36.
-
-
-LaTeX Warning: Citation `cervantex' on page 4 undefined on input line 38.
-
-
-LaTeX Warning: Citation `introduccion_latex' on page 4 undefined on input line 
-38.
-
-
-LaTeX Warning: Citation `latex_wikibook' on page 4 undefined on input line 38.
-
-) [4]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\2conceptosTeoric
-os.tex
-Cap\'{\i }tulo 2.
-[5
-
-
-
-] [6] <imgs/adquisicion_imagen.png, id=716, 726.46407pt x 482.55281pt>
-File: imgs/adquisicion_imagen.png Graphic file (type png)
-
-<use imgs/adquisicion_imagen.png>
-Package pdftex.def Info: imgs/adquisicion_imagen.png used on input line 81.
-(pdftex.def)             Requested size: 390.79141pt x 259.58797pt.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 81.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 81.
-
-[7]
-Underfull \vbox (badness 2903) has occurred while \output is active []
-
- [8 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/adquisi
-cion_imagen.png>] <imgs/saliency.png, id=731, 249.93375pt x 124.21407pt>
-File: imgs/saliency.png Graphic file (type png)
-
-<use imgs/saliency.png>
-Package pdftex.def Info: imgs/saliency.png used on input line 122.
-(pdftex.def)             Requested size: 390.79141pt x 194.2394pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 122.
-
-
-Underfull \vbox (badness 1931) has occurred while \output is active []
-
- [9 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/salienc
-y.png>]
-[10] [11]
-Underfull \vbox (badness 4765) has occurred while \output is active []
-
- [12]
-[13] [14] <imgs/lbp.png, id=781, 767.11594pt x 355.3275pt>
-File: imgs/lbp.png Graphic file (type png)
- <use imgs/lbp.png>
-Package pdftex.def Info: imgs/lbp.png used on input line 323.
-(pdftex.def)             Requested size: 390.79141pt x 181.014pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 323.
-
-
-Underfull \vbox (badness 5161) has occurred while \output is active []
-
- [15]
-[16 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/lbp.png
->] <imgs/vecindades_lbp.png, id=792, 429.10312pt x 179.92218pt>
-File: imgs/vecindades_lbp.png Graphic file (type png)
-
-<use imgs/vecindades_lbp.png>
-Package pdftex.def Info: imgs/vecindades_lbp.png used on input line 330.
-(pdftex.def)             Requested size: 390.79141pt x 163.8612pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 330.
-
-[17 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/vecinda
-des_lbp.png>] [18] <imgs/extraccion.png, id=805, 496.10344pt x 141.52875pt>
-File: imgs/extraccion.png Graphic file (type png)
-
-<use imgs/extraccion.png>
-Package pdftex.def Info: imgs/extraccion.png used on input line 425.
-(pdftex.def)             Requested size: 390.79141pt x 111.48686pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 425.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19]
-<imgs/mascara.png, id=813, 365.86688pt x 156.585pt>
-File: imgs/mascara.png Graphic file (type png)
- <use imgs/mascara.png>
-Package pdftex.def Info: imgs/mascara.png used on input line 430.
-(pdftex.def)             Requested size: 390.79141pt x 167.26234pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 430.
-
-[20 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/extracc
-ion.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ma
-scara.png>] <imgs/ventana_deslizante.png, id=819, 496.85625pt x 118.19156pt>
-File: imgs/ventana_deslizante.png Graphic file (type png)
-
-<use imgs/ventana_deslizante.png>
-Package pdftex.def Info: imgs/ventana_deslizante.png used on input line 459.
-(pdftex.def)             Requested size: 390.79141pt x 92.96272pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 459.
-
-[21 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ventana
-_deslizante.png>] [22]
-<imgs/dibujado_defectos.png, id=830, 331.2375pt x 283.0575pt>
-File: imgs/dibujado_defectos.png Graphic file (type png)
-
-<use imgs/dibujado_defectos.png>
-Package pdftex.def Info: imgs/dibujado_defectos.png used on input line 498.
-(pdftex.def)             Requested size: 262.75269pt x 224.54588pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 498.
-
-[23 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibujad
-o_defectos.png>] [24]
-<imgs/segunda_opcion.png, id=843, 203.25937pt x 158.09062pt>
-File: imgs/segunda_opcion.png Graphic file (type png)
-
-<use imgs/segunda_opcion.png>
-Package pdftex.def Info: imgs/segunda_opcion.png used on input line 539.
-(pdftex.def)             Requested size: 326.7753pt x 254.16833pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 539.
-
-[25 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/segunda
-_opcion.png>] <imgs/precisionrecall.png, id=849, 253.69781pt x 124.21407pt>
-File: imgs/precisionrecall.png Graphic file (type png)
-
-<use imgs/precisionrecall.png>
-Package pdftex.def Info: imgs/precisionrecall.png used on input line 557.
-(pdftex.def)             Requested size: 177.3957pt x 86.85826pt.
-
-Underfull \hbox (badness 4193) in paragraph at lines 557--557
-[][]\T1/phv/m/n/10 T�rminos pre-ci-sion and
- []
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 557.
-
-) [26 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/preci
-sionrecall.png>] [27]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
-ientas.tex [28
-
-
-
-]
-Cap\'{\i }tulo 3.
-
-LaTeX Warning: Citation `scrum' on page 29 undefined on input line 16.
-
-
-LaTeX Warning: Citation `controlchaos' on page 29 undefined on input line 18.
-
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 35.
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
-File: omsptm.fd 
 )
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 35.
- [29]
-
-LaTeX Warning: Citation `scrum_process_image' on page 30 undefined on input lin
-e 46.
-
-<imgs/ScrumProcess.jpg, id=870, 529.22719pt x 335.75438pt>
-File: imgs/ScrumProcess.jpg Graphic file (type jpg)
-
-<use imgs/ScrumProcess.jpg>
-Package pdftex.def Info: imgs/ScrumProcess.jpg used on input line 49.
-(pdftex.def)             Requested size: 390.79141pt x 247.92665pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 49.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [30 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumP
-rocess.jpg>]
-
-LaTeX Warning: Citation `scrum_stages_image' on page 31 undefined on input line
- 58.
-
-<imgs/ScrumDiagram.png, id=876, 770.88pt x 481.8pt>
-File: imgs/ScrumDiagram.png Graphic file (type png)
-
-<use imgs/ScrumDiagram.png>
-Package pdftex.def Info: imgs/ScrumDiagram.png used on input line 61.
-(pdftex.def)             Requested size: 426.79141pt x 266.74051pt.
-
-
-LaTeX Warning: Citation `scrum_wiki' on page 31 undefined on input line 64.
-
-[31 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumDi
-agram.png (PNG copy)>] [32] [33] [34] [35]
-
-LaTeX Warning: Citation `epl' on page 36 undefined on input line 223.
-
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 227.
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd"
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [36]
-Overfull \hbox (7.94908pt too wide) in paragraph at lines 255--256
-[]\T1/ptm/m/n/10.95 P�gina web de la he-rra-mien-ta: [][]$\T1/pcr/m/n/10.95 htt
-p : / / www . campwoodsw . com / sourcemonitor . html$[][]\T1/ptm/m/n/10.95 . 
- []
-
-[37] [38]
-Overfull \hbox (16.1183pt too wide) in paragraph at lines 330--331
-[]\T1/ptm/m/n/10.95 P�gina web del \T1/ptm/m/it/10.95 plu-gin\T1/ptm/m/n/10.95 
-: [][]$\T1/pcr/m/n/10.95 http : / / fiji . sc / wiki / index . php / Auto _ Loc
-al _ Threshold$[][]\T1/ptm/m/n/10.95 . 
- []
-
-
-Overfull \hbox (32.67027pt too wide) in paragraph at lines 337--338
-[]\T1/ptm/m/n/10.95 La p�-gi-na web de la he-rra-mien-ta es: [][]$\T1/pcr/m/n/1
-0.95 http : / / commons . apache . org / proper / commons-[]io/$[][]\T1/ptm/m/n
-/10.95 . 
- []
-
-[39]) [40]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
-tes.tex
-Cap\'{\i }tulo 4.
-<imgs/radiografia_articulos.png, id=947, 343.2825pt x 357.58594pt>
-File: imgs/radiografia_articulos.png Graphic file (type png)
-
-<use imgs/radiografia_articulos.png>
-Package pdftex.def Info: imgs/radiografia_articulos.png used on input line 22.
-(pdftex.def)             Requested size: 390.79141pt x 407.07382pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 22.
-
-<imgs/radiografia_antolin.png, id=948, 554.07pt x 429.10312pt>
-File: imgs/radiografia_antolin.png Graphic file (type png)
-
-<use imgs/radiografia_antolin.png>
-Package pdftex.def Info: imgs/radiografia_antolin.png used on input line 24.
-(pdftex.def)             Requested size: 390.79141pt x 302.64868pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 24.
-
-[41
-
-
-
-] [42 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/radio
-grafia_articulos.png>] [43 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Docu
-mentación/imgs/radiografia_antolin.png>] [44]
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 76.
-) [45]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\5trabajosRelacio
-nados.tex [46
-
-
-
-]
-Cap\'{\i }tulo 5.
-
-LaTeX Warning: Citation `DomingoMery' on page 47 undefined on input line 13.
-
-
-LaTeX Warning: Citation `vilar2009automatic' on page 47 undefined on input line
- 14.
-
-
-LaTeX Warning: Citation `wang2010recognition' on page 47 undefined on input lin
-e 15.
-
-
-LaTeX Warning: Citation `bazi2007image' on page 47 undefined on input line 16.
-
-
-LaTeX Warning: Citation `Tridi' on page 47 undefined on input line 17.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 An au-to-ma-tic sys-
- []
-
-
-Underfull \hbox (badness 4156) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 tem of clas-si-fi-ca-tion
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 of weld de-fects in
- []
-
-
-Underfull \hbox (badness 1286) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Rafael Vi-lar
- []
-
-
-Overfull \hbox (0.56041pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 2009| 
- []
-
-
-Underfull \hbox (badness 4254) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Filtro adap-ta-ti-
- []
-
-
-Underfull \hbox (badness 3128) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 Filtro gau-siano
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 �rea,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 cen-troi-de,
- []
-
-
-Underfull \hbox (badness 1454) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 eje ma-yor,
- []
-
-
-Underfull \hbox (badness 1454) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 eje me-nor,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ex-cen-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 tri-ci-dad,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Red neu-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ro-nal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ar-ti-fi-cial
- []
-
-
-Overfull \hbox (20.47585pt too wide) in paragraph at lines 33--33
- [] 
- []
-
-[47]
-Underfull \hbox (badness 3219) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Weld de-fect clas-si-fi-
- []
-
-
-Underfull \hbox (badness 1796) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ca-tion using EM al-
- []
-
-
-Overfull \hbox (0.56041pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 2005| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Segmentaci�n
- []
-
-
-Overfull \hbox (8.59212pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Geom�tricas:
- []
-
-
-Underfull \hbox (badness 3536) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 �rea, lon-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 gi-tud,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 an-chu-ra,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 elon-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ga-ci�n,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 pe-r�-me-tro,
- []
-
-
-Underfull \hbox (badness 3209) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Recognition of Wel-
- []
-
-
-Underfull \hbox (badness 2351) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ding De-fects in Ra-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 X.Wang et
- []
-
-
-Overfull \hbox (0.56041pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 2010| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Binarizaci�n
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 Igualizaci�n
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 adap-ta-ti-va del
- []
-
-
-Overfull \hbox (14.66902pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Caracter�sticas
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de Ha-ra-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 lick, de
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 Ga-bor,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de ma-triz
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de co-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ocurrencia
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 M�quina
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de vec-tor
- []
-
-
-Underfull \hbox (badness 2027) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de so-por-te
- []
-
-
-Underfull \hbox (badness 3977) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Automated De-tec-tion
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 of Wel-ding De-fects
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Domingo
- []
-
-
-Overfull \hbox (0.56041pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 2011| 
- []
-
-
-Overfull \hbox (14.66902pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Caracter�sticas
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 es-t�n-dar,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de Ha-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 ra-lick y
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 M�quina
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de vec-tor
- []
-
-
-Underfull \hbox (badness 2027) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 de so-por-te
- []
-
-
-Underfull \hbox (badness 1308) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Multiclass de-fect de-
- []
-
-
-Underfull \hbox (badness 6876) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Ioannis Va-
- []
-
-
-Overfull \hbox (0.56041pt too wide) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 2010| 
- []
-
-
-Underfull \hbox (badness 1371) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 Umbrales lo-ca-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-[]\T1/ptm/m/n/10.95 De tex-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 tu-ras (2$[]$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 mo-men-to
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 an-gu-lar,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 con-tras-te,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 co-rre-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 la-ci�n,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 su-ma de
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 cua-dra-dos,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 m�-tri-cas
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 (po-si-ci�n,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 lon-gi-tud,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 re-don-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-\T1/ptm/m/n/10.95 neu-ro-nal
- []
-
-
-Overfull \hbox (20.47585pt too wide) in paragraph at lines 33--33
- [] 
- []
-
-[48]
-
-LaTeX Warning: Citation `vilar2009automatic' on page 49 undefined on input line
- 45.
-
-
-LaTeX Warning: Citation `wiener1949extrapolation' on page 49 undefined on input
- line 51.
-
-
-LaTeX Warning: Reference `suavizadoImagen' on page 49 undefined on input line 5
-1.
-
-
-LaTeX Warning: Citation `otsu1979threshold' on page 49 undefined on input line 
-60.
-
-
-LaTeX Warning: Citation `haralick1992computer' on page 49 undefined on input li
-ne 61.
-
-
-Underfull \vbox (badness 6592) has occurred while \output is active []
-
- [49]
-
-LaTeX Warning: Citation `dunham1999euler' on page 50 undefined on input line 72
-.
-
-
-LaTeX Warning: Citation `PCA' on page 50 undefined on input line 76.
-
-
-LaTeX Warning: Reference `pca' on page 50 undefined on input line 76.
-
-
-LaTeX Warning: Citation `Tridi' on page 50 undefined on input line 94.
-
-[50]
-
-LaTeX Warning: Citation `kandel1999introduction' on page 51 undefined on input 
-line 99.
-
-
-LaTeX Warning: Citation `zhang2003algorithms' on page 51 undefined on input lin
-e 108.
-
-
-LaTeX Warning: Citation `sargunar2010automatic' on page 51 undefined on input l
-ine 124.
-
-
-Underfull \vbox (badness 3492) has occurred while \output is active []
-
- [51]
-
-LaTeX Warning: Reference `svm' on page 52 undefined on input line 143.
-
-
-LaTeX Warning: Citation `anand2009flaw' on page 52 undefined on input line 147.
-
-
-
-LaTeX Warning: Citation `Watershed79' on page 52 undefined on input line 147.
-
-
-LaTeX Warning: Reference `suavizadoImagen' on page 52 undefined on input line 1
-49.
-
-
-LaTeX Warning: Reference `realzadoImagen' on page 52 undefined on input line 14
-9.
-
-
-LaTeX Warning: Reference `deteccionBordes' on page 52 undefined on input line 1
-51.
-
-
-Underfull \vbox (badness 2126) has occurred while \output is active []
-
- [52]
-
-LaTeX Warning: Citation `gonzalez2008digital' on page 53 undefined on input lin
-e 159.
-
-
-Overfull \hbox (1.3887pt too wide) in paragraph at lines 161--161
-|\T1/phv/m/n/12 5.2.5 \T1/phv/b/n/12 Re-cog-ni-tion of Wel-ding De-fects in Ra-
-dio-grap-hic Ima-ges by Using Sup-
- []
-
-
-LaTeX Warning: Citation `wang2010recognition' on page 53 undefined on input lin
-e 162.
-
-
-LaTeX Warning: Reference `svm' on page 53 undefined on input line 162.
-
-
-LaTeX Warning: Citation `daugman1988complete' on page 53 undefined on input lin
-e 176.
-
-
-LaTeX Warning: Citation `haralick1973textural' on page 53 undefined on input li
-ne 176.
-
-[53]) [54]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\6conclusionesYfu
-turo.tex
-Cap\'{\i }tulo 6.
-[55
-
-
-
-] [56]
-
-LaTeX Warning: Citation `mery2011automated' on page 57 undefined on input line 
-53.
-
-) [57] [58
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 81.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [59]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
-ectoSoftware.tex [60
-
-
-]
-Ap\'{e}ndice A.
-[61] [62] [63]
-
-LaTeX Warning: Command \textordmasculine invalid in math mode on input line 98.
-
-
-[64]
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 124.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 124.
-
-
-LaTeX Warning: Citation `scrum' on page 65 undefined on input line 129.
-
-
-LaTeX Warning: Reference `scrumProcess' on page 65 undefined on input line 146.
-
-
-<imgs/ScrumProcess.png, id=1085, 801.99625pt x 356.33125pt>
-File: imgs/ScrumProcess.png Graphic file (type png)
-
-<use imgs/ScrumProcess.png>
-Package pdftex.def Info: imgs/ScrumProcess.png used on input line 149.
-(pdftex.def)             Requested size: 390.79141pt x 173.63602pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 149.
-
-[65] [66 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Sc
-rumProcess.png>]
-Underfull \hbox (badness 1552) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be ser ca-paz
- []
-
-
-Underfull \hbox (badness 1552) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be ser ca-paz
- []
-
-
-Overfull \hbox (6.50175pt too wide) in paragraph at lines 222--222
- [] 
- []
-
-[67]
-Underfull \hbox (badness 10000) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be mos-trar
- []
-
-
-Underfull \hbox (badness 1226) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be guar-dar y
- []
-
-
-Overfull \hbox (6.50175pt too wide) in paragraph at lines 222--222
- [] 
- []
-
-[68]
-Underfull \hbox (badness 1552) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be ser ca-paz
- []
-
-
-Underfull \hbox (badness 1552) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be ser ca-paz
- []
-
-
-Underfull \hbox (badness 1728) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be po-der re-
- []
-
-
-Underfull \hbox (badness 3158) in paragraph at lines 222--222
-\T1/ptm/m/n/10.95 mues-trear la lis-ta de p�-xe-les
- []
-
-
-Overfull \hbox (7.7172pt too wide) in paragraph at lines 222--222
- [] 
- []
-
-[69]
-Underfull \hbox (badness 1082) in paragraph at lines 222--222
-\T1/ptm/m/n/10.95 cal-cu-lar ca-rac-te-r�s-ti-cas geo-m�-
- []
-
-
-Underfull \hbox (badness 1377) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be a�a-dir un
- []
-
-
-Underfull \hbox (badness 2343) in paragraph at lines 222--222
-[]\T1/ptm/m/n/10.95 La apli-ca-ci�n de-be tra-tar las
- []
-
-
-Overfull \hbox (7.7172pt too wide) in paragraph at lines 222--222
- [] 
- []
-
-[70] [71] [72]
-<imgs/burndownChartSprint2.png, id=1129, 228.855pt x 234.8775pt>
-File: imgs/burndownChartSprint2.png Graphic file (type png)
-
-<use imgs/burndownChartSprint2.png>
-Package pdftex.def Info: imgs/burndownChartSprint2.png used on input line 309.
-(pdftex.def)             Requested size: 390.79141pt x 401.09276pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 309.
-
-[73] [74 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/bu
-rndownChartSprint2.png>]
-<imgs/burndownChartSprint3.png, id=1142, 224.33812pt x 231.86626pt>
-File: imgs/burndownChartSprint3.png Graphic file (type png)
-
-<use imgs/burndownChartSprint3.png>
-Package pdftex.def Info: imgs/burndownChartSprint3.png used on input line 363.
-(pdftex.def)             Requested size: 390.79141pt x 403.94994pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 363.
-
-[75] [76 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/bu
-rndownChartSprint3.png>] [77]
-<imgs/burndownChartSprint4.png, id=1159, 222.8325pt x 233.37187pt>
-File: imgs/burndownChartSprint4.png Graphic file (type png)
-
-<use imgs/burndownChartSprint4.png>
-Package pdftex.def Info: imgs/burndownChartSprint4.png used on input line 438.
-(pdftex.def)             Requested size: 390.79141pt x 409.3078pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 438.
-
-[78] [79 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/bu
-rndownChartSprint4.png>] [80]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [81]
-<imgs/burndownChartSprint5.png, id=1177, 224.33812pt x 231.11343pt>
-File: imgs/burndownChartSprint5.png Graphic file (type png)
-
-<use imgs/burndownChartSprint5.png>
-Package pdftex.def Info: imgs/burndownChartSprint5.png used on input line 558.
-(pdftex.def)             Requested size: 390.79141pt x 402.63841pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 558.
-
-
-Underfull \vbox (badness 1622) has occurred while \output is active []
-
- [82]
-[83 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndow
-nChartSprint5.png>] [84]
-<imgs/burndownChartSprint6.png, id=1192, 220.57407pt x 231.11343pt>
-File: imgs/burndownChartSprint6.png Graphic file (type png)
-
-<use imgs/burndownChartSprint6.png>
-Package pdftex.def Info: imgs/burndownChartSprint6.png used on input line 651.
-(pdftex.def)             Requested size: 390.79141pt x 409.48335pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 651.
-
-[85] [86 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/bu
-rndownChartSprint6.png>] [87]
-<imgs/burndownChartSprint7.png, id=1206, 225.84375pt x 231.86626pt>
-File: imgs/burndownChartSprint7.png Graphic file (type png)
-
-<use imgs/burndownChartSprint7.png>
-Package pdftex.def Info: imgs/burndownChartSprint7.png used on input line 728.
-(pdftex.def)             Requested size: 390.79141pt x 401.2646pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 728.
-
-
-Underfull \vbox (badness 6157) has occurred while \output is active []
-
- [88]
-[89 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndow
-nChartSprint7.png>] [90]) [91] [92
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 84.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [93]
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo2Especifica
-cionDeRequisitos.tex [94
-
-
-]
-Ap\'{e}ndice B.
-[95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106]
-<imgs/casosdeusogeneral.png, id=1311, 596.98032pt x 566.115pt>
-File: imgs/casosdeusogeneral.png Graphic file (type png)
-
-<use imgs/casosdeusogeneral.png>
-Package pdftex.def Info: imgs/casosdeusogeneral.png used on input line 328.
-(pdftex.def)             Requested size: 348.10966pt x 330.10912pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 328.
-
-[107 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/casosd
-eusogeneral.png>]
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 370--370
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 370--370
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 370--370
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 370--370
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 395--395
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 395--395
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 395--395
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 395--395
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 419--419
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 419--419
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 419--419
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 419--419
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 444--444
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 444--444
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 444--444
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 444--444
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 469--469
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 469--469
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 469--469
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 469--469
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 493--493
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 493--493
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 493--493
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 493--493
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 517--517
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 517--517
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 517--517
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 517--517
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 540--540
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 540--540
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 540--540
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 540--540
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 563--563
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 563--563
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 563--563
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 563--563
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 587--587
-[]|[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 587--587
-[]|\T1/ptm/m/n/10.95 Objetivos aso-cia-
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 587--587
-[]|[]| 
- []
-
-
-Overfull \hbox (14.22638pt too wide) in paragraph at lines 587--587
-[]|[]| 
- []
-
-[108] [109] [110] [111] [112] [113] [114] [115] [116] [117]
-<imgs/prototipoVentanaPpal.png, id=1369, 770.88pt x 613.54219pt>
-File: imgs/prototipoVentanaPpal.png Graphic file (type png)
-
-<use imgs/prototipoVentanaPpal.png>
-Package pdftex.def Info: imgs/prototipoVentanaPpal.png used on input line 621.
-(pdftex.def)             Requested size: 284.09355pt x 226.1083pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 621.
-
-<imgs/prototipoOpciones.png, id=1371, 308.65312pt x 255.95625pt>
-File: imgs/prototipoOpciones.png Graphic file (type png)
-
-<use imgs/prototipoOpciones.png>
-Package pdftex.def Info: imgs/prototipoOpciones.png used on input line 625.
-(pdftex.def)             Requested size: 284.09355pt x 235.60757pt.
-
-
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 625.
-
-) [118 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/prot
-otipoVentanaPpal.png>] [119 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Doc
-umentación/imgs/prototipoOpciones.png>] [120
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 87.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [121]
-No file anexo3EspecificacionDeDisenno.tex.
-[122
-
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 90.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [123]
-No file anexo4ManualDelProgramador.tex.
-[124
-
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 93.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [125]
-No file anexo5ManualDelUsuario.tex.
-[126
-
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 104.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [127]
-No file apendiceA.tex.
-[128
-
-
-
-]
-File: imgs/escudo.pdf Graphic file (type pdf)
- <use imgs/escudo.pdf>
-Package pdftex.def Info: imgs/escudo.pdf used on input line 107.
-(pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [129]
-No file apendiceB.tex.
-[130
-
-
-
-]
-No file main.bbl.
-No file otras.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 118.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 118.
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.aux
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\1objetivosDelPro
-yecto.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\2conceptosTeoric
-os.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\3tecnicasYherram
-ientas.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
-tes.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\5trabajosRelacio
-nados.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\6conclusionesYfu
-turo.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo1PlanDeProy
-ectoSoftware.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo2Especifica
-cionDeRequisitos.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo3Especifica
-cionDeDisenno.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo4ManualDelP
-rogramador.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo5ManualDelU
-suario.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\apendiceA.aux)
-(C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\apendiceB.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 118.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 118.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D3A49026A45B165F2B1DC4715BDF670C;7762.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 118.
- ) 
+! Incomplete \iffalse; all text was ignored after line 17.
+<inserted text> 
+                \fi 
+l.57 \listoffigures
+                    % Opcional
+The file ended while I was skipping conditional text.
+This kind of error happens when you say `\if...' and forget
+the matching `\fi'. I've inserted a `\fi'; this might work.
+
+)
+! Incomplete \iffalse; all text was ignored after line 57.
+<inserted text> 
+                \fi 
+<*> main.tex
+            
+The file ended while I was skipping conditional text.
+This kind of error happens when you say `\if...' and forget
+the matching `\fi'. I've inserted a `\fi'; this might work.
+
+! Emergency stop.
+<*> main.tex
+            
+*** (job aborted, no legal \end found)
+
+ 
 Here is how much of TeX's memory you used:
- 13049 strings out of 494045
- 191276 string characters out of 3148381
- 393974 words of memory out of 3000000
- 15562 multiletter control sequences out of 15000+200000
- 81844 words of font info for 89 fonts, out of 3000000 for 9000
+ 12002 strings out of 494045
+ 170474 string characters out of 3148381
+ 301744 words of memory out of 3000000
+ 15056 multiletter control sequences out of 15000+200000
+ 46153 words of font info for 57 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 55i,14n,45p,967b,611s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcirclew.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helv
-etic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/tim
-es/utmri8a.pfb>
-Output written on main.pdf (144 pages, 2124037 bytes).
-PDF statistics:
- 1580 PDF objects out of 1728 (max. 8388607)
- 408 named destinations out of 1000 (max. 500000)
- 926 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 55i,8n,45p,523b,374s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

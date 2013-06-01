@@ -21,7 +21,7 @@ En la segunda parte se calcularán los costes, analizando la rentabilidad del pr
 
 %Planifiación temporal del proyecto
 \section{Planificación temporal del proyecto} 
-Como se explicó en la memoria, para el desarrollo del proyecto de final de carrera se va, a utilizar una metodología ágil llamada \scrum{}. Esta metodología establece una serie de prácticas que serán llevadas a cabo con algunas limitaciones debido al reducido tamaño del equipo de desarrollo.
+Como se explicó en la memoria, para el desarrollo del proyecto de final de carrera se va a utilizar una metodología ágil llamada \scrum{}. Esta metodología establece una serie de prácticas que serán llevadas a cabo con algunas limitaciones debido al reducido tamaño del equipo de desarrollo.
 
 Para poder estimar de manera general el tiempo total que va a llevar el desarrollo del proyecto se va a realizar una estimación a partir de los casos de uso definidos en el Anexo II.
 
@@ -148,7 +148,7 @@ El ciclo de desarrollo, como se muestra \ver{scrumProcess}, es iterativo a nivel
 %Ciclo de desarrollo con Scrum.
 \figura{1}{imgs/ScrumProcess.png}{Metodología Scrum}{ScrumProcess}{}
 
-\scrum{} define que debe realizarse una breve reunión diaria \textit{Daily Meeting} en la que, cada miembro del equipo de desarrollo, explica lo que ha hecho desde la última sincronización, que va a hacer a partir de ese momento y las dificultades encontradas o que espera encontrar. En este caso, debido a que el equipo de desarrollo está formado por un único desarrollador, se va a omitir esta reunión y se sustituye por una pequeña reflexión interior en la que analizar las tareas a desarrollar durante el día.
+\scrum{} define que debe realizarse una breve reunión diaria, \textit{Daily Meeting}, en la que cada miembro del equipo de desarrollo explica lo que ha hecho desde la última sincronización, que va a hacer a partir de ese momento y las dificultades encontradas o que espera encontrar. En este caso, debido a problemas de tiempo y problemas para quedar, no se harán explícitamente estas reuniones.
 
 Los \sprints{} se definirán, como establece \scrum{}, con una duración de dos a cuatro semanas que podrán alargarse o contraerse para coincidir con los tutores para las reuniones periódicas que establece:
 \begin{itemize}
@@ -164,7 +164,7 @@ En este caso, todas las reuniones requieren de la presencia de los tutores y del
 
 %Product backlog
 \section{Product Backlog del proyecto}
-En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada una de los \productitem{}, el \textit{sprint} al que pertenecen y la estimación que les dimos en su momento, basándonos en una escala de puntos tipo Fibonacci (1, 2, 3, 5, 8). Hemos decidido incluir también los \textit{bugs} que se han ido localizando[INSERTAR CITA].
+En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada uno de los \productitem{}, el \textit{sprint} al que pertenecen y la estimación que les dimos en su momento, basándonos en una escala de puntos tipo Fibonacci (1, 2, 3, 5, 8). Hemos decidido incluir también los \textit{bugs} que se han ido localizando[INSERTAR CITA].
 
 \scrum{} no define un método o herramienta para llevar el día a día del trabajo realizado, por lo que el seguimiento se puede realizar con una simple hoja de cálculo, o con herramientas de gestión especializadas en este tipo de desarrollos.
 
@@ -211,12 +211,12 @@ En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotalt
   S-01033 & La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos & César, José & Alta & 5 & Sprint 7  \\
   S-01034 & La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas & César, José & Alta & 5 & Sprint 7  \\
   S-01035 & Se debe poder mostrar una tabla resumen de los defectos & César, José & Alta & 5 & Sprint 7  \\
-  S-01036 & La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & 2 & Sprint 8  \\
+  S-01036 & La aplicación debe permitir al usuario elegir qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & 2 & Sprint 8  \\
   S-01037 & La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen & César, José & Media & 3 & Sprint 8  \\
-  S-01038 & La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar  & César, José & Media & 3 & Sprint 8  \\
+  S-01038 & La aplicación debe permitir al usuario elegir qué tipo de ventana defectuosa quiere usar  & César, José & Media & 3 & Sprint 8  \\
   S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & 3 & Sprint 8  \\
   S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & 5 & Sprint 8  \\
-  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores  & César, José & Media & 3 & Sprint 8  \\
+  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores  & César, José & Media & 3 & Sprint 8  \\
   S-01042 & La aplicación debe tratar las excepciones de forma correcta, mostrando avisos  & César, José & Media & 3 & Sprint 8  \\
   B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & - & Sprint 8  \\
  }
@@ -267,14 +267,14 @@ Para este \sprint{} no disponemos de \burndownchart{} debido a un fallo en el us
 
 ¿Qué dificultades ha habido?
 \begin{itemize}
- \item Familiarizarse con ImageJ es difícil. Por ello, llegamos a plantearnos el uso de alguna otra librería, como \textit{OpenCL}, pero acabamos descartándolo debido a que ImageJ tienen muy buena documentación, cosa que el resto no.
+ \item Familiarizarse con ImageJ es difícil. Por ello, llegamos a plantearnos el uso de alguna otra librería, como \textit{OpenCV}, pero acabamos descartándolo debido a que ImageJ tienen muy buena documentación, cosa que el resto no.
  \item Adaptación a la nueva metodología.
 \end{itemize}
 
 
 \subsection{Sprint 2: Spike Arquitectónico 2}
 \subsubsection*{Planning meeting}
-Como seguimos probando cosas más que implementar funcionalidad nueva, consideramos a este \sprint{} otro \textit{spike}, aunque este está ya más orientado a nueva funcionalidad. Básicamente, lo que buscamos en este \sprint{} es:
+Como seguimos probando cosas más que implementar funcionalidad nueva, consideramos a este \sprint{} otro \textit{spike}, aunque éste está ya más orientado a nueva funcionalidad. Básicamente, lo que buscamos en este \sprint{} es:
 
 \begin{enumerate}
 \item Seguir familiarizándonos con ImageJ.
@@ -314,7 +314,7 @@ En el \burndownchart{} \ver{burndownChartSprint2} podemos ver 2 cosas:
  \item Cada vez dominamos más ImageJ.
  \item Hemos conseguido implementar con éxito el multihilo.
  \item Las implementaciones de los algoritmos de extracción de características del año pasado parece que van bien, por lo que decidimos mantenerlas.
- \item El diseño que habíamos pensado se está probando ser bueno.
+ \item El diseño que habíamos pensado está probando ser bueno.
 \end{itemize}
 
 ¿Qué dificultades ha habido?
@@ -367,8 +367,8 @@ Por lo demás, vemos que en este \sprint{} no nos pasamos de la fecha límte.
 \subsubsection*{Retrospective meeting}
 ¿Qué ha ido bien?
 \begin{itemize}
- \item Los nuevos algoritmos parecen funcionar bien lo que había el año pasado, por lo que decidimos mantenerlo (excepto una cosa, de la que hablaremos más tarde).
- \item El diseño que habíamos pensado se vuelve a probar ser bueno, ya que permite añadir nuevos algoritmos muy fácilmente.
+ \item Los algoritmos de la versión anterior parecen funcionar bien, por lo que decidimos mantenerlo (excepto una cosa, de la que hablaremos más tarde).
+ \item El diseño que habíamos pensado vuelve a probar ser bueno, ya que permite añadir nuevos algoritmos muy fácilmente.
 \end{itemize}
 
 ¿Qué dificultades ha habido?
@@ -384,13 +384,13 @@ En este \sprint{} planeamos hacer:
 
 \begin{itemize}
 \item Probar implementaciones alternativas para los autovalores de una matriz (Weka, COLT...).
-\item Añadir un solapamiento al dividir las imágenes para el multihilo, para tener en cuenta la importancia de los pixeles de la división, ya que pueden ser importantes en la otra parte de la imagen.
+\item Añadir un solapamiento al dividir las imágenes para el multihilo, para tener en cuenta la importancia de los píxeles de la división, ya que pueden ser importantes en la otra parte de la imagen.
 \item Modificar la convolución de las imágenes para hacerlo con la imagen completa.
 \item Entrenar un clasificador, para lo que hace falta una ventana aleatoria.
 \item Implementar la interfaz de usuario.
 \end{itemize}
 
-Además, se habló de otras cosas, como el ir probando los umbrales adaptitivos en ImageJ, o cosas que deben ir en la memoria (la metodología debe aparecer en el apartado de técnicas, resaltar los aspectos relevantes y nuevos del proyecto de este año \textit{versus} la versión del año pasado...). Llegamos incluso a hablar de la idea de clasificar los defectos en tipo, para lo cual es necesario calcular características geométricas.
+Además, se habló de otras cosas, como el ir probando los umbrales adaptitivos en ImageJ, o cosas que deben ir en la memoria (la metodología debe aparecer en el apartado de técnicas, resaltar los aspectos relevantes y nuevos del proyecto de este año \textit{versus} la versión del año pasado...). Llegamos incluso a hablar de la idea de clasificar los defectos en tipos, para lo cual es necesario calcular características geométricas.
 
 \subsubsection*{Fechas de desarrollo y tiempo estimado}
 Este \sprint{} se inicia el 26/01/2013 y tiene como fecha límite el 15/02/2013. Tiene un total de puntos estimados de 20.
@@ -398,10 +398,10 @@ Este \sprint{} se inicia el 26/01/2013 y tiene como fecha límite el 15/02/2013.
 
 \subsubsection*{Sprint planning}
 \begin{itemize}
- \item S-01006: La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT.
+ \item S-01006: La aplicación debe ser capaz de calcular los valores propios mediante weka.Matrix o COLT.
  \begin{itemize}
   \item TK-00012: Añadir las librerías necesarias.
-  \item TK-00013: Sustituir la llamada a eigenvalues por el método correspondiente de las nuevas librerías.
+  \item TK-00013: Sustituir la llamada a la función de cálculo de valores propios por el método correspondiente de las nuevas librerías.
  \end{itemize}
  \item S-01007: La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas.
  \begin{itemize}
@@ -443,15 +443,15 @@ Todo esto al final hizo que nos pasáramos de fecha, ya que acabamos el 21 de fe
 \subsubsection*{Retrospective meeting}
 ¿Qué ha ido bien?
 \begin{itemize}
- \item El diseño que habíamos pensado se vuelve a probar ser bueno, ya que, usando la misma idea para las ventanas que para los algoritmos, nos permite añadir nuevos tipos de ventana fácilmente.
+ \item El diseño que habíamos pensado vuelve a probar ser bueno, ya que, usando la misma idea para las ventanas que para los algoritmos, nos permite añadir nuevos tipos de ventana fácilmente.
  \item El entrenamiento funciona bien. Esto nos permitió ganar mucha comprensión acerca de cómo funciona esta parte del proyecto.
  \item La GUI implementada es más intuitiva que la del año pasado.
 \end{itemize}
 
 ¿Qué dificultades ha habido?
 \begin{itemize}
- \item Los autovalores siguen siendo muy lentos.
- \item Mala planificación: nos pasamos metiendo historias en este \sprint{}, por lo que nos ha llevado algo más de tiempo del previsto.
+ \item El cálculo de los autovalores siguen siendo muy lentos.
+ \item Mala planificación: nos pasamos metiendo historias de usuario en este \sprint{}, por lo que nos ha llevado algo más de tiempo del previsto.
  \item Fallo extraño al crear el ARFF de entrenamiento: hay veces que los hilos no lo hacen bien.
 \end{itemize}
 
@@ -479,17 +479,17 @@ Las nuevas formas de determinar cuándo una ventana es defectuosa son las que ya
 \item Porcentaje de píxeles malos en una región de vecinos $3\times3$ centrada en el píxel central.
 \end{itemize}
 
-Además, se habla de analizar si es mejor \textit{Random Forest} que \textit{Bagging} y la posibilidad de incluir un árbol para poder seleccionar el algoritmo de clasificación.
+Además, se habla de analizar si es mejor \textit{Random Forest}(que es un método de construcción de ensembles[REFERENCIA]) que \textit{Bagging} y la posibilidad de incluir un árbol para poder seleccionar el algoritmo de clasificación.
 
 \subsubsection*{Fechas de desarrollo y tiempo estimado}
 Este \sprint{} se inicia el 21/02/2013 y tiene como fecha límite el 12/03/2013. Tiene un total de puntos estimados de 34.
 
 \subsubsection*{Sprint planning}
 \begin{itemize}
- \item S-01012: La aplicación debe mostrar el progreso en una Progress Bar.
+ \item S-01012: La aplicación debe mostrar el progreso en una \emph{Progress Bar}.
  \begin{itemize}
-   \item TK-00025: Actualizar el progreso de la ProgressBar en el análisis de la imagen.
-   \item TK-00026: Actualizar el progreso de la PorgressBar en el entrenamiento.
+   \item TK-00025: Actualizar el progreso de la \emph{Progress Bar} en el análisis de la imagen.
+   \item TK-00026: Actualizar el progreso de la \emph{Progress Bar} en el entrenamiento.
   \end{itemize}
  \item S-01013: La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar.
  \begin{itemize}
@@ -519,7 +519,7 @@ Este \sprint{} se inicia el 21/02/2013 y tiene como fecha límite el 12/03/2013.
  \item S-01018: La aplicación debe ser capaz de guardar un log de errores.
   \begin{itemize}
    \item TK-00037: Creación de una clase que escriba el log.
-   \item TK-00038: Escritura en el log en cada excpeción.
+   \item TK-00038: Escritura en el log en cada excepción.
   \end{itemize}
  \item S-01019: La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar.
   \begin{itemize}
@@ -539,20 +539,20 @@ Este \sprint{} se inicia el 21/02/2013 y tiene como fecha límite el 12/03/2013.
   \end{itemize}
  \item S-01022: La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no.
   \begin{itemize}
-   \item TK-00046: Implementación de "píxel central -> todo mal".
+   \item TK-00046: Implementación de <<píxel central -> todo mal>>.
    \item TK-00047: Creación del ARFF para que se pueda usar en regresión (valor de la clase numérico).
-   \item TK-00048: Implementación de "píxel central más tanto por ciento de vecinos".
-   \item TK-00049: Implementación de "porcentaje de todos los píxeles de la ventana".
+   \item TK-00048: Implementación de <<píxel central más tanto por ciento de vecinos>>.
+   \item TK-00049: Implementación de <<porcentaje de todos los píxeles de la ventana>>.
    \item TK-00050: Entrenamiento de un modelo de regresión lineal y usarlo para clasificar.
   \end{itemize}
  \item S-01023: La aplicación debe mostrar un slider para seleccionar el umbral de detección.
   \begin{itemize}
-   \item TK-00051: Creación del slider, junto con su Listener.
+   \item TK-00051: Creación del \emph{slider}, junto con su \emph{listener}.
   \end{itemize}
 \end{itemize}
 
 \subsubsection*{Burndown chart}
-En el \burndownchart{} \ver{burndownChartSprint5} podemos ver que el desarrollo fue bastante cercano a la recta de "ideal".
+En el \burndownchart{} \ver{burndownChartSprint5} podemos ver que el desarrollo fue bastante cercano a la recta ideal.
 
 %Burndown chart del Sprint 5.
 \figura{1}{imgs/burndownChartSprint5.png}{Burndown Chart del quinto Sprint}{burndownChartSprint5}{}
@@ -573,7 +573,7 @@ Esto hizo que, pese a tener mucha carga de trabajo en este \sprint{}, termináse
 
 ¿Qué dificultades ha habido?
 \begin{itemize}
- \item No hemos encontrado ninguna forma de automatizar el valor del umbral de detección de defectos. Se deja, por lo tanto, con el slider sin más.
+ \item No hemos encontrado ninguna forma de automatizar el valor del umbral de detección de defectos. Se deja, por lo tanto, con el \emph{slider} sin más.
  \item La barra de progreso nos ha dado algunos problemas.
 \end{itemize}
 
@@ -608,21 +608,21 @@ Este \sprint{} se inicia el 12/03/2013 y tiene como fecha límite el 26/03/2013.
  \item S-01024: La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log.
   \begin{itemize}
    \item TK-00052: Crear un CSS con una clase por cada tipo de cadena.
-   \item TK-00053: Sustituir las escrituras con SImpleAttributeSet por HTML.
+   \item TK-00053: Sustituir las escrituras con \emph{SimpleAttributeSet} por HTML.
   \end{itemize}
  \item S-01025: La aplicación debe ser capaz de exportar el log en formato HTML.
   \begin{itemize}
-   \item TK-00054: Creación del botón junto con su listener.
+   \item TK-00054: Creación del botón junto con su \emph{listener}.
    \item TK-00055: Escritura del texto formateado en HTML en el fichero seleccionado.
   \end{itemize}
  \item S-01026: La aplicación debe tener un menú con varias opciones.
   \begin{itemize}
    \item TK-00056: Creación de la barra de menús, con sus diferentes apartados.
-   \item TK-00057: Creación del diálogo de "opciones avanzadas".
+   \item TK-00057: Creación del diálogo de <<opciones avanzadas>>.
   \end{itemize}
  \item S-01027: La aplicación debe usar REPTree para regresión lineal.
   \begin{itemize}
-   \item TK-00058: Sustituir LinearReggression por REPTree.
+   \item TK-00058: Sustituir LinearRegression por REPTree.
   \end{itemize}
  \item S-01028: La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara.
   \begin{itemize}
@@ -645,7 +645,7 @@ Este \sprint{} se inicia el 12/03/2013 y tiene como fecha límite el 26/03/2013.
 \end{itemize}
 
 \subsubsection*{Burndown chart}
-En el \burndownchart{} \ver{burndownChartSprint6} podemos ver que el desarrollo fue cercano a la recta de "ideal".
+En el \burndownchart{} \ver{burndownChartSprint6} podemos ver que el desarrollo fue cercano a la recta ideal.
 
 %Burndown chart del Sprint 6.
 \figura{1}{imgs/burndownChartSprint6.png}{Burndown Chart del sexto Sprint}{burndownChartSprint6}{}
@@ -702,7 +702,7 @@ Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013.
   \end{itemize}
  \item S-01032: La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante.
  \begin{itemize}
-   \item TK-00071: Generación de un arff a partir de la ventana deslizante.
+   \item TK-00071: Generación de un ARFF a partir de la ventana deslizante.
    \item TK-00072: Inclusión de la opción en la interfaz.
   \end{itemize}  
  \item S-01033: La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos.
@@ -712,7 +712,7 @@ Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013.
   \end{itemize}
  \item S-01034: La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas.
  \begin{itemize}
-  \item TK-00075: Cambiar la llamada a ParticleAnalyzer para que calcule características geométricas.
+  \item TK-00075: Cambiar la llamada a \emph{ParticleAnalyzer} para que calcule características geométricas.
   \item TK-00076: Creación de un método para mostrar los resultados por cada ROI.
  \end{itemize}
  \item S-01035: Se debe poder mostrar una tabla resumen de los defectos.
@@ -722,7 +722,7 @@ Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013.
 \end{itemize}
 
 \subsubsection*{Burndown chart}
-En el \burndownchart{} \ver{burndownChartSprint7} podemos ver que hubo una primera parte en la que la curve es totalmente plana. Coincide con las vacaciones.
+En el \burndownchart{} \ver{burndownChartSprint7} podemos ver que hubo una primera parte en la que la curva es totalmente plana. Coincide con las vacaciones.
 
 %Burndown chart del Sprint 7.
 \figura{1}{imgs/burndownChartSprint7.png}{Burndown Chart del séptimo Sprint}{burndownChartSprint7}{}
@@ -735,7 +735,7 @@ Pese a ello, terminamos a tiempo. Esto es debido a que tuvimos en cuenta esta ev
 \begin{itemize}
  \item Se vuelve a ver que el fichero de opciones nos da muchas posibilidades para personalizar el funcionamiento de la aplicación.
  \item El cálculo de las características geométricas funciona perfectamente.
- \item Se ha encontrado una buena solución al problema de los autovalores con \textit{EJML}, aunque sigue siendo algo lento. Tendremos que decidir si lo usamos finalmente o no.
+ \item Se ha encontrado una buena solución al problema de los autovalores con \textit{EJML} (\textit{Efficient Java Matrix Library}), aunque sigue siendo algo lento. Tendremos que decidir si lo usamos finalmente o no.
 \end{itemize}
 
 ¿Qué dificultades ha habido?
@@ -749,8 +749,8 @@ Pese a ello, terminamos a tiempo. Esto es debido a que tuvimos en cuenta esta ev
 En este \sprint{} lo que se pretende es:
 
 \begin{itemize}
-\item Dejar el código limpio y bien refactorizado, ya que se pretende que sea la ultima iteración.
-\item Añadir las últimas funcionalidades: permitir seleccionar una fila de la tabla resumen e iluminar el defecto al que pertenece y viceversa, es decir, seleccionar un defecto en la imagen e iluminar la fila a la que pertenece.
+\item Dejar el código limpio y bien refactorizado, ya que se pretende que sea la última iteración.
+\item Añadir las últimas funcionalidades: permitir seleccionar una fila de la tabla resumen e resaltar el defecto al que pertenece y viceversa, es decir, seleccionar un defecto en la imagen y resaltar la fila a la que pertenece.
 \item Mejorar el margen de la selección al calcular umbrales locales.
 \item Permitir al usuario seleccionar más opciones.
 \item Permitir el cálculo de sólo las mejores características.
@@ -773,7 +773,7 @@ Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 01/05/2013.
 \begin{itemize}
  \item S-01036: La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión.
   \begin{itemize}
-   \item TK-00078: Añadir la opción al fichero de propiedades, junto con su set y su get.
+   \item TK-00078: Añadir la opción al fichero de propiedades, junto con su \emph{set} y su \emph{get}.
    \item TK-00079: Añadir la opción al diálogo de opciones avanzadas.
   \end{itemize}
  \item S-01037: La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen.
@@ -797,15 +797,15 @@ Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 01/05/2013.
    \item TK-00087: Al seleccionar una fila, dibujar sólo el ROI al que pertenece.
    \item TK-00088: Al seleccionar un defecto en la imagen, mostrar a qué fila de la tabla pertenece.
   \end{itemize}
- \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo mejores.
+ \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores.
   \begin{itemize}
-   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su get y su set.
+   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su \emph{get} y su \emph{set}.
    \item TK-00090: Añadir la opción al diálogo de opciones avanzadas.
    \item TK-00091: En función de la opción, seleccionar todas las características o sólo las mejores.
   \end{itemize}
  \item S-01042: La aplicación debe tratar las excepciones de forma correcta, mostrando avisos.
   \begin{itemize}
-   \item TK-00092: Capturar las excepciones de los hilos y almacenarlas..
+   \item TK-00092: Capturar las excepciones de los hilos y almacenarlas.
    \item TK-00093: Parar los hilos que aún estén en ejecución.
    \item TK-00094: En el hilo de la interfaz comprobar si hay excepciones lanzadas. En caso positivo mostrar un mensaje con la excepción pertinente.
   \end{itemize}
