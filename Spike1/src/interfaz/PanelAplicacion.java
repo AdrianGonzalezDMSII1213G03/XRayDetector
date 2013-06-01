@@ -1,5 +1,6 @@
 package interfaz;
 
+import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.Overlay;
 import ij.gui.Roi;
@@ -58,6 +59,7 @@ import org.apache.commons.io.FileUtils;
 import utils.Graphic;
 import utils.MyLogHandler;
 import utils.Propiedades;
+import java.awt.Dimension;
 
 public class PanelAplicacion{
 
@@ -88,6 +90,9 @@ public class PanelAplicacion{
     private JPanel panelLog_1;
     private JButton btnLimpiarLog;
     private JButton btnExportarLog;
+    private JButton btnGuardarImagenAnalizada;
+    private JButton btnGuardarImagenBinarizada;
+    private JButton btnPrecissionRecall;
     private JTable tablaResultados;
     private JPanel panelTabla_1;
     private ImagePlus copiaEdges;
@@ -164,6 +169,14 @@ public class PanelAplicacion{
 		getTablaResultados(panelTabla_1);
 		imgPanel.setFocusable(true);
 		
+		JPanel panelAnalizarResultados = getPanelAnalizarResultados();
+		
+		getButtonGuardarImagenAnalizada(panelAnalizarResultados);
+					
+		getButtonGuardarImagenBinarizada(panelAnalizarResultados);
+		
+		getButtonPrecissionRecall(panelAnalizarResultados);
+		
 		try {
 			File fichero = new File("./res/ayuda/ayuda.hs");
 			URL hsURL = fichero.toURI().toURL();
@@ -182,10 +195,37 @@ public class PanelAplicacion{
 	
 	}
 
+	public void getButtonPrecissionRecall(JPanel panelAnalizarResultados) {
+		btnPrecissionRecall = new JButton("<html><CENTER>Precission & Recall</CENTER></html>");
+		btnPrecissionRecall.setPreferredSize(new Dimension(220, 30));
+		btnPrecissionRecall.setMinimumSize(new Dimension(80, 30));		
+		panelAnalizarResultados.add(btnPrecissionRecall);
+	}
+
+	public void getButtonGuardarImagenBinarizada(JPanel panelAnalizarResultados) {
+		btnGuardarImagenBinarizada = new JButton("<html><CENTER>Guardar imagen<br>binarizada</CENTER></html>");
+		panelAnalizarResultados.add(btnGuardarImagenBinarizada);
+	}
+
+	public void getButtonGuardarImagenAnalizada(JPanel panelAnalizarResultados) {
+		btnGuardarImagenAnalizada = new JButton("<html><CENTER>Guardar imagen<br>analizada</CENTER></html>");
+		btnGuardarImagenAnalizada.addActionListener(new GuardarImagenAnalizadaListener());
+		panelAnalizarResultados.add(btnGuardarImagenAnalizada);
+	}
+
+	public JPanel getPanelAnalizarResultados() {
+		JPanel panelAnalizarResultados = new JPanel();
+		panelAnalizarResultados.setBorder(new TitledBorder(null, "Analizar resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelAnalizarResultados.setBounds(10, 302, 262, 112);
+		panelAnalizarResultados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frmXraydetector.getContentPane().add(panelAnalizarResultados);
+		return panelAnalizarResultados;
+	}
+
 	public void getPanelTabla() {
 		panelTabla_1 = new JPanel();
 		panelTabla_1.setBorder(new TitledBorder(null, "Tabla de resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTabla_1.setBounds(256, 572, 750, 173);
+		panelTabla_1.setBounds(282, 572, 750, 173);
 		frmXraydetector.getContentPane().add(panelTabla_1);
 	}
 
@@ -242,14 +282,17 @@ public class PanelAplicacion{
 
 	public void getBotonLimpiarLog() {
 		btnLimpiarLog = new JButton("Limpiar Log");
-		btnLimpiarLog.setBounds(10, 401, 107, 36);
+		btnLimpiarLog.setMaximumSize(new Dimension(95, 30));
+		btnLimpiarLog.setMinimumSize(new Dimension(95, 30));
+		btnLimpiarLog.setPreferredSize(new Dimension(95, 30));
+		btnLimpiarLog.setBounds(10, 281, 116, 30);
 		btnLimpiarLog.addActionListener(new LimpiarLogListener());
 		panelLog_1.add(btnLimpiarLog);
 	}
 
 	public void getBotonExportarLog() {
 		btnExportarLog = new JButton("Exportar Log");
-		btnExportarLog.setBounds(120, 401, 107, 36);
+		btnExportarLog.setBounds(136, 281, 116, 30);
 		btnExportarLog.addActionListener(new ExportarLogListener());
 		panelLog_1.add(btnExportarLog);
 	}
@@ -272,7 +315,7 @@ public class PanelAplicacion{
 	public JPanel getPanelSlider() {
 		JPanel panelSlider = new JPanel();
 		panelSlider.setBorder(new TitledBorder(null, "Nivel de tolerancia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelSlider.setBounds(10, 218, 236, 73);
+		panelSlider.setBounds(10, 218, 262, 73);
 		frmXraydetector.getContentPane().add(panelSlider);
 		panelSlider.setLayout(new GridLayout(1, 1, 0, 0));
 		return panelSlider;
@@ -310,7 +353,7 @@ public class PanelAplicacion{
 							"</head>"+
 							"<body>");
 		JScrollPane scroll = new JScrollPane(textPaneLog);
-		scroll.setBounds(10, 16, 217, 374);
+		scroll.setBounds(10, 16, 242, 254);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		panelLog.add(scroll);
 		return textPaneLog;
@@ -319,7 +362,7 @@ public class PanelAplicacion{
 	private JPanel getPanelLog() {
 		panelLog_1 = new JPanel();
 		panelLog_1.setBorder(new TitledBorder(null, "Log", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelLog_1.setBounds(10, 302, 236, 443);
+		panelLog_1.setBounds(10, 425, 262, 320);
 		frmXraydetector.getContentPane().add(panelLog_1);
 		return panelLog_1;
 	}
@@ -327,7 +370,7 @@ public class PanelAplicacion{
 	private JPanel getPanelImagen() {
 		JPanel panelImagen = new JPanel();
 		panelImagen.setBorder(new TitledBorder(null, "Imagen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelImagen.setBounds(256, 11, 750, 550);
+		panelImagen.setBounds(282, 11, 750, 550);
 		frmXraydetector.getContentPane().add(panelImagen);
 		panelImagen.setLayout(new GridLayout(1, 0, 0, 0));
 		return panelImagen;
@@ -335,21 +378,25 @@ public class PanelAplicacion{
 
 	private void getBtnStop(JPanel panelProgreso) {
 		btnStop = new JButton("Stop");
+		btnStop.setPreferredSize(new Dimension(60, 30));
+		btnStop.setMinimumSize(new Dimension(60, 30));
+		btnStop.setMaximumSize(new Dimension(60, 30));
 		btnStop.addActionListener(new StopListener());
 		btnStop.setEnabled(false);
 		panelProgreso.add(btnStop);
 	}
 
 	private void getProgressBar(JPanel panelProgreso) {
-		panelProgreso_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelProgreso_1.setLayout(new FlowLayout(FlowLayout.CENTER, 16, 5));
 		progressBar = new JProgressBar();
+		progressBar.setPreferredSize(new Dimension(150, 16));
 		panelProgreso.add(progressBar);
 	}
 
 	private JPanel getPanelProgreso() {
 		panelProgreso_1 = new JPanel();
 		panelProgreso_1.setBorder(new TitledBorder(null, "Progreso", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelProgreso_1.setBounds(10, 147, 236, 60);
+		panelProgreso_1.setBounds(10, 147, 262, 60);
 		frmXraydetector.getContentPane().add(panelProgreso_1);
 		return panelProgreso_1;
 	}
@@ -376,7 +423,7 @@ public class PanelAplicacion{
 	private JPanel getPanelControl() {
 		JPanel panelControl = new JPanel();
 		panelControl.setBorder(new TitledBorder(null, "Control", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelControl.setBounds(10, 11, 236, 125);
+		panelControl.setBounds(10, 11, 262, 125);
 		frmXraydetector.getContentPane().add(panelControl);
 		panelControl.setLayout(new GridLayout(0, 1, 0, 4));
 		return panelControl;
@@ -385,7 +432,7 @@ public class PanelAplicacion{
 	public void getJFramePrincipal() {
 		frmXraydetector = new JFrame();
 		frmXraydetector.setTitle("XRayDetector");
-		frmXraydetector.setBounds(100, 100, 1024, 800);
+		frmXraydetector.setBounds(100, 100, 1048, 800);
 		frmXraydetector.setResizable(false);
 		frmXraydetector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXraydetector.getContentPane().setLayout(null);
@@ -944,6 +991,49 @@ public class PanelAplicacion{
 			}
 	    }
     }
+	
+	private class GuardarImagenAnalizadaListener implements ActionListener{
+		
+		public void actionPerformed (ActionEvent e){
+	    	
+	    	JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	    	chooser.setDialogTitle("Escoja la ubicación para guardar la imagen analizada");
+	    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes JPG", "jpg");
+	    	chooser.setFileFilter(filter);
+	    	chooser.setAcceptAllFileFilterUsed(false);
+	    	int answer = chooser.showSaveDialog(null);
+			if (answer == JFileChooser.APPROVE_OPTION) {
+				File JFC = chooser.getSelectedFile();
+                String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar
+                ImagePlus i = new ImagePlus("img", imgPanel.getImage());                
+                IJ.saveAs(i, "JPG", PATH);
+                try {
+    				kit.insertHTML(doc, doc.getLength(), "<p class=\"exito\"> Imagen exportada correctamente</p><br>", 0, 0, null);
+    				txtLog.setCaretPosition(txtLog.getDocument().getLength());
+    			} catch (BadLocationException e1) {
+    				MyLogHandler.writeException(e1);
+    				e1.printStackTrace();
+    			} catch (IOException e1) {
+    				MyLogHandler.writeException(e1);
+    				e1.printStackTrace();
+    			}
+			}
+	    }
+	}
+
+	private class GuardarImagenBinarizadaListener implements ActionListener{
+		
+		public void actionPerformed (ActionEvent e){
+	    }
+	}
+	
+	private class PrecissionRecallListener implements ActionListener{
+		
+		public void actionPerformed (ActionEvent e){
+	    }
+	}
+
+
 	
 	private class ThreadEntrenar implements Runnable{
 		
