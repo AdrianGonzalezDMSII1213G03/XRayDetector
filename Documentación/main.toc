@@ -113,27 +113,27 @@
 \contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.206}
 \contentsline {subsection}{\numberline {A.5.8}Sprint 8}{87}{subsection.208}
 \contentsline {subsection}{\numberline {A.5.9}Sprint 9}{90}{subsection.210}
-\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.211}
-\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.212}
-\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.213}
-\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.214}
-\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{98}{section.215}
-\contentsline {section}{\numberline {B.5}Factores de riesgo}{99}{section.216}
-\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{100}{section.217}
-\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{100}{subsection.218}
-\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{101}{subsection.220}
-\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{101}{subsection.222}
-\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{102}{subsubsection*.223}
-\contentsline {subsubsection}{Entrenar el clasificador}{103}{subsubsection*.242}
-\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{103}{subsubsection*.243}
-\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{104}{subsection.244}
-\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{104}{subsection.245}
-\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{105}{section.246}
-\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{105}{subsection.247}
-\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{105}{subsection.248}
-\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{106}{subsection.250}
-\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{116}{subsection.262}
-\contentsline {subsection}{\numberline {B.7.5}Matrices}{118}{subsection.263}
-\contentsline {section}{\numberline {B.8}Interfaz de usuario}{118}{section.264}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{126}{figure.266}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{131}{figure.266}
+\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.212}
+\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.213}
+\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.214}
+\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.215}
+\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{98}{section.216}
+\contentsline {section}{\numberline {B.5}Factores de riesgo}{99}{section.217}
+\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{100}{section.218}
+\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{100}{subsection.219}
+\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{101}{subsection.221}
+\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{101}{subsection.223}
+\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{102}{subsubsection*.224}
+\contentsline {subsubsection}{Entrenar el clasificador}{103}{subsubsection*.243}
+\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{103}{subsubsection*.244}
+\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{104}{subsection.245}
+\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{104}{subsection.246}
+\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{105}{section.247}
+\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{105}{subsection.248}
+\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{105}{subsection.249}
+\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{106}{subsection.251}
+\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{116}{subsection.266}
+\contentsline {subsection}{\numberline {B.7.5}Matrices}{121}{subsection.267}
+\contentsline {section}{\numberline {B.8}Interfaz de usuario}{121}{section.268}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{128}{figure.270}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{133}{figure.270}

@@ -318,6 +318,9 @@ En la lista aparecen todos los requisitos identificados en la aplicación:
  \item Interacción con los resultados: se podrá seleccionar un defecto y se iluminará la fila de la tabla correspondiente a ese defecto. Se podrá seleccionar también una fila de la tabla y se iluminará el defecto.
  \item Guardar Log: el usuario podrá visualizar el progreso en un log y guardarlo en el disco duro.
  \item Visualización de la ayuda: las interfaces deberán ofrecer la ayuda al usuario que necesite para poder utilizarlas.
+ \item Guardar imagen analizada: se permite guardar los resultados del análisis en un fichero.
+ \item Guardar imagen binarizada: se permite guardar una binarización de los defectos encontrados.
+ \item Calcular <<Precision \& Recall>>: se realiza el cálculo de estas medidas de precisión, a través de una máscara.
 \end{itemize}
 
 Para la definición formal de los casos de uso se hace uso de los diagramas de casos de uso. Para completar la información de los diagramas se utilizan las plantillas donde quedan reflejados los aspectos funcionales.
@@ -343,6 +346,9 @@ A continuación, aparecen los casos de uso listados y cada una de las plantillas
  \item RF-08 Exportar Log \vertabla{tablaRF8}
  \item RF-09 Abrir ayuda \vertabla{tablaRF9}
  \item RF-10 Cambiar opciones \vertabla{tablaRF10}
+ \item RF-11 Guardar imagen analizada \vertabla{tablaRF11}
+ \item RF-12 Guardar imagen binarizada \vertabla{tablaRF12}
+ \item RF-13 Calcular <<Precision \& Recall>> \vertabla{tablaRF13}
 \end{itemize}
 
 \tablaSmallSinColores{Caso de uso: RF-01 Abrir imagen}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF1}{
@@ -584,6 +590,78 @@ A continuación, aparecen los casos de uso listados y cada una de las plantillas
   Importancia                            & \alta{2} \\\hline
   Urgencia                               & \media{2} \\\hline
   Comentarios                            & \multicolumn{2}{p{10cm}}{Las opciones que se pueden cambiar están relacionadas con el tamaño de las ventanas y de su salto, el tipo de heurística de ventana defectuosa, el tipo de ventana para entrenar, el tipo de detección...} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-11 Guardar imagen analizada}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF11}{
+  \multicolumn{3}{l}{\textbf{RF-11 Guardar imagen analizada}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite exportar la imagen analizada junto con los defectos dibujados a un fichero} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<guardar imagen>> \\\cline{2-3} 
+                                         & 2    & El usuario determina el fichero en el que guardar la imagen \\\cline{2-3}
+                                         & 3	& El sistema guarda la imagen en el fichero especificado\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se ha creado un fichero con la imagen} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, la imagen no se guarda\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \baja{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{La imagen se guardará en un fichero con formato JPG} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-12 Guardar imagen binarizada}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF12}{
+  \multicolumn{3}{l}{\textbf{RF-12 Guardar imagen binarizada}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite exportar los defectos detectados en una imagen binarizada a un fichero} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<guardar defectos binarizados>> \\\cline{2-3} 
+                                         & 2    & El usuario determina el fichero en el que guardar la imagen \\\cline{2-3}
+                                         & 3	& El sistema guarda la imagen en el fichero especificado\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se ha creado un fichero con la imagen} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, la imagen no se guarda\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \baja{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{La imagen se guardará en un fichero con formato JPG} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-13 Calcular <<Precision \& Recall>>}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF13}{
+  \multicolumn{3}{l}{\textbf{RF-13 Calcular <<Precision \& Recall>>}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite realizar los cálculos de precision \& recall sobre los defectos localizados} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<calcular precision \& recall>> \\\cline{2-3} 
+                                         & 2    & El usuario determina cuál es la máscara asociada a la imagen \\\cline{2-3}
+                                         & 3	& El sistema realiza los cálculos y los muestra\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se muestra un diálogo con los datos} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \media{2} \\\hline
+  Urgencia                               & \media{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Debe existir una máscara sobre la cual se van a realizar las comparaciones} \\
 }
 
 
