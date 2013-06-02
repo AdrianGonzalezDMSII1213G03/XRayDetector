@@ -489,9 +489,9 @@
 % Comandos para insertar comodamente las dos bibliografias de la memoria:
 % la de libros y articulos, y la de 'otras fuentes'.
 \newcommand{\bibliografia}[1]{%
-\cleardoublepage \addcontentsline{toc}{chapter}{Bibliografía (Libros y artículos)}
-\renewcommand{\bibname}{BIBLIOGRAFÍA (LIBROS Y ARTÍCULOS)}
-%\renewcommand{\bibname}{Bibliografía (Libros y artículos)}
+\cleardoublepage \addcontentsline{toc}{chapter}{Bibliografía}
+\renewcommand{\bibname}{BIBLIOGRAFÍA}
+%\renewcommand{\bibname}{Bibliografía}
 %\renewcommand{\bibname}{BIBLIOGRAFÍA}
 %
 %\cleardoublepage \addcontentsline{toc}{chapter}{Bibliografí­a}

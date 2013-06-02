@@ -14,9 +14,9 @@ A la hora de comenzar el proyecto, necesitamos leer el artículo principal sobre
 		\item \textit{An automatic system of classification of weld defects in radiographic images} \cite{vilar2009automatic}
 		\item \textit{Recognition of welding defects in radiographic images by using support vector machine classifier} \cite{wang2010recognition}
 		\item \textit{Image thresholding based on the EM algorithm and the generalized Gaussian distribution} \cite{bazi2007image}
-		\item \textit{Weld defect classification using EM algorithm for Gaussian mixture model} \cite{Tridi}
+		\item \textit{Weld defect classification using EM algorithm for Gaussian mixture model} \cite{tridi}
 		\item \textit{Multiclass defect detection and classification in weld radiographic images
-using geometric and texture features}[CITA]
+using geometric and texture features}\cite{Valavanis20107606}
 	\end{itemize}
 
 
@@ -46,7 +46,7 @@ En este artículo \cite{vilar2009automatic} se estudia la forma de detectar defe
 \subsubsection{Preprocesado de las imágenes}
 Para reducir el ruido se utilizan dos técnicas:
 	\begin{itemize}
-	\item Filtro adaptativo de Wiener de 7$\times$7 \cite{wiener1949extrapolation}. Ver apartado \ref{suavizadoImagen}.
+	\item Filtro adaptativo de Wiener de 7$\times$7 \cite{wiener1949extrapolation}.
 	\item Filtro gausiano de paso bajo de 3$\times$3.
 	\end{itemize}
 También se utilizan técnicas para mejorar el contraste.
@@ -71,7 +71,7 @@ La salida de esta fase es una descripción de cada defecto candidato de la image
 
 
 \subsubsection{Análisis de componentes principales}
-En esta fase se reduce el tamaño de los vectores de características de entrada. Para ello se utiliza la técnica PCA \cite{PCA} (ver apartado \ref{pca}).
+En esta fase se reduce el tamaño de los vectores de características de entrada. Para ello se utiliza la técnica PCA \cite{PCA}.
 
 
 \subsubsection{Predicción utilizando una red neuronal multicapa}
@@ -89,7 +89,7 @@ Para evaluar el rendimiento de la red, se realiza un análisis de regresión ent
 
 
 \subsection{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}
-En este articulo \cite{Tridi}, se proponen dos algoritmos de clasificación de los defectos de soldadura  \textit{(El algoritmo Fuzzy-C-Means Iterativo: FCMI y el algoritmo Expectation maximization: EM)}.
+En este articulo \cite{tridi}, se proponen dos algoritmos de clasificación de los defectos de soldadura  \textit{(El algoritmo Fuzzy-C-Means Iterativo: FCMI y el algoritmo Expectation maximization: EM)}.
 El primer algoritmo se basa en el concepto de distancia y lógica difusa, y el segundo está basado en conceptos estadísticos. 
 
 
@@ -120,7 +120,7 @@ Se describe un nuevo enfoque para clasificar el defecto de soldadura para las im
 
 
 \subsection{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}
-En este artículo \cite{wang2010recognition} se describe un método para detectar defectos en imágenes de rayos X basado en Support Vector Machine (SVM) (ver apartado \ref{svm}).
+En este artículo \cite{wang2010recognition} se describe un método para detectar defectos en imágenes de rayos X basado en Support Vector Machine (SVM).
 El método está compuesto por tres fases:
 
 
@@ -154,3 +154,17 @@ Se dividen las imágenes en regiones específicas de acuerdo a las característi
 Se seleccionan 16 características combinando las 12 mejores obtenidas mediante la aplicación de un algoritmo basado en SVM y las 12 mejores obtenidas con un análisis ROC.
 Se entrena la SVM con los vectores formados por esas características.
 Después, se preprocesa la imagen de prueba para extraer las 16 características, y entonces se aplica la SVM entrenado para que decida entre <<defecto>> y <<no defecto>>.
+
+
+\subsection{Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}
+
+\subsubsection{Local thresholding}
+Los autores usan un filtro de umbrales locales, llamado \emph{Sauvola} \cite{Sauvola00adaptivedocument}, como primer paso para la detección de defectos. Los autores dicen que se comporta mejor que otros métodos, como \textit{Otsu} o \textit{Niblack}. Después de usar este método, se hace necesario utilizar unas operaciones morfológicas para eliminar una serie de puntos aislados (ruido). Con esto, se obtienen una serie de regiones candidatas a albergar defectos, marcadas en blanco.
+
+\subsubsection{Segmentación}
+El segundo paso para la detección de defectos es usar una operación de segmentación. Se utiliza un método basado en grafos que es capaz de capturar regiones perceptualmente distintas, aunque su interior se caracterice por una alta variabilidad, considerando características globales de la imagen.
+
+\subsubsection{Clasificación}
+Para realizar la clasificación de los defectos se hace necesario calcular una serie de descriptores de regiones, divididos en descriptores de texturas y descriptores geométricos. Los descriptores de texturas son los mismos que hemos usado en nuestro proyecto, ya que este artículo también está basado en el artículo de Domingo Mery. Entre los geométricos se encuentran el área, la redondez, semieje mayor y menor de la mayor elipse,...
+
+Como clasificadores, los autores usan \emph{support vector machine} y una red neuronal artificial, realizando una comparativa entre ambos.

@@ -1,0 +1,306 @@
+\begin{thebibliography}{10}
+
+\bibitem{analyzeij}
+Analyze menu.
+\newblock http://rsbweb.nih.gov/ij/docs/menus/analyze.html.
+\newblock URL: \url{http://rsbweb.nih.gov/ij/docs/menus/analyze.html}.
+
+\bibitem{autolocal}
+Auto local threshold - fiji.
+\newblock {http://fiji.sc/wiki/index.php/Auto\_Local\_Threshold}.
+\newblock URL: \url{http://fiji.sc/wiki/index.php/Auto_Local_Threshold}.
+
+\bibitem{particleij}
+{ImageJ} user guide - {IJ} 1.46r {\textbar} analyze menu.
+\newblock http://rsbweb.nih.gov/ij/docs/guide/146-30.html.
+\newblock URL: \url{http://rsbweb.nih.gov/ij/docs/guide/146-30.html}.
+
+\bibitem{patrones}
+{\em Design Patterns: Elements of Reusable Object-Oriented Software}.
+\newblock 1995.
+
+\bibitem{waveletdiscreta}
+{\em Extracción de caracteristicas de textura basada en la transformada
+  Wavelet discreta}.
+\newblock PhD thesis, Escuela superior de ingenieros de la universidad de
+  Sevilla, 2009.
+
+\bibitem{abramoff04}
+M.~D. Abramoff, P.~J. Magelhaes, and S.~J. Ram.
+\newblock {Image processing with ImageJ}.
+\newblock {\em Biophotonics int}, 11(7):36--42, 2004.
+
+\bibitem{controlchaos}
+{Control Chaos} [online].
+\newblock URL: \url{http://www.controlchaos.com}.
+
+\bibitem{scrum_stages_image}
+{Etapas de Scrum} [online].
+\newblock URL:
+  \url{http://orione.wordpress.com/2008/02/24/agile-scrum-meet-with-sanjeev-augustine/}.
+
+\bibitem{scrum_process_image}
+{Proceso Scrum} [online].
+\newblock URL: \url{http://www.1dot0.com/dev_process.html}.
+
+\bibitem{scrum}
+{¿Qué es Scrum?} [online].
+\newblock URL: \url{http://www.proyectosagiles.org/que-es-scrum/}.
+
+\bibitem{scrum_wiki}
+{Scrum} [online].
+\newblock URL: \url{http://es.wikipedia.org/wiki/Scrum/}.
+
+\bibitem{anand2009flaw}
+Rs~Anand, P.~Kumar, et~al.
+\newblock Flaw detection in radiographic weldment images using morphological
+  watershed segmentation technique.
+\newblock {\em Ndt \& e International}, 42(1):2--8, 2009.
+
+\bibitem{bazi2007image}
+Y.~Bazi, L.~Bruzzone, and F.~Melgani.
+\newblock Image thresholding based on the em algorithm and the generalized
+  gaussian distribution.
+\newblock {\em Pattern recognition}, 40(2):619--634, 2007.
+
+\bibitem{daugman1988complete}
+j.g. Daugman.
+\newblock Complete discrete 2-d gabor transforms by neural networks for image
+  analysis and compression.
+\newblock {\em Acoustics, speech and signal processing, ieee transactions on},
+  36(7):1169--1179, 1988.
+
+\bibitem{de2011transformaciones}
+E.J. de~Ram{\'o}n~Balmaseda.
+\newblock Transformaciones basadas en el algoritmo local binary pattern de
+  im{\'a}genes capturadas con la kinect para clasificaci{\'o}n facial.
+\newblock 2011.
+
+\bibitem{dunham1999euler}
+W.~Dunham.
+\newblock Euler: The master of us all (dolciani mathematical expositions 22).
+\newblock {\em Math. Assoc. Amer., Washington}, 1999.
+
+\bibitem{haralick1973textural}
+R.M. Haralick, K.~Shanmugam, and I.H. Dinstein.
+\newblock Textural features for image classification.
+\newblock {\em Systems, Man and Cybernetics, IEEE Transactions on},
+  3(6):610--621, 1973.
+
+\bibitem{haralick1992computer}
+R.M. Haralick and L.G. Shapiro.
+\newblock {\em Computer and Robot Vision}, volume~1.
+\newblock Addison-Wesley, 1992.
+
+\bibitem{ian_h._witten_data_2005}
+{Ian H. Witten} and {Eibe Frank}.
+\newblock {\em Data Mining - Practical Machine Learning Tools and Techniques}.
+\newblock {MORGAN} {KAUFMANN} {PUBLISHERS}, second edition edition, 2005.
+
+\bibitem{juan_jose_rodriguez_diez_apuntes_2012}
+{Juan José Rodríguez Díez}.
+\newblock Apuntes de la asignatura minería de datos, 2012.
+
+\bibitem{kandel1999introduction}
+A.~Kandel.
+\newblock {\em Introduction to pattern recognition: statistical, structural,
+  neural, and fuzzy logic approaches}, volume~32.
+\newblock World scientific Pub Co Inc, 1999.
+
+\bibitem{koch1985shifts}
+C.~Koch and S.~Ullman.
+\newblock Shifts in selective visual attention: towards the underlying neural
+  circuitry.
+\newblock {\em Hum Neurobiol}, 4(4):219--27, 1985.
+
+\bibitem{lamport1989latex}
+L.~Lamport.
+\newblock Latex: a document preparation system.
+\newblock 1989.
+
+\bibitem{definicion_latex}
+{\LaTeX{}} [online].
+\newblock URL: \url{http://en.wikipedia.org/wiki/LaTeX/}.
+
+\bibitem{cervantex}
+{CervanTEX} [online].
+\newblock URL: \url{http://goliat.mecanica.upm.es/cervantex/}.
+
+\bibitem{introduccion_latex}
+{Una Introducción no-tan-corta a \LaTeX{}} [online].
+\newblock URL: \url{http://tug.ctan.org/tex-archive/info/lshort/spanish/}.
+
+\bibitem{latex_wikibook}
+{\LaTeX{} Wikibook} [online].
+\newblock URL: \url{http://en.wikibooks.org/wiki/LaTeX}.
+
+\bibitem{wysiwyg}
+{WYSIWYG: What You See Is What You Get} [online].
+\newblock URL: \url{http://en.wikipedia.org/wiki/WYSIWYG}.
+
+\bibitem{epl}
+{Licencia EPL} [online].
+\newblock URL: \url{http://www.eclipse.org/legal/epl-v10.html}.
+
+\bibitem{proyectoAlvar}
+Álvar Arnáiz~González.
+\newblock {\em Biblioteca de algoritmos de selección de instancias y
+  aplicación orientada a su docencia}.
+\newblock PhD thesis, Universidad de Burgos, 2010.
+\newblock Tutores: César García Osorio and Juan José Rodriguez.
+
+\bibitem{tridi}
+S.~Belaifa M.~Tridi and N.~Nacereddine.
+\newblock Weld defect classification using em algorithm for gaussian mixture
+  model.
+\newblock 2005.
+
+\bibitem{marcosmartin2004}
+Marcos Martin.
+\newblock Tecnicas clasicas de segmentacion de la imagen.
+\newblock 2004.
+
+\bibitem{DomingoMery}
+D.~Mery.
+\newblock Automated detection of welding defects without segmentation.
+\newblock {\em Materials Evaluation}, 5:657--663, 2011.
+
+\bibitem{mery2011automated}
+D.~Mery, I.~Lillo, H.~Loebel, V.~Riffo, A.~Soto, A.~Cipriano, and J.M.
+  Aguilera.
+\newblock Automated fish bone detection using x-ray imaging.
+\newblock {\em Journal of Food Engineering}, 2011.
+
+\bibitem{montabone2010human}
+S.~Montabone and A.~Soto.
+\newblock Human detection using a mobile platform and novel features derived
+  from a visual saliency mechanism.
+\newblock {\em Image and Vision Computing}, 28(3):391--402, 2010.
+
+\bibitem{Niebur:2007}
+E.~Niebur.
+\newblock Saliency map.
+\newblock {\em Scholarpedia}, 2(8):2675, 2007.
+
+\bibitem{otsu1979threshold}
+N.~Otsu.
+\newblock A threshold selection method from gray-level histograms.
+\newblock {\em Ieee transactions on systems man and cybernetics}, 9(1):62--66,
+  1979.
+
+\bibitem{PCA}
+K.~Pearson.
+\newblock On lines and planes of closest fit to systems of points in space.
+\newblock {\em Philosophical magazine}, 2:559--572, 1901.
+
+\bibitem{presutti2004matriz}
+M.~Presutti.
+\newblock La matriz de co-ocurrencia en la clasificaci{\'o}n multiespectral:
+  tutorial para la ense{\~n}anza de medidas texturales en cursos de grado
+  universitario.
+\newblock {\em 4{\textordfeminine} jornada de educa{\c{c}}{\~a}o em
+  sensoriamento remoto no {\^a}mbito do mercosul, s{\~a}o leopoldo, brasil},
+  2004.
+
+\bibitem{Sauvola00adaptivedocument}
+J.~Sauvola and M.~Pietikäinen.
+\newblock Adaptive document image binarization.
+\newblock {\em PATTERN RECOGNITION}, 33:225--236, 2000.
+
+\bibitem{sezgin}
+Mehmet Sezgin and Bulent Sankur.
+\newblock Survey over image thresholding techniques and quantitative
+  performance evaluation.
+\newblock {\em Journal of Electronic Imaging}, 13(1):146--168, 2004.
+\newblock URL: \url{+ http://dx.doi.org/10.1117/1.1631315}.
+
+\bibitem{ojala}
+M.~Pietikainen T.~Ojala and T.~Maenpaa.
+\newblock Multiresolution gray-scale and rotation invariant texture
+  classification with local binary patterns.
+\newblock {\em Ieee trans. on pattern analysis and machine intelligence},
+  24(7):971--987, 2002.
+
+\bibitem{Valavanis20107606}
+Ioannis Valavanis and Dimitrios Kosmopoulos.
+\newblock Multiclass defect detection and classification in weld radiographic
+  images using geometric and texture features.
+\newblock {\em Expert Systems with Applications}, 37(12):7606 -- 7614, 2010.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0957417410003829},
+  \href {http://dx.doi.org/10.1016/j.eswa.2010.04.082}
+  {\path{doi:10.1016/j.eswa.2010.04.082}}.
+
+\bibitem{vilar2009automatic}
+R.~Vilar, J.~Zapata, and R.~Ruiz.
+\newblock An automatic system of classification of weld defects in radiographic
+  images.
+\newblock {\em Ndt \& e International}, 42(5):467--476, 2009.
+
+\bibitem{wang2010recognition}
+X.~Wang, B.S. Wong, and C.S. Tan.
+\newblock Recognition of welding defects in radiographic images by using
+  support vector machine classifier.
+\newblock {\em A research journal of applied sciences, engineering and
+  technology}, 2(3), 2010.
+
+\bibitem{weka}
+{Weka (Waikato Environment for Knowledge Analysis)} [online].
+\newblock URL: \url{http://www.cs.waikato.ac.nz/ml/weka/}.
+
+\bibitem{wiener1949extrapolation}
+N.~Wiener.
+\newblock Extrapolation, interpolation, and smoothing of stationary time
+  series: with engineering applications.
+\newblock {\em Journal of the American Statistical Association}, 47(258), 1949.
+
+\bibitem{wiki:Clasificadores}
+Wikipedia.
+\newblock Clasificadores (matematico) --- wikipedia{,} la enciclopedia libre,
+  2011.
+\newblock URL:
+  \url{http://es.wikipedia.org/w/index.php?title=Clasificadores_(matem%C3%A1tico)&oldid=43291813}.
+
+\bibitem{wiki:LocalBinaryPatterns}
+Wikipedia.
+\newblock Local binary patterns --- wikipedia{,} the free encyclopedia, 2011.
+\newblock URL:
+  \url{http://en.wikipedia.org/w/index.php?title=Local_binary_patterns&oldid=459646939}.
+
+\bibitem{wiki:EnsayoNoDestructivo}
+Wikipedia.
+\newblock Ensayo no destructivo --- wikipedia{,} la enciclopedia libre, 2013.
+\newblock URL:
+  \url{http://es.wikipedia.org/w/index.php?title=Ensayo_no_destructivo&oldid=55705663}.
+
+\bibitem{wiki:segmentation}
+Wikipedia.
+\newblock Image segmentation --- wikipedia{,} the free encyclopedia, 2013.
+\newblock URL:
+  \url{http://en.wikipedia.org/w/index.php?title=Image_segmentation&oldid=549435126}.
+
+\bibitem{wiki:precisionandrecall}
+Wikipedia.
+\newblock Precision and recall --- wikipedia{,} the free encyclopedia, 2013.
+\newblock URL:
+  \url{http://en.wikipedia.org/w/index.php?title=Precision_and_recall&oldid=555149430}.
+
+\bibitem{wiki:Radiografia}
+Wikipedia.
+\newblock Radiografía --- wikipedia{,} la enciclopedia libre, 2013.
+\newblock URL:
+  \url{http://es.wikipedia.org/w/index.php?title=Radiograf%C3%ADa&oldid=56282751}.
+
+\bibitem{wiki:thresholding}
+Wikipedia.
+\newblock Thresholding (image processing) --- wikipedia{,} the free
+  encyclopedia, 2013.
+\newblock URL:
+  \url{http://en.wikipedia.org/w/index.php?title=Thresholding_(image_processing)&oldid=539260515}.
+
+\bibitem{zhang2003algorithms}
+Z.~Zhang, C.~Chen, J.~Sun, and K.~Luk~Chan.
+\newblock Em algorithms for gaussian mixtures with split-and-merge operation.
+\newblock {\em Pattern recognition}, 36(9):1973--1983, 2003.
+
+\end{thebibliography}

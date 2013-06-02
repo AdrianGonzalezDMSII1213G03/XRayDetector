@@ -126,7 +126,7 @@ En esta sección se repasa de una manera rápida los principales aspectos del de
 
 Conviene aclarar que los términos que define la metodología \scrum {} se encuentran en inglés, han sido mantenidos en el idioma original para no confundir con las traducciones.
 
-\scrum{} \citeotras{scrum} es una metodología para la gestión y desarrollo de proyectos software basada en un proceso iterativo e incremental. Cada iteración termina con una pieza de software ejecutable que incorpora una nueva funcionalidad o mejora las ya existentes. Estas iteraciones suelen durar de dos a cuatro semanas.
+\scrum{} \cite{scrum} es una metodología para la gestión y desarrollo de proyectos software basada en un proceso iterativo e incremental. Cada iteración termina con una pieza de software ejecutable que incorpora una nueva funcionalidad o mejora las ya existentes. Estas iteraciones suelen durar de dos a cuatro semanas.
 
 \scrum{} busca priorizar los trabajos que mayor valor aportan al negocio evitando, en la medida de lo posible, complejos manuales de documentación que no tengan utilidad en el proceso.
 
@@ -143,7 +143,7 @@ Los requerimientos y prioridades se revisan y ajustan durante el proyecto en int
 \subsection{Ciclo de desarrollo}
 Al inicio del proyecto se definen una serie de requisitos que serán los objetivos a cumplir. Todos ellos quedan reflejados en el \productbacklog{}. Cada uno de estos objetivos serán subdivididos en tareas pequeñas y atómicas al inicio de cada \sprint{}.
 
-El ciclo de desarrollo, como se muestra \ver{scrumProcess}, es iterativo a nivel de \sprint{}, al inicio del mismo se extraen una serie de tareas de los elementos del \productbacklog{} que conforman el \sprintbacklog{}. Estas tareas deberán ser completadas durante el ciclo.
+El ciclo de desarrollo, como se muestra \ver{ScrumProcess}, es iterativo a nivel de \sprint{}, al inicio del mismo se extraen una serie de tareas de los elementos del \productbacklog{} que conforman el \sprintbacklog{}. Estas tareas deberán ser completadas durante el ciclo.
 
 %Ciclo de desarrollo con Scrum.
 \figura{1}{imgs/ScrumProcess.png}{Metodología Scrum}{ScrumProcess}{}
@@ -216,9 +216,13 @@ En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotalt
   S-01038 & La aplicación debe permitir al usuario elegir qué tipo de ventana defectuosa quiere usar  & César, José & Media & 3 & Sprint 8  \\
   S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & 3 & Sprint 8  \\
   S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & 5 & Sprint 8  \\
-  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores  & César, José & Media & 3 & Sprint 8  \\
+  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores  & César, José & Media & 3 & Sprint 9  \\
   S-01042 & La aplicación debe tratar las excepciones de forma correcta, mostrando avisos  & César, José & Media & 3 & Sprint 8  \\
   B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & - & Sprint 8  \\
+  S-01043 & La aplicación debe permitir guardar la imagen final  & César, José & Media & 2 & Sprint 9  \\
+  S-01044 & La aplicación debe permitir guardar los defectos binarizados  & César, José & Media & 2 & Sprint 9  \\
+  S-01045 & La aplicación debe calcular <<precision and recall>> del resultado  & César, José & Media & 3 & Sprint 9  \\
+  B-01003 & BUG: coordenadas en lista de píxeles blancos  & César, José & Alta & - & Sprint 9  \\
  }
 \newpage
 
@@ -306,7 +310,7 @@ En el \burndownchart{} \ver{burndownChartSprint2} podemos ver 2 cosas:
 \end{enumerate}
 
 %Burndown chart del Sprint 2.
-\figura{1}{imgs/burndownChartSprint2.png}{Burndown Chart del segundo Sprint}{burndownChartSprint2}{}
+\figura{0.6}{imgs/burndownChartSprint2.png}{Burndown Chart del segundo Sprint}{burndownChartSprint2}{}
 
 \subsubsection*{Retrospective meeting}
 ¿Qué ha ido bien?
@@ -360,7 +364,7 @@ Este \sprint{} se planificó de manera especial, ya que por medio están las vac
 En el \burndownchart{} \ver{burndownChartSprint3} podemos ver que hay un gran periodo totalmente plano, en el que no pudimos prácticamente hacer nada del proyecto. Esto estaba previsto y controlado, y por eso planificamos este \sprint{} con tanto tiempo.
 
 %Burndown chart del Sprint 3.
-\figura{1}{imgs/burndownChartSprint3.png}{Burndown Chart del tercer Sprint}{burndownChartSprint3}{}
+\figura{0.6}{imgs/burndownChartSprint3.png}{Burndown Chart del tercer Sprint}{burndownChartSprint3}{}
 
 Por lo demás, vemos que en este \sprint{} no nos pasamos de la fecha límte.
 
@@ -435,7 +439,7 @@ Este \sprint{} se inicia el 26/01/2013 y tiene como fecha límite el 15/02/2013.
 En el \burndownchart{} \ver{burndownChartSprint4} podemos ver que el desarrollo fue bastante escalonado, teniendo periodos planos en los que no podíamos avanzar debido a las dificultades.
 
 %Burndown chart del Sprint 4.
-\figura{1}{imgs/burndownChartSprint4.png}{Burndown Chart del cuarto Sprint}{burndownChartSprint4}{}
+\figura{0.6}{imgs/burndownChartSprint4.png}{Burndown Chart del cuarto Sprint}{burndownChartSprint4}{}
 
 Todo esto al final hizo que nos pasáramos de fecha, ya que acabamos el 21 de febrero.
 
@@ -555,7 +559,7 @@ Este \sprint{} se inicia el 21/02/2013 y tiene como fecha límite el 12/03/2013.
 En el \burndownchart{} \ver{burndownChartSprint5} podemos ver que el desarrollo fue bastante cercano a la recta ideal.
 
 %Burndown chart del Sprint 5.
-\figura{1}{imgs/burndownChartSprint5.png}{Burndown Chart del quinto Sprint}{burndownChartSprint5}{}
+\figura{0.6}{imgs/burndownChartSprint5.png}{Burndown Chart del quinto Sprint}{burndownChartSprint5}{}
 
 Esto hizo que, pese a tener mucha carga de trabajo en este \sprint{}, terminásemos dentro del tiempo. Fue una buena planificación.
 
@@ -648,7 +652,7 @@ Este \sprint{} se inicia el 12/03/2013 y tiene como fecha límite el 26/03/2013.
 En el \burndownchart{} \ver{burndownChartSprint6} podemos ver que el desarrollo fue cercano a la recta ideal.
 
 %Burndown chart del Sprint 6.
-\figura{1}{imgs/burndownChartSprint6.png}{Burndown Chart del sexto Sprint}{burndownChartSprint6}{}
+\figura{0.6}{imgs/burndownChartSprint6.png}{Burndown Chart del sexto Sprint}{burndownChartSprint6}{}
 
 Esto hizo que terminásemos dentro de tiempo. Es más, podríamos incluso haber metido más carga de trabajo, ya que terminamos algo antes de tiempo. La planificación no fue mala.
 
@@ -725,7 +729,7 @@ Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013.
 En el \burndownchart{} \ver{burndownChartSprint7} podemos ver que hubo una primera parte en la que la curva es totalmente plana. Coincide con las vacaciones.
 
 %Burndown chart del Sprint 7.
-\figura{1}{imgs/burndownChartSprint7.png}{Burndown Chart del séptimo Sprint}{burndownChartSprint7}{}
+\figura{0.6}{imgs/burndownChartSprint7.png}{Burndown Chart del séptimo Sprint}{burndownChartSprint7}{}
 
 Pese a ello, terminamos a tiempo. Esto es debido a que tuvimos en cuenta esta eventualidad, dando lugar a una buena planificación.
 
@@ -766,7 +770,7 @@ Por lo tanto, en este último \sprint{} pretendemos cerrar (o prácticamente dej
 
 
 \subsubsection*{Fechas de desarrollo y tiempo estimado}
-Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 01/05/2013. Tiene un total de 22 puntos estimados.
+Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 04/05/2013. Tiene un total de 22 puntos estimados.
 
 
 \subsubsection*{Sprint planning}
@@ -817,8 +821,78 @@ Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 01/05/2013.
 
 
 \subsubsection*{Burndown chart}
-Aún no hay.
+En el \burndownchart{} \ver{burndownChartSprint8} podemos ver que nos adaptamos muy bien a la curva ideal en un principio, llegando incluso a adelantarnos y terminar antes de tiempo.
+
+%Burndown chart del Sprint 7.
+\figura{0.6}{imgs/burndownChartSprint8.png}{Burndown Chart del octavo Sprint}{burndownChartSprint8}{}
 
 
 \subsubsection*{Retrospective meeting}
-Aún no hay.
+¿Qué ha ido bien?
+\begin{itemize}
+ \item La interacción con la tabla de resultados y los defectos dibujados ha salido bien y queda realmente bien.
+ \item Las modificaciones realizadas funcionan bien.
+ \item El módulo de ayuda en línea funciona perfectamente.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Por unas dudas que tuvimos, no pudimos implementar la selección de características, por lo que se deja para el siguiente \sprint{}. Es necesario, por tanto, hacer una iteración más.
+\end{itemize}
+
+\subsection{Sprint 9}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Terminar toda la parte del código definitivamente.
+\item Implementar lo que no se pudo implementar en el anterior \sprint{}
+\item Solucionar algún BUG.
+\item Añadir la última funcionalidad que surgió en la reunión anterior.
+\end{itemize}
+
+Como vemos, se pretende cerrar lo que no se pudo cerrar en el anterior \sprint{}. Será una iteración corta, con pocas historias de usuario.
+
+La última funcionalidad hace referencia a la posibilidad de exportar la imagen con los defectos dibujados y la imagen con los defectos binarizados, así como la implementación de una medida de precisión, como es \emph{Precision \& Recall}.
+
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 20/05/2013 y tiene como fecha límite el 03/06/2013. Tiene un total de 10 puntos estimados.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores.
+  \begin{itemize}
+   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su \emph{get} y su \emph{set}.
+   \item TK-00090: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00091: En función de la opción, seleccionar todas las características o sólo las mejores.
+  \end{itemize}
+ \item S-01043: La aplicación debe permitir guardar la imagen final.
+  \begin{itemize}
+   \item TK-00096: Creación del botón y su \textit{listener}.
+  \end{itemize}
+  \item S-01044: La aplicación debe permitir guardar los defectos binarizados.
+  \begin{itemize}
+   \item TK-00097: Creación del botón y su \textit{listener}.
+  \end{itemize}
+  \item S-01045: La aplicación debe calcular <<precision and recall>> del resultado.
+  \begin{itemize}
+   \item TK-00098: Creación de un botón y su \textit{listener}.
+   \item TK-00099: Implementación de un diálogo modal con los datos.
+   \item TK-00100: Implementación del cálculo de <<precision \& recall>>.
+  \end{itemize}
+ \item B-01003: BUG: coordenadas en lista de píxeles blancos.
+  \begin{itemize}
+   \item TK-00101: Cambiar la forma en que se pasa la imagen a la estrategia.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{Burndown chart}
+Aún no hay
+
+
+\subsubsection*{Retrospective meeting}
+Aún no hay
+
