@@ -44,10 +44,10 @@ public class Auto_Local_Threshold implements PlugIn {
 		// 1 - Obtain the currently active image:
 		//ImagePlus imp = IJ.getImage();
 
-		if (null == imp){
-			IJ.showMessage("There must be at least one image open");
-			return;
-		}
+		//if (null == imp){
+			//IJ.showMessage("There must be at least one image open");
+			//return;
+		//}
 
 		if (imp.getBitDepth()!=8) {
 			IJ.showMessage("Error", "Only 8-bit images are supported");

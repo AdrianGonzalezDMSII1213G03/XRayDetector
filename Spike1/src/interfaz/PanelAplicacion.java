@@ -870,21 +870,23 @@ public class PanelAplicacion{
 		        		    	thread = new Thread(threadEntrenar);
 		        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 		        		    	    public void uncaughtException(Thread th, Throwable ex) {
-		        		    	    	JOptionPane.showMessageDialog(
-		        		    	    			   null,
-		        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
-		        		    	    			   "Error",
-		        		    	    			   JOptionPane.ERROR_MESSAGE);
-		        						try {
-											kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
-											txtLog.setCaretPosition(txtLog.getDocument().getLength());
-										} catch (BadLocationException e) {
-											MyLogHandler.writeException(e);
-											e.printStackTrace();
-										} catch (IOException e) {
-											MyLogHandler.writeException(e);
-											e.printStackTrace();
-										}
+		        		    	    	if(!ex.getClass().toString().contains("ThreadDeath")){
+			        		    	    	JOptionPane.showMessageDialog(
+			        		    	    			   null,
+			        		    	    			   "Se ha producido un error: "+ ex.getMessage(),
+			        		    	    			   "Error",
+			        		    	    			   JOptionPane.ERROR_MESSAGE);
+			        						try {
+												kit.insertHTML(doc, doc.getLength(), "<p class=\"error\"> Error</p><br>", 0, 0, null);
+												txtLog.setCaretPosition(txtLog.getDocument().getLength());
+											} catch (BadLocationException e) {
+												MyLogHandler.writeException(e);
+												e.printStackTrace();
+											} catch (IOException e) {
+												MyLogHandler.writeException(e);
+												e.printStackTrace();
+											}
+		        		    	    	}
 		        		    	    }
 		        		    	};
 		        		    	thread.setUncaughtExceptionHandler(h);

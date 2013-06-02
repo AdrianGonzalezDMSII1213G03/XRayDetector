@@ -276,8 +276,10 @@ public class Fachada {
 			
 			Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
 	    	    public void uncaughtException(Thread th, Throwable ex) {
-	    	    	excepcion = new RuntimeException(ex);
-	    	    	stop();
+	    	    	if(!ex.getClass().toString().contains("ThreadDeath")){
+		    	    	excepcion = new RuntimeException(ex);
+		    	    	stop();
+	    	    	}
 	    	    }
 	    	};			
 					
@@ -383,8 +385,10 @@ public class Fachada {
 		
 		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {
     	    public void uncaughtException(Thread th, Throwable ex) {
-    	    	excepcion = new RuntimeException(ex);
-    	    	stop();
+    	    	if(!ex.getClass().toString().contains("ThreadDeath")){
+	    	    	excepcion = new RuntimeException(ex);
+	    	    	stop();
+    	    	}
     	    }
     	};
 				
@@ -424,7 +428,6 @@ public class Fachada {
 		int a = ((anchura-altoVentana)/salto)+1;
 		int b = ((altura-altoVentana)/salto)+1;
 		int res = a*b;
-		//System.out.println("Ancho: "+anchura+" Alto: "+altura+" Salto: " +salto+ "Total ventanas: " +res);
 		return res;
 	}
 	
@@ -516,16 +519,9 @@ public class Fachada {
 			if(x + width > getImagen().getWidth()){
 				width = selection.width + alt.getRadius();
 			}
-
-			/*
-			if(x < 0 || y < 0 || height + y > getImagen().getHeight() || width + x > getImagen().getWidth()){
-				ip.setRoi(selection); //si no entra la seleccion+radio, cogemos la selección normal
-			}
-			*/
-//			else{				
+			
 			Rectangle rec = new Rectangle(x, y, width, height);
 			ip.setRoi(rec);
-//			}
 			
 			ip = ip.crop();
 			BufferedImage croppedImage = ip.getBufferedImage();
@@ -579,8 +575,7 @@ public class Fachada {
 
 		myRT = new ResultsTable(); // Here we create our empty
 		// results table
-		ParticleAnalyzer pa = new ParticleAnalyzer(myOptions, myMeasurements, myRT, myMinSize, myMaxSize, myMinCirc, myMaxCirc);  
-		/** In this method we create our particle analyzer with our properties */
+		ParticleAnalyzer pa = new ParticleAnalyzer(myOptions, myMeasurements, myRT, myMinSize, myMaxSize, myMinCirc, myMaxCirc);
 
 		RoiManager manager = new RoiManager(true);
 		
@@ -611,7 +606,6 @@ public class Fachada {
 	public void drawEdge(Graphic imgPanel) {
 		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];
 		int[][] defectsMatrixDefinitiva;
-		//defect = false;
 
 		copiarMatrizDefectos(defectsMatrix2);
 
@@ -634,7 +628,6 @@ public class Fachada {
 		imgPanel.isEnded(true);
 		imgPanel.setImage(imagePlusResult.getImage());
 		imgPanel.repaint();
-		//guardarMapaCalor();
 		
 		calcularCaracteristicasGeometricas();
 	}
@@ -812,13 +805,6 @@ public class Fachada {
 		g.dispose();
 		return bgImage;
 	}
-	
-//	//Pruebas
-//	public void guardarMapaCalor(){
-//		FloatProcessor fp = new FloatProcessor(defectMatrix);
-//		ImagePlus i = new ImagePlus("mapa_calor", fp.createImage());
-//		IJ.saveAs(i, "BMP", "./res/img/" + i.getTitle());
-//	}
 	
 	public void ejecutaVentanaOpcionRegiones(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
 		ArrayList<int[]> blancos = calcularUmbralesLocales(selection);

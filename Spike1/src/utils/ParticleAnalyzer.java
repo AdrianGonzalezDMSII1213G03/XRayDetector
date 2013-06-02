@@ -240,8 +240,8 @@ public class ParticleAnalyzer implements PlugInFilter, Measurements {
 	public int setup(String arg, ImagePlus imp) {
 		this.imp = imp;
 		IJ.register(ParticleAnalyzer.class);
-		if (imp==null)
-			{IJ.noImage();return DONE;}
+		//if (imp==null)
+			//{IJ.noImage();return DONE;}
 		if (imp.getBitDepth()==24 && !isThresholdedRGB(imp)) {
 			IJ.error("Particle Analyzer",
 			"RGB images must be thresholded using\n"

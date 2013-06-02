@@ -1,6 +1,7 @@
 package modelo;
 
 import java.awt.Rectangle;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +47,7 @@ public class VentanaRegiones extends VentanaAbstracta {
 			Analyzer an = new Analyzer(getImage());
 			an.measure();			
 			ResultsTable rt = Analyzer.getResultsTable();
-			int numPixelPorRoi = (int) (rt.getValueAsDouble(ResultsTable.AREA, 0) * 0.1);
+			int numPixelPorRoi = (int) (rt.getValueAsDouble(ResultsTable.AREA, 0) * 0.05);
 			if (numPixelPorRoi < MIN){
 				numPixelPorRoi = MIN;
 			}
@@ -55,11 +56,14 @@ public class VentanaRegiones extends VentanaAbstracta {
 			ip.resetRoi();
 		}
 		
+		Collections.shuffle(listaPixeles);
+		
 		while(!listaPixeles.isEmpty()){
 			int randIndex = rand.nextInt(listaPixeles.size());
 			int[] coord = listaPixeles.get(randIndex);
-			int coordX = (coord[0] - selection.x) - getAnchuraVentana()/2;
-			int coordY = (coord[1] - selection.y) - getAlturaVentana()/2;
+			
+			int coordX = (coord[0] - selection.x - 15) - (getAnchuraVentana()/2);
+			int coordY = (coord[1] - selection.y - 15) - (getAlturaVentana()/2);
 			
 			if(coordX >= 0 && coordY >= 0 && coordX <= (getImage().getProcessor().getWidth() - getAnchuraVentana())
 					&& coordY <= (getImage().getProcessor().getHeight() - getAlturaVentana())){
@@ -96,9 +100,6 @@ public class VentanaRegiones extends VentanaAbstracta {
 	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
 		
 		int y = coordenadaY + selection.y;
-//		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-//			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
-//		}
 
 		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchuraVentana(), getAlturaVentana());
 		imgPanel.repaint();
@@ -108,9 +109,6 @@ public class VentanaRegiones extends VentanaAbstracta {
 		
 		//para la coordenada Y, hay que determinar en qué trozo de la imagen estamos analizando
 		int y = coordY + selection.y;
-//		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){
-//			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección
-//		}
 		
 		int opcion = getPropiedades().getTipoClasificacion();
 		
@@ -133,9 +131,6 @@ public class VentanaRegiones extends VentanaAbstracta {
 				}
 				break;
 		}
-		
-		
-
 	}
 	
 	public void setArrayRois(Roi[] array){
