@@ -95,7 +95,46 @@
 \BOOKMARK [2][-]{subsection.249}{Especificaci\363n de requisitos de informaci\363n}{section.247}% 95
 \BOOKMARK [2][-]{subsection.251}{Requisitos funcionales}{section.247}% 96
 \BOOKMARK [2][-]{subsection.266}{Requisitos no funcionales}{section.247}% 97
-\BOOKMARK [2][-]{subsection.267}{Matrices}{section.247}% 98
-\BOOKMARK [1][-]{section.268}{Interfaz de usuario}{appendix.212}% 99
-\BOOKMARK [0][-]{figure.270}{Ap\351ndices}{}% 100
-\BOOKMARK [0][-]{figure.270}{Bibliograf\355a}{}% 101
+\BOOKMARK [1][-]{section.267}{Interfaz de usuario}{appendix.212}% 98
+\BOOKMARK [0][-]{appendix.270}{Especificaci\363n de dise\361o}{}% 99
+\BOOKMARK [1][-]{section.271}{Introducci\363n}{appendix.270}% 100
+\BOOKMARK [1][-]{section.272}{\301mbito del software}{appendix.270}% 101
+\BOOKMARK [1][-]{section.273}{Dise\361o Arquitect\363nico}{appendix.270}% 102
+\BOOKMARK [2][-]{subsection.274}{Estilos arquitect\363nicos utilizados}{section.273}% 103
+\BOOKMARK [2][-]{subsection.277}{Arquitectura final de la aplicaci\363n}{section.273}% 104
+\BOOKMARK [2][-]{subsection.278}{Patrones de dise\361o utilizados}{section.273}% 105
+\BOOKMARK [2][-]{subsection.288}{Diagrama de clases de dise\361o}{section.273}% 106
+\BOOKMARK [1][-]{section.289}{Dise\361o de la interfaz}{appendix.270}% 107
+\BOOKMARK [2][-]{subsection.290}{Ventana principal}{section.289}% 108
+\BOOKMARK [2][-]{subsection.292}{Ventana de opciones avanzadas}{section.289}% 109
+\BOOKMARK [2][-]{subsection.294}{Ventana de Precision \046 Recall}{section.289}% 110
+\BOOKMARK [1][-]{section.296}{Dise\361o procedimental}{appendix.270}% 111
+\BOOKMARK [1][-]{section.297}{Referencia cruzada a los requisitos}{appendix.270}% 112
+\BOOKMARK [1][-]{section.298}{Pruebas}{appendix.270}% 113
+\BOOKMARK [2][-]{subsection.299}{Pruebas de integraci\363n}{section.298}% 114
+\BOOKMARK [1][-]{section.300}{Entorno tecnol\363gico del sistema}{appendix.270}% 115
+\BOOKMARK [1][-]{section.302}{Plan de desarrollo e implantaci\363n}{appendix.270}% 116
+\BOOKMARK [0][-]{appendix.304}{Manual del programador}{}% 117
+\BOOKMARK [1][-]{section.305}{Introducci\363n}{appendix.304}% 118
+\BOOKMARK [1][-]{section.306}{Documentaci\363n de las bibliotecas}{appendix.304}% 119
+\BOOKMARK [2][-]{subsection.307}{Bibliotecas de Java}{section.306}% 120
+\BOOKMARK [2][-]{subsection.308}{ImageJ}{section.306}% 121
+\BOOKMARK [2][-]{subsection.309}{Weka}{section.306}% 122
+\BOOKMARK [2][-]{subsection.310}{JavaHelp}{section.306}% 123
+\BOOKMARK [2][-]{subsection.311}{Apache Commons IO}{section.306}% 124
+\BOOKMARK [2][-]{subsection.312}{EJML}{section.306}% 125
+\BOOKMARK [1][-]{section.313}{C\363digo fuente}{appendix.304}% 126
+\BOOKMARK [2][-]{subsection.314}{Recursos necesarios por el c\363digo fuente}{section.313}% 127
+\BOOKMARK [1][-]{section.315}{Manual del programador}{appendix.304}% 128
+\BOOKMARK [2][-]{subsection.316}{Agregar nuevos elementos a la aplicaci\363n}{section.315}% 129
+\BOOKMARK [2][-]{subsection.318}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.315}% 130
+\BOOKMARK [1][-]{section.319}{Pruebas unitarias}{appendix.304}% 131
+\BOOKMARK [0][-]{appendix.320}{Manual del usuario}{}% 132
+\BOOKMARK [1][-]{section.321}{Documento de instalaci\363n y configuraci\363n}{appendix.320}% 133
+\BOOKMARK [2][-]{subsection.322}{Requisitos}{section.321}% 134
+\BOOKMARK [2][-]{subsection.323}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.321}% 135
+\BOOKMARK [1][-]{section.324}{Manual de usuario}{appendix.320}% 136
+\BOOKMARK [2][-]{subsection.325}{Ventana principal de la aplicaci\363n}{section.324}% 137
+\BOOKMARK [2][-]{subsection.334}{Configuraci\363n de la aplicaci\363n}{section.324}% 138
+\BOOKMARK [0][-]{Item.346}{Ap\351ndices}{}% 139
+\BOOKMARK [0][-]{Item.346}{Bibliograf\355a}{}% 140

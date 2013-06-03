@@ -5,6 +5,11 @@ Analyze menu.
 \newblock http://rsbweb.nih.gov/ij/docs/menus/analyze.html.
 \newblock URL: \url{http://rsbweb.nih.gov/ij/docs/menus/analyze.html}.
 
+\bibitem{arquitectura}
+Arquitectura de software.
+\newblock http://magmacode.net/arquitecturadesoftware.php.
+\newblock URL: \url{http://magmacode.net/arquitecturadesoftware.php}.
+
 \bibitem{autolocal}
 Auto local threshold - fiji.
 \newblock {http://fiji.sc/wiki/index.php/Auto\_Local\_Threshold}.
@@ -62,6 +67,10 @@ Y.~Bazi, L.~Bruzzone, and F.~Melgani.
 \newblock Image thresholding based on the em algorithm and the generalized
   gaussian distribution.
 \newblock {\em Pattern recognition}, 40(2):619--634, 2007.
+
+\bibitem{carlos_lopez_nozal_apuntes_2012}
+{Carlos López Nozal}.
+\newblock Apuntes de diseño y mantenimiento del software {II}, 2012.
 
 \bibitem{daugman1988complete}
 j.g. Daugman.

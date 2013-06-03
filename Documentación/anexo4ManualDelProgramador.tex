@@ -1,0 +1,135 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Manual del programador}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Introducción
+\section{Introducción}
+Este anexo explica en detalle la fase de implementación del proyecto.
+
+Se realiza la documentación de las librerías utilizadas y las creadas específicamente para la aplicación, un manual del programador para que otras personas puedan trabajar en el proyecto en un futuro y una descripción de las pruebas unitarias del sistema.
+
+\section{Documentación de las bibliotecas}\label{bib}
+
+\subsection{Bibliotecas de Java}
+Java es un lenguaje de programación orientado a objetos, desarrollado por Sun Microsystems a principios de los años 90.
+
+El lenguaje en sí mismo toma mucha de su sintaxis de C y C++, pero tiene un modelo de objetos más simple y elimina herramientas de bajo nivel, que suelen inducir a muchos errores, como la manipulación directa de punteros o memoria.
+
+En concreto, nosotros hemos utilizado \textit{Java 7}, por lo que es necesario descargar el \textit{Development Kit} correspondiente a esta versión.
+
+\subsection{ImageJ}
+ImageJ permite ser usado programáticamente mediante llamadas a un JAR. Esto nos ha permitido trabajar con las imágenes de forma sencilla, por ejemplo, estableciendo regiones de interés en una imagen y extrayendo información de sus píxeles.
+
+En concreto, hemos usado la versión 1.47n, que se corresponde con el archivo \textit{ij.jar}.
+
+\subsection{Weka}
+\weka{}\cite{weka} es una plataforma de software para aprendizaje automático y minería de datos, diseñada por la Universidad de Waikato. Está escrita en \java{}.
+
+Nosotros hemos utilizado \weka{} usando su JAR, lo que permite realizar llamadas a sus métodos dentro de nuestro código, como para, por ejemplo, construir y usar clasificadores. Esto permite realizar estas tareas de una forma muy sencilla, sin necesidad de programar estos métodos manualmente.
+
+\subsection{JavaHelp}
+JavaHelp es una expansión de Java que facilita la programación de las ventanas de ayuda en las aplicaciones java.
+
+Con JavaHelp se pueden crear las ventanas típicas de ayuda de las aplicaciones informáticas, en las que sale en el lado izquierdo un panel con varias pestañas: índice de contenidos, búsqueda, temas favoritos, índice alfabético, etc., mientras que en el lado derecho sale el texto de la ayuda.
+
+Las ventanas de ayuda pueden lanzarse directamente con la pulsación de botones en la aplicación, o bien por medio de la pulsación de la tecla F1, mostrando la ayuda correspondiente a la ventana sobre la que estamos trabajando.
+
+Las ventanas de ayuda de JavaHelp se configuran por medio de varios ficheros en formato XML. Los textos de ayuda que se quieran mostrar se escribirán en ficheros con formato HTML.
+
+JavaHelp no se incluye en la JDK, ni en la JRE, sino que debe conseguirse como un paquete externo.
+
+La biblioteca correspondiente al módulo de JavaHelp se corresponde con el archivo jh.jar.
+
+
+\subsection{Apache Commons IO}
+Esta librería permite realizar algunas operaciones con ficheros, como es la fusión de uno o más ficheros de texto, o la exportación de un cierto texto a un fichero externo de una forma muy sencilla, evitándonos problemas.
+
+Hemos usado la versión 2.4, y se corresponde con el archivo \textit{commons-io-2.4}.
+
+\subsection{EJML}
+Esta librería ha sido usada sólo para el cálculo de una de las caracteristicas de Haralick que requería previamente el cálculo de unos autovalores. Estos cálculos son computacionalmente muy exigentes, y la solución que dieron los desarrolladores anteriores no era buena. Esta librería realiza cálculos con matrices de forma muy eficiente, pero pese a ello, los cálculos que necesitamos ralentizan la ejecución de nuestra aplicación.
+
+Hemos usado la versión 0.21, que se corresponde con el archivo \textit{ejml-0.21}.
+
+
+\section{Código fuente}
+El código fuente de la aplicación XRayDetector se puede encontrar en la carpeta XRayDetector/src.
+
+Dentro de la carpeta src, los archivos pertenecientes al código fuente se encuentran organizados en carpetas correspondientes a los diferentes paquetes que conforman la estructura de ficheros Java de la aplicación.
+
+Esta estructura está organizada de la siquiente forma:
+
+FALTA
+
+\subsection{Recursos necesarios por el código fuente}
+La carpeta \textit{res} contiene los archivos para la correcta ejecución y funcionamiento de la aplicación. Se encuentra estructurada en subcarpetas, que son:
+
+\begin{itemize}
+\item Arff: contiene ficheros \arff{} de ejemplo.
+\item Ayuda: Se corresponde con el módulo de ayuda en línea que utiliza la aplicación mediante \textit{JavaHelp}.
+\item Config: contiene un único fichero (\textit{config.properties}) con las opciones elegidas por el usuario.
+\item Img: contiene, por un lado, imágenes de ejemplo para usar la aplicación, y, por otro lado, los iconos necesarios para la interfaz de la aplicación (en la carpeta \textit{app}).
+\item Log: contiene el archivo generado por el gestor de log integrado en la aplicación. Además, cuando el usuario exporta el contenido del log de la interfaz, se guarda automáticamente en la carpeta \textit{html} dentro de esta misma carpeta.
+\item Model: contiene clasificadores de ejemplo para poder usar la aplicación.
+\end{itemize}
+
+La carpeta \textit{lib} contiene las bibliotecas necesarias para la compilación y ejecución de la aplicación. Estas librerías se corresponden con los archivos .JAR, descritos en el apartado \ref{bib}.
+
+El código fuente de las pruebas se encuentra en la carpeta XRayDetector/test.
+
+La documentación interna de las clases tras ser generada es almacenada en el directorio XRayDetector/docs/javadoc.
+
+La documentación correspondiente al docheck referente a la documentación interna de las clases tras ser generada es almacenada en el directorio XRayDetector/docs/docCheck.
+
+\section{Manual del programador}
+Este manual pretende ser una guía de referencia para futuros programadores de la aplicación, facilitándoles en la medida de lo posible, la creación de nuevos componentes.
+
+\subsection{Agregar nuevos elementos a la aplicación}
+A continuación se va a mostrar un ejemplo para añadir nuevos componentes a la aplicación, creando nuevos tipos de ventana, nuevos algoritmos de extracción de características y nuevos algoritmos de preprocesamiento.
+
+\subsubsection{Creación de nuevos elementos en las estrategias}
+Como ya hemos visto, para las ventanas, extracción de características y preprocesamiento se han usado sendos patrones estrategia. Por lo tanto, el primer paso es simplemente incluir la nueva clase en esta estructura, heredando de la superclase que corresponda. Después, hay que implementar los métodos abstractos de estas superclases, que son realmente donde va a estar la funcionalidad específica.
+
+En la extracción de características, es necesario guardar un vector con los nombres de cada descriptor en particular (\textit{headVector}) y otro, del mismo tamaño, con los valores de cada descriptor, en formato \textit{double}.
+
+Para integrar una nueva ventana en el funcionamiento de la aplicación, es necesario añadir una opción en las opciones avanzadas y, después, los métodos que llaman a las ventanas (ejecutar entrenamiento, ejecutar análisis) deberán controlarlas.
+
+Para integrar un nuevo algoritmo de extracción de características, habría que llamar a sus métodos dentro e la clase VentanaAbstracta, que es la que contiene los cálculos. Además, se hace necesario añadir los nombres de los descriptores en la cabecera de los \arff{}.
+
+Para integrar un nuevo algoritmo de preprocesamiento, sería necesario crear una nueva opción, ya que de momento sólo hay uno y no se ha implementado esta opción, aunque la estructura está pensaba para albergar nuevos algoritmos.
+
+\subsection{Modificación del módulo de ayuda en línea de la aplicación y del motor de búsqueda}
+Para realizar el módulo de ayuda online de la aplicación, hemos utilizado la biblioteca JavaHelp, la cual ya hemos reseñado en este mismo anexo de la memoria.
+
+Para poder usar JavaHelp, necesitaremos los siguientes ficheros:
+
+\begin{itemize}
+\item Ficheros html: en estos ficheros escribiremos la ayuda de la aplicación. Se usa una codificación html estándar, y podemos poner la información de ayuda correspondiente a las ventanas de la aplicación.
+\item Mapa de JavaHelp: este fichero contiene los nombres de los html junto con la clave que le damos a cada uno de ellos.
+
+Tendremos un mapID por cada html que queremos que se muestre. En nuestro caso, es el fichero <<mapa.jhm>> contenido en el directorio XRayDetector/res/ayuda.
+\item Tabla de contenidos: en él incluiremos los capítulos y subcapítulos de los que consta nuestra ayuda. En nuestro caso, se trata del fichero <<toc.xml>> que se encuentra en el directorio de ayuda.
+\item Fichero HelpSet: es el fichero principal de la ayuda. En él se indica qué se mostrará en la ayuda. En nuestro caso, sólo queremos que se muestren la tabla de contenidos y un motor de búsqueda.
+
+Hay que indicar, además, cuál es el archivo de mapas. Es el fichero <<ayuda.hs>> del directorio de ayuda.
+\item Motor de búsqueda: para realizar el motor de búsqueda, debemos tener descomprimida la biblioteca de JavaHelp.
+
+Además de meter la correspondiente parte del motor en el fichero del HelpSet, debemos introducir el siguiente comando mediante línea de comandos, estando en el directorio de la ayuda:
+
+\begin{verbatim}
+
+java -jar path_java_help/jh2.0/javahelp/bin/jhindexer.jar
+
+\end{verbatim}
+
+Donde el \textit{path\_java\_help} es el directorio en el que hemos descomprimido la biblioteca de JavaHelp.
+Una vez realizado, se habrá creado una carpeta llamada \textit{JavaHelpSearch}, que es la que contiene el motor de búsqueda.
+\end{itemize}
+
+\section{Pruebas unitarias}
+FALTA
+
+ 

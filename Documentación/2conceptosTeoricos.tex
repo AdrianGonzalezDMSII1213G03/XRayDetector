@@ -171,14 +171,14 @@ También se les conoce como características estándar o de primer orden \cite{p
 
 Las características más comunes y que se han usado en este proyecto son:
 
-\subsubsection*{Media}
-Se calcula el promedio de los niveles de intensidad de todos los píxeles de la imagen. Esta es una medida útil ya que nos permite determinar de forma sencilla la claridad de la imagen. Si la media es alta, la imagen será más clara, mientras que si la media es baja, será más oscura.
+\paragraph*{Media}\mbox{} \\
+\indent Se calcula el promedio de los niveles de intensidad de todos los píxeles de la imagen. Esta es una medida útil ya que nos permite determinar de forma sencilla la claridad de la imagen. Si la media es alta, la imagen será más clara, mientras que si la media es baja, será más oscura.
 
-\subsubsection*{Desviación estándar}
-Es una medida de dispersión que nos indica cuánto se alejan los valores respecto a la media. Nos sirve para apreciar el grado de variabilidad entre los valores de intensidad de los píxeles de una región.
+\paragraph*{Desviación estándar}\mbox{} \\
+\indent Es una medida de dispersión que nos indica cuánto se alejan los valores respecto a la media. Nos sirve para apreciar el grado de variabilidad entre los valores de intensidad de los píxeles de una región.
 
-\subsubsection*{Primera y segunda derivadas}
-Se utilizan operadores de detección de bordes \cite{marcosmartin2004} basados en aproximaciones de la primera y segunda derivada de los niveles de grises de la imagen. La primera derivada del perfil de gris será positiva en el borde de entrada de la transición entre una zona clara y otra oscura. En el borde de salida será negativa, mientras que en las zonas de nivel de gris constante será cero. El módulo de la primera derivada podrá utilizarse, por lo tanto, para detectar la presencia de un borde en una imagen. En cuanto a la segunda derivada, será positiva en la parte de la transición asociada con el lado oscuro del borde, negativa en la parte de la transición asociada con el lado claro y cero en las zonas de nivel de gris constante. El signo de la segunda derivada nos permitirá determinar si un píxel perteneciente a un borde está situado en el lado oscuro o claro del mismo.
+\paragraph*{Primera y segunda derivadas}\mbox{} \\
+\indent Se utilizan operadores de detección de bordes \cite{marcosmartin2004} basados en aproximaciones de la primera y segunda derivada de los niveles de grises de la imagen. La primera derivada del perfil de gris será positiva en el borde de entrada de la transición entre una zona clara y otra oscura. En el borde de salida será negativa, mientras que en las zonas de nivel de gris constante será cero. El módulo de la primera derivada podrá utilizarse, por lo tanto, para detectar la presencia de un borde en una imagen. En cuanto a la segunda derivada, será positiva en la parte de la transición asociada con el lado oscuro del borde, negativa en la parte de la transición asociada con el lado claro y cero en las zonas de nivel de gris constante. El signo de la segunda derivada nos permitirá determinar si un píxel perteneciente a un borde está situado en el lado oscuro o claro del mismo.
 
 
 \subsubsection{Descriptores de textura}
@@ -189,8 +189,8 @@ Otra definición de la textura podría ser la variación entre píxeles en una p
 
 El análisis de la textura de las imágenes nos ofrecerá datos útiles para nuestro trabajo. Hemos utilizado los siguientes descriptores:
 
-\subsubsection*{Características de Haralick}
-Siguiendo la propuesta de Haralick \cite{haralick1992computer}, se extrae información de textura de la distribución de los valores de intensidad de los píxeles. Dichos valores se calculan utilizando matrices de coocurrencia que representan información de textura de segundo orden.
+\paragraph*{Características de Haralick}\mbox{} \\
+\indent Siguiendo la propuesta de Haralick \cite{haralick1992computer}, se extrae información de textura de la distribución de los valores de intensidad de los píxeles. Dichos valores se calculan utilizando matrices de coocurrencia que representan información de textura de segundo orden.
 
 Haralick propuso un conjunto de 14 medidas de textura basada en la dependencia espacial de los tonos de grises. Esas dependencias están especificadas en la matriz de co-ocurrencia espacial (o de niveles de gris). Se sigue la descripción de \cite{presutti2004matriz} para calcular dicha matriz.
 
@@ -303,8 +303,8 @@ Donde $\lambda_2$ es el segundo valor propio de la matriz Q definida como:
 \end{enumerate}
 
 
-\subsubsection*{Local Binary Patterns}
-Los Local Binary Patterns (LBP) \cite{wiki:LocalBinaryPatterns} son un tipo de característica usado para la clasificación de texturas. Fueron descritos por primera vez en 1994 \cite{ojala}.
+\paragraph*{Local Binary Patterns}\mbox{} \\
+\indent Los Local Binary Patterns (LBP) \cite{wiki:LocalBinaryPatterns} son un tipo de característica usado para la clasificación de texturas. Fueron descritos por primera vez en 1994 \cite{ojala}.
 
 Debido a su poder de discriminación y su simplicidad de cálculo, se ha convertido en un método popular que se usa en varios tipos de aplicaciones \cite{de2011transformaciones}.
 
@@ -461,25 +461,25 @@ La ventana irá analizando cada vez una región de la imagen, recorriendo todos 
 \item Ventana aleatoria.
 \end{itemize}
 
-\subsubsection*{Ventana deslizante}
-La ventana comienza desde la esquina superior izquierda de la imagen y se va moviendo cada cierto porcentaje del tamaño de la ventana. Cuando llega al extremo derecho baja ese mismo porcentaje y comienza de nuevo desde el lado izquierdo. A diferencia del artículo, donde se usa siempre un salto de 4 píxeles, nosotros hemos hecho que se pueda seleccionar el tamaño del salto.
+\paragraph*{Ventana deslizante}\mbox{} \\
+\indent La ventana comienza desde la esquina superior izquierda de la imagen y se va moviendo cada cierto porcentaje del tamaño de la ventana. Cuando llega al extremo derecho baja ese mismo porcentaje y comienza de nuevo desde el lado izquierdo. A diferencia del artículo, donde se usa siempre un salto de 4 píxeles, nosotros hemos hecho que se pueda seleccionar el tamaño del salto.
 
 \figuraConPosicion{1}{imgs/ventana_deslizante.png}{Esquema de la ventana deslizante \cite{DomingoMery}}{ventana_deslizante}{}{H}
 
-\subsubsection*{Ventana aleatoria}
-Se obtienen 300 muestras de ventanas por imagen, seleccionándolas aleatoriamente entre aquellas que tienen defecto y las que no.
+\paragraph*{Ventana aleatoria}\mbox{} \\
+\indent Se obtienen 300 muestras de ventanas por imagen, seleccionándolas aleatoriamente entre aquellas que tienen defecto y las que no.
 
 \subsubsection{Estrategias de etiquetado}
 Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto o no, ya que se necesita etiquetar las muestras de cada ventana como «defecto» o «no defecto». Los alumnos que desarrollaron la versión previa utilizaron una aproximación muy simple: consideraban que una ventana era defectuosa cuando, al poner esa ventana sobre la máscara coloreada manualmente, al menos un píxel de la misma estaba coloreado. Comprobamos que esto provoca falsos positivos, con lo que se pierde exactitud. Por lo tanto, decidimos implementar otras posibilidades:
 
-\subsubsection*{Píxel central}
-En este caso, se considera una ventana defectuosa cuando el píxel central de la misma es defectuoso. Es un poco más preciso que la versión del año pasado, pero sigue sin ser demasiado buena.
+\paragraph*{Píxel central}\mbox{} \\
+\indent En este caso, se considera una ventana defectuosa cuando el píxel central de la misma es defectuoso. Es un poco más preciso que la versión del año pasado, pero sigue sin ser demasiado buena.
 
-\subsubsection*{Porcentaje de la ventana}
-En esta aproximación, se considera defectuosa una ventana cuando al menos un cierto porcentaje de la ventana contiene píxeles coloreados, es decir, defectuosos. Hemos obtenido resultados muy buenos con porcentajes que van desde el 50\% al 75\%.
+\paragraph*{Porcentaje de la ventana}\mbox{} \\
+\indent En esta aproximación, se considera defectuosa una ventana cuando al menos un cierto porcentaje de la ventana contiene píxeles coloreados, es decir, defectuosos. Hemos obtenido resultados muy buenos con porcentajes que van desde el 50\% al 75\%.
 
-\subsubsection*{Píxel central más región de vecinos}
-En este caso, no sólo consideramos el píxel central, si no que creamos una región cuadrada de $3 \times 3$ píxeles a su alrededor. Consideramos entonces una ventana como defectuosa cuando un cierto porcentaje de esta región de vecinos está coloreada. Obtenemos unos resultados muy parecidos a los de la anterior aproximación con porcentajes parecidos.
+\paragraph*{Píxel central más región de vecinos}\mbox{} \\
+\indent En este caso, no sólo consideramos el píxel central, si no que creamos una región cuadrada de $3 \times 3$ píxeles a su alrededor. Consideramos entonces una ventana como defectuosa cuando un cierto porcentaje de esta región de vecinos está coloreada. Obtenemos unos resultados muy parecidos a los de la anterior aproximación con porcentajes parecidos.
 
 
 \subsubsection{Detección de defectos}

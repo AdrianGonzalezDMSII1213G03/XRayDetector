@@ -1,0 +1,250 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Especificación de diseño}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Introducción
+\section{Introducción}
+
+En este apartado se pretende dar una primera aproximación a la solución final del problema. Partiendo del análisis realizado en el apartado anterior, ahora se va a especificar cómo van a interactuar los objetos entre sí para dar la solución al problema, en contraposición a la anterior etapa de análisis dónde sólo se especificaba la funcionalidad. La frontera entre la finalización del análisis y el comienzo del diseño es difusa ya que el modelo va evolucionando y refinándose en cada paso.
+
+En este apartado se marcará el camino a seguir hacia la solución final, y se tomarán decisiones muy importantes dentro de la arquitectura, los datos o la interfaz. Los detalles de diseño son muy importantes para conseguir unos factores de calidad externos e internos que permitan obtener un producto final de calidad.
+
+Como se ha comentado con anterioridad, se va a realizar un diseño orientado a objetos. Esta metodología permite abordar el problema de una manera eficaz, y trabajar con clases y objetos que representan las abstracciones de los entes que se manifiestan en el dominio del problema, permitiéndonos así tener una comprensión mucho más clara de cómo funciona el sistema final, y de cómo están relacionadas sus piezas.
+
+El diseño es una pieza clave para el correcto desarrollo de un proyecto software, ya que facilita llevar a cabo una estructuración modular, permitiendo identificar cada elemento del programa. Esto hace posible encontrar todos aquellos puntos peligrosos a los que el desarrollo podría enfrentarse en la fase de construcción.
+
+En este apartado se definirá la estructura de paquetes de la aplicación y las relaciones que tienen entre ellos. Después, se desglosará cada paquete con los diagramas de clases, permitiendo ver y comprender el diseño con más detalle. Estos diagramas no incluirán todas las clases y atributos, sino que, por temas de legibilidad, sólo contendrán aquellas que sean más importantes para el funcionamiento del programa, ocultando información superflua.
+
+\newpage
+
+\section{Ámbito del software}
+El objetivo del sistema es la construcción de una aplicación que permita trabajar con imágenes radiográficas, pudiendo entrenar un clasificador tanto desde cero (es decir, con una serie de imágenes etiquetadas) como a partir de un fichero \arff{}, así como analizar esas radiografías para determinar si existen defectos.
+
+Se diseñará una interfaz gráfica que deberá disponer de las características que se definieron en la fase de análisis previa. Dicha interfaz deberá ser intuitiva y fácil de usar, aportando al usuario la máxima información posible para que pueda utilizarla eficientemente.
+
+Las restricciones de diseño a aplicar sobre el desarrollo son:
+\begin{itemize}
+ \item Arquitectura basada en objetos.
+ \item Aplicación extensible.
+ \item Interfaz sencilla e intuitiva.
+ \item Máxima información de cara al usuario.
+\end{itemize}
+
+\newpage
+
+\section{Diseño Arquitectónico}
+El diseño arquitectónico tiene como objetivo desarrollar la estructura modular que representa las relaciones entre los módulos, combinando la estructura del programa con la de los datos a través de interfaces que permiten el flujo de éstos.
+
+La arquitectura de la aplicación depende del problema a tratar. La mayoría de las veces se utilizan varios estilos arquitectónicos para la solución.
+
+\subsection{Estilos arquitectónicos utilizados}
+Tras un estudio de distintos estilos arquitectónicos, hemos considerado que los más convenientes para nuestra aplicación son los que se muestran a continuación.
+
+\subsubsection{Arquitectura en capas}
+Este tipo de arquitectura distribuye jerárquicamente los roles y las responsabilidades. De esta forma, se proporciona una división de los problemas a resolver. Los roles indican cómo una capa se relaciona con otra, mientras que las responsabilidades indican su funcionalidad \cite{arquitectura}. Entre sus características, podemos destacar:
+
+\begin{itemize}
+\item Descomposición de los servicios.
+\item Las capas pueden permanecer en una misma máquina o en equipos distintos.
+\item Los componentes de cada capa se comunican con otras capas mediante interfaces.
+\item Se diferencia claramente la funcionalidad de cada capa.
+\item Se trata de una abstracción a muy alto nivel, por lo que no se conocen tipos de datos, atributos, métodos e implementaciones.
+\item Las capas inferiores no tienen dependencias
+\end{itemize}
+
+Como principales ventajas, tenemos la abstracción, el aislamiento, el rendimiento y la testeabilidad, al ser cada capa independiente de las demás.
+
+Esta arquitectura debería usarse cuando:
+
+\begin{itemize}
+\item Se tienen construidas capas de otra aplicación y pueden ser reutilizables.
+\item La aplicación es muy compleja y el diseño requiere la separación de funcionalidad.
+\item Se quiere implementar reglas de negocio complicadas.
+\item Se deben soportan diferentes tipos de clientes.
+\end{itemize}
+
+En \ver{arq} podemos ver cómo se estructura.
+
+\figura{0.65}{imgs/arquitecturacapas.png}{Arquitectura en capas \cite{arquitectura}}{arq}{}
+
+\subsection{Arquitectura final de la aplicación}
+Hemos estructurado nuestra aplicación siguiendo la arquitectura en capas, en la cual distinguimos:
+
+\begin{itemize}
+\item La capa de presentación o interfaz es la capa encargada de interactuar con el usuario. Permite, por ejemplo, que éste pueda visualizar los resultados de los análisis de imágenes y se encarga también de recibir los datos de entrada del usuario.
+\item La capa de lógica de negocio contiene todas las reglas del dominio de nuestra aplicación. Esta capa en ocasiones recibe otros nombres como dominio, modelo de negocio, modelo de dominio, etc. En nuestro caso, es la capa del modelo, que se encarga de manejar la lógica de la aplicación.
+\item La capa de acceso a datos se encarga de obtener los datos alojados en sistemas de almacenamiento persistente. En nuestro caso, abre las imágenes y se encarga de gestionar físicamente los archivos \arff{}.
+\end{itemize}
+
+\subsection{Patrones de diseño utilizados}
+Hemos realizado una clasificación de los patrones de diseño de acuerdo a la capa lógica a la que pertenecen: Acceso a Datos, Dominio o Presentación \cite{carlos_lopez_nozal_apuntes_2012}.
+
+\subsubsection{Patrones en la capa de Modelo del Dominio}
+
+\paragraph{Fachada}\mbox{} \\
+\indent Hemos utilizado el patrón Fachada para separar la parte de interfaz de usuario de la capa de dominio. Esta fachada encapsula la lógica de la aplicación y va a ser la encargada de manejar los procesos de análisis y entrenamiento, controlando el comportamiento de las ventanas. En la imagen \ver{fachada} se puede ver su estructura. Tiene las siguientes características:
+
+\figura{0.5}{imgs/dclasesfachada.png}{Patrón Fachada - Diagrama de clases \cite{carlos_lopez_nozal_apuntes_2012}}{fachada}{}
+
+\begin{itemize}
+\item \textbf{Problema}
+
+\begin{itemize}
+\item Existe mucha dependencia entre las clases que representan una abstracción y las clases clientes. Las dependencias añaden una complejidad notable a los clientes.
+\item Se quiere simplificar las clases clientes.
+\item Se quiere poner una barrera entre una clase cliente y un conjunto de clases y relaciones que implementan una abstracción.
+\end{itemize}
+
+\item \textbf{Solución}
+
+\begin{itemize}
+\item Se proporciona un objeto adicional reutilizable que oculta gran parte de la complejidad del trabajo de las clases. El cliente sólo tiene que relacionarse con este nuevo objeto.
+\item Los clientes se comunican con el subsistema a través de la fachada, que reenvía las peticiones a los objetos del subsistema apropiados y puede realizar también algún trabajo de traducción.
+\item Los clientes que usan la fachada no necesitan acceder directamente a los objetos del sistema.
+\end{itemize}
+
+\item \textbf{Conclusiones}
+
+\begin{itemize}
+\item Los clientes no necesitan conocer cómo se relacionan, ni cómo se crean las clases que proporcionan el servicio, solo se comunican a través del los objetos Fachada.
+\item Reduce o elimina el acoplamiento entre las clases cliente y las clases que implementan la abstracción. Se podrían cambiar las clases que implementan la abstracción sin ningún impacto en las clases clientes. Ayuda a dividir un sistema en capas y reduce dependencias de compilación.
+\item Los clientes que necesiten acceder directamente a los objetos que implementan la abstracción, pueden acceder a ellos.
+\end{itemize}
+\end{itemize}
+
+En nuestro caso, como ya hemos dicho, utilizamos una clase llamada Fachada que es la que separa las capas y la que encapsula la lógica \ver{nuestrafachada}
+
+\figuraConPosicion{0.5}{imgs/nuestrafachada.png}{Diagrama de clases de nuestra Fachada}{nuestrafachada}{}{H}
+
+\paragraph{Singleton}\mbox{} \\
+\indent Hemos utilizado el patrón Singleton para poder instanciar únicamente un objeto de tipo Fachada, que es el encargado de manejar la lógica de negocio. En \ver{dclasessingleton} podemos ver cómo se estructura este patrón. Tiene las siguientes características:
+
+\figuraConPosicion{0.5}{imgs/dclasessingleton.png}{Patrón Singleton - Diagrama de clases \cite{carlos_lopez_nozal_apuntes_2012}}{dclasessingleton}{}{H}
+
+
+\begin{itemize}
+\item \textbf{Problema}
+
+Algunas clases deberían tener sólo una instancia. Estas clases están generalmente relacionadas con el manejo de un determinado recurso.
+
+\item \textbf{Solución}
+
+\begin{itemize}
+\item Involucra una única clase.
+\item La clase Singleton tiene una variable estática que referencia a la única instancia de la clase.
+\item Para prevenir que los clientes creen más instancias de la clase se declara el constructor privado.
+\item La instancia de la clase se puede crear cuando la clase se carga.
+\item Para permitir el acceso a la instancia, la clase proporciona un método estático, típicamente llamado getInstance().
+\end{itemize}
+
+\item \textbf{Conclusiones}
+
+\begin{itemize}
+\item Sólo existe una instancia de la clase Singleton.
+\item Otras clases que utilizar la instancia de la clase Singleton lo deben hacer invocando el método getInstance().
+\end{itemize}
+\end{itemize}
+
+\paragraph{Estrategia}\mbox{} \\
+Hemos utilizado el patrón estrategia para encapsular los diferentes algoritmos que usa nuestra aplicación. Hemos necesitado tres estrategias: una para los tipos de ventana, otra para los algoritmos de extracción de características y otra para los algoritmos de preprocesamiento. Con esto buscamos que se puedan añadir fácilmente nuevos algoritmos.
+
+En \ver{dclasesestrategia} podemos ver cómo se estructura este patrón. Tiene las siguientes características:
+
+\figuraConPosicion{0.75}{imgs/dclasesestrategia.png}{Patrón Estrategia - Diagrama de clases \cite{carlos_lopez_nozal_apuntes_2012}}{dclasesestrategia}{}{H}
+
+\begin{itemize}
+\item \textbf{Problema}
+
+\begin{itemize}
+\item Muchas clases relacionadas difieren solo en su comportamiento.
+\item Se necesitan distintas variantes de un algoritmo.
+\item Un algoritmo usa datos que el cliente no debería conocer. Se quiere evitar exponer estructuras complejas y dependientes del algoritmo.
+\item Una clase define múltiples comportamientos y estos se representan con múltiples sentencias condicionales en sus operaciones.
+\end{itemize}
+
+\item \textbf{Solución}
+
+\begin{itemize}
+\item Define una familia de algoritmos, encapsula cada uno de ellos y los hace intercambiables. Permite que un algoritmo varíe independientemente de los clientes que lo usan.
+\item Se declara una interfaz común para todos los algoritmos soportados
+\item Los clientes que usan la fachada no necesitan acceder directamente a los objetos del sistema.
+\end{itemize}
+\end{itemize}
+
+Como ya hemos dicho, nosotros tenemos tres estrategias, por lo que necesitamos tres superclases que contendrán las operaciones comunes de cada estrategia. De ellas heredarán una serie de clases, que son las que implementan los algoritmos concretos, como puede ser el desplazamiento de una ventana deslizante o la implementación de las características de Haralick. En \ver{nuestraestrategia} se puede ver una simplificación de nuestras clases.
+
+\figuraConPosicion{0.75}{imgs/nuestraestrategia.png}{Diagrama de clases de nuestras Estrategias}{nuestraestrategia}{}{H}
+
+
+\subsection{Diagrama de clases de diseño}
+FALTA
+
+\newpage
+
+\section{Diseño de la interfaz}
+En este apartado, se cierra la parte de diseño de la interfaz gráfica, y se resaltan los aspectos más relevantes de este proceso.
+
+\subsection{Ventana principal}
+
+\figuraConPosicion{1}{imgs/ventanaprincipal.png}{Diseño de la ventana principal}{disventppal}{}{H}
+
+Desde la ventana principal podemos acceder a todos los casos de uso mediante botones y menú. Se ha preferido esta distribución a, por ejemplo, distintas ventanas, para tenerlo todo en un mismo lugar. Para evitar confusiones, se ha elegido una estrategia de habilitación/deshabilitación de los botones según se puedan hacer o no determinadas acciones.
+
+\subsection{Ventana de opciones avanzadas}
+
+\figuraConPosicion{0.65}{imgs/opcionesavanzadas.png}{Diseño de la ventana de opciones avanzadas}{disventavanzadas}{}{H}
+
+Desde esta ventana se permite cambiar todas las opciones del programa. Se accede a ella mediante el menú de opciones de la ventana principal.
+
+\subsection{Ventana de Precision \& Recall}
+
+\figuraConPosicion{0.35}{imgs/ventprecisionrecall.png}{Diseño de la ventana de precision \& recall}{disventaprecrecall}{}{H}
+
+En esta ventana se muestran los resultados de precision \& recall. Se accede a ella mediante el botón de la ventana principal, que sólo se puede pulsar cuando ha acabado un análisis.
+
+\newpage
+
+\section{Diseño procedimental}
+En el presente apartado, se recogerán algunos de los algoritmos más importantes que hemos utilizado, eliminando cualquier ambigüedad.
+
+Nos hemos basado en los casos de uso que se explicaron en el anexo II de esta memoria. A continuación, se explica cada uno por separado, usando para ello diagramas de secuencia que muestran la interacción entre los diferentes objetos.
+
+FALTA
+
+\section{Referencia cruzada a los requisitos}
+De cara a la trazabilidad del sistema, es interesante incluir matrices que relacionen los requisitos funcionales con los elementos de diseño. De esta forma puede observarse rápidamente si se han satisfecho todos los requisitos de la aplicación.
+
+FALTA
+
+\section{Pruebas}
+En este apartado se recogen las pruebas de integración del sistema y aspectos relevantes del diseño de las mismas.
+
+Las pruebas de integración testean los módulos de la aplicación de forma combinada, es decir, como un grupo. Estas pruebas se realizan testeando un conjunto de elementos unitarios.
+
+\subsection{Pruebas de integración}
+FALTA
+
+\newpage
+
+\section{Entorno tecnológico del sistema}
+Este entorno establece el equipo físico, el equipo lógico y las comunicaciones del sistema software. Los detalles de la parte física se indican en el siguiente apartado.
+
+Necesitaremos tener instalada la máquina virtual de Java. La aplicación es monolítica, por lo que sólo estará desplegada en un único equipo.
+
+Es recomendable tener instalado también un navegador web para poder ver los informes que se exporten.
+
+Las dependencias entre la aplicación y las librerías que utiliza se muestran en \ver{componentes}
+
+\figuraConPosicion{0.55}{imgs/componentes.png}{Diagrama de componentes}{componentes}{}{H}
+
+
+
+\section{Plan de desarrollo e implantación}
+La aplicación se implantará en una misma máquina que proporcione todas las funcionalidades requeridas, ya que, como hemos dicho, es monolítica.
+
+En la imagen \ver{despliegue} se muestra el diagrama de despliegue que representa la implantación de la aplicación en la máquina cliente.
+
+\figuraConPosicion{0.55}{imgs/despliegue.png}{Diagrama de despliegue}{despliegue}{}{H}
