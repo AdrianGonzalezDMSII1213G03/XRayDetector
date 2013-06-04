@@ -23,101 +23,9 @@ En la segunda parte se calcularán los costes, analizando la rentabilidad del pr
 \section{Planificación temporal del proyecto} 
 Como se explicó en la memoria, para el desarrollo del proyecto de final de carrera se va a utilizar una metodología ágil llamada \scrum{}. Esta metodología establece una serie de prácticas que serán llevadas a cabo con algunas limitaciones debido al reducido tamaño del equipo de desarrollo.
 
-Para poder estimar de manera general el tiempo total que va a llevar el desarrollo del proyecto se va a realizar una estimación a partir de los casos de uso definidos en el Anexo II.
+El proyecto comienza a principios de noviembre de 2012, y termina a mediados de junio de
+2013, con una duración total de siete meses y medio. En un principio, se planificaron unos 7 sprints, pero al final se vio que se necesitó alguno más para terminar funcionalidad.
 
-\newcommand{\pesoscasosdeuso}{\operatorname{Peso De Casos De Uso}}
-\newcommand{\pesosactores}{\operatorname{Peso De Actores}}
-
-\subsection{Estimación temporal a partir de casos de uso}
-Antes de mostrar la tabla de estimación temporal, conviene repasar una serie de fórmulas que se utilizan para calcular algunos valores de la tabla:
-\begin{itemize}
- \item Puntos de casos de uso no ajustados:
-  \[ UUCP = \pesosactores + \pesoscasosdeuso \]
- \item Peso de los casos de uso:
-  \[ \pesoscasosdeuso = \sum_{i = 0}^{i} Factor_{i} \]
- \item Peso de los factores técnicos:
-  \[ TFC = 0,6 + 0,01 \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
- \item Factores de entorno:
-  \[ EF = 1,4 + (-0,03) \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
-\end{itemize}
-
-A continuación \vertabla{tablaEstimacionTemporalCasosDeUso}, aparece detallada la duración estimada del desarrollo del proyecto a partir de los casos de uso identificados. Se encuentra dividida en:
-\begin{itemize}
- \item Puntos de casos de uso no ajustados: sirven para conocer la envergadura del proyecto tomando como referencia los casos de uso.
- \item Factores técnicos: cuantifica la dificultad del proyecto en función de sus características internas.
- \item Factores del entorno: sirven para valorar lo familiarizado que se encuentra el equipo de desarrollo con proyectos de este tipo.
-\end{itemize}
-
-% Estimación temporal a partir de casos de uso.
-\tablaSmallSinColores{Estimación temporal a partir de casos de uso}{p{8cm} c c c}{tablaEstimacionTemporalCasosDeUso}{
-  \multicolumn{1}{c}{Factor} & \multicolumn{1}{c}{Peso} & \multicolumn{1}{c}{$ F_{i} $} & \multicolumn{1}{c}{Total} \\
- }
- {
-  Actores simples                                              & 0  & 1   & 0    \\
-  Actores medios                                               & 0  & 2   & 0    \\
-  Actores complejos                                            & 1  & 3   & 3    \\
-  \rowcolor[gray]{.8} Total peso actores                       &    &     & 3    \\
-  Casos de uso simples                                         & 5  & 5   & 25   \\
-  Casos de uso medios                                          & 1  & 10  & 10   \\
-  Casos de uso complejos                                       & 2  & 15  & 30   \\
-  \rowcolor[gray]{.8} Total peso casos de uso                  &    &     & 65   \\
-  \rowcolor[gray]{.8} UUCP (Puntos de caso de uso no ajustados)&    &     & 68   \\
-  Sistema distribuido                                          & 1  & 2   & 2    \\
-  Tiempos de respuesta críticos                                & 1  & 1   & 1    \\
-  En línea                                                     & 1  & 1   & 1    \\
-  Procesos internos complejos                                  & 5  & 1   & 5    \\
-  El código debe ser reutilizable                              & 3  & 1   & 3    \\
-  Fácil de instalar                                            & 1  & 0,5 & 0,5  \\
-  Fácil de utilizar                                            & 5  & 0,5 & 2,5  \\
-  Portable                                                     & 1  & 2   & 2    \\
-  Fácil de modificar                                           & 4  & 1   & 4    \\
-  Concurrencia                                                 & 1  & 1   & 1    \\
-  Incluye características de seguridad                         & 1  & 1   & 1    \\
-  Acceso a software creado por otras compañías                 & 1  & 1   & 1    \\
-  Incluye facilidades de aprendizaje para usuario              & 5  & 1   & 5    \\
-  \rowcolor[gray]{.8} TF (Factores técnicos)                   &    &     & 0,89 \\
-  Familiarizado con \scrum{}                                   & 1  & 0,5 & 0,5  \\
-  Experiencia en este tipo de aplicaciones                     & 2  & 1   & 2    \\
-  Experiencia en Orientación a Objetos                         & 5  & 0,5 & 2,5  \\
-  Capacidad de liderazgo del analista                          & 5  & 1   & 5    \\
-  Motivación                                                   & 5  & 1   & 5    \\
-  Requisitos estables                                          & 3  & 2   & 6    \\
-  Trabajadores a tiempo parcial                                & 5  & -1  & -5   \\
-  Lenguaje de programación difícil de utilizar                 & 1  & -1  & -1   \\
-  \rowcolor[gray]{.8} EF (Factores de entorno)                 &    &     & 0,95 \\
- }
-
-Los puntos de casos de uso se calculan según la siguiente fórmula:
-\[ UCP = UUCP \cdot TF \cdot EF \]
-
-Para calcular los puntos de casos de uso hay que sustituir, en la fórmula anterior, con los valores de la tabla, es decir:
-\[ UCP = 68 \cdot 0,89 \cdot 0,95 = 57,494 \]
-
-Para obtener la duración del proyecto estimado según los casos de uso hay que multiplicar el valor de \textit{UCP} por un factor que depende del número de factores de entorno (\textit{EF}) a los cuales se les haya dado peso 0. En este caso, como no se ha dado ningún valor cero se multiplica por 20.
-
-Por lo expuesto anteriormente: $ Nº horas = 20 \cdot 57,494 $, es decir, 1150 horas/hombre. [CAMBIAR]
-
-Conviene destacar que los resultados obtenidos son meramente orientativos, ya que se va a utilizar una metodología ágil, por lo que la planificación va a ser a nivel de \sprint{} (de 15 a 30 días). Al comenzar cada uno de ellos, se definirán una serie de tareas que deberán ser completadas en dicho \sprint{}.
-
-El proyecto comenzará en noviembre de 2012 y se desea finalizar en junio de 2013, es decir, se trabajará durante 7 meses. Se deben realizar los cálculos de horas para comprobar si es viable el desarrollo en las fechas previstas:
-\newcommand{\tiempo}{\operatorname{Tiempo}}
-\newcommand{\horas}{\operatorname{horas}}
-\newcommand{\persona}{\operatorname{persona}}
-\newcommand{\jornada}{\operatorname{jornada}}
-\newcommand{\jornadas}{\operatorname{jornadas}}
-\newcommand{\mes}{\operatorname{mes}}
-\newcommand{\meses}{\operatorname{meses}}
-\newcommand{\semana}{\operatorname{semana}}
-\newcommand{\hora}{\operatorname{hora}}
-
-\[
- \tiempo = \dfrac{1150 \horas}{1 \persona} \cdot \dfrac{1 \jornada}{7 \horas} \cdot \dfrac{1 \mes}{20 \jornadas} = 8,21 \meses
-\]
-
-El análisis de casos de uso junto con el horario marcado hace que la fecha de finalización deba trasladarse hasta julio para poder cumplir los plazos. De este modo la fecha de finalización del proyecto se retrasa hasta julio de 2010, manteniendo la jornada laboral de 35 horas semanales.
-
-[TODO ESTO HAY QUE CAMBIARLO, PERO NOS SIRVE DE PLANTILLA]
-\newpage
 
 
 %Aplicando una metodología ágil: SCRUM
@@ -899,3 +807,268 @@ En el \burndownchart{} \ver{burndownChartSprint9} podemos ver que hay una gran p
 \subsubsection*{Retrospective meeting}
 Aún no hay
 
+\newpage
+
+\newcommand{\pesoscasosdeuso}{\operatorname{Peso De Casos De Uso}}
+\newcommand{\pesosactores}{\operatorname{Peso De Actores}}
+
+\section{Estudio de viabilidad del proyecto}
+En este apartado, vamos a comprobar si el tiempo y el dinero invertidos en el proyecto están bien aprovechados, lo que implicaría que se trata de un proyecto rentable.
+
+Normalmente, el estudio de viabilidad se centra en la viabilidad económica realizando el análisis coste-beneficio que proporciona una justificación económica, aunque, en nuestro caso, se van a realizar algunos estudios más.
+
+Se van a realizar distintos tipos de estudio de viabilidad:
+
+\begin{itemize}
+\item \textbf{Viabilidad temporal}. Una estimación del tiempo esperado para desarrollar el proyecto software que se trata en esta memoria.
+\item \textbf{Viabilidad económica}. Una valoración del coste de desarrollo frente al beneficio producido por el sistema desarrollado.
+\item \textbf{Viabilidad legal}. Una determinación de cualquier infracción, violación o ilegalidad que pudiera resultar del desarrollo del sistema.
+\item \textbf{Viabilidad técnica}. Un estudio de la funcionalidad, rendimiento y restricciones que pueden afectar a la posibilidad de realización de un sistema aceptable.
+\end{itemize}
+ 
+\subsection{Viabilidad temporal}
+El estudio de la viabilidad temporal sirve para planificar el coste temporal que tendrá un proyecto software. Para ello, se tienen en cuenta diversos factores que intervienen en el desarrollo del mismo.
+
+Utilizando los casos de uso, elementos ya fijados por medio de los requisitos exigibles para la elaboración del proyecto, y realizando una serie de cálculos, se obtendrá a una estimación del tiempo necesario para desarrollar el proyecto y comprobar si es viable o no. Los casos de uso que vamos a usar vienen definidos en el Anexo II de esta memoria.
+
+
+\subsubsection{Cálculos de estimación según los casos de uso}
+Los diagramas de casos de uso son eficaces tanto para la identificación de requisitos y comportamiento del sistema como para la planificación de la viabilidad global del proyecto. En este apartado, vamos a utilizar técnicas de estimación del trabajo basadas en los casos de uso \cite{wiki:casosuso}. Para ello, debemos tener en cuenta los siguientes factores:
+
+\subsubsection*{Pesos de los actores}
+se asigna un factor clasificándolos si son actores simples (1), promedios (2) o complejos (3). En nuestro caso, sólo hay un actor: el usuario de la aplicación, que consideramos que es complejo.
+
+\subsubsection*{Peso de los casos de uso}
+Se realiza la misma operación que para los actores: se determina su peso en función de si son casos de uso simples (5), promedios (10) o complejos (15). Además se determinan las transacciones de cada caso de uso, es decir, cada una de las etapas o pasos de un caso de uso necesarios para alcanzar el objetivo previsto.
+
+\[ \pesoscasosdeuso = \sum_{i = 0}^{i} Factor_{i} \]
+
+\subsubsection*{UUCP}
+Con los pesos de actores y casos de uso determinamos el UUCP, es decir, los Puntos de Caso de Uso sin Ajustar (Unadjusted Use Case Points):
+
+\[ UUCP = \pesosactores + \pesoscasosdeuso \]
+
+\subsubsection*{Peso de los factores técnicos}
+Para este cálculo se emplea la variable TFC, o lo que es lo mismo, Factor Técnico de Complejidad (Tecnical Complexity Factor). La fórmula para calcular su valor es la siguiente:
+
+\[ TFC = 0,6 + 0,01 \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
+
+\subsubsection*{EF (Environmental Factor)}
+Factor de Entorno: nos sirve para valorar lo familiarizado que está el equipo de desarrollo con este tipo de proyectos. Como en los casos anteriores tenemos una tabla con una serie de factores a los que se les asigna un peso (0-Nada, 3-Promedio, 5-Experto). Su fórmula es la siguiente:
+
+ \[ EF = 1,4 + (-0,03) \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
+ 
+Todos estos pesos están calculados en \vertabla{tablaEstimacionTemporalCasosDeUso}.
+
+
+% Estimación temporal a partir de casos de uso.
+\tablaSmallSinColores{Estimación temporal a partir de casos de uso}{p{8cm} c c c}{tablaEstimacionTemporalCasosDeUso}{
+  \multicolumn{1}{c}{Factor} & \multicolumn{1}{c}{Peso} & \multicolumn{1}{c}{$ F_{i} $} & \multicolumn{1}{c}{Total} \\
+ }
+ {
+  Actores simples                                              & 0  & 1   & 0    \\
+  Actores medios                                               & 0  & 2   & 0    \\
+  Actores complejos                                            & 1  & 3   & 3    \\
+  \rowcolor[gray]{.8} Total peso actores                       &    &     & 3    \\
+  Casos de uso simples                                         & 8  & 5   & 40   \\
+  Casos de uso medios                                          & 1  & 10  & 10   \\
+  Casos de uso complejos                                       & 0  & 15  & 0   \\
+  \rowcolor[gray]{.8} Total peso casos de uso                  &    &     & 50   \\
+  \rowcolor[gray]{.8} UUCP (Puntos de caso de uso no ajustados)&    &     & 53  \\
+  Sistema distribuido                                          & 1  & 2   & 2    \\
+  Tiempos de respuesta críticos                                & 5  & 1   & 5    \\
+  En línea                                                     & 1  & 1   & 1    \\
+  Procesos internos complejos                                  & 5  & 1   & 5    \\
+  El código debe ser reutilizable                              & 4  & 1   & 4    \\
+  Fácil de instalar                                            & 1  & 0,5 & 0,5  \\
+  Fácil de utilizar                                            & 5  & 0,5 & 2,5  \\
+  Portable                                                     & 1  & 2   & 2    \\
+  Fácil de modificar                                           & 4  & 1   & 4    \\
+  Concurrencia                                                 & 4  & 1   & 1    \\
+  Incluye características de seguridad                         & 1  & 1   & 1    \\
+  Acceso a software creado por otras compañías                 & 3  & 1   & 3    \\
+  Incluye facilidades de aprendizaje para usuario              & 1  & 1   & 1    \\
+  \rowcolor[gray]{.8} TF (Factores técnicos)                   &    &     & 0,92 \\
+  Familiarizado con \scrum{}                                   & 1  & 1,5 & 1,5  \\
+  Experiencia en este tipo de aplicaciones                     & 1  & 1   & 1    \\
+  Experiencia en Orientación a Objetos                         & 5  & 0,5 & 2,5  \\
+  Capacidad de liderazgo del analista                          & 5  & 1   & 5    \\
+  Motivación                                                   & 5  & 1   & 5    \\
+  Requisitos estables                                          & 1  & 2   & 3    \\
+  Trabajadores a tiempo parcial                                & 5  & -1  & -5   \\
+  Lenguaje de programación difícil de utilizar                 & 2  & -1  & -2   \\
+  \rowcolor[gray]{.8} EF (Factores de entorno)                 &    &     & 1,07 \\
+ }
+
+Los puntos de casos de uso se calculan según la siguiente fórmula:
+\[ UCP = UUCP \cdot TF \cdot EF \]
+
+Para calcular los puntos de casos de uso hay que sustituir, en la fórmula anterior, con los valores de la tabla, es decir:
+\[ UCP = 53 \cdot 0,92 \cdot 1,07 = 52,173 \]
+
+Para obtener la duración del proyecto estimado según los casos de uso hay que multiplicar el valor de \textit{UCP} por un factor que depende del número de factores de entorno (\textit{EF}) a los cuales se les haya dado peso 0. En este caso, como no se ha dado ningún valor cero se multiplica por 20.
+
+Por lo expuesto anteriormente: $ Nº horas = 20 \cdot 52,173 $, es decir, 1043 horas/hombre.
+
+Conviene destacar que los resultados obtenidos son meramente orientativos, ya que se va a utilizar una metodología ágil, por lo que la planificación va a ser a nivel de \sprint{} (de 15 a 30 días). Al comenzar cada uno de ellos, se definirán una serie de tareas que deberán ser completadas en dicho \sprint{}.
+
+El proyecto comenzará en noviembre de 2012 y se desea finalizar en junio de 2013, es decir, se trabajará durante 7 meses. Se deben realizar los cálculos de horas para comprobar si es viable el desarrollo en las fechas previstas:
+\newcommand{\tiempo}{\operatorname{Tiempo}}
+\newcommand{\horas}{\operatorname{horas}}
+\newcommand{\persona}{\operatorname{personas}}
+\newcommand{\jornada}{\operatorname{jornada}}
+\newcommand{\jornadas}{\operatorname{jornadas}}
+\newcommand{\mes}{\operatorname{mes}}
+\newcommand{\meses}{\operatorname{meses}}
+\newcommand{\semana}{\operatorname{semana}}
+\newcommand{\hora}{\operatorname{hora}}
+
+\[
+ \tiempo = \dfrac{1043 \horas}{2 \persona} \cdot \dfrac{1 \jornada}{4 \horas} \cdot \dfrac{1 \mes}{20 \jornadas} = 6,52 \meses
+\]
+
+Como vemos, nos sobra un mes más para toda la parte de realizar la documentación y otras tareas, por lo que el proyecto es viable. Cierto es que estos valores son orientativos, ya que se pueden tener problemas en el desarrollo, cosa que no está contemplada en estos cálculos.
+
+
+\subsection{Viabilidad económica}
+En este apartado, se hará un análisis de los costes que producirán el desarrollo del proyecto y los beneficios que proporcionará una vez que esté acabado y en fase de explotación.
+
+\subsubsection{Análisis de costes}
+Los cálculos se realizan para los 7,5 meses que hemos tomado como referencia de la estimación temporal más el mes extra que ya hemos comentado.
+
+\paragraph{Costes de personal}\mbox{} \\
+\indent Se asignarán dos programadores, titulados en Ingeniería Técnica en Informática de Gestión, que llevarán a cabo la implementación de la aplicación, que trabajarán durante un periodo aproximado de 7.5 meses y cobrarán en función de las horas dedicadas al proyecto. Se ha determinado que percibirán un salario  de 10\euro /hora. Como se trabajan durante 4 horas diarias, se tiene que se cobran 40\euro /día. Cada mes se trabajan 20 días, con lo que tenemos un total de $40\times20=800$\euro mensuales, que, multiplicados por los 7,5 meses, da un total de 6000\euro por cada desarrollador. Total: 12000\euro en sueldos.
+
+Además, hay que tener en cuenta a los tutores del proyecto. Los tutores son titulados en Ingeniería en  Informática que cobrarán 20 \euro /hora. Calculando que la dedicación media va a ser de 2 horas/semana. Teniendo en cuenta de nuevo la estimación de la planificación el proyecto durará 7,5 meses se tiene un total de 1200\euro por tutor en todo el proyecto. En total, 2400\euro.
+
+Sumando los costes de los desarrolladores y de los tutores, tenemos un total de 14400\euro.
+
+\paragraph{Seguridad Social}\mbox{} \\
+\indent La ley de Seguridad Social marca que un porcentaje de sueldos deben ser abonado al estado en concepto de impuestos, entonces los gastos de personal quedarían de la siguiente manera: Gastos de personal mes = Sueldo Bruto + Seguridad Social.
+
+El importe de la Seguridad Social es el 32,4\% del salario neto. Por lo tanto: $12000\times32.4\%=3888$\euro de Seguridad Social.
+
+Por lo tanto, el gasto de personal final es: 14400\euro netos + 4665,6\euro de Seguridad Social = 19065,6\euro.
+
+
+\newcommand{\software}{\operatorname{Software}}
+\newcommand{\hardware}{\operatorname{Hardware}}
+
+\paragraph{Coste del hardware}\mbox{} \\
+Para el desarrollo del proyecto han sido necesarios dos ordenadores de sobremesa. Se ha estimado el coste de cada uno en torno a los 800\euro. Teniendo en cuenta que la vida útil del equipo es de dos a cuatro años, los cálculos están realizados teniendo en cuenta la vida media del inmovilizado en 3 años.
+
+ \[ 
+   \hardware = \dfrac{800 \textup{ \euro} + 800\textup{ \euro}}{36 \meses} \cdot 7,5 \meses = 333,33 \textup{ \euro}
+ \]
+
+
+
+\paragraph{Coste del software}\mbox{} \\
+A continuación \vertabla{costeSoftware} aparece detallado el software empleado y el precio de las licencias correspondientes:
+
+%Tabla de licencias de software
+\tablaSmall{Licencias de Software}{p{7cm} c c r}{costeSoftware}{
+  \multicolumn{1}{c}{Software} & \multicolumn{1}{c}{Nº licencias} & \multicolumn{1}{c}{\euro/Licencia}  & \multicolumn{1}{c}{Total} \\
+ }
+ {
+  Microsoft Windows 8 Pro	 	& 1 &   199,99 & 199,99 \\
+  Microsoft Windows XP						 	& 1 & 70 &   70 \\
+  Eclipse                            	& 2 & Gratuito &		0,00 \\
+  Java Development Kit               	& 2 & Gratuito &   	0,00 \\
+  Weka                              	& 2 & Gratuito &   	0,00 \\
+  JUnit                                	& 2 & Gratuito &   	0,00 \\
+  Astah Community                		& 2 & Gratuito &   	0,00 \\
+  \TeX{}Maker                          	& 2 & Gratuito &   	0,00 \\
+  MiK\TeX{}                            	& 2 & Gratuito &   	0,00 \\
+  ImageJ                         	  	& 2 & Gratuito &   	0,00 \\
+  EJML                          	  	& 2 & Gratuito &   	0,00 \\
+  Apache Commons IO                          	  	& 2 & Gratuito &   	0,00 \\
+  JavaHelp                          	  	& 2 & Gratuito &   	0,00 \\
+  Pivotal Tracker                          	  	& 2 & Gratuito &   	0,00 \\
+  Total                                	&   &          & 	269,99 \\
+ }
+
+
+Estimando que la vida útil de las licencias necesarias es de, aproximadamente, 3 años hay que amortizar el precio total para este intervalo. 
+
+Amortización del software = Amortización anual x periodo de utilización
+ \[ 
+   \software = \dfrac{269,99 \textup{ \euro}}{36 \meses} \cdot 7,5 \meses = 56,25 \textup{ \euro}
+ \]
+
+\paragraph{Otros costes}\mbox{} \\
+\indent No se puede concluir en análisis de costes sin tener en cuenta los costes de oficina. En la siguiente tabla \vertabla{costeOficina}, se muestra un resumen de todos ellos. El precio de la impresión del proyecto no ha sido estimado por no haber decidido, todavía, el tipo de impresión y encuadernación.
+
+%Tabla de costes de oficina
+\tablaSmall{Costes de oficina}{p{6cm} r c r}{costeOficina}{
+  \multicolumn{1}{c}{Concepto} & \multicolumn{1}{c}{\euro/mes} & \multicolumn{1}{c}{Cantidad}  & \multicolumn{1}{c}{Importe} \\
+ }
+ {
+  Alquiler de oficina                  & 300,00 &   9 & 2400,00 \\
+  Electricidad                         &  12,00 &   9 &   96,00 \\
+  Teléfono                             &  10,00 &   9 &   80,00 \\
+  Conexión a Internet                  &  23,00 &   9 &  184,00 \\
+  Material de oficina                  &   5,00 &   9 &   40,00 \\
+  Agua                                 &   6,00 &   9 &   48,00 \\
+  Calefacción                          &  21,00 &   9 &  168,00 \\
+  Total                                &        &     & 3016,00 \\
+ }
+
+\paragraph{Total costes}\mbox{} \\
+\indent Tras el análisis de todos los costes \vertabla{costeTotal}: personal, software, hardware y otros, el proyecto asciende a un total de $ 26574 \textup{ \euro} $.
+
+%Tabla total de costes
+\tablaSmall{Lista de costes}{p{6cm} r}{costeTotal}{
+  \multicolumn{1}{c}{Costes} & \multicolumn{1}{c}{Importe} \\
+ }
+ {
+  Software                  &    56,25 \\
+  Hardware                  &   333,33 \\
+  Personal                  & 19065,60 \\
+  Otros costes              &  3016,00 \\
+  Total                     & 22471,18 \\
+ }
+ 
+ 
+\subsubsection{Análisis de beneficios}
+Para justificar el desembolso calculado en la sección anterior se debe realizar un análisis de beneficios que se esperan obtener del proyecto.
+
+\paragraph{Beneficios no económicos}\mbox{} \\
+\indent En primer lugar, cabe destacar el beneficio que aportará la aplicación a la investigación y detección de defectos en todo tipo de empresas que utilicen radiografías para comprobar la presencia de defectos de fundición.
+
+En segundo lugar, como todo proyecto de final de carrera, supondrá una formación adicional a los estudiantes que aprenderán una serie de nuevas técnicas y herramientas como por ejemplo: conocimientos teóricos sobre el entrenamiento de clasificadores, nuevas formas de escribir textos con \LaTeX{}\dots
+
+Por último, pero no por ello menos importante, hay que destacar que la consecución del proyecto será el último paso del alumno para la finalización de la Ingeniería en Informática.
+
+\paragraph{Beneficios económicos}\mbox{} \\
+\indent El coste total del proyecto ha sido estimado en $ 22471,18 \textup{ \euro} $ por lo que calculando el precio de la licencia en $ 550 \textup{ \euro} $ el número de licencias a vender para empezar a obtener beneficios sería de 45. El público al que se encuentra orientado es el principalmente el empresarial.
+
+Teniendo en cuenta que multitud de empresas internacionales analizan radiografías en busca de defectos de fundición, es factible que pronto diversas empresas adquieran nuestra licencia con la que comencemos a obtener beneficios de su venta.
+
+Cabe destacar que la utilización de \weka{} hace que el software que se venda tendrá licencia \gnu{} y el usuario gozará de las mismas ventajas y libertades. Dicho de otro modo, la venta de las licencias ofrecerán el código fuente y la total libertad del mismo.
+
+\subsubsection{Conclusiones Viabilidad económica del Proyecto}
+Analizando los beneficios económicos y no económicos, está más que justificada la inversión a realizar en pro de los beneficios que ofrece, no sólo a los autores del proyecto sino también a la Universidad de Burgos y a los tutores del proyecto.
+
+Por todo lo expuesto en el capítulo, se considera viable el proyecto software.
+
+
+\subsection{Viabilidad Legal}
+La utilización de bibliotecas de terceros (\weka{} y \textit{EJML}) que se encuentran bajo licencia \gnu{} hace que el software desarrollado herede esta licencia. De este modo todas las aplicaciones que utilicen la biblioteca que se va a generar también deberán ser bajo esta licencia y se consigue que se extienda. Por todo ello la legalidad técnica queda demostrada.
+
+En el interior del CD se puede encontrar un pdf con una copia de la licencia, dentro de la carpeta <<Licencia>>. No obstante, para obtener la última versión de la misma, acceder a la dirección web: \url{http://www.gnu.org/licenses/gpl.html}.
+
+Además, Apache Commons IO usa una licencia de Apache (\url{http://www.apache.org/licenses/}), compatible con GPLv3. Esta licencia permite la distribución de la librería.
+
+\subsection{Viabilidad Técnica ó Tecnológica}
+Entendiendo por viabilidad técnica la condición que hace posible el funcionamiento del sistema, proyecto o idea prestando atención a sus características tecnológicas.
+
+Las mayores dificultades se centran en el desconocimiento, por parte del equipo de desarrollo en temas que no han sido vistos en la carrera. Aunque las técnicas utilizadas son novedosas y desconocidas para nosotros, los tutores tienen mucha experiencia en el campo de la minería de datos y cierta experiencia en el campo del análisis de imágenes, lo que hace que el proyecto sea factible técnicamente a pesar de las dificultades.
+
+Recordemos que pretendemos resolver un problema real, con datos y radiografías reales, lo que complica considerablemente la situación al no tratarse de un problema teórico.
+
+También hay que recordar que uno de los objetivos del proyecto es mejorar la versión anterior, por lo que ha sido necesario invertir una gran cantidad de horas en entender el código de los otros desarrolladores y pensar formas para mejorarlo, lo que ha restado mucho tiempo.
+
+El desconocimiento citado anteriormente se contrapone a la voluntad de los desarrolladores por obtener nuevos conocimientos y superar retos. La inexistencia de aplicaciones que detecten defectos en radiografias y la visualización de éste tipo de características, hacen del software a crear una herramienta empresarial muy útil.
+
+Todo lo anteriormente expuesto hace al proyecto viable técnicamente.

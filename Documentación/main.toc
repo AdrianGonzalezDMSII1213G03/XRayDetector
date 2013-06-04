@@ -98,97 +98,113 @@
 \contentsline {chapter}{\numberline {A}Plan del proyecto software}{61}{appendix.176}
 \contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{61}{section.177}
 \contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{62}{section.178}
-\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{62}{subsection.179}
-\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{65}{section.181}
-\contentsline {subsection}{\numberline {A.3.1}Actores}{65}{subsection.182}
-\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{65}{subsection.183}
-\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{67}{section.185}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{72}{section.187}
-\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{72}{subsection.188}
-\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{73}{subsection.189}
-\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{75}{subsection.196}
-\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{77}{subsection.201}
-\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{79}{subsection.203}
-\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{83}{subsection.205}
-\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.207}
-\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{87}{subsection.209}
-\contentsline {subsection}{\numberline {A.5.9}Sprint 9}{90}{subsection.211}
-\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.213}
-\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.214}
-\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.215}
-\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.216}
-\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{97}{section.217}
-\contentsline {section}{\numberline {B.5}Factores de riesgo}{98}{section.218}
-\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{99}{section.219}
-\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{99}{subsection.220}
-\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{100}{subsection.222}
-\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{100}{subsection.224}
-\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{101}{subsubsection*.225}
-\contentsline {subsubsection}{Entrenar el clasificador}{102}{subsubsection*.244}
-\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{102}{subsubsection*.245}
-\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{103}{subsection.246}
-\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{103}{subsection.247}
-\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{104}{section.248}
-\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{104}{subsection.249}
-\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{104}{subsection.250}
-\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{105}{subsection.252}
-\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{115}{subsection.267}
-\contentsline {section}{\numberline {B.8}Interfaz de usuario}{120}{section.268}
-\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{125}{appendix.271}
-\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{125}{section.272}
-\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{126}{section.273}
-\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{127}{section.274}
-\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{127}{subsection.275}
-\contentsline {subsubsection}{Arquitectura en capas}{127}{subsubsection*.276}
-\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{128}{subsection.278}
-\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{128}{subsection.279}
-\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{128}{subsubsection*.280}
-\contentsline {paragraph}{Fachada}{128}{paragraph*.281}
-\contentsline {paragraph}{Singleton}{130}{paragraph*.284}
-\contentsline {paragraph}{Estrategia}{131}{paragraph*.286}
-\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{132}{subsection.289}
-\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{133}{section.290}
-\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{133}{subsection.291}
-\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{134}{subsection.293}
-\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{134}{subsection.295}
-\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{135}{section.297}
-\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{135}{section.298}
-\contentsline {section}{\numberline {C.7}Pruebas}{135}{section.299}
-\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{135}{subsection.300}
-\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{136}{section.301}
-\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{136}{section.303}
-\contentsline {chapter}{\numberline {D}Manual del programador}{139}{appendix.305}
-\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{139}{section.306}
-\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{139}{section.307}
-\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{139}{subsection.308}
-\contentsline {subsection}{\numberline {D.2.2}ImageJ}{139}{subsection.309}
-\contentsline {subsection}{\numberline {D.2.3}Weka}{139}{subsection.310}
-\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{140}{subsection.311}
-\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{140}{subsection.312}
-\contentsline {subsection}{\numberline {D.2.6}EJML}{140}{subsection.313}
-\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{140}{section.314}
-\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{141}{subsection.315}
-\contentsline {section}{\numberline {D.4}Manual del programador}{141}{section.316}
-\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{141}{subsection.317}
-\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{141}{subsubsection*.318}
-\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{142}{subsection.319}
-\contentsline {section}{\numberline {D.5}Pruebas unitarias}{143}{section.320}
-\contentsline {chapter}{\numberline {E}Manual del usuario}{147}{appendix.321}
-\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{147}{section.322}
-\contentsline {subsection}{\numberline {E.1.1}Requisitos}{147}{subsection.323}
-\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{147}{subsection.324}
-\contentsline {section}{\numberline {E.2}Manual de usuario}{147}{section.325}
-\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{147}{subsection.326}
-\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{152}{subsection.336}
-\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{154}{subsection.349}
-\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{155}{subsection.352}
-\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{156}{subsection.355}
-\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{159}{subsection.361}
-\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{160}{subsection.363}
-\contentsline {subsection}{\numberline {E.2.8}Ayuda}{160}{subsection.365}
-\contentsline {subsubsection}{Tabla de contenidos}{161}{subsubsection*.368}
-\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{162}{subsubsection*.370}
-\contentsline {subsubsection}{Otras ayudas}{163}{subsubsection*.372}
-\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{164}{subsection.373}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{165}{subsection.373}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{169}{subsection.373}
+\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{62}{section.179}
+\contentsline {subsection}{\numberline {A.3.1}Actores}{62}{subsection.180}
+\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{63}{subsection.181}
+\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{65}{section.183}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{70}{section.185}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{70}{subsection.186}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{71}{subsection.187}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{73}{subsection.194}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{75}{subsection.199}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{77}{subsection.201}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{81}{subsection.203}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{83}{subsection.205}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{85}{subsection.207}
+\contentsline {subsection}{\numberline {A.5.9}Sprint 9}{88}{subsection.209}
+\contentsline {section}{\numberline {A.6}Estudio de viabilidad del proyecto}{90}{section.211}
+\contentsline {subsection}{\numberline {A.6.1}Viabilidad temporal}{90}{subsection.212}
+\contentsline {subsubsection}{C\IeC {\'a}lculos de estimaci\IeC {\'o}n seg\IeC {\'u}n los casos de uso}{91}{subsubsection*.213}
+\contentsline {subsection}{\numberline {A.6.2}Viabilidad econ\IeC {\'o}mica}{92}{subsection.215}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de costes}{92}{subsubsection*.216}
+\contentsline {paragraph}{Costes de personal}{94}{paragraph*.217}
+\contentsline {paragraph}{Seguridad Social}{94}{paragraph*.218}
+\contentsline {paragraph}{Coste del hardware}{94}{paragraph*.219}
+\contentsline {paragraph}{Coste del software}{94}{paragraph*.220}
+\contentsline {paragraph}{Otros costes}{94}{paragraph*.222}
+\contentsline {paragraph}{Total costes}{95}{paragraph*.224}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de beneficios}{95}{subsubsection*.226}
+\contentsline {paragraph}{Beneficios no econ\IeC {\'o}micos}{96}{paragraph*.227}
+\contentsline {paragraph}{Beneficios econ\IeC {\'o}micos}{96}{paragraph*.228}
+\contentsline {subsubsection}{Conclusiones Viabilidad econ\IeC {\'o}mica del Proyecto}{96}{subsubsection*.229}
+\contentsline {subsection}{\numberline {A.6.3}Viabilidad Legal}{96}{subsection.230}
+\contentsline {subsection}{\numberline {A.6.4}Viabilidad T\IeC {\'e}cnica \IeC {\'o} Tecnol\IeC {\'o}gica}{97}{subsection.231}
+\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{101}{appendix.232}
+\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{101}{section.233}
+\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{102}{section.234}
+\contentsline {section}{\numberline {B.3}Usuarios participantes}{103}{section.235}
+\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{103}{section.236}
+\contentsline {section}{\numberline {B.5}Factores de riesgo}{104}{section.237}
+\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{105}{section.238}
+\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{105}{subsection.239}
+\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{106}{subsection.241}
+\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{106}{subsection.243}
+\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{107}{subsubsection*.244}
+\contentsline {subsubsection}{Entrenar el clasificador}{108}{subsubsection*.263}
+\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{108}{subsubsection*.264}
+\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{109}{subsection.265}
+\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{109}{subsection.266}
+\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{110}{section.267}
+\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{110}{subsection.268}
+\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{110}{subsection.269}
+\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{111}{subsection.271}
+\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{121}{subsection.286}
+\contentsline {section}{\numberline {B.8}Interfaz de usuario}{126}{section.287}
+\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{131}{appendix.290}
+\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{131}{section.291}
+\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{132}{section.292}
+\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{133}{section.293}
+\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{133}{subsection.294}
+\contentsline {subsubsection}{Arquitectura en capas}{133}{subsubsection*.295}
+\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{134}{subsection.297}
+\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{134}{subsection.298}
+\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{134}{subsubsection*.299}
+\contentsline {paragraph}{Fachada}{134}{paragraph*.300}
+\contentsline {paragraph}{Singleton}{136}{paragraph*.303}
+\contentsline {paragraph}{Estrategia}{137}{paragraph*.305}
+\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{138}{subsection.308}
+\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{139}{section.309}
+\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{139}{subsection.310}
+\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{140}{subsection.312}
+\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{140}{subsection.314}
+\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{141}{section.316}
+\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{141}{section.317}
+\contentsline {section}{\numberline {C.7}Pruebas}{141}{section.318}
+\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{141}{subsection.319}
+\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{142}{section.320}
+\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{142}{section.322}
+\contentsline {chapter}{\numberline {D}Manual del programador}{145}{appendix.324}
+\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{145}{section.325}
+\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{145}{section.326}
+\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{145}{subsection.327}
+\contentsline {subsection}{\numberline {D.2.2}ImageJ}{145}{subsection.328}
+\contentsline {subsection}{\numberline {D.2.3}Weka}{145}{subsection.329}
+\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{146}{subsection.330}
+\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{146}{subsection.331}
+\contentsline {subsection}{\numberline {D.2.6}EJML}{146}{subsection.332}
+\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{146}{section.333}
+\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{147}{subsection.334}
+\contentsline {section}{\numberline {D.4}Manual del programador}{147}{section.335}
+\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{147}{subsection.336}
+\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{147}{subsubsection*.337}
+\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{148}{subsection.338}
+\contentsline {section}{\numberline {D.5}Pruebas unitarias}{149}{section.339}
+\contentsline {chapter}{\numberline {E}Manual del usuario}{153}{appendix.340}
+\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{153}{section.341}
+\contentsline {subsection}{\numberline {E.1.1}Requisitos}{153}{subsection.342}
+\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{153}{subsection.343}
+\contentsline {section}{\numberline {E.2}Manual de usuario}{153}{section.344}
+\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{153}{subsection.345}
+\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{158}{subsection.355}
+\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{160}{subsection.368}
+\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{161}{subsection.371}
+\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{162}{subsection.374}
+\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{165}{subsection.380}
+\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{166}{subsection.382}
+\contentsline {subsection}{\numberline {E.2.8}Ayuda}{166}{subsection.384}
+\contentsline {subsubsection}{Tabla de contenidos}{167}{subsubsection*.387}
+\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{168}{subsubsection*.389}
+\contentsline {subsubsection}{Otras ayudas}{169}{subsubsection*.391}
+\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{170}{subsection.392}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{171}{subsection.392}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{175}{subsection.392}

@@ -63,85 +63,89 @@
 \BOOKMARK [0][-]{appendix.176}{Plan del proyecto software}{}% 63
 \BOOKMARK [1][-]{section.177}{Introducci\363n}{appendix.176}% 64
 \BOOKMARK [1][-]{section.178}{Planificaci\363n temporal del proyecto}{appendix.176}% 65
-\BOOKMARK [2][-]{subsection.179}{Estimaci\363n temporal a partir de casos de uso}{section.178}% 66
-\BOOKMARK [1][-]{section.181}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.176}% 67
-\BOOKMARK [2][-]{subsection.182}{Actores}{section.181}% 68
-\BOOKMARK [2][-]{subsection.183}{Ciclo de desarrollo}{section.181}% 69
-\BOOKMARK [1][-]{section.185}{Product Backlog del proyecto}{appendix.176}% 70
-\BOOKMARK [1][-]{section.187}{Planificaci\363n por Sprint}{appendix.176}% 71
-\BOOKMARK [2][-]{subsection.188}{Sprint 1: Spike Arquitect\363nico 1}{section.187}% 72
-\BOOKMARK [2][-]{subsection.189}{Sprint 2: Spike Arquitect\363nico 2}{section.187}% 73
-\BOOKMARK [2][-]{subsection.196}{Sprint 3}{section.187}% 74
-\BOOKMARK [2][-]{subsection.201}{Sprint 4}{section.187}% 75
-\BOOKMARK [2][-]{subsection.203}{Sprint 5}{section.187}% 76
-\BOOKMARK [2][-]{subsection.205}{Sprint 6}{section.187}% 77
-\BOOKMARK [2][-]{subsection.207}{Sprint 7}{section.187}% 78
-\BOOKMARK [2][-]{subsection.209}{Sprint 8}{section.187}% 79
-\BOOKMARK [2][-]{subsection.211}{Sprint 9}{section.187}% 80
-\BOOKMARK [0][-]{appendix.213}{Especificaci\363n de requisitos}{}% 81
-\BOOKMARK [1][-]{section.214}{Introducci\363n}{appendix.213}% 82
-\BOOKMARK [1][-]{section.215}{Objetivos del proyecto}{appendix.213}% 83
-\BOOKMARK [1][-]{section.216}{Usuarios participantes}{appendix.213}% 84
-\BOOKMARK [1][-]{section.217}{Descripci\363n del sistema actual}{appendix.213}% 85
-\BOOKMARK [1][-]{section.218}{Factores de riesgo}{appendix.213}% 86
-\BOOKMARK [1][-]{section.219}{Cat\341logo de requisitos del sistema}{appendix.213}% 87
-\BOOKMARK [2][-]{subsection.220}{Objetivos del proyecto}{section.219}% 88
-\BOOKMARK [2][-]{subsection.222}{Descripci\363n de los actores}{section.219}% 89
-\BOOKMARK [2][-]{subsection.224}{Funciones del producto}{section.219}% 90
-\BOOKMARK [2][-]{subsection.246}{Requisitos de usuario}{section.219}% 91
-\BOOKMARK [2][-]{subsection.247}{Requisitos de sistema}{section.219}% 92
-\BOOKMARK [1][-]{section.248}{Especificaci\363n de los requisitos}{appendix.213}% 93
-\BOOKMARK [2][-]{subsection.249}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.248}% 94
-\BOOKMARK [2][-]{subsection.250}{Especificaci\363n de requisitos de informaci\363n}{section.248}% 95
-\BOOKMARK [2][-]{subsection.252}{Requisitos funcionales}{section.248}% 96
-\BOOKMARK [2][-]{subsection.267}{Requisitos no funcionales}{section.248}% 97
-\BOOKMARK [1][-]{section.268}{Interfaz de usuario}{appendix.213}% 98
-\BOOKMARK [0][-]{appendix.271}{Especificaci\363n de dise\361o}{}% 99
-\BOOKMARK [1][-]{section.272}{Introducci\363n}{appendix.271}% 100
-\BOOKMARK [1][-]{section.273}{\301mbito del software}{appendix.271}% 101
-\BOOKMARK [1][-]{section.274}{Dise\361o Arquitect\363nico}{appendix.271}% 102
-\BOOKMARK [2][-]{subsection.275}{Estilos arquitect\363nicos utilizados}{section.274}% 103
-\BOOKMARK [2][-]{subsection.278}{Arquitectura final de la aplicaci\363n}{section.274}% 104
-\BOOKMARK [2][-]{subsection.279}{Patrones de dise\361o utilizados}{section.274}% 105
-\BOOKMARK [2][-]{subsection.289}{Diagrama de clases de dise\361o}{section.274}% 106
-\BOOKMARK [1][-]{section.290}{Dise\361o de la interfaz}{appendix.271}% 107
-\BOOKMARK [2][-]{subsection.291}{Ventana principal}{section.290}% 108
-\BOOKMARK [2][-]{subsection.293}{Ventana de opciones avanzadas}{section.290}% 109
-\BOOKMARK [2][-]{subsection.295}{Ventana de Precision \046 Recall}{section.290}% 110
-\BOOKMARK [1][-]{section.297}{Dise\361o procedimental}{appendix.271}% 111
-\BOOKMARK [1][-]{section.298}{Referencia cruzada a los requisitos}{appendix.271}% 112
-\BOOKMARK [1][-]{section.299}{Pruebas}{appendix.271}% 113
-\BOOKMARK [2][-]{subsection.300}{Pruebas de integraci\363n}{section.299}% 114
-\BOOKMARK [1][-]{section.301}{Entorno tecnol\363gico del sistema}{appendix.271}% 115
-\BOOKMARK [1][-]{section.303}{Plan de desarrollo e implantaci\363n}{appendix.271}% 116
-\BOOKMARK [0][-]{appendix.305}{Manual del programador}{}% 117
-\BOOKMARK [1][-]{section.306}{Introducci\363n}{appendix.305}% 118
-\BOOKMARK [1][-]{section.307}{Documentaci\363n de las bibliotecas}{appendix.305}% 119
-\BOOKMARK [2][-]{subsection.308}{Bibliotecas de Java}{section.307}% 120
-\BOOKMARK [2][-]{subsection.309}{ImageJ}{section.307}% 121
-\BOOKMARK [2][-]{subsection.310}{Weka}{section.307}% 122
-\BOOKMARK [2][-]{subsection.311}{JavaHelp}{section.307}% 123
-\BOOKMARK [2][-]{subsection.312}{Apache Commons IO}{section.307}% 124
-\BOOKMARK [2][-]{subsection.313}{EJML}{section.307}% 125
-\BOOKMARK [1][-]{section.314}{C\363digo fuente}{appendix.305}% 126
-\BOOKMARK [2][-]{subsection.315}{Recursos necesarios por el c\363digo fuente}{section.314}% 127
-\BOOKMARK [1][-]{section.316}{Manual del programador}{appendix.305}% 128
-\BOOKMARK [2][-]{subsection.317}{Agregar nuevos elementos a la aplicaci\363n}{section.316}% 129
-\BOOKMARK [2][-]{subsection.319}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.316}% 130
-\BOOKMARK [1][-]{section.320}{Pruebas unitarias}{appendix.305}% 131
-\BOOKMARK [0][-]{appendix.321}{Manual del usuario}{}% 132
-\BOOKMARK [1][-]{section.322}{Documento de instalaci\363n y configuraci\363n}{appendix.321}% 133
-\BOOKMARK [2][-]{subsection.323}{Requisitos}{section.322}% 134
-\BOOKMARK [2][-]{subsection.324}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.322}% 135
-\BOOKMARK [1][-]{section.325}{Manual de usuario}{appendix.321}% 136
-\BOOKMARK [2][-]{subsection.326}{Ventana principal de la aplicaci\363n}{section.325}% 137
-\BOOKMARK [2][-]{subsection.336}{Configuraci\363n de la aplicaci\363n}{section.325}% 138
-\BOOKMARK [2][-]{subsection.349}{Entrenar un clasificador}{section.325}% 139
-\BOOKMARK [2][-]{subsection.352}{Abrir una imagen}{section.325}% 140
-\BOOKMARK [2][-]{subsection.355}{Analizar imagen}{section.325}% 141
-\BOOKMARK [2][-]{subsection.361}{Analizar y exportar los resultados}{section.325}% 142
-\BOOKMARK [2][-]{subsection.363}{Exportar y limpiar Log}{section.325}% 143
-\BOOKMARK [2][-]{subsection.365}{Ayuda}{section.325}% 144
-\BOOKMARK [2][-]{subsection.373}{Salir de la aplicaci\363n}{section.325}% 145
-\BOOKMARK [0][-]{subsection.373}{Ap\351ndices}{}% 146
-\BOOKMARK [0][-]{subsection.373}{Bibliograf\355a}{}% 147
+\BOOKMARK [1][-]{section.179}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.176}% 66
+\BOOKMARK [2][-]{subsection.180}{Actores}{section.179}% 67
+\BOOKMARK [2][-]{subsection.181}{Ciclo de desarrollo}{section.179}% 68
+\BOOKMARK [1][-]{section.183}{Product Backlog del proyecto}{appendix.176}% 69
+\BOOKMARK [1][-]{section.185}{Planificaci\363n por Sprint}{appendix.176}% 70
+\BOOKMARK [2][-]{subsection.186}{Sprint 1: Spike Arquitect\363nico 1}{section.185}% 71
+\BOOKMARK [2][-]{subsection.187}{Sprint 2: Spike Arquitect\363nico 2}{section.185}% 72
+\BOOKMARK [2][-]{subsection.194}{Sprint 3}{section.185}% 73
+\BOOKMARK [2][-]{subsection.199}{Sprint 4}{section.185}% 74
+\BOOKMARK [2][-]{subsection.201}{Sprint 5}{section.185}% 75
+\BOOKMARK [2][-]{subsection.203}{Sprint 6}{section.185}% 76
+\BOOKMARK [2][-]{subsection.205}{Sprint 7}{section.185}% 77
+\BOOKMARK [2][-]{subsection.207}{Sprint 8}{section.185}% 78
+\BOOKMARK [2][-]{subsection.209}{Sprint 9}{section.185}% 79
+\BOOKMARK [1][-]{section.211}{Estudio de viabilidad del proyecto}{appendix.176}% 80
+\BOOKMARK [2][-]{subsection.212}{Viabilidad temporal}{section.211}% 81
+\BOOKMARK [2][-]{subsection.215}{Viabilidad econ\363mica}{section.211}% 82
+\BOOKMARK [2][-]{subsection.230}{Viabilidad Legal}{section.211}% 83
+\BOOKMARK [2][-]{subsection.231}{Viabilidad T\351cnica \363 Tecnol\363gica}{section.211}% 84
+\BOOKMARK [0][-]{appendix.232}{Especificaci\363n de requisitos}{}% 85
+\BOOKMARK [1][-]{section.233}{Introducci\363n}{appendix.232}% 86
+\BOOKMARK [1][-]{section.234}{Objetivos del proyecto}{appendix.232}% 87
+\BOOKMARK [1][-]{section.235}{Usuarios participantes}{appendix.232}% 88
+\BOOKMARK [1][-]{section.236}{Descripci\363n del sistema actual}{appendix.232}% 89
+\BOOKMARK [1][-]{section.237}{Factores de riesgo}{appendix.232}% 90
+\BOOKMARK [1][-]{section.238}{Cat\341logo de requisitos del sistema}{appendix.232}% 91
+\BOOKMARK [2][-]{subsection.239}{Objetivos del proyecto}{section.238}% 92
+\BOOKMARK [2][-]{subsection.241}{Descripci\363n de los actores}{section.238}% 93
+\BOOKMARK [2][-]{subsection.243}{Funciones del producto}{section.238}% 94
+\BOOKMARK [2][-]{subsection.265}{Requisitos de usuario}{section.238}% 95
+\BOOKMARK [2][-]{subsection.266}{Requisitos de sistema}{section.238}% 96
+\BOOKMARK [1][-]{section.267}{Especificaci\363n de los requisitos}{appendix.232}% 97
+\BOOKMARK [2][-]{subsection.268}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.267}% 98
+\BOOKMARK [2][-]{subsection.269}{Especificaci\363n de requisitos de informaci\363n}{section.267}% 99
+\BOOKMARK [2][-]{subsection.271}{Requisitos funcionales}{section.267}% 100
+\BOOKMARK [2][-]{subsection.286}{Requisitos no funcionales}{section.267}% 101
+\BOOKMARK [1][-]{section.287}{Interfaz de usuario}{appendix.232}% 102
+\BOOKMARK [0][-]{appendix.290}{Especificaci\363n de dise\361o}{}% 103
+\BOOKMARK [1][-]{section.291}{Introducci\363n}{appendix.290}% 104
+\BOOKMARK [1][-]{section.292}{\301mbito del software}{appendix.290}% 105
+\BOOKMARK [1][-]{section.293}{Dise\361o Arquitect\363nico}{appendix.290}% 106
+\BOOKMARK [2][-]{subsection.294}{Estilos arquitect\363nicos utilizados}{section.293}% 107
+\BOOKMARK [2][-]{subsection.297}{Arquitectura final de la aplicaci\363n}{section.293}% 108
+\BOOKMARK [2][-]{subsection.298}{Patrones de dise\361o utilizados}{section.293}% 109
+\BOOKMARK [2][-]{subsection.308}{Diagrama de clases de dise\361o}{section.293}% 110
+\BOOKMARK [1][-]{section.309}{Dise\361o de la interfaz}{appendix.290}% 111
+\BOOKMARK [2][-]{subsection.310}{Ventana principal}{section.309}% 112
+\BOOKMARK [2][-]{subsection.312}{Ventana de opciones avanzadas}{section.309}% 113
+\BOOKMARK [2][-]{subsection.314}{Ventana de Precision \046 Recall}{section.309}% 114
+\BOOKMARK [1][-]{section.316}{Dise\361o procedimental}{appendix.290}% 115
+\BOOKMARK [1][-]{section.317}{Referencia cruzada a los requisitos}{appendix.290}% 116
+\BOOKMARK [1][-]{section.318}{Pruebas}{appendix.290}% 117
+\BOOKMARK [2][-]{subsection.319}{Pruebas de integraci\363n}{section.318}% 118
+\BOOKMARK [1][-]{section.320}{Entorno tecnol\363gico del sistema}{appendix.290}% 119
+\BOOKMARK [1][-]{section.322}{Plan de desarrollo e implantaci\363n}{appendix.290}% 120
+\BOOKMARK [0][-]{appendix.324}{Manual del programador}{}% 121
+\BOOKMARK [1][-]{section.325}{Introducci\363n}{appendix.324}% 122
+\BOOKMARK [1][-]{section.326}{Documentaci\363n de las bibliotecas}{appendix.324}% 123
+\BOOKMARK [2][-]{subsection.327}{Bibliotecas de Java}{section.326}% 124
+\BOOKMARK [2][-]{subsection.328}{ImageJ}{section.326}% 125
+\BOOKMARK [2][-]{subsection.329}{Weka}{section.326}% 126
+\BOOKMARK [2][-]{subsection.330}{JavaHelp}{section.326}% 127
+\BOOKMARK [2][-]{subsection.331}{Apache Commons IO}{section.326}% 128
+\BOOKMARK [2][-]{subsection.332}{EJML}{section.326}% 129
+\BOOKMARK [1][-]{section.333}{C\363digo fuente}{appendix.324}% 130
+\BOOKMARK [2][-]{subsection.334}{Recursos necesarios por el c\363digo fuente}{section.333}% 131
+\BOOKMARK [1][-]{section.335}{Manual del programador}{appendix.324}% 132
+\BOOKMARK [2][-]{subsection.336}{Agregar nuevos elementos a la aplicaci\363n}{section.335}% 133
+\BOOKMARK [2][-]{subsection.338}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.335}% 134
+\BOOKMARK [1][-]{section.339}{Pruebas unitarias}{appendix.324}% 135
+\BOOKMARK [0][-]{appendix.340}{Manual del usuario}{}% 136
+\BOOKMARK [1][-]{section.341}{Documento de instalaci\363n y configuraci\363n}{appendix.340}% 137
+\BOOKMARK [2][-]{subsection.342}{Requisitos}{section.341}% 138
+\BOOKMARK [2][-]{subsection.343}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.341}% 139
+\BOOKMARK [1][-]{section.344}{Manual de usuario}{appendix.340}% 140
+\BOOKMARK [2][-]{subsection.345}{Ventana principal de la aplicaci\363n}{section.344}% 141
+\BOOKMARK [2][-]{subsection.355}{Configuraci\363n de la aplicaci\363n}{section.344}% 142
+\BOOKMARK [2][-]{subsection.368}{Entrenar un clasificador}{section.344}% 143
+\BOOKMARK [2][-]{subsection.371}{Abrir una imagen}{section.344}% 144
+\BOOKMARK [2][-]{subsection.374}{Analizar imagen}{section.344}% 145
+\BOOKMARK [2][-]{subsection.380}{Analizar y exportar los resultados}{section.344}% 146
+\BOOKMARK [2][-]{subsection.382}{Exportar y limpiar Log}{section.344}% 147
+\BOOKMARK [2][-]{subsection.384}{Ayuda}{section.344}% 148
+\BOOKMARK [2][-]{subsection.392}{Salir de la aplicaci\363n}{section.344}% 149
+\BOOKMARK [0][-]{subsection.392}{Ap\351ndices}{}% 150
+\BOOKMARK [0][-]{subsection.392}{Bibliograf\355a}{}% 151
