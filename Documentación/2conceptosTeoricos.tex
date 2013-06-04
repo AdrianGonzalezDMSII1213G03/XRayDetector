@@ -481,6 +481,14 @@ Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto
 \paragraph*{Píxel central más región de vecinos}\mbox{} \\
 \indent En este caso, no sólo consideramos el píxel central, si no que creamos una región cuadrada de $3 \times 3$ píxeles a su alrededor. Consideramos entonces una ventana como defectuosa cuando un cierto porcentaje de esta región de vecinos está coloreada. Obtenemos unos resultados muy parecidos a los de la anterior aproximación con porcentajes parecidos.
 
+Se realizó un experimento con todas estas opciones para determinar cuáles eran las que mejor funcionaba. En \ver{experimentos}, se pueden ver algunos de los resultados que se obtuvieron, a la vista de los cuales decidimos quedarnos con las opciones de porcentaje de la ventana y píxel centrar más región de vecinos.
+
+\figuraConPosicion{0.5}{imgs/experimentos.png}{Experimento estrategias de etiquetado
+\newline
+Píxel central \newline
+Porcentaje de ventana \newline
+Región de vecinos}{experimentos}{}{H}
+
 
 \subsubsection{Detección de defectos}
 El proceso es prácticamente igual al entrenamiento del clasificador. Se genera una imagen \emph{Saliency Map} a partir de la imagen original, al igual que antes, y a partir de las dos imágenes (la original y la \emph{Saliency}) se analizan mediante una ventana deslizante.

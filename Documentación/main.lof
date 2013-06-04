@@ -8,51 +8,68 @@
 \contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas \cite {DomingoMery}}}{20}{figure.70}
 \contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Ejemplo de m\IeC {\'a}scara junto a imagen original}}{21}{figure.72}
 \contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Esquema de la ventana deslizante \cite {DomingoMery}}}{22}{figure.73}
-\contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto. \newline a)Imagen con defectos marcados \newline b)Imagen binarizada con el \IeC {\'a}rea de defectos \newline c)Imagen con filtro de detecci\IeC {\'o}n de bordes\newline d)Resultado final}}{24}{figure.76}
-\contentsline {figure}{\numberline {\relax 2.9}{\ignorespaces Proceso de detecci\IeC {\'o}n en la segunda opci\IeC {\'o}n \newline a)Imagen original \newline b)Imagen segmentada con los umbrales locales \newline c)Binarizaci\IeC {\'o}n de los umbrales locales\newline d)Identificaci\IeC {\'o}n de las regiones candidatas}}{26}{figure.81}
-\contentsline {figure}{\numberline {\relax 2.10}{\ignorespaces T\IeC {\'e}rminos precision and recall \cite {wiki:precisionandrecall}}}{27}{figure.84}
+\contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Experimento estrategias de etiquetado \newline P\IeC {\'\i }xel central \newline Porcentaje de ventana \newline Regi\IeC {\'o}n de vecinos}}{23}{figure.75}
+\contentsline {figure}{\numberline {\relax 2.9}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto. \newline a)Imagen con defectos marcados \newline b)Imagen binarizada con el \IeC {\'a}rea de defectos \newline c)Imagen con filtro de detecci\IeC {\'o}n de bordes\newline d)Resultado final}}{24}{figure.77}
+\contentsline {figure}{\numberline {\relax 2.10}{\ignorespaces Proceso de detecci\IeC {\'o}n en la segunda opci\IeC {\'o}n \newline a)Imagen original \newline b)Imagen segmentada con los umbrales locales \newline c)Binarizaci\IeC {\'o}n de los umbrales locales\newline d)Identificaci\IeC {\'o}n de las regiones candidatas}}{26}{figure.82}
+\contentsline {figure}{\numberline {\relax 2.11}{\ignorespaces T\IeC {\'e}rminos precision and recall \cite {wiki:precisionandrecall}}}{27}{figure.85}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Diagrama de la metodolog\IeC {\'\i }a Scrum \cite {scrum_process_image}}}{30}{figure.88}
-\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Diagrama de etapas en Scrum \cite {scrum_stages_image}}}{31}{figure.89}
+\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Diagrama de la metodolog\IeC {\'\i }a Scrum \cite {scrum_process_image}}}{30}{figure.89}
+\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Diagrama de etapas en Scrum \cite {scrum_stages_image}}}{31}{figure.90}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Radiograf\IeC {\'\i }as usadas en otros art\IeC {\'\i }culos \cite {anand2009flaw} \cite {tridi} \cite {DomingoMery}}}{42}{figure.123}
-\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Ejemplo de radiograf\IeC {\'\i }a usada en nuestro proyecto}}{43}{figure.124}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{66}{figure.183}
-\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{74}{figure.194}
-\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{76}{figure.199}
-\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{78}{figure.201}
-\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{82}{figure.203}
-\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{85}{figure.205}
-\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{87}{figure.207}
-\contentsline {figure}{\numberline {\relax A.8}{\ignorespaces Burndown Chart del octavo Sprint}}{90}{figure.209}
-\contentsline {figure}{\numberline {\relax A.9}{\ignorespaces Burndown Chart del noveno Sprint}}{92}{figure.211}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax B.1}{\ignorespaces Diagrama de casos de uso principal}}{106}{figure.252}
-\contentsline {figure}{\numberline {\relax B.2}{\ignorespaces Prototipo de la ventana principal}}{120}{figure.268}
-\contentsline {figure}{\numberline {\relax B.3}{\ignorespaces Prototipo de la ventana de opciones avanzadas}}{121}{figure.269}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax C.1}{\ignorespaces Arquitectura en capas \cite {arquitectura}}}{128}{figure.276}
-\contentsline {figure}{\numberline {\relax C.2}{\ignorespaces Patr\IeC {\'o}n Fachada - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{129}{figure.281}
-\contentsline {figure}{\numberline {\relax C.3}{\ignorespaces Diagrama de clases de nuestra Fachada}}{130}{figure.282}
-\contentsline {figure}{\numberline {\relax C.4}{\ignorespaces Patr\IeC {\'o}n Singleton - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{130}{figure.284}
-\contentsline {figure}{\numberline {\relax C.5}{\ignorespaces Patr\IeC {\'o}n Estrategia - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{131}{figure.286}
-\contentsline {figure}{\numberline {\relax C.6}{\ignorespaces Diagrama de clases de nuestras Estrategias}}{132}{figure.287}
-\contentsline {figure}{\numberline {\relax C.7}{\ignorespaces Dise\IeC {\~n}o de la ventana principal}}{133}{figure.291}
-\contentsline {figure}{\numberline {\relax C.8}{\ignorespaces Dise\IeC {\~n}o de la ventana de opciones avanzadas}}{134}{figure.293}
-\contentsline {figure}{\numberline {\relax C.9}{\ignorespaces Dise\IeC {\~n}o de la ventana de precision \& recall}}{134}{figure.295}
-\contentsline {figure}{\numberline {\relax C.10}{\ignorespaces Diagrama de componentes}}{136}{figure.301}
-\contentsline {figure}{\numberline {\relax C.11}{\ignorespaces Diagrama de despliegue}}{136}{figure.303}
+\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Radiograf\IeC {\'\i }as usadas en otros art\IeC {\'\i }culos \cite {anand2009flaw} \cite {tridi} \cite {DomingoMery}}}{42}{figure.124}
+\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Ejemplo de radiograf\IeC {\'\i }a usada en nuestro proyecto}}{43}{figure.125}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax E.1}{\ignorespaces Ventana principal de XRayDetector}}{148}{figure.326}
-\contentsline {figure}{\numberline {\relax E.2}{\ignorespaces Men\IeC {\'u} control}}{148}{figure.327}
-\contentsline {figure}{\numberline {\relax E.3}{\ignorespaces Men\IeC {\'u} progreso}}{149}{figure.328}
-\contentsline {figure}{\numberline {\relax E.4}{\ignorespaces Nivel de tolerancia}}{149}{figure.329}
-\contentsline {figure}{\numberline {\relax E.5}{\ignorespaces Analizar resultados}}{150}{figure.330}
-\contentsline {figure}{\numberline {\relax E.6}{\ignorespaces Control de Log}}{150}{figure.331}
-\contentsline {figure}{\numberline {\relax E.7}{\ignorespaces Visor}}{151}{figure.332}
-\contentsline {figure}{\numberline {\relax E.8}{\ignorespaces Barra de men\IeC {\'u}s}}{151}{figure.333}
-\contentsline {figure}{\numberline {\relax E.9}{\ignorespaces Opciones avanzadas}}{152}{figure.335}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{66}{figure.184}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{74}{figure.195}
+\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{76}{figure.200}
+\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{78}{figure.202}
+\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{82}{figure.204}
+\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{85}{figure.206}
+\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{87}{figure.208}
+\contentsline {figure}{\numberline {\relax A.8}{\ignorespaces Burndown Chart del octavo Sprint}}{90}{figure.210}
+\contentsline {figure}{\numberline {\relax A.9}{\ignorespaces Burndown Chart del noveno Sprint}}{92}{figure.212}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax B.1}{\ignorespaces Diagrama de casos de uso principal}}{106}{figure.253}
+\contentsline {figure}{\numberline {\relax B.2}{\ignorespaces Prototipo de la ventana principal}}{120}{figure.269}
+\contentsline {figure}{\numberline {\relax B.3}{\ignorespaces Prototipo de la ventana de opciones avanzadas}}{121}{figure.270}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax C.1}{\ignorespaces Arquitectura en capas \cite {arquitectura}}}{128}{figure.277}
+\contentsline {figure}{\numberline {\relax C.2}{\ignorespaces Patr\IeC {\'o}n Fachada - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{129}{figure.282}
+\contentsline {figure}{\numberline {\relax C.3}{\ignorespaces Diagrama de clases de nuestra Fachada}}{130}{figure.283}
+\contentsline {figure}{\numberline {\relax C.4}{\ignorespaces Patr\IeC {\'o}n Singleton - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{130}{figure.285}
+\contentsline {figure}{\numberline {\relax C.5}{\ignorespaces Patr\IeC {\'o}n Estrategia - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{131}{figure.287}
+\contentsline {figure}{\numberline {\relax C.6}{\ignorespaces Diagrama de clases de nuestras Estrategias}}{132}{figure.288}
+\contentsline {figure}{\numberline {\relax C.7}{\ignorespaces Dise\IeC {\~n}o de la ventana principal}}{133}{figure.292}
+\contentsline {figure}{\numberline {\relax C.8}{\ignorespaces Dise\IeC {\~n}o de la ventana de opciones avanzadas}}{134}{figure.294}
+\contentsline {figure}{\numberline {\relax C.9}{\ignorespaces Dise\IeC {\~n}o de la ventana de precision \& recall}}{134}{figure.296}
+\contentsline {figure}{\numberline {\relax C.10}{\ignorespaces Diagrama de componentes}}{136}{figure.302}
+\contentsline {figure}{\numberline {\relax C.11}{\ignorespaces Diagrama de despliegue}}{136}{figure.304}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax E.1}{\ignorespaces Ventana principal de XRayDetector}}{148}{figure.327}
+\contentsline {figure}{\numberline {\relax E.2}{\ignorespaces Men\IeC {\'u} control}}{148}{figure.328}
+\contentsline {figure}{\numberline {\relax E.3}{\ignorespaces Men\IeC {\'u} progreso}}{149}{figure.329}
+\contentsline {figure}{\numberline {\relax E.4}{\ignorespaces Nivel de tolerancia}}{149}{figure.330}
+\contentsline {figure}{\numberline {\relax E.5}{\ignorespaces Analizar resultados}}{150}{figure.331}
+\contentsline {figure}{\numberline {\relax E.6}{\ignorespaces Control de Log}}{150}{figure.332}
+\contentsline {figure}{\numberline {\relax E.7}{\ignorespaces Visor}}{151}{figure.333}
+\contentsline {figure}{\numberline {\relax E.8}{\ignorespaces Tabla de resultados}}{151}{figure.334}
+\contentsline {figure}{\numberline {\relax E.9}{\ignorespaces Barra de men\IeC {\'u}s}}{152}{figure.335}
+\contentsline {figure}{\numberline {\relax E.10}{\ignorespaces Opciones avanzadas}}{152}{figure.337}
+\contentsline {figure}{\numberline {\relax E.11}{\ignorespaces Bot\IeC {\'o}n entrenar}}{154}{figure.350}
+\contentsline {figure}{\numberline {\relax E.12}{\ignorespaces Elecci\IeC {\'o}n del tipo de entrenamiento}}{154}{figure.351}
+\contentsline {figure}{\numberline {\relax E.13}{\ignorespaces Bot\IeC {\'o}n abrir imagen}}{155}{figure.353}
+\contentsline {figure}{\numberline {\relax E.14}{\ignorespaces Explorador archivos para abrir imagen}}{156}{figure.354}
+\contentsline {figure}{\numberline {\relax E.15}{\ignorespaces Bot\IeC {\'o}n analizar imagen}}{156}{figure.356}
+\contentsline {figure}{\numberline {\relax E.16}{\ignorespaces Aviso al analizar imagen}}{157}{figure.357}
+\contentsline {figure}{\numberline {\relax E.17}{\ignorespaces An\IeC {\'a}lisis en ejecuci\IeC {\'o}n}}{157}{figure.358}
+\contentsline {figure}{\numberline {\relax E.18}{\ignorespaces Defectos detectados}}{158}{figure.359}
+\contentsline {figure}{\numberline {\relax E.19}{\ignorespaces Resultados coloreados}}{159}{figure.360}
+\contentsline {figure}{\numberline {\relax E.20}{\ignorespaces Resultados de Precision \& Recall}}{160}{figure.362}
+\contentsline {figure}{\numberline {\relax E.21}{\ignorespaces Bot\IeC {\'o}n exportar}}{160}{figure.364}
+\contentsline {figure}{\numberline {\relax E.22}{\ignorespaces M\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea}}{161}{figure.366}
+\contentsline {figure}{\numberline {\relax E.23}{\ignorespaces Pesta\IeC {\~n}as de la ayuda en l\IeC {\'\i }nea}}{161}{figure.367}
+\contentsline {figure}{\numberline {\relax E.24}{\ignorespaces Ejemplo b\IeC {\'u}squeda tabla de contenidos}}{162}{figure.369}
+\contentsline {figure}{\numberline {\relax E.25}{\ignorespaces Ejemplo de motor de b\IeC {\'u}squeda}}{163}{figure.371}

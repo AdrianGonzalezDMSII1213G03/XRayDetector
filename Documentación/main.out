@@ -16,125 +16,132 @@
 \BOOKMARK [2][-]{subsection.64}{Reconocimiento e interpretaci\363n de im\341genes}{section.34}% 16
 \BOOKMARK [1][-]{section.67}{Aplicaci\363n de la visi\363n artificial a la detecci\363n y segmentaci\363n de defectos}{chapter.14}% 17
 \BOOKMARK [2][-]{subsection.68}{Fundamentos te\363ricos de la versi\363n inicial}{section.67}% 18
-\BOOKMARK [2][-]{subsection.78}{Fundamentos te\363ricos de la versi\363n final}{section.67}% 19
-\BOOKMARK [0][-]{chapter.85}{T\351cnicas y herramientas}{}% 20
-\BOOKMARK [1][-]{section.86}{T\351cnicas}{chapter.85}% 21
-\BOOKMARK [2][-]{subsection.87}{Metodolog\355a Scrum}{section.86}% 22
-\BOOKMARK [2][-]{subsection.90}{Java}{section.86}% 23
-\BOOKMARK [2][-]{subsection.91}{UML}{section.86}% 24
-\BOOKMARK [2][-]{subsection.92}{Weka}{section.86}% 25
-\BOOKMARK [2][-]{subsection.102}{ImageJ}{section.86}% 26
-\BOOKMARK [2][-]{subsection.103}{Patrones de dise\361o}{section.86}% 27
-\BOOKMARK [1][-]{section.104}{Herramientas}{chapter.85}% 28
-\BOOKMARK [2][-]{subsection.105}{Eclipse}{section.104}% 29
-\BOOKMARK [2][-]{subsection.106}{JUnit}{section.104}% 30
-\BOOKMARK [2][-]{subsection.107}{JDepend}{section.104}% 31
-\BOOKMARK [2][-]{subsection.108}{Source Monitor}{section.104}% 32
-\BOOKMARK [2][-]{subsection.109}{Astah}{section.104}% 33
-\BOOKMARK [2][-]{subsection.110}{GitHub}{section.104}% 34
-\BOOKMARK [2][-]{subsection.111}{PivotalTracker}{section.104}% 35
-\BOOKMARK [2][-]{subsection.112}{MiKTeX}{section.104}% 36
-\BOOKMARK [2][-]{subsection.113}{TeXMaker}{section.104}% 37
-\BOOKMARK [2][-]{subsection.114}{WindowBuilder}{section.104}% 38
-\BOOKMARK [2][-]{subsection.115}{Auto Local Threshold}{section.104}% 39
-\BOOKMARK [2][-]{subsection.116}{Apache Commons IO}{section.104}% 40
-\BOOKMARK [2][-]{subsection.117}{EJML}{section.104}% 41
-\BOOKMARK [2][-]{subsection.118}{Zotero}{section.104}% 42
-\BOOKMARK [0][-]{chapter.119}{Aspectos relevantes del desarrollo del proyecto}{}% 43
-\BOOKMARK [1][-]{section.120}{Problemas y retos}{chapter.119}% 44
-\BOOKMARK [1][-]{section.125}{Mejoras respecto a la versi\363n previa}{chapter.119}% 45
-\BOOKMARK [1][-]{section.133}{Conocimientos adquiridos}{chapter.119}% 46
-\BOOKMARK [2][-]{subsection.134}{Miner\355a de datos}{section.133}% 47
-\BOOKMARK [2][-]{subsection.135}{Weka}{section.133}% 48
-\BOOKMARK [2][-]{subsection.136}{Metodolog\355a Scrum}{section.133}% 49
-\BOOKMARK [2][-]{subsection.137}{Programaci\363n multihilo}{section.133}% 50
-\BOOKMARK [2][-]{subsection.138}{Documentaci\363n en LaTeX}{section.133}% 51
-\BOOKMARK [0][-]{chapter.139}{Trabajos relacionados}{}% 52
-\BOOKMARK [1][-]{section.140}{Art\355culos Estudiados}{chapter.139}% 53
-\BOOKMARK [1][-]{section.142}{Revisi\363n del estado del arte}{chapter.139}% 54
-\BOOKMARK [2][-]{subsection.143}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.142}% 55
-\BOOKMARK [2][-]{subsection.153}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.142}% 56
-\BOOKMARK [2][-]{subsection.161}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.142}% 57
-\BOOKMARK [2][-]{subsection.167}{Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{section.142}% 58
-\BOOKMARK [0][-]{chapter.171}{Conclusiones y l\355neas de trabajo futuras}{}% 59
-\BOOKMARK [1][-]{section.172}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.171}% 60
-\BOOKMARK [1][-]{section.173}{Conclusiones}{chapter.171}% 61
-\BOOKMARK [1][-]{section.174}{L\355neas de trabajo futuras}{chapter.171}% 62
-\BOOKMARK [0][-]{appendix.175}{Plan del proyecto software}{}% 63
-\BOOKMARK [1][-]{section.176}{Introducci\363n}{appendix.175}% 64
-\BOOKMARK [1][-]{section.177}{Planificaci\363n temporal del proyecto}{appendix.175}% 65
-\BOOKMARK [2][-]{subsection.178}{Estimaci\363n temporal a partir de casos de uso}{section.177}% 66
-\BOOKMARK [1][-]{section.180}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.175}% 67
-\BOOKMARK [2][-]{subsection.181}{Actores}{section.180}% 68
-\BOOKMARK [2][-]{subsection.182}{Ciclo de desarrollo}{section.180}% 69
-\BOOKMARK [1][-]{section.184}{Product Backlog del proyecto}{appendix.175}% 70
-\BOOKMARK [1][-]{section.186}{Planificaci\363n por Sprint}{appendix.175}% 71
-\BOOKMARK [2][-]{subsection.187}{Sprint 1: Spike Arquitect\363nico 1}{section.186}% 72
-\BOOKMARK [2][-]{subsection.188}{Sprint 2: Spike Arquitect\363nico 2}{section.186}% 73
-\BOOKMARK [2][-]{subsection.195}{Sprint 3}{section.186}% 74
-\BOOKMARK [2][-]{subsection.200}{Sprint 4}{section.186}% 75
-\BOOKMARK [2][-]{subsection.202}{Sprint 5}{section.186}% 76
-\BOOKMARK [2][-]{subsection.204}{Sprint 6}{section.186}% 77
-\BOOKMARK [2][-]{subsection.206}{Sprint 7}{section.186}% 78
-\BOOKMARK [2][-]{subsection.208}{Sprint 8}{section.186}% 79
-\BOOKMARK [2][-]{subsection.210}{Sprint 9}{section.186}% 80
-\BOOKMARK [0][-]{appendix.212}{Especificaci\363n de requisitos}{}% 81
-\BOOKMARK [1][-]{section.213}{Introducci\363n}{appendix.212}% 82
-\BOOKMARK [1][-]{section.214}{Objetivos del proyecto}{appendix.212}% 83
-\BOOKMARK [1][-]{section.215}{Usuarios participantes}{appendix.212}% 84
-\BOOKMARK [1][-]{section.216}{Descripci\363n del sistema actual}{appendix.212}% 85
-\BOOKMARK [1][-]{section.217}{Factores de riesgo}{appendix.212}% 86
-\BOOKMARK [1][-]{section.218}{Cat\341logo de requisitos del sistema}{appendix.212}% 87
-\BOOKMARK [2][-]{subsection.219}{Objetivos del proyecto}{section.218}% 88
-\BOOKMARK [2][-]{subsection.221}{Descripci\363n de los actores}{section.218}% 89
-\BOOKMARK [2][-]{subsection.223}{Funciones del producto}{section.218}% 90
-\BOOKMARK [2][-]{subsection.245}{Requisitos de usuario}{section.218}% 91
-\BOOKMARK [2][-]{subsection.246}{Requisitos de sistema}{section.218}% 92
-\BOOKMARK [1][-]{section.247}{Especificaci\363n de los requisitos}{appendix.212}% 93
-\BOOKMARK [2][-]{subsection.248}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.247}% 94
-\BOOKMARK [2][-]{subsection.249}{Especificaci\363n de requisitos de informaci\363n}{section.247}% 95
-\BOOKMARK [2][-]{subsection.251}{Requisitos funcionales}{section.247}% 96
-\BOOKMARK [2][-]{subsection.266}{Requisitos no funcionales}{section.247}% 97
-\BOOKMARK [1][-]{section.267}{Interfaz de usuario}{appendix.212}% 98
-\BOOKMARK [0][-]{appendix.270}{Especificaci\363n de dise\361o}{}% 99
-\BOOKMARK [1][-]{section.271}{Introducci\363n}{appendix.270}% 100
-\BOOKMARK [1][-]{section.272}{\301mbito del software}{appendix.270}% 101
-\BOOKMARK [1][-]{section.273}{Dise\361o Arquitect\363nico}{appendix.270}% 102
-\BOOKMARK [2][-]{subsection.274}{Estilos arquitect\363nicos utilizados}{section.273}% 103
-\BOOKMARK [2][-]{subsection.277}{Arquitectura final de la aplicaci\363n}{section.273}% 104
-\BOOKMARK [2][-]{subsection.278}{Patrones de dise\361o utilizados}{section.273}% 105
-\BOOKMARK [2][-]{subsection.288}{Diagrama de clases de dise\361o}{section.273}% 106
-\BOOKMARK [1][-]{section.289}{Dise\361o de la interfaz}{appendix.270}% 107
-\BOOKMARK [2][-]{subsection.290}{Ventana principal}{section.289}% 108
-\BOOKMARK [2][-]{subsection.292}{Ventana de opciones avanzadas}{section.289}% 109
-\BOOKMARK [2][-]{subsection.294}{Ventana de Precision \046 Recall}{section.289}% 110
-\BOOKMARK [1][-]{section.296}{Dise\361o procedimental}{appendix.270}% 111
-\BOOKMARK [1][-]{section.297}{Referencia cruzada a los requisitos}{appendix.270}% 112
-\BOOKMARK [1][-]{section.298}{Pruebas}{appendix.270}% 113
-\BOOKMARK [2][-]{subsection.299}{Pruebas de integraci\363n}{section.298}% 114
-\BOOKMARK [1][-]{section.300}{Entorno tecnol\363gico del sistema}{appendix.270}% 115
-\BOOKMARK [1][-]{section.302}{Plan de desarrollo e implantaci\363n}{appendix.270}% 116
-\BOOKMARK [0][-]{appendix.304}{Manual del programador}{}% 117
-\BOOKMARK [1][-]{section.305}{Introducci\363n}{appendix.304}% 118
-\BOOKMARK [1][-]{section.306}{Documentaci\363n de las bibliotecas}{appendix.304}% 119
-\BOOKMARK [2][-]{subsection.307}{Bibliotecas de Java}{section.306}% 120
-\BOOKMARK [2][-]{subsection.308}{ImageJ}{section.306}% 121
-\BOOKMARK [2][-]{subsection.309}{Weka}{section.306}% 122
-\BOOKMARK [2][-]{subsection.310}{JavaHelp}{section.306}% 123
-\BOOKMARK [2][-]{subsection.311}{Apache Commons IO}{section.306}% 124
-\BOOKMARK [2][-]{subsection.312}{EJML}{section.306}% 125
-\BOOKMARK [1][-]{section.313}{C\363digo fuente}{appendix.304}% 126
-\BOOKMARK [2][-]{subsection.314}{Recursos necesarios por el c\363digo fuente}{section.313}% 127
-\BOOKMARK [1][-]{section.315}{Manual del programador}{appendix.304}% 128
-\BOOKMARK [2][-]{subsection.316}{Agregar nuevos elementos a la aplicaci\363n}{section.315}% 129
-\BOOKMARK [2][-]{subsection.318}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.315}% 130
-\BOOKMARK [1][-]{section.319}{Pruebas unitarias}{appendix.304}% 131
-\BOOKMARK [0][-]{appendix.320}{Manual del usuario}{}% 132
-\BOOKMARK [1][-]{section.321}{Documento de instalaci\363n y configuraci\363n}{appendix.320}% 133
-\BOOKMARK [2][-]{subsection.322}{Requisitos}{section.321}% 134
-\BOOKMARK [2][-]{subsection.323}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.321}% 135
-\BOOKMARK [1][-]{section.324}{Manual de usuario}{appendix.320}% 136
-\BOOKMARK [2][-]{subsection.325}{Ventana principal de la aplicaci\363n}{section.324}% 137
-\BOOKMARK [2][-]{subsection.334}{Configuraci\363n de la aplicaci\363n}{section.324}% 138
-\BOOKMARK [0][-]{Item.346}{Ap\351ndices}{}% 139
-\BOOKMARK [0][-]{Item.346}{Bibliograf\355a}{}% 140
+\BOOKMARK [2][-]{subsection.79}{Fundamentos te\363ricos de la versi\363n final}{section.67}% 19
+\BOOKMARK [0][-]{chapter.86}{T\351cnicas y herramientas}{}% 20
+\BOOKMARK [1][-]{section.87}{T\351cnicas}{chapter.86}% 21
+\BOOKMARK [2][-]{subsection.88}{Metodolog\355a Scrum}{section.87}% 22
+\BOOKMARK [2][-]{subsection.91}{Java}{section.87}% 23
+\BOOKMARK [2][-]{subsection.92}{UML}{section.87}% 24
+\BOOKMARK [2][-]{subsection.93}{Weka}{section.87}% 25
+\BOOKMARK [2][-]{subsection.103}{ImageJ}{section.87}% 26
+\BOOKMARK [2][-]{subsection.104}{Patrones de dise\361o}{section.87}% 27
+\BOOKMARK [1][-]{section.105}{Herramientas}{chapter.86}% 28
+\BOOKMARK [2][-]{subsection.106}{Eclipse}{section.105}% 29
+\BOOKMARK [2][-]{subsection.107}{JUnit}{section.105}% 30
+\BOOKMARK [2][-]{subsection.108}{JDepend}{section.105}% 31
+\BOOKMARK [2][-]{subsection.109}{Source Monitor}{section.105}% 32
+\BOOKMARK [2][-]{subsection.110}{Astah}{section.105}% 33
+\BOOKMARK [2][-]{subsection.111}{GitHub}{section.105}% 34
+\BOOKMARK [2][-]{subsection.112}{PivotalTracker}{section.105}% 35
+\BOOKMARK [2][-]{subsection.113}{MiKTeX}{section.105}% 36
+\BOOKMARK [2][-]{subsection.114}{TeXMaker}{section.105}% 37
+\BOOKMARK [2][-]{subsection.115}{WindowBuilder}{section.105}% 38
+\BOOKMARK [2][-]{subsection.116}{Auto Local Threshold}{section.105}% 39
+\BOOKMARK [2][-]{subsection.117}{Apache Commons IO}{section.105}% 40
+\BOOKMARK [2][-]{subsection.118}{EJML}{section.105}% 41
+\BOOKMARK [2][-]{subsection.119}{Zotero}{section.105}% 42
+\BOOKMARK [0][-]{chapter.120}{Aspectos relevantes del desarrollo del proyecto}{}% 43
+\BOOKMARK [1][-]{section.121}{Problemas y retos}{chapter.120}% 44
+\BOOKMARK [1][-]{section.126}{Mejoras respecto a la versi\363n previa}{chapter.120}% 45
+\BOOKMARK [1][-]{section.134}{Conocimientos adquiridos}{chapter.120}% 46
+\BOOKMARK [2][-]{subsection.135}{Miner\355a de datos}{section.134}% 47
+\BOOKMARK [2][-]{subsection.136}{Weka}{section.134}% 48
+\BOOKMARK [2][-]{subsection.137}{Metodolog\355a Scrum}{section.134}% 49
+\BOOKMARK [2][-]{subsection.138}{Programaci\363n multihilo}{section.134}% 50
+\BOOKMARK [2][-]{subsection.139}{Documentaci\363n en LaTeX}{section.134}% 51
+\BOOKMARK [0][-]{chapter.140}{Trabajos relacionados}{}% 52
+\BOOKMARK [1][-]{section.141}{Art\355culos Estudiados}{chapter.140}% 53
+\BOOKMARK [1][-]{section.143}{Revisi\363n del estado del arte}{chapter.140}% 54
+\BOOKMARK [2][-]{subsection.144}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.143}% 55
+\BOOKMARK [2][-]{subsection.154}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.143}% 56
+\BOOKMARK [2][-]{subsection.162}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.143}% 57
+\BOOKMARK [2][-]{subsection.168}{Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{section.143}% 58
+\BOOKMARK [0][-]{chapter.172}{Conclusiones y l\355neas de trabajo futuras}{}% 59
+\BOOKMARK [1][-]{section.173}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.172}% 60
+\BOOKMARK [1][-]{section.174}{Conclusiones}{chapter.172}% 61
+\BOOKMARK [1][-]{section.175}{L\355neas de trabajo futuras}{chapter.172}% 62
+\BOOKMARK [0][-]{appendix.176}{Plan del proyecto software}{}% 63
+\BOOKMARK [1][-]{section.177}{Introducci\363n}{appendix.176}% 64
+\BOOKMARK [1][-]{section.178}{Planificaci\363n temporal del proyecto}{appendix.176}% 65
+\BOOKMARK [2][-]{subsection.179}{Estimaci\363n temporal a partir de casos de uso}{section.178}% 66
+\BOOKMARK [1][-]{section.181}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.176}% 67
+\BOOKMARK [2][-]{subsection.182}{Actores}{section.181}% 68
+\BOOKMARK [2][-]{subsection.183}{Ciclo de desarrollo}{section.181}% 69
+\BOOKMARK [1][-]{section.185}{Product Backlog del proyecto}{appendix.176}% 70
+\BOOKMARK [1][-]{section.187}{Planificaci\363n por Sprint}{appendix.176}% 71
+\BOOKMARK [2][-]{subsection.188}{Sprint 1: Spike Arquitect\363nico 1}{section.187}% 72
+\BOOKMARK [2][-]{subsection.189}{Sprint 2: Spike Arquitect\363nico 2}{section.187}% 73
+\BOOKMARK [2][-]{subsection.196}{Sprint 3}{section.187}% 74
+\BOOKMARK [2][-]{subsection.201}{Sprint 4}{section.187}% 75
+\BOOKMARK [2][-]{subsection.203}{Sprint 5}{section.187}% 76
+\BOOKMARK [2][-]{subsection.205}{Sprint 6}{section.187}% 77
+\BOOKMARK [2][-]{subsection.207}{Sprint 7}{section.187}% 78
+\BOOKMARK [2][-]{subsection.209}{Sprint 8}{section.187}% 79
+\BOOKMARK [2][-]{subsection.211}{Sprint 9}{section.187}% 80
+\BOOKMARK [0][-]{appendix.213}{Especificaci\363n de requisitos}{}% 81
+\BOOKMARK [1][-]{section.214}{Introducci\363n}{appendix.213}% 82
+\BOOKMARK [1][-]{section.215}{Objetivos del proyecto}{appendix.213}% 83
+\BOOKMARK [1][-]{section.216}{Usuarios participantes}{appendix.213}% 84
+\BOOKMARK [1][-]{section.217}{Descripci\363n del sistema actual}{appendix.213}% 85
+\BOOKMARK [1][-]{section.218}{Factores de riesgo}{appendix.213}% 86
+\BOOKMARK [1][-]{section.219}{Cat\341logo de requisitos del sistema}{appendix.213}% 87
+\BOOKMARK [2][-]{subsection.220}{Objetivos del proyecto}{section.219}% 88
+\BOOKMARK [2][-]{subsection.222}{Descripci\363n de los actores}{section.219}% 89
+\BOOKMARK [2][-]{subsection.224}{Funciones del producto}{section.219}% 90
+\BOOKMARK [2][-]{subsection.246}{Requisitos de usuario}{section.219}% 91
+\BOOKMARK [2][-]{subsection.247}{Requisitos de sistema}{section.219}% 92
+\BOOKMARK [1][-]{section.248}{Especificaci\363n de los requisitos}{appendix.213}% 93
+\BOOKMARK [2][-]{subsection.249}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.248}% 94
+\BOOKMARK [2][-]{subsection.250}{Especificaci\363n de requisitos de informaci\363n}{section.248}% 95
+\BOOKMARK [2][-]{subsection.252}{Requisitos funcionales}{section.248}% 96
+\BOOKMARK [2][-]{subsection.267}{Requisitos no funcionales}{section.248}% 97
+\BOOKMARK [1][-]{section.268}{Interfaz de usuario}{appendix.213}% 98
+\BOOKMARK [0][-]{appendix.271}{Especificaci\363n de dise\361o}{}% 99
+\BOOKMARK [1][-]{section.272}{Introducci\363n}{appendix.271}% 100
+\BOOKMARK [1][-]{section.273}{\301mbito del software}{appendix.271}% 101
+\BOOKMARK [1][-]{section.274}{Dise\361o Arquitect\363nico}{appendix.271}% 102
+\BOOKMARK [2][-]{subsection.275}{Estilos arquitect\363nicos utilizados}{section.274}% 103
+\BOOKMARK [2][-]{subsection.278}{Arquitectura final de la aplicaci\363n}{section.274}% 104
+\BOOKMARK [2][-]{subsection.279}{Patrones de dise\361o utilizados}{section.274}% 105
+\BOOKMARK [2][-]{subsection.289}{Diagrama de clases de dise\361o}{section.274}% 106
+\BOOKMARK [1][-]{section.290}{Dise\361o de la interfaz}{appendix.271}% 107
+\BOOKMARK [2][-]{subsection.291}{Ventana principal}{section.290}% 108
+\BOOKMARK [2][-]{subsection.293}{Ventana de opciones avanzadas}{section.290}% 109
+\BOOKMARK [2][-]{subsection.295}{Ventana de Precision \046 Recall}{section.290}% 110
+\BOOKMARK [1][-]{section.297}{Dise\361o procedimental}{appendix.271}% 111
+\BOOKMARK [1][-]{section.298}{Referencia cruzada a los requisitos}{appendix.271}% 112
+\BOOKMARK [1][-]{section.299}{Pruebas}{appendix.271}% 113
+\BOOKMARK [2][-]{subsection.300}{Pruebas de integraci\363n}{section.299}% 114
+\BOOKMARK [1][-]{section.301}{Entorno tecnol\363gico del sistema}{appendix.271}% 115
+\BOOKMARK [1][-]{section.303}{Plan de desarrollo e implantaci\363n}{appendix.271}% 116
+\BOOKMARK [0][-]{appendix.305}{Manual del programador}{}% 117
+\BOOKMARK [1][-]{section.306}{Introducci\363n}{appendix.305}% 118
+\BOOKMARK [1][-]{section.307}{Documentaci\363n de las bibliotecas}{appendix.305}% 119
+\BOOKMARK [2][-]{subsection.308}{Bibliotecas de Java}{section.307}% 120
+\BOOKMARK [2][-]{subsection.309}{ImageJ}{section.307}% 121
+\BOOKMARK [2][-]{subsection.310}{Weka}{section.307}% 122
+\BOOKMARK [2][-]{subsection.311}{JavaHelp}{section.307}% 123
+\BOOKMARK [2][-]{subsection.312}{Apache Commons IO}{section.307}% 124
+\BOOKMARK [2][-]{subsection.313}{EJML}{section.307}% 125
+\BOOKMARK [1][-]{section.314}{C\363digo fuente}{appendix.305}% 126
+\BOOKMARK [2][-]{subsection.315}{Recursos necesarios por el c\363digo fuente}{section.314}% 127
+\BOOKMARK [1][-]{section.316}{Manual del programador}{appendix.305}% 128
+\BOOKMARK [2][-]{subsection.317}{Agregar nuevos elementos a la aplicaci\363n}{section.316}% 129
+\BOOKMARK [2][-]{subsection.319}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.316}% 130
+\BOOKMARK [1][-]{section.320}{Pruebas unitarias}{appendix.305}% 131
+\BOOKMARK [0][-]{appendix.321}{Manual del usuario}{}% 132
+\BOOKMARK [1][-]{section.322}{Documento de instalaci\363n y configuraci\363n}{appendix.321}% 133
+\BOOKMARK [2][-]{subsection.323}{Requisitos}{section.322}% 134
+\BOOKMARK [2][-]{subsection.324}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.322}% 135
+\BOOKMARK [1][-]{section.325}{Manual de usuario}{appendix.321}% 136
+\BOOKMARK [2][-]{subsection.326}{Ventana principal de la aplicaci\363n}{section.325}% 137
+\BOOKMARK [2][-]{subsection.336}{Configuraci\363n de la aplicaci\363n}{section.325}% 138
+\BOOKMARK [2][-]{subsection.349}{Entrenar un clasificador}{section.325}% 139
+\BOOKMARK [2][-]{subsection.352}{Abrir una imagen}{section.325}% 140
+\BOOKMARK [2][-]{subsection.355}{Analizar imagen}{section.325}% 141
+\BOOKMARK [2][-]{subsection.361}{Analizar y exportar los resultados}{section.325}% 142
+\BOOKMARK [2][-]{subsection.363}{Exportar y limpiar Log}{section.325}% 143
+\BOOKMARK [2][-]{subsection.365}{Ayuda}{section.325}% 144
+\BOOKMARK [2][-]{subsection.373}{Salir de la aplicaci\363n}{section.325}% 145
+\BOOKMARK [0][-]{subsection.373}{Ap\351ndices}{}% 146
+\BOOKMARK [0][-]{subsection.373}{Bibliograf\355a}{}% 147

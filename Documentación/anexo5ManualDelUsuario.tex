@@ -80,7 +80,7 @@ Aquí se muestra la imagen cargada en la aplicación, así como el resultado del
 \subsubsection*{Tabla resultados}
 Aquí se muestra una lista de los defectos detectados durante el proceso de detección, así como una colección de características geométricas asociadas al defecto. Si se selecciona una fila en la tabla de resultados, el defecto se coloreará en el visor indicando con qué defecto se corresponde. De la misma forma, si se selecciona un defecto sobre el visor mediante la combinación de la tecla \textit{control} y click del ratón, se resaltará la fila de la tabla a la que corresponde.
 
-%pantallazo
+\figuraConPosicion{1}{imgs/tablaresultados.png}{Tabla de resultados}{tablaresultados}{}{H}
 
 
 \subsubsection*{Barra de menús}
@@ -149,3 +149,116 @@ Mediante el menú \textbf{Opciones}, de la barra de menú y seleccionando \textb
 
 \subsection{Entrenar un clasificador}
 El primer paso para poder analizar imágenes es tener un clasificador entrenado que sea capaz de decidir cuándo una ventana es defectuosa o no. En cualquier momento, se puede entrenar un clasificador para usarlo posteriormente en la aplicación para realizar el proceso de detección de defectos. Para ello hacemos click en el botón \textbf{Entrenar Clasificador} del panel de control de la aplicación.
+
+\figuraConPosicion{0.6}{imgs/botonentrenar.png}{Botón entrenar}{botonentrenar}{}{H}
+
+A continuación, se ofrece la posibilidad de construir un clasificador utilizando 2 métodos diferentes:
+
+\figuraConPosicion{0.6}{imgs/tipoentrenamiento.png}{Elección del tipo de entrenamiento}{tipoentrenamiento}{}{H}
+
+\begin{itemize}
+\item Generando un archivo ARFF nuevo: Si se selecciona esta opción, la aplicación abrirá un explorador de archivos y solicitará al usuario que especifique donde se encuentra el directorio con las imágenes que se utilizarán para el proceso de entrenamiento y con las que se generará un archivo ARFF nuevo, a partir del cual se construirá el clasificador.
+
+\textbf{NOTA:} Las imágenes que se utilicen para el proceso de entrenamiento deben tener asociadas una máscara para poder enseñar al clasificador a identificar los defectos.
+
+\item A partir de un archivo ARFF existente: Si se selecciona esta opción, la aplicación abrirá un explorador de archivos y solicitará al usuario que especifique donde se encuentra el archivo ARFF que se utilizará para el proceso de entrenamiento y con el que se construirá el clasificador.
+\end{itemize}
+
+La aplicación también pedirá la ubicación donde guardar el modelo generado, en formato \textit{.model}.
+
+Una vez construido el clasificador, la aplicación estará lista para comenzar el proceso de análisis con el fin de detectar los defectos en la imagen.
+
+\textbf{NOTA:} Este proceso lleva un tiempo y puede demorar varios minutos entrenar un clasificador a partir de un conjunto de datos de tamaño considerable.
+
+El proceso puede ser detenido en cualquier momento haciendo click en el botón \textbf{Stop}, es decir, el botón del aspa roja contenido en la sección \textit{Progreso} de la interfaz.
+
+\subsection{Abrir una imagen}
+Para poder analizar una imagen, es necesario primero abrirla y que la cargue la aplicación. Para ello, hacemos click en el botón \textbf{Abrir Imagen} del panel de control de la aplicación.
+
+\figuraConPosicion{0.6}{imgs/botonabrir.png}{Botón abrir imagen}{botonentabrir}{}{H}
+
+A continuación, la aplicación nos muestra un explorador de archivos donde seleccionaremos la imagen a cargar en la aplicación. Hay que tener en cuenta las restricciones de este explorador, ya que solo permte escoger archivos JPG, JPEG, BMP y PNG. Una vez seleccionada hacemos click en el botón \textbf{Aceptar}.
+
+\figuraConPosicion{0.9}{imgs/escogerimagen.png}{Explorador archivos para abrir imagen}{elegirimagen}{}{H}
+
+Una vez cargada la imagen, se mostrará en el visor de imágenes de la aplicación, y estará lista para ser procesada.
+
+\subsection{Analizar imagen}
+Una vez que tenemos la imagen abierta en el visor de la aplicación y que tenemos un clasificador debidamente entrenado a partir de un conjunto de datos de muestra, se procede al proceso de análisis para iniciar la detección de defectos sobre la imagen. Para ello, hacemos click en el botón \textbf{Analizar Imagen} del panel de control de la aplicación.
+
+\figuraConPosicion{0.6}{imgs/botonanalizar.png}{Botón analizar imagen}{botonanalizar}{}{H}
+
+Este botón sólo se podrá pulsar mientras se haya cargado una imagen en el visor.
+
+XRayDetector da la opción de analizar sólo una región de la imagen. Para ello, simplemente hay que hacer click en un punto de la imagen y arrastrar el ratón, manteniendo pulsado el botón del mismo. Se generará un recuadro amarillo, que delimita la región a analizar. Si no se selecciona ninguna región en el visor de la aplicación, se mostrará un mensaje indicando que el proceso puede demorarse un tiempo en completar dicha operación.
+
+\figuraConPosicion{0.6}{imgs/avisoanalizar.png}{Aviso al analizar imagen}{avisoanalizar}{}{H}
+
+A continuación, la aplicación inicia el proceso de análisis en busca de defectos sobre la imagen. Durante este proceso de análisis, se verá cómo se van dibujando unas ventanas amarillas, que representan las regiones que se están analizando en ese momento. Si alguna es clasificada como defecto, se quedarán dibujadas en color verde.
+
+\figuraConPosicion{0.6}{imgs/analizando.png}{Análisis en ejecución}{analizando}{}{H}
+
+También se irá mostrando el progreso de la aplicación mediante una barra de progreso. Junto a esta barra se encuentra el botón de \textit{Stop} (el aspa roja), que permite detener el proceso en cualquier momento.
+
+Una vez que ha finalizado el proceso de detección, y si no ha habido ningún error, se muestran los defectos detectados con su contorno en el visor.
+
+\figuraConPosicion{0.6}{imgs/dibujados.png}{Defectos detectados}{dibujados}{}{H}
+
+Los resultados obtenidos pueden observarse tanto en el visor como en la tabla de resultados que se encuentra bajo el visor. Esta tabla contiene una lista con todos los defectos encontrados, junto con sus características geométricas asociadas a cada defecto.
+
+Si hacemos click sobre un defecto en el visor de la imagen (manteniendo la tecla \textit{control} pulsada, lo que provocará que el icono del cursor cambie a una mano), o bien sobre la lista de defectos de la tabla de resultados, se coloreará el defecto seleccionado en el visor, y se seleccionará la fila correspondiente en la tabla de resultados asociada al defecto marcado.
+
+\figuraConPosicion{1}{imgs/resdeteccion.png}{Resultados coloreados}{resdeteccion}{}{H}
+
+Además podemos cambiar el nivel de tolerancia de detección sobre el defecto mediante la barra desplazadora. A menor valor, mayor tolerancia y menor precisión, y viceversa.
+
+\subsection{Analizar y exportar los resultados}
+Tras el proceso de análisis de la imagen, es posible analizar y exportar los resultados obtenidos. Para ello, a través del panel \textbf{Analizar Resultados}, nos da a elegir diversas opciones:
+
+\begin{itemize}
+\item \textbf{Guardar imagen analizada:} Permite guardar una copia de lo que se muestra en el visor, en la ruta que el usuario especifique mediante un explorador de archivos, como imagen JPG.
+\item \textbf{Guardar defectos binarizados:} Permite guardar el resultado de la detección con los píxeles que han sido marcados como defectuosos mediante una imagen binarizada. El resultado se guarda en la ruta que el usuario especifique mediante un explorador de archivos.
+\item \textbf{Calcular Precision \& Recall:} La aplicación calcula a partir de los resultados obtenidos tras el proceso de análisis y detección de defectos los parámetros Precision and Recall, para determinar cómo de efectiva ha sido la detección. Al hacer click en el botón \textbf{Calcular Precision \& Recall}, la aplicación solicitará que se le indique donde se encuentra la máscara asociada a la imagen analizada mediante un explorador de archivos.
+\end{itemize}
+
+\figuraConPosicion{0.6}{imgs/resprecrecall.png}{Resultados de Precision \& Recall}{resprecrecall}{}{H}
+
+\subsection{Exportar y limpiar Log}
+Si se desea, puede exportarse el log de la aplicación haciendo click en el botón \textbf{Exportar} del panel Log.
+
+\figuraConPosicion{0.5}{imgs/botonexportar.png}{Botón exportar}{botonexportar}{}{H}
+
+Al hacer click en el mismo, la aplicación generará un archivo index.html, en la carpeta \textit{/XRayDetector/res/log/html/}.
+
+También se puede borrar el contenido de este log mediante el botón \textbf{Limpiar Log}.
+
+\subsection{Ayuda}
+Esta aplicación dispone de un módulo de ayuda en línea, que puede ser consultado en cualquier momento. Puede accederse a la ayuda en línea de la aplicación, bien mediante la tecla de acceso rápido F1, o a través del menú Ayuda, Ayuda en Línea en la barra de menús de la aplicación.
+
+\figuraConPosicion{1}{imgs/Ayuda.png}{Módulo de ayuda en línea}{ayuda}{}{H}
+
+Esta ventana se compone de de 2 partes principales. En la parte izquierda nos encontramos con las pestañas de la tabla de contenidos, que se representa mediante el símbolo de un libro, y el motor de búsqueda de resultados de la ayuda, cuya representación viene definida por el símbolo de una lupa.
+
+\figuraConPosicion{0.3}{imgs/lupa.png}{Pestañas de la ayuda en línea}{lupa}{}{H}
+
+\subsubsection{Tabla de contenidos}
+Seleccionando el icono del libro en las pestañas del módulo de ayuda, se mostrará en el lado izquierdo de la ventana, el árbol de contenidos perteneciente a la ayuda completa de la aplicación. Esta opción es la visualizada en el módulo de ayuda por defecto, y aparecerá abierta la entrada correspondiente a la ayuda  que hayamos accedido.
+
+En la parte derecha de la ventana aparece el cuadro de ayuda con la descripción correspondiente a la entrada seleccionada en el árbol de contenidos, donde el usuario puede consultar toda la información acerca del uso de la aplicación y de los componentes que conforman la ventana desde la que solicitó la ayuda en línea.
+
+
+\figuraConPosicion{1}{imgs/AyudaTablacontenidosbusqueda.png}{Ejemplo búsqueda tabla de contenidos}{AyudaTablacontenidosbusqueda}{}{H}
+
+\subsubsection{Motor de búsqueda}
+Seleccionando el icono de la lupa en las pestañas del módulo de ayuda, se mostrará en el lado izquierdo de la ventana un campo de texto que permite al usuario buscar una palabra concreta en la ayuda en línea, mostrando debajo del campo de búsqueda los sitios en los que se han encontrado las coincidencias con la palabra buscada y el número de coincidencias que se han encontrado en ese apartado del árbol de contenidos.
+
+\figuraConPosicion{1}{imgs/AyudaMotorbusquedaejemplo.png}{Ejemplo de motor de búsqueda}{AyudaMotorbusquedaejemplo}{}{H}
+
+En la parte derecha de la ventana aparece el cuadro de ayuda con las entradas coincidentes con la palabra buscada, resaltando los lugares donde se encuentren las coincidencias. En la imagen anterior se puede ver un ejemplo de uso del motor de búsqueda en el que se ha introducido la palabra <<análisis>>, como palabra a buscar dentro del árbol de contenidos. Como resultado se puede observar que se han encontrado 6 lugares donde se hace referencia al análisis, y dentro de los cuales, aparece 1 coincidencia en el apartado <<Ventana de Entrenamiento y Detección de Defectos>> del árbol de contenidos, y a la derecha aparecen remarcados los lugares en los que se muestra la palabra <<análisis>> encontrada en el módulo de ayuda a través del motor de búsqueda.
+
+\subsubsection{Otras ayudas}
+La ayuda en línea no es el único tipo de ayuda que se ha incluido en la aplicación. Cada componente de la interfaz (botones, barras de desplazamiento, etc) tienen asociada una ayuda emergente, que se muestra al mantener unos segundos el cursor del ratón sobre ellos. Esta ayuda proporciona una explicación muy breve sobre el componente en cuestión de forma muy rápida.
+
+
+\subsection{Salir de la aplicación}
+Para salir de la aplicación se debe hacer click sobre la opción \textbf{Salir} del menú \textbf{Archivo} de la barra de menús de la aplicación, o mediante el botón superior derecho de la ventana de la aplicación representado con una \textbf{X}.

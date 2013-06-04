@@ -29,156 +29,166 @@
 \contentsline {subsubsection}{Preproceso}{20}{subsubsection*.69}
 \contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas y etiquetado de instancias}{20}{subsubsection*.71}
 \contentsline {subsubsection}{Estrategias de etiquetado}{22}{subsubsection*.74}
-\contentsline {subsubsection}{Detecci\IeC {\'o}n de defectos}{23}{subsubsection*.75}
-\contentsline {subsubsection}{Multihilo}{23}{subsubsection*.77}
-\contentsline {subsection}{\numberline {2.3.2}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{24}{subsection.78}
-\contentsline {subsubsection}{Primera innovaci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{25}{subsubsection*.79}
-\contentsline {subsubsection}{Segunda innovaci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{25}{subsubsection*.80}
-\contentsline {subsubsection}{C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{26}{subsubsection*.82}
-\contentsline {subsubsection}{Precision \& Recall}{26}{subsubsection*.83}
-\contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{29}{chapter.85}
-\contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{29}{section.86}
-\contentsline {subsection}{\numberline {3.1.1}Metodolog\IeC {\'\i }a Scrum}{29}{subsection.87}
-\contentsline {subsection}{\numberline {3.1.2}Java}{33}{subsection.90}
-\contentsline {subsection}{\numberline {3.1.3}UML}{33}{subsection.91}
-\contentsline {subsection}{\numberline {3.1.4}Weka}{34}{subsection.92}
-\contentsline {subsection}{\numberline {3.1.5}ImageJ}{34}{subsection.102}
-\contentsline {subsection}{\numberline {3.1.6}Patrones de dise\IeC {\~n}o}{35}{subsection.103}
-\contentsline {section}{\numberline {3.2}Herramientas}{36}{section.104}
-\contentsline {subsection}{\numberline {3.2.1}Eclipse}{36}{subsection.105}
-\contentsline {subsection}{\numberline {3.2.2}JUnit}{36}{subsection.106}
-\contentsline {subsection}{\numberline {3.2.3}JDepend}{36}{subsection.107}
-\contentsline {subsection}{\numberline {3.2.4}Source Monitor}{37}{subsection.108}
-\contentsline {subsection}{\numberline {3.2.5}Astah}{37}{subsection.109}
-\contentsline {subsection}{\numberline {3.2.6}GitHub}{37}{subsection.110}
-\contentsline {subsection}{\numberline {3.2.7}PivotalTracker}{37}{subsection.111}
-\contentsline {subsection}{\numberline {3.2.8}MiK\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}}{38}{subsection.112}
-\contentsline {subsection}{\numberline {3.2.9}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}Maker}{38}{subsection.113}
-\contentsline {subsection}{\numberline {3.2.10}WindowBuilder}{38}{subsection.114}
-\contentsline {subsection}{\numberline {3.2.11}Auto Local Threshold}{39}{subsection.115}
-\contentsline {subsection}{\numberline {3.2.12}Apache Commons IO}{39}{subsection.116}
-\contentsline {subsection}{\numberline {3.2.13}EJML}{39}{subsection.117}
-\contentsline {subsection}{\numberline {3.2.14}Zotero}{39}{subsection.118}
-\contentsline {chapter}{\numberline {4}Aspectos relevantes del desarrollo del proyecto}{41}{chapter.119}
-\contentsline {section}{\numberline {4.1}Problemas y retos}{41}{section.120}
-\contentsline {section}{\numberline {4.2}Mejoras respecto a la versi\IeC {\'o}n previa}{41}{section.125}
-\contentsline {section}{\numberline {4.3}Conocimientos adquiridos}{44}{section.133}
-\contentsline {subsection}{\numberline {4.3.1}Miner\IeC {\'\i }a de datos}{44}{subsection.134}
-\contentsline {subsection}{\numberline {4.3.2}Weka}{45}{subsection.135}
-\contentsline {subsection}{\numberline {4.3.3}Metodolog\IeC {\'\i }a Scrum}{45}{subsection.136}
-\contentsline {subsection}{\numberline {4.3.4}Programaci\IeC {\'o}n multihilo}{45}{subsection.137}
-\contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{45}{subsection.138}
-\contentsline {chapter}{\numberline {5}Trabajos relacionados}{47}{chapter.139}
-\contentsline {section}{\numberline {5.1}Art\IeC {\'\i }culos Estudiados}{47}{section.140}
-\contentsline {section}{\numberline {5.2}Revisi\IeC {\'o}n del estado del arte}{49}{section.142}
-\contentsline {subsection}{\numberline {5.2.1}An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{49}{subsection.143}
-\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{49}{subsubsection*.144}
-\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de las regiones de soldadura}{49}{subsubsection*.145}
-\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de heterogeneidades}{49}{subsubsection*.146}
-\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{50}{subsubsection*.147}
-\contentsline {subsubsection}{An\IeC {\'a}lisis de componentes principales}{50}{subsubsection*.148}
-\contentsline {subsubsection}{Predicci\IeC {\'o}n utilizando una red neuronal multicapa}{50}{subsubsection*.149}
-\contentsline {subsection}{\numberline {5.2.2}Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{50}{subsection.153}
-\contentsline {subsubsection}{Algoritmo Fuzzy-C-Means Iterativo}{51}{subsubsection*.154}
-\contentsline {subsubsection}{The EM algorithm}{51}{subsubsection*.158}
-\contentsline {subsubsection}{Aplicaci\IeC {\'o}n en la clasificaci\IeC {\'o}n de defectos de soldadura}{51}{subsubsection*.159}
-\contentsline {subsubsection}{Conclusi\IeC {\'o}n}{51}{subsubsection*.160}
-\contentsline {subsection}{\numberline {5.2.3}Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{51}{subsection.161}
-\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{52}{subsubsection*.162}
-\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{52}{subsubsection*.163}
-\contentsline {subsubsection}{Clasificaci\IeC {\'o}n de patrones}{52}{subsubsection*.166}
-\contentsline {subsection}{\numberline {5.2.4}Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{52}{subsection.167}
-\contentsline {subsubsection}{Local thresholding}{52}{subsubsection*.168}
-\contentsline {subsubsection}{Segmentaci\IeC {\'o}n}{53}{subsubsection*.169}
-\contentsline {subsubsection}{Clasificaci\IeC {\'o}n}{53}{subsubsection*.170}
-\contentsline {chapter}{\numberline {6}Conclusiones y l\IeC {\'\i }neas de trabajo futuras}{55}{chapter.171}
-\contentsline {section}{\numberline {6.1}Aspectos que han complicado la realizaci\IeC {\'o}n del proyecto}{55}{section.172}
-\contentsline {section}{\numberline {6.2}Conclusiones}{56}{section.173}
-\contentsline {section}{\numberline {6.3}L\IeC {\'\i }neas de trabajo futuras}{57}{section.174}
-\contentsline {chapter}{\numberline {A}Plan del proyecto software}{61}{appendix.175}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{61}{section.176}
-\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{62}{section.177}
-\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{62}{subsection.178}
-\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{65}{section.180}
-\contentsline {subsection}{\numberline {A.3.1}Actores}{65}{subsection.181}
-\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{65}{subsection.182}
-\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{67}{section.184}
-\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{72}{section.186}
-\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{72}{subsection.187}
-\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{73}{subsection.188}
-\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{75}{subsection.195}
-\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{77}{subsection.200}
-\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{79}{subsection.202}
-\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{83}{subsection.204}
-\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.206}
-\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{87}{subsection.208}
-\contentsline {subsection}{\numberline {A.5.9}Sprint 9}{90}{subsection.210}
-\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.212}
-\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.213}
-\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.214}
-\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.215}
-\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{97}{section.216}
-\contentsline {section}{\numberline {B.5}Factores de riesgo}{98}{section.217}
-\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{99}{section.218}
-\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{99}{subsection.219}
-\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{100}{subsection.221}
-\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{100}{subsection.223}
-\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{101}{subsubsection*.224}
-\contentsline {subsubsection}{Entrenar el clasificador}{102}{subsubsection*.243}
-\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{102}{subsubsection*.244}
-\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{103}{subsection.245}
-\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{103}{subsection.246}
-\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{104}{section.247}
-\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{104}{subsection.248}
-\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{104}{subsection.249}
-\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{105}{subsection.251}
-\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{115}{subsection.266}
-\contentsline {section}{\numberline {B.8}Interfaz de usuario}{120}{section.267}
-\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{125}{appendix.270}
-\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{125}{section.271}
-\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{126}{section.272}
-\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{127}{section.273}
-\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{127}{subsection.274}
-\contentsline {subsubsection}{Arquitectura en capas}{127}{subsubsection*.275}
-\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{128}{subsection.277}
-\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{128}{subsection.278}
-\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{128}{subsubsection*.279}
-\contentsline {paragraph}{Fachada}{128}{paragraph*.280}
-\contentsline {paragraph}{Singleton}{130}{paragraph*.283}
-\contentsline {paragraph}{Estrategia}{131}{paragraph*.285}
-\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{132}{subsection.288}
-\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{133}{section.289}
-\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{133}{subsection.290}
-\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{134}{subsection.292}
-\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{134}{subsection.294}
-\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{135}{section.296}
-\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{135}{section.297}
-\contentsline {section}{\numberline {C.7}Pruebas}{135}{section.298}
-\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{135}{subsection.299}
-\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{136}{section.300}
-\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{136}{section.302}
-\contentsline {chapter}{\numberline {D}Manual del programador}{139}{appendix.304}
-\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{139}{section.305}
-\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{139}{section.306}
-\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{139}{subsection.307}
-\contentsline {subsection}{\numberline {D.2.2}ImageJ}{139}{subsection.308}
-\contentsline {subsection}{\numberline {D.2.3}Weka}{139}{subsection.309}
-\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{140}{subsection.310}
-\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{140}{subsection.311}
-\contentsline {subsection}{\numberline {D.2.6}EJML}{140}{subsection.312}
-\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{140}{section.313}
-\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{141}{subsection.314}
-\contentsline {section}{\numberline {D.4}Manual del programador}{141}{section.315}
-\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{141}{subsection.316}
-\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{141}{subsubsection*.317}
-\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{142}{subsection.318}
-\contentsline {section}{\numberline {D.5}Pruebas unitarias}{143}{section.319}
-\contentsline {chapter}{\numberline {E}Manual del usuario}{147}{appendix.320}
-\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{147}{section.321}
-\contentsline {subsection}{\numberline {E.1.1}Requisitos}{147}{subsection.322}
-\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{147}{subsection.323}
-\contentsline {section}{\numberline {E.2}Manual de usuario}{147}{section.324}
-\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{147}{subsection.325}
-\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{152}{subsection.334}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{154}{Item.346}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{159}{Item.346}
+\contentsline {subsubsection}{Detecci\IeC {\'o}n de defectos}{23}{subsubsection*.76}
+\contentsline {subsubsection}{Multihilo}{24}{subsubsection*.78}
+\contentsline {subsection}{\numberline {2.3.2}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{25}{subsection.79}
+\contentsline {subsubsection}{Primera innovaci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{25}{subsubsection*.80}
+\contentsline {subsubsection}{Segunda innovaci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{25}{subsubsection*.81}
+\contentsline {subsubsection}{C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{26}{subsubsection*.83}
+\contentsline {subsubsection}{Precision \& Recall}{27}{subsubsection*.84}
+\contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{29}{chapter.86}
+\contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{29}{section.87}
+\contentsline {subsection}{\numberline {3.1.1}Metodolog\IeC {\'\i }a Scrum}{29}{subsection.88}
+\contentsline {subsection}{\numberline {3.1.2}Java}{33}{subsection.91}
+\contentsline {subsection}{\numberline {3.1.3}UML}{33}{subsection.92}
+\contentsline {subsection}{\numberline {3.1.4}Weka}{34}{subsection.93}
+\contentsline {subsection}{\numberline {3.1.5}ImageJ}{34}{subsection.103}
+\contentsline {subsection}{\numberline {3.1.6}Patrones de dise\IeC {\~n}o}{35}{subsection.104}
+\contentsline {section}{\numberline {3.2}Herramientas}{36}{section.105}
+\contentsline {subsection}{\numberline {3.2.1}Eclipse}{36}{subsection.106}
+\contentsline {subsection}{\numberline {3.2.2}JUnit}{36}{subsection.107}
+\contentsline {subsection}{\numberline {3.2.3}JDepend}{36}{subsection.108}
+\contentsline {subsection}{\numberline {3.2.4}Source Monitor}{37}{subsection.109}
+\contentsline {subsection}{\numberline {3.2.5}Astah}{37}{subsection.110}
+\contentsline {subsection}{\numberline {3.2.6}GitHub}{37}{subsection.111}
+\contentsline {subsection}{\numberline {3.2.7}PivotalTracker}{37}{subsection.112}
+\contentsline {subsection}{\numberline {3.2.8}MiK\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}}{38}{subsection.113}
+\contentsline {subsection}{\numberline {3.2.9}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }{}Maker}{38}{subsection.114}
+\contentsline {subsection}{\numberline {3.2.10}WindowBuilder}{38}{subsection.115}
+\contentsline {subsection}{\numberline {3.2.11}Auto Local Threshold}{39}{subsection.116}
+\contentsline {subsection}{\numberline {3.2.12}Apache Commons IO}{39}{subsection.117}
+\contentsline {subsection}{\numberline {3.2.13}EJML}{39}{subsection.118}
+\contentsline {subsection}{\numberline {3.2.14}Zotero}{39}{subsection.119}
+\contentsline {chapter}{\numberline {4}Aspectos relevantes del desarrollo del proyecto}{41}{chapter.120}
+\contentsline {section}{\numberline {4.1}Problemas y retos}{41}{section.121}
+\contentsline {section}{\numberline {4.2}Mejoras respecto a la versi\IeC {\'o}n previa}{41}{section.126}
+\contentsline {section}{\numberline {4.3}Conocimientos adquiridos}{44}{section.134}
+\contentsline {subsection}{\numberline {4.3.1}Miner\IeC {\'\i }a de datos}{44}{subsection.135}
+\contentsline {subsection}{\numberline {4.3.2}Weka}{45}{subsection.136}
+\contentsline {subsection}{\numberline {4.3.3}Metodolog\IeC {\'\i }a Scrum}{45}{subsection.137}
+\contentsline {subsection}{\numberline {4.3.4}Programaci\IeC {\'o}n multihilo}{45}{subsection.138}
+\contentsline {subsection}{\numberline {4.3.5}Documentaci\IeC {\'o}n en \textlatin {\LaTeX }{}}{45}{subsection.139}
+\contentsline {chapter}{\numberline {5}Trabajos relacionados}{47}{chapter.140}
+\contentsline {section}{\numberline {5.1}Art\IeC {\'\i }culos Estudiados}{47}{section.141}
+\contentsline {section}{\numberline {5.2}Revisi\IeC {\'o}n del estado del arte}{49}{section.143}
+\contentsline {subsection}{\numberline {5.2.1}An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{49}{subsection.144}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{49}{subsubsection*.145}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de las regiones de soldadura}{49}{subsubsection*.146}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n de heterogeneidades}{49}{subsubsection*.147}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{50}{subsubsection*.148}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de componentes principales}{50}{subsubsection*.149}
+\contentsline {subsubsection}{Predicci\IeC {\'o}n utilizando una red neuronal multicapa}{50}{subsubsection*.150}
+\contentsline {subsection}{\numberline {5.2.2}Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{50}{subsection.154}
+\contentsline {subsubsection}{Algoritmo Fuzzy-C-Means Iterativo}{51}{subsubsection*.155}
+\contentsline {subsubsection}{The EM algorithm}{51}{subsubsection*.159}
+\contentsline {subsubsection}{Aplicaci\IeC {\'o}n en la clasificaci\IeC {\'o}n de defectos de soldadura}{51}{subsubsection*.160}
+\contentsline {subsubsection}{Conclusi\IeC {\'o}n}{51}{subsubsection*.161}
+\contentsline {subsection}{\numberline {5.2.3}Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{51}{subsection.162}
+\contentsline {subsubsection}{Preprocesado de las im\IeC {\'a}genes}{52}{subsubsection*.163}
+\contentsline {subsubsection}{Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas}{52}{subsubsection*.164}
+\contentsline {subsubsection}{Clasificaci\IeC {\'o}n de patrones}{52}{subsubsection*.167}
+\contentsline {subsection}{\numberline {5.2.4}Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{52}{subsection.168}
+\contentsline {subsubsection}{Local thresholding}{52}{subsubsection*.169}
+\contentsline {subsubsection}{Segmentaci\IeC {\'o}n}{53}{subsubsection*.170}
+\contentsline {subsubsection}{Clasificaci\IeC {\'o}n}{53}{subsubsection*.171}
+\contentsline {chapter}{\numberline {6}Conclusiones y l\IeC {\'\i }neas de trabajo futuras}{55}{chapter.172}
+\contentsline {section}{\numberline {6.1}Aspectos que han complicado la realizaci\IeC {\'o}n del proyecto}{55}{section.173}
+\contentsline {section}{\numberline {6.2}Conclusiones}{56}{section.174}
+\contentsline {section}{\numberline {6.3}L\IeC {\'\i }neas de trabajo futuras}{57}{section.175}
+\contentsline {chapter}{\numberline {A}Plan del proyecto software}{61}{appendix.176}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{61}{section.177}
+\contentsline {section}{\numberline {A.2}Planificaci\IeC {\'o}n temporal del proyecto}{62}{section.178}
+\contentsline {subsection}{\numberline {A.2.1}Estimaci\IeC {\'o}n temporal a partir de casos de uso}{62}{subsection.179}
+\contentsline {section}{\numberline {A.3}Aplicando una metodolog\IeC {\'\i }a \IeC {\'a}gil: \textit {SCRUM}}{65}{section.181}
+\contentsline {subsection}{\numberline {A.3.1}Actores}{65}{subsection.182}
+\contentsline {subsection}{\numberline {A.3.2}Ciclo de desarrollo}{65}{subsection.183}
+\contentsline {section}{\numberline {A.4}Product Backlog del proyecto}{67}{section.185}
+\contentsline {section}{\numberline {A.5}Planificaci\IeC {\'o}n por Sprint}{72}{section.187}
+\contentsline {subsection}{\numberline {A.5.1}Sprint 1: Spike Arquitect\IeC {\'o}nico 1}{72}{subsection.188}
+\contentsline {subsection}{\numberline {A.5.2}Sprint 2: Spike Arquitect\IeC {\'o}nico 2}{73}{subsection.189}
+\contentsline {subsection}{\numberline {A.5.3}Sprint 3}{75}{subsection.196}
+\contentsline {subsection}{\numberline {A.5.4}Sprint 4}{77}{subsection.201}
+\contentsline {subsection}{\numberline {A.5.5}Sprint 5}{79}{subsection.203}
+\contentsline {subsection}{\numberline {A.5.6}Sprint 6}{83}{subsection.205}
+\contentsline {subsection}{\numberline {A.5.7}Sprint 7}{85}{subsection.207}
+\contentsline {subsection}{\numberline {A.5.8}Sprint 8}{87}{subsection.209}
+\contentsline {subsection}{\numberline {A.5.9}Sprint 9}{90}{subsection.211}
+\contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{95}{appendix.213}
+\contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{95}{section.214}
+\contentsline {section}{\numberline {B.2}Objetivos del proyecto}{96}{section.215}
+\contentsline {section}{\numberline {B.3}Usuarios participantes}{97}{section.216}
+\contentsline {section}{\numberline {B.4}Descripci\IeC {\'o}n del sistema actual}{97}{section.217}
+\contentsline {section}{\numberline {B.5}Factores de riesgo}{98}{section.218}
+\contentsline {section}{\numberline {B.6}Cat\IeC {\'a}logo de requisitos del sistema}{99}{section.219}
+\contentsline {subsection}{\numberline {B.6.1}Objetivos del proyecto}{99}{subsection.220}
+\contentsline {subsection}{\numberline {B.6.2}Descripci\IeC {\'o}n de los actores}{100}{subsection.222}
+\contentsline {subsection}{\numberline {B.6.3}Funciones del producto}{100}{subsection.224}
+\contentsline {subsubsection}{Caracter\IeC {\'\i }sticas a calcular}{101}{subsubsection*.225}
+\contentsline {subsubsection}{Entrenar el clasificador}{102}{subsubsection*.244}
+\contentsline {subsubsection}{Usar el clasificador para detectar defectos}{102}{subsubsection*.245}
+\contentsline {subsection}{\numberline {B.6.4}Requisitos de usuario}{103}{subsection.246}
+\contentsline {subsection}{\numberline {B.6.5}Requisitos de sistema}{103}{subsection.247}
+\contentsline {section}{\numberline {B.7}Especificaci\IeC {\'o}n de los requisitos}{104}{section.248}
+\contentsline {subsection}{\numberline {B.7.1}Especificaci\IeC {\'o}n de requisitos inherentes a la tecnolog\IeC {\'\i }a utilizada}{104}{subsection.249}
+\contentsline {subsection}{\numberline {B.7.2}Especificaci\IeC {\'o}n de requisitos de informaci\IeC {\'o}n}{104}{subsection.250}
+\contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{105}{subsection.252}
+\contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{115}{subsection.267}
+\contentsline {section}{\numberline {B.8}Interfaz de usuario}{120}{section.268}
+\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{125}{appendix.271}
+\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{125}{section.272}
+\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{126}{section.273}
+\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{127}{section.274}
+\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{127}{subsection.275}
+\contentsline {subsubsection}{Arquitectura en capas}{127}{subsubsection*.276}
+\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{128}{subsection.278}
+\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{128}{subsection.279}
+\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{128}{subsubsection*.280}
+\contentsline {paragraph}{Fachada}{128}{paragraph*.281}
+\contentsline {paragraph}{Singleton}{130}{paragraph*.284}
+\contentsline {paragraph}{Estrategia}{131}{paragraph*.286}
+\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{132}{subsection.289}
+\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{133}{section.290}
+\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{133}{subsection.291}
+\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{134}{subsection.293}
+\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{134}{subsection.295}
+\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{135}{section.297}
+\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{135}{section.298}
+\contentsline {section}{\numberline {C.7}Pruebas}{135}{section.299}
+\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{135}{subsection.300}
+\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{136}{section.301}
+\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{136}{section.303}
+\contentsline {chapter}{\numberline {D}Manual del programador}{139}{appendix.305}
+\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{139}{section.306}
+\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{139}{section.307}
+\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{139}{subsection.308}
+\contentsline {subsection}{\numberline {D.2.2}ImageJ}{139}{subsection.309}
+\contentsline {subsection}{\numberline {D.2.3}Weka}{139}{subsection.310}
+\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{140}{subsection.311}
+\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{140}{subsection.312}
+\contentsline {subsection}{\numberline {D.2.6}EJML}{140}{subsection.313}
+\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{140}{section.314}
+\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{141}{subsection.315}
+\contentsline {section}{\numberline {D.4}Manual del programador}{141}{section.316}
+\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{141}{subsection.317}
+\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{141}{subsubsection*.318}
+\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{142}{subsection.319}
+\contentsline {section}{\numberline {D.5}Pruebas unitarias}{143}{section.320}
+\contentsline {chapter}{\numberline {E}Manual del usuario}{147}{appendix.321}
+\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{147}{section.322}
+\contentsline {subsection}{\numberline {E.1.1}Requisitos}{147}{subsection.323}
+\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{147}{subsection.324}
+\contentsline {section}{\numberline {E.2}Manual de usuario}{147}{section.325}
+\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{147}{subsection.326}
+\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{152}{subsection.336}
+\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{154}{subsection.349}
+\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{155}{subsection.352}
+\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{156}{subsection.355}
+\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{159}{subsection.361}
+\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{160}{subsection.363}
+\contentsline {subsection}{\numberline {E.2.8}Ayuda}{160}{subsection.365}
+\contentsline {subsubsection}{Tabla de contenidos}{161}{subsubsection*.368}
+\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{162}{subsubsection*.370}
+\contentsline {subsubsection}{Otras ayudas}{163}{subsubsection*.372}
+\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{164}{subsection.373}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{165}{subsection.373}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{169}{subsection.373}
