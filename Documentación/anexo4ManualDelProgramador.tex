@@ -58,11 +58,22 @@ Hemos usado la versión 0.21, que se corresponde con el archivo \textit{ejml-0.2
 \section{Código fuente}
 El código fuente de la aplicación XRayDetector se puede encontrar en la carpeta XRayDetector/src.
 
-Dentro de la carpeta src, los archivos pertenecientes al código fuente se encuentran organizados en carpetas correspondientes a los diferentes paquetes que conforman la estructura de ficheros Java de la aplicación.
+Dentro de la carpeta \textit{src}, los archivos pertenecientes al código fuente se encuentran organizados en carpetas correspondientes a los diferentes paquetes que conforman la estructura de ficheros Java de la aplicación.
 
 Esta estructura está organizada de la siquiente forma:
 
-FALTA
+\begin{itemize}
+\item \textbf{es.ubu.XRayDetector.datos:} aquí se encuentran las clases que se encargan de acceder a los datos.
+\item \textbf{es.ubu.XRayDetector.interfaz:} contiene las clases que conforman la interfaz de la aplicación. El fichero \textit{PanelPrincipal.java} contiene el método \textit{main} que lanza la aplicación.
+\item \textbf{es.ubu.XRayDetector.modelo:} contiene las clases que encapsulan la lógica de la aplicación. El punto de entrada es la clase \textit{Fachada.java}, y el resto de clases están divididas en subpaquetes:
+	\begin{itemize}
+		\item \textbf{Preprocesamiento:} contiene las clases que se encargan de realizar el preprocesamiento de las imágenes.
+		\item \textbf{Feature:} contiene las clases que implementan la extracción de características.
+		\item \textbf{Ventana:} contiene las clases que encapsulan el funcionamiento de los distintos tipos de ventana.
+	\end{itemize}
+\item \textbf{es.ubu.XRayDetector.utils:} contiene las clases de utilería de la aplicación, como el gestor de log o la clase que guarda las propiedades. Además, se han incluido aquí algunas clases modificadas de ImageJ.
+\item \textbf{ij.plugin.frame:} contiene un único fichero (\textbf{RoiManager.java}), que se corresponde con una clase modificada de ImageJ pero a la que hubo que dejar en su paquete original.
+\end{itemize}
 
 \subsection{Recursos necesarios por el código fuente}
 La carpeta \textit{res} contiene los archivos para la correcta ejecución y funcionamiento de la aplicación. Se encuentra estructurada en subcarpetas, que son:

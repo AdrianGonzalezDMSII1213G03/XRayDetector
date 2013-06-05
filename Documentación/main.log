@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  4 JUN 2013 21:18
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  5 JUN 2013 13:10
 entering extended mode
 **main.tex
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.tex
@@ -1017,7 +1017,7 @@ Cap\'{\i }tulo 2.
 
 
 
-] [6] <imgs/adquisicion_imagen.png, id=1109, 726.46407pt x 482.55281pt>
+] [6] <imgs/adquisicion_imagen.png, id=1111, 726.46407pt x 482.55281pt>
 File: imgs/adquisicion_imagen.png Graphic file (type png)
 
 <use imgs/adquisicion_imagen.png>
@@ -1033,7 +1033,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 81.
 Underfull \vbox (badness 2903) has occurred while \output is active []
 
  [8 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/adquisi
-cion_imagen.png>] <imgs/saliency.png, id=1130, 316.18124pt x 156.585pt>
+cion_imagen.png>] <imgs/saliency.png, id=1132, 316.18124pt x 156.585pt>
 File: imgs/saliency.png Graphic file (type png)
 
 <use imgs/saliency.png>
@@ -1050,7 +1050,7 @@ Underfull \vbox (badness 2126) has occurred while \output is active []
 
  [9 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/salienc
 y.png>]
-[10] [11] [12] [13] [14] <imgs/lbp.png, id=1204, 767.11594pt x 355.3275pt>
+[10] [11] [12] [13] [14] <imgs/lbp.png, id=1206, 767.11594pt x 355.3275pt>
 File: imgs/lbp.png Graphic file (type png)
 
 <use imgs/lbp.png>
@@ -1065,7 +1065,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [15]
 [16 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/lbp.png
->] <imgs/vecindades_lbp.png, id=1218, 429.10312pt x 179.92218pt>
+>] <imgs/vecindades_lbp.png, id=1220, 429.10312pt x 179.92218pt>
 File: imgs/vecindades_lbp.png Graphic file (type png)
 
 <use imgs/vecindades_lbp.png>
@@ -1080,7 +1080,7 @@ des_lbp.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [18]
-[19] <imgs/extraccion.png, id=1250, 496.10344pt x 141.52875pt>
+[19] <imgs/extraccion.png, id=1252, 496.10344pt x 141.52875pt>
 File: imgs/extraccion.png Graphic file (type png)
 
 <use imgs/extraccion.png>
@@ -1090,7 +1090,7 @@ Package pdftex.def Info: imgs/extraccion.png used on input line 431.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 431.
 
-<imgs/mascara.png, id=1254, 365.86688pt x 156.585pt>
+<imgs/mascara.png, id=1256, 365.86688pt x 156.585pt>
 File: imgs/mascara.png Graphic file (type png)
  <use imgs/mascara.png>
 Package pdftex.def Info: imgs/mascara.png used on input line 436.
@@ -1105,7 +1105,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [20 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/extrac
 cion.png>]
 [21 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/mascara
-.png>] <imgs/ventana_deslizante.png, id=1267, 496.85625pt x 118.19156pt>
+.png>] <imgs/ventana_deslizante.png, id=1269, 496.85625pt x 118.19156pt>
 File: imgs/ventana_deslizante.png Graphic file (type png)
 
 <use imgs/ventana_deslizante.png>
@@ -1116,7 +1116,7 @@ Package pdftex.def Info: imgs/ventana_deslizante.png used on input line 467.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 467.
 
 [22 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ventana
-_deslizante.png>] <imgs/experimentos.png, id=1276, 106.59825pt x 33.2442pt>
+_deslizante.png>] <imgs/experimentos.png, id=1278, 106.59825pt x 33.2442pt>
 File: imgs/experimentos.png Graphic file (type png)
 
 <use imgs/experimentos.png>
@@ -1126,7 +1126,7 @@ Package pdftex.def Info: imgs/experimentos.png used on input line 490.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 490.
 
-<imgs/dibujado_defectos.png, id=1278, 331.2375pt x 283.0575pt>
+<imgs/dibujado_defectos.png, id=1280, 331.2375pt x 283.0575pt>
 File: imgs/dibujado_defectos.png Graphic file (type png)
 
 <use imgs/dibujado_defectos.png>
@@ -1142,7 +1142,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [23 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/experim
 entos.png>] [24 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/
 imgs/dibujado_defectos.png>]
-<imgs/segunda_opcion.png, id=1291, 203.25937pt x 158.09062pt>
+<imgs/segunda_opcion.png, id=1293, 203.25937pt x 158.09062pt>
 File: imgs/segunda_opcion.png Graphic file (type png)
 
 <use imgs/segunda_opcion.png>
@@ -1157,7 +1157,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [25] [26 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/se
 gunda_opcion.png>]
-<imgs/precisionrecall.png, id=1306, 253.69781pt x 124.21407pt>
+<imgs/precisionrecall.png, id=1308, 253.69781pt x 124.21407pt>
 File: imgs/precisionrecall.png Graphic file (type png)
 
 <use imgs/precisionrecall.png>
@@ -1187,7 +1187,7 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 35.
  [29]
-<imgs/ScrumProcess.jpg, id=1328, 529.22719pt x 335.75438pt>
+<imgs/ScrumProcess.jpg, id=1330, 529.22719pt x 335.75438pt>
 File: imgs/ScrumProcess.jpg Graphic file (type jpg)
 
 <use imgs/ScrumProcess.jpg>
@@ -1201,7 +1201,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 49.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [30 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/ScrumP
-rocess.jpg>] <imgs/ScrumDiagram.png, id=1336, 770.88pt x 481.8pt>
+rocess.jpg>] <imgs/ScrumDiagram.png, id=1338, 770.88pt x 481.8pt>
 File: imgs/ScrumDiagram.png Graphic file (type png)
 
 <use imgs/ScrumDiagram.png>
@@ -1241,7 +1241,7 @@ Overfull \hbox (32.67027pt too wide) in paragraph at lines 337--338
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\4aspectosRelevan
 tes.tex
 Cap\'{\i }tulo 4.
-<imgs/radiografia_articulos.png, id=1417, 343.2825pt x 357.58594pt>
+<imgs/radiografia_articulos.png, id=1419, 343.2825pt x 357.58594pt>
 File: imgs/radiografia_articulos.png Graphic file (type png)
 
 <use imgs/radiografia_articulos.png>
@@ -1251,7 +1251,7 @@ Package pdftex.def Info: imgs/radiografia_articulos.png used on input line 22.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 22.
 
-<imgs/radiografia_antolin.png, id=1424, 554.07pt x 429.10312pt>
+<imgs/radiografia_antolin.png, id=1426, 554.07pt x 429.10312pt>
 File: imgs/radiografia_antolin.png Graphic file (type png)
 
 <use imgs/radiografia_antolin.png>
@@ -1696,7 +1696,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 32.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 32.
- [62] <imgs/ScrumProcess.png, id=1594, 801.99625pt x 356.33125pt>
+ [62] <imgs/ScrumProcess.png, id=1596, 801.99625pt x 356.33125pt>
 File: imgs/ScrumProcess.png Graphic file (type png)
 
 <use imgs/ScrumProcess.png>
@@ -1811,7 +1811,7 @@ Overfull \hbox (7.7172pt too wide) in paragraph at lines 134--134
  []
 
 [69] [70] [71]
-<imgs/burndownChartSprint2.png, id=1641, 228.855pt x 234.8775pt>
+<imgs/burndownChartSprint2.png, id=1643, 228.855pt x 234.8775pt>
 File: imgs/burndownChartSprint2.png Graphic file (type png)
 
 <use imgs/burndownChartSprint2.png>
@@ -1823,7 +1823,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 221.
 
 [72 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndow
 nChartSprint2.png>] [73]
-<imgs/burndownChartSprint3.png, id=1656, 224.33812pt x 231.86626pt>
+<imgs/burndownChartSprint3.png, id=1658, 224.33812pt x 231.86626pt>
 File: imgs/burndownChartSprint3.png Graphic file (type png)
 
 <use imgs/burndownChartSprint3.png>
@@ -1835,7 +1835,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 275.
 
 [74 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndow
 nChartSprint3.png>] [75]
-<imgs/burndownChartSprint4.png, id=1666, 222.8325pt x 233.37187pt>
+<imgs/burndownChartSprint4.png, id=1668, 222.8325pt x 233.37187pt>
 File: imgs/burndownChartSprint4.png Graphic file (type png)
 
 <use imgs/burndownChartSprint4.png>
@@ -1847,7 +1847,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 350.
 
 [76 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndow
 nChartSprint4.png>] [77] [78]
-<imgs/burndownChartSprint5.png, id=1681, 224.33812pt x 231.11343pt>
+<imgs/burndownChartSprint5.png, id=1683, 224.33812pt x 231.11343pt>
 File: imgs/burndownChartSprint5.png Graphic file (type png)
 
 <use imgs/burndownChartSprint5.png>
@@ -1865,7 +1865,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [80 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndo
 wnChartSprint5.png>] [81]
-<imgs/burndownChartSprint6.png, id=1695, 220.57407pt x 231.11343pt>
+<imgs/burndownChartSprint6.png, id=1697, 220.57407pt x 231.11343pt>
 File: imgs/burndownChartSprint6.png Graphic file (type png)
 
 <use imgs/burndownChartSprint6.png>
@@ -1879,7 +1879,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 563.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [83 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndo
-wnChartSprint6.png>] <imgs/burndownChartSprint7.png, id=1706, 225.84375pt x 231
+wnChartSprint6.png>] <imgs/burndownChartSprint7.png, id=1708, 225.84375pt x 231
 .86626pt>
 File: imgs/burndownChartSprint7.png Graphic file (type png)
 
@@ -1895,7 +1895,7 @@ Underfull \vbox (badness 3386) has occurred while \output is active []
 
  [85 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndo
 wnChartSprint7.png>] [86]
-<imgs/burndownChartSprint8.png, id=1720, 301.8778pt x 300.3722pt>
+<imgs/burndownChartSprint8.png, id=1722, 301.8778pt x 300.3722pt>
 File: imgs/burndownChartSprint8.png Graphic file (type png)
 
 <use imgs/burndownChartSprint8.png>
@@ -1909,7 +1909,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 735.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [88 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/burndo
-wnChartSprint8.png>] <imgs/burndownChartSprint9.png, id=1730, 299.61937pt x 306
+wnChartSprint8.png>] <imgs/burndownChartSprint9.png, id=1732, 299.61937pt x 306
 .39468pt>
 File: imgs/burndownChartSprint9.png Graphic file (type png)
 
@@ -1942,7 +1942,7 @@ cionDeRequisitos.tex [100
 ]
 Ap\'{e}ndice B.
 [101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111]
-<imgs/casosdeusogeneral.png, id=1875, 792.9625pt x 489.83pt>
+<imgs/casosdeusogeneral.png, id=1877, 792.9625pt x 489.83pt>
 File: imgs/casosdeusogeneral.png Graphic file (type png)
 
 <use imgs/casosdeusogeneral.png>
@@ -2214,7 +2214,7 @@ Overfull \hbox (14.22638pt too wide) in paragraph at lines 665--665
  []
 
 [113] [114] [115] [116] [117] [118] [119] [120] [121] [122] [123] [124]
-[125] <imgs/prototipoVentanaPpal.png, id=1950, 770.88pt x 613.54219pt>
+[125] <imgs/prototipoVentanaPpal.png, id=1952, 770.88pt x 613.54219pt>
 File: imgs/prototipoVentanaPpal.png Graphic file (type png)
 
 <use imgs/prototipoVentanaPpal.png>
@@ -2224,7 +2224,7 @@ Package pdftex.def Info: imgs/prototipoVentanaPpal.png used on input line 691.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 691.
 
-<imgs/prototipoOpciones.png, id=1952, 308.65312pt x 255.95625pt>
+<imgs/prototipoOpciones.png, id=1954, 308.65312pt x 255.95625pt>
 File: imgs/prototipoOpciones.png Graphic file (type png)
 
 <use imgs/prototipoOpciones.png>
@@ -2251,7 +2251,7 @@ cionDeDisenno.tex [130
 
 ]
 Ap\'{e}ndice C.
-[131] [132] <imgs/arquitecturacapas.png, id=1985, 340.27126pt x 235.63031pt>
+[131] [132] <imgs/arquitecturacapas.png, id=1987, 340.27126pt x 235.63031pt>
 File: imgs/arquitecturacapas.png Graphic file (type png)
 
 <use imgs/arquitecturacapas.png>
@@ -2265,7 +2265,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 71.
 Underfull \vbox (badness 6961) has occurred while \output is active []
 
  [133]
-<imgs/dclasesfachada.png, id=1995, 316.18124pt x 356.83313pt>
+<imgs/dclasesfachada.png, id=1997, 316.18124pt x 356.83313pt>
 File: imgs/dclasesfachada.png Graphic file (type png)
 
 <use imgs/dclasesfachada.png>
@@ -2278,7 +2278,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 90.
 [134 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/arquit
 ecturacapas.png>] [135 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Document
 ación/imgs/dclasesfachada.png>]
-<imgs/nuestrafachada.png, id=2009, 188.95593pt x 79.79813pt>
+<imgs/nuestrafachada.png, id=2011, 188.95593pt x 79.79813pt>
 File: imgs/nuestrafachada.png Graphic file (type png)
 
 <use imgs/nuestrafachada.png>
@@ -2292,7 +2292,7 @@ Underfull \hbox (badness 4366) in paragraph at lines 120--120
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 120.
 
-<imgs/dclasessingleton.png, id=2011, 196.48407pt x 110.66344pt>
+<imgs/dclasessingleton.png, id=2013, 196.48407pt x 110.66344pt>
 File: imgs/dclasessingleton.png Graphic file (type png)
 
 <use imgs/dclasessingleton.png>
@@ -2305,7 +2305,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 125.
 [136 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/nuestr
 afachada.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/im
 gs/dclasessingleton.png>]
-<imgs/dclasesestrategia.png, id=2021, 441.14813pt x 172.39406pt>
+<imgs/dclasesestrategia.png, id=2023, 441.14813pt x 172.39406pt>
 File: imgs/dclasesestrategia.png Graphic file (type png)
 
 <use imgs/dclasesestrategia.png>
@@ -2317,7 +2317,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 156.
 
 [137 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dclase
 sestrategia.png>]
-<imgs/nuestraestrategia.png, id=2032, 354.57469pt x 155.83218pt>
+<imgs/nuestraestrategia.png, id=2034, 354.57469pt x 155.83218pt>
 File: imgs/nuestraestrategia.png Graphic file (type png)
 
 <use imgs/nuestraestrategia.png>
@@ -2328,94 +2328,119 @@ Package pdftex.def Info: imgs/nuestraestrategia.png used on input line 179.
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 179.
 
 [138 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/nuestr
-aestrategia.png>] <imgs/ventanaprincipal.png, id=2038, 1051.93pt x 803.0pt>
+aestrategia.png>] <imgs/Diagramadeclases.png, id=2040, 1228.59pt x 1144.275pt>
+File: imgs/Diagramadeclases.png Graphic file (type png)
+
+<use imgs/Diagramadeclases.png>
+Package pdftex.def Info: imgs/Diagramadeclases.png used on input line 185.
+(pdftex.def)             Requested size: 433.47314pt x 403.73239pt.
+
+Overfull \hbox (6.68173pt too wide) in paragraph at lines 185--185
+ $[]$ 
+ []
+
+[139 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Diagra
+madeclases.png>] <imgs/ventanaprincipal.png, id=2046, 1051.93pt x 803.0pt>
 File: imgs/ventanaprincipal.png Graphic file (type png)
 
 <use imgs/ventanaprincipal.png>
-Package pdftex.def Info: imgs/ventanaprincipal.png used on input line 192.
+Package pdftex.def Info: imgs/ventanaprincipal.png used on input line 194.
 (pdftex.def)             Requested size: 390.79141pt x 298.31837pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 192.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 194.
 
-<imgs/opcionesavanzadas.png, id=2039, 401.5pt x 381.425pt>
+<imgs/opcionesavanzadas.png, id=2047, 401.5pt x 381.425pt>
 File: imgs/opcionesavanzadas.png Graphic file (type png)
 
 <use imgs/opcionesavanzadas.png>
-Package pdftex.def Info: imgs/opcionesavanzadas.png used on input line 198.
+Package pdftex.def Info: imgs/opcionesavanzadas.png used on input line 200.
 (pdftex.def)             Requested size: 241.4118pt x 229.34564pt.
 
-Underfull \hbox (badness 6412) in paragraph at lines 198--198
+Underfull \hbox (badness 6412) in paragraph at lines 200--200
 [][]\T1/phv/m/n/10 Dise�o de la ven-ta-na de op-cio-nes
  []
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 198.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 200.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [139 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/venta
-naprincipal.png>] <imgs/ventprecisionrecall.png, id=2044, 200.75pt x 160.6pt>
+ [140 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/venta
+naprincipal.png>] <imgs/ventprecisionrecall.png, id=2052, 200.75pt x 160.6pt>
 File: imgs/ventprecisionrecall.png Graphic file (type png)
 
 <use imgs/ventprecisionrecall.png>
-Package pdftex.def Info: imgs/ventprecisionrecall.png used on input line 204.
+Package pdftex.def Info: imgs/ventprecisionrecall.png used on input line 206.
 (pdftex.def)             Requested size: 113.3796pt x 90.70485pt.
 
-Underfull \hbox (badness 5622) in paragraph at lines 204--204
-\T1/phv/m/n/10 ven-ta-na de
+Underfull \hbox (badness 2744) in paragraph at lines 206--206
+[][]\T1/phv/m/n/10 Dise�o de
  []
 
 
-Underfull \hbox (badness 5036) in paragraph at lines 204--204
-\T1/phv/m/n/10 pre-ci-sion &
+Underfull \hbox (badness 1546) in paragraph at lines 206--206
+\T1/phv/m/n/10 la ven-ta-na
  []
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 204.
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
+\T1/phv/m/n/10 de pre-
+ []
 
-[140 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/opcion
-esavanzadas.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación
-/imgs/ventprecisionrecall.png>] [141]
-<imgs/componentes.png, id=2054, 433.62pt x 251.43938pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
+\T1/phv/m/n/10 ci-sion &
+ []
+
+
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 206.
+
+
+Underfull \vbox (badness 2334) has occurred while \output is active []
+
+ [141 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/opcio
+nesavanzadas.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentació
+n/imgs/ventprecisionrecall.png>] [142] [143]
+<imgs/componentes.png, id=2067, 433.62pt x 251.43938pt>
 File: imgs/componentes.png Graphic file (type png)
 
 <use imgs/componentes.png>
-Package pdftex.def Info: imgs/componentes.png used on input line 241.
+Package pdftex.def Info: imgs/componentes.png used on input line 243.
 (pdftex.def)             Requested size: 198.73657pt x 115.24147pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 241.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 243.
 
-<imgs/despliegue.png, id=2056, 421.575pt x 257.46187pt>
+<imgs/despliegue.png, id=2069, 421.575pt x 257.46187pt>
 File: imgs/despliegue.png Graphic file (type png)
 
 <use imgs/despliegue.png>
-Package pdftex.def Info: imgs/despliegue.png used on input line 250.
+Package pdftex.def Info: imgs/despliegue.png used on input line 252.
 (pdftex.def)             Requested size: 198.73657pt x 121.37244pt.
 
 
-LaTeX Warning: \oval, \circle, or \line size unavailable on input line 250.
+LaTeX Warning: \oval, \circle, or \line size unavailable on input line 252.
 
-) [142 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/comp
+) [144 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/comp
 onentes.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/img
 s/despliegue.png>]
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 90.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [143
+ [145
 
 
 ]
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo4ManualDelP
-rogramador.tex [144
+rogramador.tex [146
 
 
 ]
 Ap\'{e}ndice D.
-[145] [146] [147] [148]) [149] [150
+[147] [148] [149] [150]) [151] [152
 
 
 ]
@@ -2423,9 +2448,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 93.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [151]
+ [153]
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\anexo5ManualDelU
-suario.tex [152
+suario.tex [154
 
 
 ]
@@ -2441,8 +2466,8 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 23.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [153]
-<imgs/Control.png, id=2115, 270.00874pt x 125.46875pt>
+ [155]
+<imgs/Control.png, id=2128, 270.00874pt x 125.46875pt>
 File: imgs/Control.png Graphic file (type png)
  <use imgs/Control.png>
 Package pdftex.def Info: imgs/Control.png used on input line 36.
@@ -2451,15 +2476,15 @@ Package pdftex.def Info: imgs/Control.png used on input line 36.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 36.
 
-[154 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Contro
-l.png>] <imgs/Progreso.png, id=2120, 263.98625pt x 61.22874pt>
+[156 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Contro
+l.png>] <imgs/Progreso.png, id=2133, 263.98625pt x 61.22874pt>
 File: imgs/Progreso.png Graphic file (type png)
 
 <use imgs/Progreso.png>
 Package pdftex.def Info: imgs/Progreso.png used on input line 46.
 (pdftex.def)             Requested size: 134.71396pt x 31.24492pt.
 
-<imgs/tolerancia.png, id=2121, 265.99374pt x 75.28125pt>
+<imgs/tolerancia.png, id=2134, 265.99374pt x 75.28125pt>
 File: imgs/tolerancia.png Graphic file (type png)
 
 <use imgs/tolerancia.png>
@@ -2473,7 +2498,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 51--51
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 51.
 
-<imgs/Resultados.png, id=2122, 264.99pt x 113.42375pt>
+<imgs/Resultados.png, id=2135, 264.99pt x 113.42375pt>
 File: imgs/Resultados.png Graphic file (type png)
 
 <use imgs/Resultados.png>
@@ -2486,15 +2511,15 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 62.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [155 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Progr
+ [157 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Progr
 eso.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/to
-lerancia.png>] <imgs/Exportarlog.png, id=2128, 268.00125pt x 48.18pt>
+lerancia.png>] <imgs/Exportarlog.png, id=2140, 268.00125pt x 48.18pt>
 File: imgs/Exportarlog.png Graphic file (type png)
 
 <use imgs/Exportarlog.png>
 Package pdftex.def Info: imgs/Exportarlog.png used on input line 72.
 (pdftex.def)             Requested size: 220.07744pt x 39.56444pt.
- <imgs/Visor.png, id=2129, 756.8275pt x 551.05875pt>
+ <imgs/Visor.png, id=2141, 756.8275pt x 551.05875pt>
 File: imgs/Visor.png Graphic file (type png)
 
 <use imgs/Visor.png>
@@ -2507,9 +2532,9 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 77.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [156 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Resul
+ [158 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Resul
 tados.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/
-Exportarlog.png>] <imgs/tablaresultados.png, id=2134, 565.36218pt x 73.77562pt>
+Exportarlog.png>] <imgs/tablaresultados.png, id=2146, 565.36218pt x 73.77562pt>
 File: imgs/tablaresultados.png Graphic file (type png)
 
 <use imgs/tablaresultados.png>
@@ -2519,7 +2544,7 @@ Package pdftex.def Info: imgs/tablaresultados.png used on input line 83.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 83.
 
-<imgs/Barramenus.png, id=2135, 155.58125pt x 44.165pt>
+<imgs/Barramenus.png, id=2147, 155.58125pt x 44.165pt>
 File: imgs/Barramenus.png Graphic file (type png)
 
 <use imgs/Barramenus.png>
@@ -2532,7 +2557,7 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 95.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [157 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Visor
+ [159 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Visor
 .png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/tabla
 resultados.png>]
 File: imgs/opcionesavanzadas.png Graphic file (type png)
@@ -2543,19 +2568,19 @@ Package pdftex.def Info: imgs/opcionesavanzadas.png used on input line 102.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 102.
 
-[158 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Barram
+[160 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Barram
 enus.png>]
 Underfull \vbox (badness 6348) has occurred while \output is active []
 
- [159]
-<imgs/botonentrenar.png, id=2158, 185.19188pt x 21.83156pt>
+ [161]
+<imgs/botonentrenar.png, id=2171, 185.19188pt x 21.83156pt>
 File: imgs/botonentrenar.png Graphic file (type png)
 
 <use imgs/botonentrenar.png>
 Package pdftex.def Info: imgs/botonentrenar.png used on input line 153.
 (pdftex.def)             Requested size: 220.07744pt x 25.94455pt.
 
-<imgs/tipoentrenamiento.png, id=2159, 166.6225pt x 97.36375pt>
+<imgs/tipoentrenamiento.png, id=2172, 166.6225pt x 97.36375pt>
 File: imgs/tipoentrenamiento.png Graphic file (type png)
 
 <use imgs/tipoentrenamiento.png>
@@ -2565,17 +2590,17 @@ Package pdftex.def Info: imgs/tipoentrenamiento.png used on input line 157.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 157.
 
-[160 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/botone
+[162 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/botone
 ntrenar.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/img
 s/tipoentrenamiento.png>]
-<imgs/botonabrir.png, id=2167, 184.43906pt x 24.09pt>
+<imgs/botonabrir.png, id=2180, 184.43906pt x 24.09pt>
 File: imgs/botonabrir.png Graphic file (type png)
 
 <use imgs/botonabrir.png>
 Package pdftex.def Info: imgs/botonabrir.png used on input line 178.
 (pdftex.def)             Requested size: 220.07744pt x 28.74461pt.
 
-<imgs/escogerimagen.png, id=2168, 636.3775pt x 426.59375pt>
+<imgs/escogerimagen.png, id=2181, 636.3775pt x 426.59375pt>
 File: imgs/escogerimagen.png Graphic file (type png)
 
 <use imgs/escogerimagen.png>
@@ -2588,15 +2613,15 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 182.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [161 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/boton
-abrir.png>] <imgs/botonanalizar.png, id=2175, 183.68625pt x 24.09pt>
+ [163 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/boton
+abrir.png>] <imgs/botonanalizar.png, id=2187, 183.68625pt x 24.09pt>
 File: imgs/botonanalizar.png Graphic file (type png)
 
 <use imgs/botonanalizar.png>
 Package pdftex.def Info: imgs/botonanalizar.png used on input line 189.
 (pdftex.def)             Requested size: 220.07744pt x 28.86444pt.
 
-<imgs/avisoanalizar.png, id=2176, 397.485pt x 116.435pt>
+<imgs/avisoanalizar.png, id=2188, 397.485pt x 116.435pt>
 File: imgs/avisoanalizar.png Graphic file (type png)
 
 <use imgs/avisoanalizar.png>
@@ -2606,10 +2631,10 @@ Package pdftex.def Info: imgs/avisoanalizar.png used on input line 195.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 195.
 
-[162 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/escoge
+[164 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/escoge
 rimagen.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/img
 s/botonanalizar.png>]
-<imgs/analizando.png, id=2182, 121.20282pt x 142.28156pt>
+<imgs/analizando.png, id=2194, 121.20282pt x 142.28156pt>
 File: imgs/analizando.png Graphic file (type png)
 
 <use imgs/analizando.png>
@@ -2619,7 +2644,7 @@ Package pdftex.def Info: imgs/analizando.png used on input line 199.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 199.
 
-<imgs/dibujados.png, id=2183, 97.11281pt x 113.67468pt>
+<imgs/dibujados.png, id=2195, 97.11281pt x 113.67468pt>
 File: imgs/dibujados.png Graphic file (type png)
 
 <use imgs/dibujados.png>
@@ -2632,9 +2657,9 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 205.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [163 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/aviso
+ [165 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/aviso
 analizar.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/im
-gs/analizando.png>] <imgs/resdeteccion.png, id=2189, 1051.93pt x 803.0pt>
+gs/analizando.png>] <imgs/resdeteccion.png, id=2201, 1051.93pt x 803.0pt>
 File: imgs/resdeteccion.png Graphic file (type png)
 
 <use imgs/resdeteccion.png>
@@ -2647,9 +2672,9 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 211.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [164 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibuj
+ [166 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/dibuj
 ados.png>]
-<imgs/resprecrecall.png, id=2195, 200.75pt x 160.6pt>
+<imgs/resprecrecall.png, id=2207, 200.75pt x 160.6pt>
 File: imgs/resprecrecall.png Graphic file (type png)
 
 <use imgs/resprecrecall.png>
@@ -2662,8 +2687,8 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 224.
 
 Underfull \vbox (badness 2828) has occurred while \output is active []
 
- [165 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/resde
-teccion.png>] <imgs/botonexportar.png, id=2200, 91.84312pt x 27.10126pt>
+ [167 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/resde
+teccion.png>] <imgs/botonexportar.png, id=2213, 91.84312pt x 27.10126pt>
 File: imgs/botonexportar.png Graphic file (type png)
 
 <use imgs/botonexportar.png>
@@ -2673,7 +2698,7 @@ Package pdftex.def Info: imgs/botonexportar.png used on input line 229.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 229.
 
-<imgs/Ayuda.png, id=2201, 647.41875pt x 496.85625pt>
+<imgs/Ayuda.png, id=2214, 647.41875pt x 496.85625pt>
 File: imgs/Ayuda.png Graphic file (type png)
  <use imgs/Ayuda.png>
 Package pdftex.def Info: imgs/Ayuda.png used on input line 238.
@@ -2685,9 +2710,9 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 238.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [166 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/respr
+ [168 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/respr
 ecrecall.png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/im
-gs/botonexportar.png>] <imgs/lupa.png, id=2207, 48.93282pt x 21.83156pt>
+gs/botonexportar.png>] <imgs/lupa.png, id=2220, 48.93282pt x 21.83156pt>
 File: imgs/lupa.png Graphic file (type png)
 
 <use imgs/lupa.png>
@@ -2716,10 +2741,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 242--242
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 242.
 
-[167 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda.
+[169 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda.
 png> <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/lupa.p
 ng>]
-<imgs/AyudaTablacontenidosbusqueda.png, id=2215, 647.41875pt x 496.85625pt>
+<imgs/AyudaTablacontenidosbusqueda.png, id=2227, 647.41875pt x 496.85625pt>
 File: imgs/AyudaTablacontenidosbusqueda.png Graphic file (type png)
 
 <use imgs/AyudaTablacontenidosbusqueda.png>
@@ -2730,7 +2755,7 @@ ne 250.
 
 LaTeX Warning: \oval, \circle, or \line size unavailable on input line 250.
 
-<imgs/AyudaMotorbusquedaejemplo.png, id=2216, 647.41875pt x 496.85625pt>
+<imgs/AyudaMotorbusquedaejemplo.png, id=2228, 647.41875pt x 496.85625pt>
 File: imgs/AyudaMotorbusquedaejemplo.png Graphic file (type png)
 
 <use imgs/AyudaMotorbusquedaejemplo.png>
@@ -2744,22 +2769,22 @@ LaTeX Warning: \oval, \circle, or \line size unavailable on input line 255.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [168 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda
+ [170 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda
 Tablacontenidosbusqueda.png>])
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [169 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda
-Motorbusquedaejemplo.png>] [170]
+ [171 <C:/Users/Adrián/Documents/GitHub/XRayDetector/Documentación/imgs/Ayuda
+Motorbusquedaejemplo.png>] [172]
 File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 104.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [171
+ [173
 
 
 ]
 No file apendiceA.tex.
-[172
+[174
 
 
 
@@ -2768,9 +2793,9 @@ File: imgs/escudo.pdf Graphic file (type pdf)
  <use imgs/escudo.pdf>
 Package pdftex.def Info: imgs/escudo.pdf used on input line 107.
 (pdftex.def)             Requested size: 142.26378pt x 237.31592pt.
- [173]
+ [175]
 No file apendiceB.tex.
-[174
+[176
 
 
 
@@ -2786,12 +2811,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 52--54
 p : / / www . proyectosagiles . org /$
  []
 
-[175
+[177
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [176]
+ [178]
 Underfull \hbox (badness 1810) in paragraph at lines 267--272
 []\T1/ptm/m/n/10.95 Wikipedia.  Cla-si-fi-ca-do-res (ma-te-ma-ti-co) --- wi-ki-
 pe-dia, la en-ci-clo-pe-dia li-bre, 2011.
@@ -2836,7 +2861,7 @@ e = Precision _ and _$
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [177]
+ [179]
 Underfull \hbox (badness 3525) in paragraph at lines 298--302
 []\T1/ptm/m/n/10.95 Wikipedia.  Pun-tos de ca-so de uso --- wi-ki-pe-dia, la en
 -ci-clo-pe-dia li-bre, 2013.
@@ -2862,7 +2887,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 310--315
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 118.
- [178]
+ [180]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 118.
  (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\main.aux
 (C:\Users\Adrián\Documents\GitHub\XRayDetector\Documentación\1objetivosDelPro
@@ -2892,14 +2917,14 @@ suario.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 118.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 118.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 45AFB2DFDD2F886898E24E72D98E5247;11664.
+(rerunfilecheck)             Checksum: 5211A07434F3CCD096DFBDBD2D8A6D3A;11664.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 118.
  ) 
 Here is how much of TeX's memory you used:
- 13630 strings out of 494045
- 202238 string characters out of 3148381
- 421489 words of memory out of 3000000
- 15861 multiletter control sequences out of 15000+200000
+ 13640 strings out of 494045
+ 202444 string characters out of 3148381
+ 421677 words of memory out of 3000000
+ 15867 multiletter control sequences out of 15000+200000
  82195 words of font info for 92 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  55i,14n,45p,968b,617s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2922,9 +2947,9 @@ ram Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX
 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
 rw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.
 pfb>
-Output written on main.pdf (192 pages, 3331492 bytes).
+Output written on main.pdf (194 pages, 3638777 bytes).
 PDF statistics:
- 2516 PDF objects out of 2984 (max. 8388607)
- 644 named destinations out of 1000 (max. 500000)
- 1519 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2529 PDF objects out of 2984 (max. 8388607)
+ 647 named destinations out of 1000 (max. 500000)
+ 1524 words of extra memory for PDF output out of 10000 (max. 10000000)
 
