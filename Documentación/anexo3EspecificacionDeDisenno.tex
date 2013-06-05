@@ -184,7 +184,18 @@ Como ya hemos dicho, nosotros tenemos tres estrategias, por lo que necesitamos t
 
 \figuraConPosicionSinMarco{1.1}{imgs/Diagramadeclases.png}{Diagrama de clases}{diagramaclases}{}{h}
 
-\newpage
+\begin{itemize}
+\item \textbf{Paquete interfaz:} contiene las clases que implementan la interfaz gráfica de la aplicación.
+\item \textbf{Paquete modelo:} contiene las clases que componen la lógica de la aplicación. La clase Fachada es el punto de entrada y la encargada de controlar toda la lógica.
+	\begin{itemize}
+	\item \textbf{Subpaquete Preprocesamiento:} en este subpaquete se encuentra la estructura del patrón estrategia para los algoritmos de preprocesamiento.
+	\item \textbf{Subpaquete Ventana:} contiene la estructura correspondiente al patrón estrategia para los diferentes tipos de ventana.
+	\item \textbf{Subpaquete Feature:} en él se encuentran las clases que conforman la estructura del patrón estrategia para los diferentes algoritmos de extracción de características.
+	\end{itemize}
+\item \textbf{Paquete datos:} contiene las clases que se encargan de abrir imágenes y gestionar los ficheros \arff{}.
+\item \textbf{Paquete utils:} contiene las clases de utilería de la aplicación.
+\end{itemize}
+
 
 \section{Diseño de la interfaz}
 En este apartado, se cierra la parte de diseño de la interfaz gráfica, y se resaltan los aspectos más relevantes de este proceso.
@@ -210,16 +221,140 @@ En esta ventana se muestran los resultados de precision \& recall. Se accede a e
 \newpage
 
 \section{Diseño procedimental}
-En el presente apartado, se recogerán algunos de los algoritmos más importantes que hemos utilizado, eliminando cualquier ambigüedad.
+En esta sección se detallarán aquellos casos de uso que sean más complejos y que por ello
+requieran de un estudio más individualizado de los mismos. Se utilizarán diagramas de secuencia
+para hacer más fácil el seguimiento de las interacciones entre las distintas clases.
 
-Nos hemos basado en los casos de uso que se explicaron en el anexo II de esta memoria. A continuación, se explica cada uno por separado, usando para ello diagramas de secuencia que muestran la interacción entre los diferentes objetos.
+Los casos de uso analizados son:
 
-FALTA
+\begin{itemize}
+\item RF-01 Abrir imagen \ver{dsecuenciaAbriImagen}.
+\item RF-03 Entrenar clasificador (opción entrenamiento con ARFF) \ver{dsecuenciaEntrenar1}.
+\item RF-04 Entrenar clasificador (opción entrenamiento con imágenes), parte 1 \ver{dsecuenciaEntrenar2parte1}, parte 2 \ver{dsecuenciaEntrenar2parte2}, parte 3 \ver{dsecuenciaEntrenar2parte3} y parte 4 \ver{dsecuenciaEntrenar2parte4}.
+\item RF-05 Analizar imagen, parte 1 \ver{dsecuenciaAnalizarparte1}, parte 2 \ver{dsecuenciaAnalizarparte2} y parte 3 \ver{dsecuenciaAnalizarparte3}.
+\item RF-10 Cambiar opciones \ver{dsecuenciaOpciones}.
+\item RF-13 Calcular <<Precision \& Recall>> \ver{dsecuenciaPrecision}.
+\end{itemize}
+
+\figuraConPosicionSinMarco{1}{imgs/dsecuenciaAbriImagen.png}{Diagrama de secuencia: Abrir imagen}{dsecuenciaAbriImagen}{}{H}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaEntrenar1.png}{Diagrama de secuencia: Entrenar clasificador (opción entrenamiento con ARFF)}{dsecuenciaEntrenar1}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaEntrenar2parte1.png}{Diagrama de secuencia: Entrenar clasificador (opción entrenamiento con imágenes, parte 1)}{dsecuenciaEntrenar2parte1}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaEntrenar2parte2.png}{Diagrama de secuencia: Entrenar clasificador (opción entrenamiento con imágenes, parte 2)}{dsecuenciaEntrenar2parte2}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaEntrenar2parte3.png}{Diagrama de secuencia: Entrenar clasificador (opción entrenamiento con imágenes, parte 3)}{dsecuenciaEntrenar2parte3}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaEntrenar2parte4.png}{Diagrama de secuencia: Entrenar clasificador (opción entrenamiento con imágenes, parte 4)}{dsecuenciaEntrenar2parte4}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaAnalizarparte1.png}{Diagrama de secuencia: Analizar imagen (parte 1)}{dsecuenciaAnalizarparte1}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaAnalizarparte2.png}{Diagrama de secuencia: Analizar imagen (parte 2)}{dsecuenciaAnalizarparte2}{}
+
+\figuraApaisadaSinMarco{.8}{imgs/dsecuenciaAnalizarparte3.png}{Diagrama de secuencia: Analizar imagen (parte 3)}{dsecuenciaAnalizarparte3}{}
+
+\figuraConPosicionSinMarco{0.9}{imgs/dsecuenciaOpciones.png}{Diagrama de secuencia: Cambiar opciones}{dsecuenciaOpciones}{}{H}
+
+\figuraConPosicionSinMarco{1}{imgs/dsecuenciaPrecision.png}{Diagrama de secuencia: Calcular <<Precision \& Recall>>}{dsecuenciaPrecision}{}{H}
 
 \section{Referencia cruzada a los requisitos}
 De cara a la trazabilidad del sistema, es interesante incluir matrices que relacionen los requisitos funcionales con los elementos de diseño. De esta forma puede observarse rápidamente si se han satisfecho todos los requisitos de la aplicación.
 
-FALTA
+\subsection{RF-01 Abrir imagen}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\item[] es.ubu.XRayDetector.utils.Graphics
+\end{itemize}
+
+\subsection{RF-02 Entrenar clasificador}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\end{itemize}
+
+\subsection{RF-03 Entrenar clasificador con ARFF existente}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\item[] es.ubu.XRayDetector.datos.GestorArff
+\end{itemize}
+
+\subsection{RF-04 Entrenar clasificador generando nuevo ARFF}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAlicacion
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\item[] es.ubu.XRayDetector.utils.Propiedades
+\item[] es.ubu.XRayDetector.modelo.preprocesamiento.Saliency
+\item[] es.ubu.XRayDetector.modelo.ventana.VentanaAleatoria
+\item[] es.ubu.XRayDetector.modelo.ventana.VentanaDeslizante
+\item[] es.ubu.XRayDetector.datos.GestorArff
+\end{itemize}
+
+\subsection{RF-05 Analizar imagen}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.utils.Propiedades
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\item[] es.ubu.XRayDetector.modelo.preprocesamiento.Saliency
+\item[] es.ubu.XRayDetector.modelo.ventana.VentanaDeslizante
+\item[] es.ubu.XRayDetector.modelo.ventana.VentanaRegiones
+\item[] es.ubu.XRayDetector.utils.Graphics
+\item[] es.ubu.XRayDetector.utils.AutoLocalThreshold
+\item[] es.ubu.XRayDetector.utils.ParticleAnalyzer
+\item[] es.ubu.XRayDetector.utils.Thresholder
+\end{itemize}
+
+\subsection{RF-06 Calcular características}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.modelo.ventana.VentanaAbstracta
+\item[] es.ubu.XRayDetector.modelo.feature.Standard
+\item[] es.ubu.XRayDetector.modelo.feature.Lbp
+\item[] es.ubu.XRayDetector.modelo.feature.Haralick
+\item[] es.ubu.XRayDetector.utils.Differentials\_
+\end{itemize}
+
+\subsection{RF-07 Seleccionar defecto}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.utils.Graphics
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\end{itemize}
+
+\subsection{RF-08 Exportar log}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.PanelAplicacion
+\end{itemize}
+
+\subsection{RF-09 Abrir ayuda}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.BarraMenu
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\end{itemize}
+
+\subsection{RF-10 Cambiar opciones}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.BarraMenu
+\item[] es.ubu.XRayDetector.utils.Propiedades
+\end{itemize}
+
+\subsection{RF-11 Guardar imagen analizada}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\end{itemize}
+
+\subsection{RF-12 Guardar imagen binarizada}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\end{itemize}
+
+\subsection{RF-12 Calcular <<Precision \& Recall>>}
+\begin{itemize}
+\item[] es.ubu.XRayDetector.interfaz.PanelAplicacion
+\item[] es.ubu.XRayDetector.interfaz.PrecisionRecallDialog
+\item[] es.ubu.XRayDetector.modelo.Fachada
+\end{itemize}
 
 \section{Pruebas}
 En este apartado se recogen las pruebas de integración del sistema y aspectos relevantes del diseño de las mismas.

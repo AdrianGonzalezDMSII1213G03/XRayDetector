@@ -693,3 +693,37 @@ En la imagen \ver{prototipoVentanaPpal} se muestra el prototipo de la ventana pr
 En la imagen \ver{prototipoOpciones} se muestra el prototipo de la ventana de opciones avanzadas, desde la que podemos cambiar un cierto número de opciones.
 
 \figura{0.75}{imgs/prototipoOpciones.png}{Prototipo de la ventana de opciones avanzadas}{prototipoOpciones}{}
+
+\newpage
+
+
+\section{Pruebas de aceptación}
+Las pruebas de aceptación del software son pruebas que debe realizar el cliente cuando la aplicación está terminada y antes de entregarle la versión definitiva. En estas pruebas, el cliente comprueba que el programa tenga toda la funcionalidad que ha pedido y se pueden descubrir fallos que al programador le habían pasado inadvertidos incluso después de realizar otro tipo de pruebas sobre la aplicación.
+
+A continuación, en la tabla \vertabla{pacept} se muestran algunas de las pruebas de aceptación más relevantes realizadas sobre el programa.
+
+\tablaSmall{Pruebas de aceptación}{ c  p{10cm}  c }{pacept}{
+  \multicolumn{1}{c}{Identificación} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PA-01 & El usuario puede cargar imágenes y visualizarlas en la aplicación & OK\\
+  PA-02 & El usuario puede entrenar un clasificador mediante un fichero ARFF ya existente & OK\\
+  PA-03 & El usuario puede entrenar un clasificador a partir de unas imágenes etiquetadas & OK\\
+  PA-04 & El usuario puede guardar el ARFF generado en el entrenamiento & OK\\
+  PA-05 & El usuario puede guardar el modelo generado en el entrenamiento & OK\\
+  PA-06 & El usuario puede seleccionar un área de la imagen y analizarla & OK\\
+  PA-07 & En caso de no seleccionar una región, se muestra una aviso & OK\\
+  PA-08 & La aplicación hace visible el progreso de las operaciones & OK\\
+  PA-09 & La aplicación es capaz de dibujar los defectos encontrados & OK\\
+  PA-10 & En caso de que ocurra un error, la aplicación informa de ello & OK\\
+  PA-11 & El usuario puede seleccionar un defecto dibujado y éste se resalta & OK\\
+  PA-12 & El usuario puede seleccionar un fila de la tabla y resaltar el defecto asociado & OK\\
+  PA-13 & El usuario puede calcular <<precision \& recall>>, usando una máscara & OK\\
+  PA-14 & El usuario puede guardar la imagen generada en el análisis & OK\\
+  PA-15 & El usuario puede guardar una binarización de los defectos encontrados & OK\\
+  PA-16 & El usuario puede cambiar las opciones del programa & OK\\
+  PA-17 & El usuario puede guardar en un fichero el log generado & OK\\
+  PA-18 & El usuario puede borrar la información del log & OK\\
+  PA-19 & El usuario puede acceder a la ayuda en línea & OK\\
+  PA-20 & El usuario puede detener cualquier proceso en marcha & OK\\
+ }

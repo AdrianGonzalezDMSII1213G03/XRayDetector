@@ -100,52 +100,66 @@
 \BOOKMARK [2][-]{subsection.271}{Requisitos funcionales}{section.267}% 100
 \BOOKMARK [2][-]{subsection.286}{Requisitos no funcionales}{section.267}% 101
 \BOOKMARK [1][-]{section.287}{Interfaz de usuario}{appendix.232}% 102
-\BOOKMARK [0][-]{appendix.290}{Especificaci\363n de dise\361o}{}% 103
-\BOOKMARK [1][-]{section.291}{Introducci\363n}{appendix.290}% 104
-\BOOKMARK [1][-]{section.292}{\301mbito del software}{appendix.290}% 105
-\BOOKMARK [1][-]{section.293}{Dise\361o Arquitect\363nico}{appendix.290}% 106
-\BOOKMARK [2][-]{subsection.294}{Estilos arquitect\363nicos utilizados}{section.293}% 107
-\BOOKMARK [2][-]{subsection.297}{Arquitectura final de la aplicaci\363n}{section.293}% 108
-\BOOKMARK [2][-]{subsection.298}{Patrones de dise\361o utilizados}{section.293}% 109
-\BOOKMARK [2][-]{subsection.308}{Diagrama de clases de dise\361o}{section.293}% 110
-\BOOKMARK [1][-]{section.310}{Dise\361o de la interfaz}{appendix.290}% 111
-\BOOKMARK [2][-]{subsection.311}{Ventana principal}{section.310}% 112
-\BOOKMARK [2][-]{subsection.313}{Ventana de opciones avanzadas}{section.310}% 113
-\BOOKMARK [2][-]{subsection.315}{Ventana de Precision \046 Recall}{section.310}% 114
-\BOOKMARK [1][-]{section.317}{Dise\361o procedimental}{appendix.290}% 115
-\BOOKMARK [1][-]{section.318}{Referencia cruzada a los requisitos}{appendix.290}% 116
-\BOOKMARK [1][-]{section.319}{Pruebas}{appendix.290}% 117
-\BOOKMARK [2][-]{subsection.320}{Pruebas de integraci\363n}{section.319}% 118
-\BOOKMARK [1][-]{section.321}{Entorno tecnol\363gico del sistema}{appendix.290}% 119
-\BOOKMARK [1][-]{section.323}{Plan de desarrollo e implantaci\363n}{appendix.290}% 120
-\BOOKMARK [0][-]{appendix.325}{Manual del programador}{}% 121
-\BOOKMARK [1][-]{section.326}{Introducci\363n}{appendix.325}% 122
-\BOOKMARK [1][-]{section.327}{Documentaci\363n de las bibliotecas}{appendix.325}% 123
-\BOOKMARK [2][-]{subsection.328}{Bibliotecas de Java}{section.327}% 124
-\BOOKMARK [2][-]{subsection.329}{ImageJ}{section.327}% 125
-\BOOKMARK [2][-]{subsection.330}{Weka}{section.327}% 126
-\BOOKMARK [2][-]{subsection.331}{JavaHelp}{section.327}% 127
-\BOOKMARK [2][-]{subsection.332}{Apache Commons IO}{section.327}% 128
-\BOOKMARK [2][-]{subsection.333}{EJML}{section.327}% 129
-\BOOKMARK [1][-]{section.334}{C\363digo fuente}{appendix.325}% 130
-\BOOKMARK [2][-]{subsection.335}{Recursos necesarios por el c\363digo fuente}{section.334}% 131
-\BOOKMARK [1][-]{section.336}{Manual del programador}{appendix.325}% 132
-\BOOKMARK [2][-]{subsection.337}{Agregar nuevos elementos a la aplicaci\363n}{section.336}% 133
-\BOOKMARK [2][-]{subsection.339}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.336}% 134
-\BOOKMARK [1][-]{section.340}{Pruebas unitarias}{appendix.325}% 135
-\BOOKMARK [0][-]{appendix.341}{Manual del usuario}{}% 136
-\BOOKMARK [1][-]{section.342}{Documento de instalaci\363n y configuraci\363n}{appendix.341}% 137
-\BOOKMARK [2][-]{subsection.343}{Requisitos}{section.342}% 138
-\BOOKMARK [2][-]{subsection.344}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.342}% 139
-\BOOKMARK [1][-]{section.345}{Manual de usuario}{appendix.341}% 140
-\BOOKMARK [2][-]{subsection.346}{Ventana principal de la aplicaci\363n}{section.345}% 141
-\BOOKMARK [2][-]{subsection.356}{Configuraci\363n de la aplicaci\363n}{section.345}% 142
-\BOOKMARK [2][-]{subsection.369}{Entrenar un clasificador}{section.345}% 143
-\BOOKMARK [2][-]{subsection.372}{Abrir una imagen}{section.345}% 144
-\BOOKMARK [2][-]{subsection.375}{Analizar imagen}{section.345}% 145
-\BOOKMARK [2][-]{subsection.381}{Analizar y exportar los resultados}{section.345}% 146
-\BOOKMARK [2][-]{subsection.383}{Exportar y limpiar Log}{section.345}% 147
-\BOOKMARK [2][-]{subsection.385}{Ayuda}{section.345}% 148
-\BOOKMARK [2][-]{subsection.393}{Salir de la aplicaci\363n}{section.345}% 149
-\BOOKMARK [0][-]{subsection.393}{Ap\351ndices}{}% 150
-\BOOKMARK [0][-]{subsection.393}{Bibliograf\355a}{}% 151
+\BOOKMARK [1][-]{section.290}{Pruebas de aceptaci\363n}{appendix.232}% 103
+\BOOKMARK [0][-]{appendix.292}{Especificaci\363n de dise\361o}{}% 104
+\BOOKMARK [1][-]{section.293}{Introducci\363n}{appendix.292}% 105
+\BOOKMARK [1][-]{section.294}{\301mbito del software}{appendix.292}% 106
+\BOOKMARK [1][-]{section.295}{Dise\361o Arquitect\363nico}{appendix.292}% 107
+\BOOKMARK [2][-]{subsection.296}{Estilos arquitect\363nicos utilizados}{section.295}% 108
+\BOOKMARK [2][-]{subsection.299}{Arquitectura final de la aplicaci\363n}{section.295}% 109
+\BOOKMARK [2][-]{subsection.300}{Patrones de dise\361o utilizados}{section.295}% 110
+\BOOKMARK [2][-]{subsection.310}{Diagrama de clases de dise\361o}{section.295}% 111
+\BOOKMARK [1][-]{section.312}{Dise\361o de la interfaz}{appendix.292}% 112
+\BOOKMARK [2][-]{subsection.313}{Ventana principal}{section.312}% 113
+\BOOKMARK [2][-]{subsection.315}{Ventana de opciones avanzadas}{section.312}% 114
+\BOOKMARK [2][-]{subsection.317}{Ventana de Precision \046 Recall}{section.312}% 115
+\BOOKMARK [1][-]{section.319}{Dise\361o procedimental}{appendix.292}% 116
+\BOOKMARK [1][-]{section.331}{Referencia cruzada a los requisitos}{appendix.292}% 117
+\BOOKMARK [2][-]{subsection.332}{RF-01 Abrir imagen}{section.331}% 118
+\BOOKMARK [2][-]{subsection.333}{RF-02 Entrenar clasificador}{section.331}% 119
+\BOOKMARK [2][-]{subsection.334}{RF-03 Entrenar clasificador con ARFF existente}{section.331}% 120
+\BOOKMARK [2][-]{subsection.335}{RF-04 Entrenar clasificador generando nuevo ARFF}{section.331}% 121
+\BOOKMARK [2][-]{subsection.336}{RF-05 Analizar imagen}{section.331}% 122
+\BOOKMARK [2][-]{subsection.337}{RF-06 Calcular caracter\355sticas}{section.331}% 123
+\BOOKMARK [2][-]{subsection.338}{RF-07 Seleccionar defecto}{section.331}% 124
+\BOOKMARK [2][-]{subsection.339}{RF-08 Exportar log}{section.331}% 125
+\BOOKMARK [2][-]{subsection.340}{RF-09 Abrir ayuda}{section.331}% 126
+\BOOKMARK [2][-]{subsection.341}{RF-10 Cambiar opciones}{section.331}% 127
+\BOOKMARK [2][-]{subsection.342}{RF-11 Guardar imagen analizada}{section.331}% 128
+\BOOKMARK [2][-]{subsection.343}{RF-12 Guardar imagen binarizada}{section.331}% 129
+\BOOKMARK [2][-]{subsection.344}{RF-12 Calcular \253Precision \046 Recall\273}{section.331}% 130
+\BOOKMARK [1][-]{section.345}{Pruebas}{appendix.292}% 131
+\BOOKMARK [2][-]{subsection.346}{Pruebas de integraci\363n}{section.345}% 132
+\BOOKMARK [1][-]{section.347}{Entorno tecnol\363gico del sistema}{appendix.292}% 133
+\BOOKMARK [1][-]{section.349}{Plan de desarrollo e implantaci\363n}{appendix.292}% 134
+\BOOKMARK [0][-]{appendix.351}{Manual del programador}{}% 135
+\BOOKMARK [1][-]{section.352}{Introducci\363n}{appendix.351}% 136
+\BOOKMARK [1][-]{section.353}{Documentaci\363n de las bibliotecas}{appendix.351}% 137
+\BOOKMARK [2][-]{subsection.354}{Bibliotecas de Java}{section.353}% 138
+\BOOKMARK [2][-]{subsection.355}{ImageJ}{section.353}% 139
+\BOOKMARK [2][-]{subsection.356}{Weka}{section.353}% 140
+\BOOKMARK [2][-]{subsection.357}{JavaHelp}{section.353}% 141
+\BOOKMARK [2][-]{subsection.358}{Apache Commons IO}{section.353}% 142
+\BOOKMARK [2][-]{subsection.359}{EJML}{section.353}% 143
+\BOOKMARK [1][-]{section.360}{C\363digo fuente}{appendix.351}% 144
+\BOOKMARK [2][-]{subsection.361}{Recursos necesarios por el c\363digo fuente}{section.360}% 145
+\BOOKMARK [1][-]{section.362}{Manual del programador}{appendix.351}% 146
+\BOOKMARK [2][-]{subsection.363}{Agregar nuevos elementos a la aplicaci\363n}{section.362}% 147
+\BOOKMARK [2][-]{subsection.365}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.362}% 148
+\BOOKMARK [1][-]{section.366}{Pruebas unitarias}{appendix.351}% 149
+\BOOKMARK [0][-]{appendix.367}{Manual del usuario}{}% 150
+\BOOKMARK [1][-]{section.368}{Documento de instalaci\363n y configuraci\363n}{appendix.367}% 151
+\BOOKMARK [2][-]{subsection.369}{Requisitos}{section.368}% 152
+\BOOKMARK [2][-]{subsection.370}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.368}% 153
+\BOOKMARK [1][-]{section.371}{Manual de usuario}{appendix.367}% 154
+\BOOKMARK [2][-]{subsection.372}{Ventana principal de la aplicaci\363n}{section.371}% 155
+\BOOKMARK [2][-]{subsection.382}{Configuraci\363n de la aplicaci\363n}{section.371}% 156
+\BOOKMARK [2][-]{subsection.395}{Entrenar un clasificador}{section.371}% 157
+\BOOKMARK [2][-]{subsection.398}{Abrir una imagen}{section.371}% 158
+\BOOKMARK [2][-]{subsection.401}{Analizar imagen}{section.371}% 159
+\BOOKMARK [2][-]{subsection.407}{Analizar y exportar los resultados}{section.371}% 160
+\BOOKMARK [2][-]{subsection.409}{Exportar y limpiar Log}{section.371}% 161
+\BOOKMARK [2][-]{subsection.411}{Ayuda}{section.371}% 162
+\BOOKMARK [2][-]{subsection.419}{Salir de la aplicaci\363n}{section.371}% 163
+\BOOKMARK [0][-]{subsection.419}{Ap\351ndices}{}% 164
+\BOOKMARK [0][-]{subsection.419}{Bibliograf\355a}{}% 165

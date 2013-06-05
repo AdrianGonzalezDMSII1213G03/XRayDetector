@@ -150,61 +150,75 @@
 \contentsline {subsection}{\numberline {B.7.3}Requisitos funcionales}{111}{subsection.271}
 \contentsline {subsection}{\numberline {B.7.4}Requisitos no funcionales}{121}{subsection.286}
 \contentsline {section}{\numberline {B.8}Interfaz de usuario}{126}{section.287}
-\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{131}{appendix.290}
-\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{131}{section.291}
-\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{132}{section.292}
-\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{133}{section.293}
-\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{133}{subsection.294}
-\contentsline {subsubsection}{Arquitectura en capas}{133}{subsubsection*.295}
-\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{134}{subsection.297}
-\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{134}{subsection.298}
-\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{134}{subsubsection*.299}
-\contentsline {paragraph}{Fachada}{134}{paragraph*.300}
-\contentsline {paragraph}{Singleton}{136}{paragraph*.303}
-\contentsline {paragraph}{Estrategia}{137}{paragraph*.305}
-\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{139}{subsection.308}
-\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{140}{section.310}
-\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{140}{subsection.311}
-\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{141}{subsection.313}
-\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{141}{subsection.315}
-\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{143}{section.317}
-\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{143}{section.318}
-\contentsline {section}{\numberline {C.7}Pruebas}{143}{section.319}
-\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{143}{subsection.320}
-\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{144}{section.321}
-\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{144}{section.323}
-\contentsline {chapter}{\numberline {D}Manual del programador}{147}{appendix.325}
-\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{147}{section.326}
-\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{147}{section.327}
-\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{147}{subsection.328}
-\contentsline {subsection}{\numberline {D.2.2}ImageJ}{147}{subsection.329}
-\contentsline {subsection}{\numberline {D.2.3}Weka}{147}{subsection.330}
-\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{148}{subsection.331}
-\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{148}{subsection.332}
-\contentsline {subsection}{\numberline {D.2.6}EJML}{148}{subsection.333}
-\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{148}{section.334}
-\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{149}{subsection.335}
-\contentsline {section}{\numberline {D.4}Manual del programador}{150}{section.336}
-\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{150}{subsection.337}
-\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{150}{subsubsection*.338}
-\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{150}{subsection.339}
-\contentsline {section}{\numberline {D.5}Pruebas unitarias}{151}{section.340}
-\contentsline {chapter}{\numberline {E}Manual del usuario}{155}{appendix.341}
-\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{155}{section.342}
-\contentsline {subsection}{\numberline {E.1.1}Requisitos}{155}{subsection.343}
-\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{155}{subsection.344}
-\contentsline {section}{\numberline {E.2}Manual de usuario}{155}{section.345}
-\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{155}{subsection.346}
-\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{160}{subsection.356}
-\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{162}{subsection.369}
-\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{163}{subsection.372}
-\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{164}{subsection.375}
-\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{167}{subsection.381}
-\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{168}{subsection.383}
-\contentsline {subsection}{\numberline {E.2.8}Ayuda}{168}{subsection.385}
-\contentsline {subsubsection}{Tabla de contenidos}{169}{subsubsection*.388}
-\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{170}{subsubsection*.390}
-\contentsline {subsubsection}{Otras ayudas}{171}{subsubsection*.392}
-\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{172}{subsection.393}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{173}{subsection.393}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{177}{subsection.393}
+\contentsline {section}{\numberline {B.9}Pruebas de aceptaci\IeC {\'o}n}{127}{section.290}
+\contentsline {chapter}{\numberline {C}Especificaci\IeC {\'o}n de dise\IeC {\~n}o}{131}{appendix.292}
+\contentsline {section}{\numberline {C.1}Introducci\IeC {\'o}n}{131}{section.293}
+\contentsline {section}{\numberline {C.2}\IeC {\'A}mbito del software}{132}{section.294}
+\contentsline {section}{\numberline {C.3}Dise\IeC {\~n}o Arquitect\IeC {\'o}nico}{133}{section.295}
+\contentsline {subsection}{\numberline {C.3.1}Estilos arquitect\IeC {\'o}nicos utilizados}{133}{subsection.296}
+\contentsline {subsubsection}{Arquitectura en capas}{133}{subsubsection*.297}
+\contentsline {subsection}{\numberline {C.3.2}Arquitectura final de la aplicaci\IeC {\'o}n}{134}{subsection.299}
+\contentsline {subsection}{\numberline {C.3.3}Patrones de dise\IeC {\~n}o utilizados}{134}{subsection.300}
+\contentsline {subsubsection}{Patrones en la capa de Modelo del Dominio}{134}{subsubsection*.301}
+\contentsline {paragraph}{Fachada}{134}{paragraph*.302}
+\contentsline {paragraph}{Singleton}{136}{paragraph*.305}
+\contentsline {paragraph}{Estrategia}{137}{paragraph*.307}
+\contentsline {subsection}{\numberline {C.3.4}Diagrama de clases de dise\IeC {\~n}o}{139}{subsection.310}
+\contentsline {section}{\numberline {C.4}Dise\IeC {\~n}o de la interfaz}{140}{section.312}
+\contentsline {subsection}{\numberline {C.4.1}Ventana principal}{140}{subsection.313}
+\contentsline {subsection}{\numberline {C.4.2}Ventana de opciones avanzadas}{141}{subsection.315}
+\contentsline {subsection}{\numberline {C.4.3}Ventana de Precision \& Recall}{141}{subsection.317}
+\contentsline {section}{\numberline {C.5}Dise\IeC {\~n}o procedimental}{143}{section.319}
+\contentsline {section}{\numberline {C.6}Referencia cruzada a los requisitos}{153}{section.331}
+\contentsline {subsection}{\numberline {C.6.1}RF-01 Abrir imagen}{153}{subsection.332}
+\contentsline {subsection}{\numberline {C.6.2}RF-02 Entrenar clasificador}{153}{subsection.333}
+\contentsline {subsection}{\numberline {C.6.3}RF-03 Entrenar clasificador con ARFF existente}{153}{subsection.334}
+\contentsline {subsection}{\numberline {C.6.4}RF-04 Entrenar clasificador generando nuevo ARFF}{153}{subsection.335}
+\contentsline {subsection}{\numberline {C.6.5}RF-05 Analizar imagen}{153}{subsection.336}
+\contentsline {subsection}{\numberline {C.6.6}RF-06 Calcular caracter\IeC {\'\i }sticas}{154}{subsection.337}
+\contentsline {subsection}{\numberline {C.6.7}RF-07 Seleccionar defecto}{154}{subsection.338}
+\contentsline {subsection}{\numberline {C.6.8}RF-08 Exportar log}{154}{subsection.339}
+\contentsline {subsection}{\numberline {C.6.9}RF-09 Abrir ayuda}{154}{subsection.340}
+\contentsline {subsection}{\numberline {C.6.10}RF-10 Cambiar opciones}{154}{subsection.341}
+\contentsline {subsection}{\numberline {C.6.11}RF-11 Guardar imagen analizada}{155}{subsection.342}
+\contentsline {subsection}{\numberline {C.6.12}RF-12 Guardar imagen binarizada}{155}{subsection.343}
+\contentsline {subsection}{\numberline {C.6.13}RF-12 Calcular <<Precision \& Recall>>}{155}{subsection.344}
+\contentsline {section}{\numberline {C.7}Pruebas}{155}{section.345}
+\contentsline {subsection}{\numberline {C.7.1}Pruebas de integraci\IeC {\'o}n}{155}{subsection.346}
+\contentsline {section}{\numberline {C.8}Entorno tecnol\IeC {\'o}gico del sistema}{156}{section.347}
+\contentsline {section}{\numberline {C.9}Plan de desarrollo e implantaci\IeC {\'o}n}{156}{section.349}
+\contentsline {chapter}{\numberline {D}Manual del programador}{159}{appendix.351}
+\contentsline {section}{\numberline {D.1}Introducci\IeC {\'o}n}{159}{section.352}
+\contentsline {section}{\numberline {D.2}Documentaci\IeC {\'o}n de las bibliotecas}{159}{section.353}
+\contentsline {subsection}{\numberline {D.2.1}Bibliotecas de Java}{159}{subsection.354}
+\contentsline {subsection}{\numberline {D.2.2}ImageJ}{159}{subsection.355}
+\contentsline {subsection}{\numberline {D.2.3}Weka}{159}{subsection.356}
+\contentsline {subsection}{\numberline {D.2.4}JavaHelp}{160}{subsection.357}
+\contentsline {subsection}{\numberline {D.2.5}Apache Commons IO}{160}{subsection.358}
+\contentsline {subsection}{\numberline {D.2.6}EJML}{160}{subsection.359}
+\contentsline {section}{\numberline {D.3}C\IeC {\'o}digo fuente}{160}{section.360}
+\contentsline {subsection}{\numberline {D.3.1}Recursos necesarios por el c\IeC {\'o}digo fuente}{161}{subsection.361}
+\contentsline {section}{\numberline {D.4}Manual del programador}{162}{section.362}
+\contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{162}{subsection.363}
+\contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{162}{subsubsection*.364}
+\contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{162}{subsection.365}
+\contentsline {section}{\numberline {D.5}Pruebas unitarias}{163}{section.366}
+\contentsline {chapter}{\numberline {E}Manual del usuario}{167}{appendix.367}
+\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{167}{section.368}
+\contentsline {subsection}{\numberline {E.1.1}Requisitos}{167}{subsection.369}
+\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{167}{subsection.370}
+\contentsline {section}{\numberline {E.2}Manual de usuario}{167}{section.371}
+\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{167}{subsection.372}
+\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{172}{subsection.382}
+\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{174}{subsection.395}
+\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{175}{subsection.398}
+\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{176}{subsection.401}
+\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{179}{subsection.407}
+\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{180}{subsection.409}
+\contentsline {subsection}{\numberline {E.2.8}Ayuda}{180}{subsection.411}
+\contentsline {subsubsection}{Tabla de contenidos}{181}{subsubsection*.414}
+\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{182}{subsubsection*.416}
+\contentsline {subsubsection}{Otras ayudas}{183}{subsubsection*.418}
+\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{184}{subsection.419}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{185}{subsection.419}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{189}{subsection.419}
