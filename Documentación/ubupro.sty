@@ -107,6 +107,17 @@
   \end{figure}%
 }
 
+% Comando para incluir imágenes en formato apaisado (sin marco).
+\newcommand{\figuraApaisadaSinMarcoPosicion}[6]{%
+  \begin{figure}[#6]
+    \begin{center}%
+    \includegraphics[angle=90,height=#1\textheight,#5]{#2}%
+    \caption{#3}%
+    \label{#4}%
+    \end{center}%
+  \end{figure}%
+}
+
 %Comando para insertar una figura con posicion y sin marco
 \newcommand{\figuraConPosicionSinMarco}[6]{%
   \setlength{\anchoFloat}{#1\textwidth}%
