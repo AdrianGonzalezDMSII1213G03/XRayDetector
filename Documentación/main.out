@@ -28,7 +28,7 @@
 \BOOKMARK [1][-]{section.105}{Herramientas}{chapter.86}% 28
 \BOOKMARK [2][-]{subsection.106}{Eclipse}{section.105}% 29
 \BOOKMARK [2][-]{subsection.107}{JUnit}{section.105}% 30
-\BOOKMARK [2][-]{subsection.108}{JDepend}{section.105}% 31
+\BOOKMARK [2][-]{subsection.108}{RefactorIT}{section.105}% 31
 \BOOKMARK [2][-]{subsection.109}{Source Monitor}{section.105}% 32
 \BOOKMARK [2][-]{subsection.110}{Astah}{section.105}% 33
 \BOOKMARK [2][-]{subsection.111}{GitHub}{section.105}% 34
@@ -168,4 +168,12 @@
 \BOOKMARK [2][-]{subsection.428}{Ayuda}{section.388}% 168
 \BOOKMARK [2][-]{subsection.436}{Salir de la aplicaci\363n}{section.388}% 169
 \BOOKMARK [0][-]{subsection.436}{Ap\351ndices}{}% 170
-\BOOKMARK [0][-]{subsection.436}{Bibliograf\355a}{}% 171
+\BOOKMARK [0][-]{appendix.437}{Comparativas}{}% 171
+\BOOKMARK [1][-]{section.438}{Introducci\363n}{appendix.437}% 172
+\BOOKMARK [1][-]{section.439}{Modificaciones}{appendix.437}% 173
+\BOOKMARK [1][-]{section.440}{M\351tricas}{appendix.437}% 174
+\BOOKMARK [2][-]{subsection.441}{M\351tricas: introducci\363n}{section.440}% 175
+\BOOKMARK [2][-]{subsection.442}{M\351tricas de RefactorIT}{section.440}% 176
+\BOOKMARK [2][-]{subsection.444}{M\351tricas de SourceMonitor}{section.440}% 177
+\BOOKMARK [1][-]{section.447}{Rendimiento}{appendix.437}% 178
+\BOOKMARK [0][-]{section.447}{Bibliograf\355a}{}% 179

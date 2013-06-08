@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Comparativas}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+Como hemos podido ver en varias partes de la presente memoria, este proyecto es una evolución de uno comenzado anteriormente. Por ello, se hace necesario realizar una comparativa entre los dos proyectos, para tener una idea más clara de cuáles han sido las mejoras y modificaciones.
+
+En este apéndice se explican, primero, las modificaciones realizadas respecto al proyecto anterior (\ref{modificaciones}), seguido de una comparativa de métricas de software (\ref{metricas}) y terminando con una comparativa de rendimiento entre las dos aplicaciones (\ref{rendimiento}).
+
+\section{Modificaciones}\label{modificaciones}
+FALTA
+
+
+\section{Métricas}\label{metricas}
+\subsection{Métricas: introducción}
+Las métricas de código son una herramienta muy útil para evaluar la calidad del código de una aplicación. Como uno de los objetivos era mejorar el código del proyecto anterior, hemos visto necesario hacer una pequeña comparativa objetiva entre ambos proyectos. Para ello se necesita usar una medida objetiva: las métricas.
+
+En concreto, las métricas que se han usado son las que permiten calcular los \textit{plugins} que ya vimos en la memoria: RefactorIT y SourceMonitor. Estas métricas son orientadas a objeto y se suelen dividir en métricas CK (Chidamber y Kemerer), métricas LK (Lorenz y Kidd) y métricas de R. Martin \cite{carlos_lopez_nozal_apuntes_2012}. Hemos hecho un resumen de las que nos han parecido más representativas.
+
+Para consultar más información sobre estas métricas se recomienda usar la ayuda de RefactorIT o de SourceMonitor, ya que vienen muy bien explicadas.
+
+\subsection{Métricas de RefactorIT}
+En la tabla \vertabla{refactorit} hemos incluido un resumen de alguna de las métricas que nos han parecido más interesantes, seguido de una explicación de las mismas y otras que no hemos incluido en la tabla.
+
+\tablaSmall{Métricas RefactorIT}{p{5cm}  c  c}{refactorit}{
+  \multicolumn{1}{c}{Métrica} & \multicolumn{1}{c}{Nueva versión} & \multicolumn{1}{c}{Versión antigua}\\
+  }
+ {
+ V(G) máxima & 31 & 67\\
+ NP máximo & 10 & 17\\
+ WMC medio & 16.4 & 27.1\\
+ RFC medio & 28 & 28\\
+ Dn media & 0.244 & 0.465\\
+ }
+ 
+Los resultados de las métricas completas pueden consultarse en los archivos HTML incluidos en docs/métricas/RefactorIT.
+
+Respecto a los resultados, lo primero que vemos es la diferencia en V(G), es decir, la complejidad ciclomática. Esto es muy importante, pues uno de los objetivos era mejorar el rendimiento, cosa que se ha conseguido parcialmente mejorando el código. En general, no sólo vemos una mejoría en el máximo, sino que la media parece menor, viendo la tabla completa.
+
+En cuanto a NP (número de parámetros), también vemos que se ha disminuido notablemente el máximo. En general, se ha disminuido en toda la aplicación, gracias al uso de un fichero de opciones. Aún asi, sigue siendo un poco alto, ya no que hemos podido meter todo en este fichero.
+
+Si observamos la fila de WMC (\textit{Weighted Methods per Class}, métodos ponderados por clase), también vemos una disminución en la media. De nuevo, vuelve a ser muy importante, ya que esta métrica representa la suma de las complejidades de los métodos de una clase. Sí que es cierto que sigue habiendo valores altos, pero en muchas ocasiones es debido al uso de los patrones de diseño ya explicados. Por ejemplo, el uso del patrón fachada hace que esta clase sea muy compleja, pero es normal. Lo mismo pasa con las superclases de las estrategias, ya que en ellas se ha implementado la lógica común a las subclases, que tiende a ser alta en nuestro caso. Esto hace que sea grande en esas clases pero que se reduzca en las otras.
+
+Respecto a RFC (\textit{Response For a Class}, respuesta para una clase), vemos que los valores se han mantenido. Nuevamente, lo consideramos como normal por el uso de patrones (sobre todo por el patrón fachada), ya que muchos métodos responderán a llamadas de esta clase.
+
+La Dn media (distancia a la \textit{main sequence}, una métrica que mide cómo de balanceado está un subsistema respecto a su estabilidad y abstracción) vemos que también es bastante menor en nuestro caso. Esto quiere decir que, en general, nuestros subsistemas no son demasiado abstractos para su estabilidad, ni demasiado inestables para su abstracción.
+
+Si miramos las tablas completas, podremos ver que la métrica DIT (\textit{Depth in Tree}, profundidad en el árbol de herencia), se puede ver que en nuestro caso hay valores más altos. Esto no quiere decir que sea malo. Simplemente significa que nosotros hemos usado más herencia que los anteriores desarrolladores, generando un diseño más complejo. Esta complejidad es asumible, ya que viene dada por el uso de los patrones estrategia, lo cual es bueno, ya que van a permitir la extensibilidad de la aplicación.
+
+Relacionada con la métrica anterior está NOC (\textit{Number of Children in Tree}, número de hijos en el árbol), que en el caso del proyecto anterior siempre es cero. Esto quiere decir que ellos no usaron nunca la herencia.
+
+En cuanto a otras métricas, se puede ver que en nuestro proyecto las dependencias cíclicas entre paquetes (CYC y DCYC) son siempre cero, lo cual es bueno. El que no existan dependencias cíclicas entre paquetes da una idea de que el diseño no es malo, ya que las dependencias van sólo en una dirección. Esto evita problemas de integración y de extensibilidad. En el proyecto anterior no siempre son cero, por lo que se pueden dar problemas.
+
+Respecto a LCOM (\textit{Lack of Coherence}, carencia de cohesión), los valores son bastante parecidos, si bien es cierto que ellos llegan a tener valores de uno, lo cual quizás sea demasiado. En nuestro caso, los valores altos vienen condicionados, de nuevo, por el uso de patrones. En el caso de la fachada, es la que se encarga de controlar el comportamiento general, por lo que es permisible cierto grado de acoplamiento entre métodos. En los patrones estrategia, la superclase engloba el comportamiento común, por lo que también es normal que el valor sea elevado. También es cierto que es posible que en futuras iteraciones sea recomendable dividir alguna de estas clases (sobre todo la fachada) si estos valores se disparan.
+
+Por último, vemos que los valores de NOA (\textit{Number of Attributes}, número de variables clase) son ligeramente altos en nuestro caso. De nuevo, vuelve a ponerse de manifiesto el uso de los patrones de diseño.
+
+\subsection{Métricas de SourceMonitor}
+En primer lugar, vemos en \ver{kiviat1} un diagrama de Kiviat que muestra los valores de las métricas que ha calculado esta herramienta para nuestro proyecto.
+
+\figuraConPosicion{0.8}{imgs/kiviat1.png}{Métricas SourceMonitor para nuestro proyecto}{kiviat1}{}{H}
+
+En \ver{kiviat2}, vemos el mismo diagrama para el proyecto antiguo.
+
+\figuraConPosicion{0.8}{imgs/kiviat2.png}{Métricas SourceMonitor para el proyecto antiguo}{kiviat2}{}{H}
+
+En el caso de nuestro proyecto, vemos que casi todos los valores están dentro de los rangos que la herramienta considera como normales, lo cual en principio es bueno. Sí que es cierto que la complejidad máxima se dispara un poco, pero lo consideramos normal, ya que el proyecto tiene una complejidad inherente bastante alta. De todas formas, la complejidad media se mantiene dentro de los límites, lo cual parece indicar que es un caso aislado.
+
+La profundidad media de bloque, que hace referencia a la profundidad de bloques anidados (sentencias \textit{if}, bucles, etc), vemos que es bastante alta, pero aún así es menor que el valor máximo del intervalo. También lo consideramos normal, ya que el código se complica en ocasiones, sobre todo con el cálculo de características.
+
+Los métodos por clase y el número de sentencias por método también se encuentran dentro de esos valores normales, lo que indica que el código es, en principio, fácil de leer y reutilizable.
+
+La métrica referente a los comentarios no la consideramos relevante, puesto que en la fecha en la que se sacó el informe aún no estaba terminada toda la documentación.
+
+Respecto al proyecto del año pasado, vemos que todas las métricas menos una están fuera de los intervalos. Son muy notables las diferencias de complejidades (tanto la máxima como la media), lo que parece indicar que nuestro código debería ser más eficiente. Además, esto coincide con lo visto en las métricas de RefactorIT.
+
+El porcentaje de comentarios parce también demasiado alto, lo que puede indicar un defecto de código, ya que demasiados comentarios pueden marcar las zonas donde se puede partir un método en otros métodos más pequeños. Relacionado con esto están las métricas de método por clase y sentencias por método. Vemos que los métodos por clase son pocos, cosa que quizás en un principio pueda parecer positivo. Realmente, en este caso, tener pocos métodos indica que estos métodos son muy largos. Esto parece confirmarse con las sentencias por método, que son demasiadas. Esto hace que el código sea muy poco reutilizable y muy difícil de leer, cosa que hemos podido comprobar a la hora de mejorar el código.
+
+La métrica de la profundidad de bloque confirma también todo lo dicho sobre los métodos demasiado largos, ya que en muchos casos se usa una gran cantidad de sentencias condicionales y bucles dentro del mismo método, lo que dispara la profundidad del mismo. Dividiendo los métodos, cosa que hemos hecho, se reduce esta profundidad.
+
+
+\section{Rendimiento}\label{rendimiento}
+FALTA

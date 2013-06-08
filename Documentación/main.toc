@@ -47,7 +47,7 @@
 \contentsline {section}{\numberline {3.2}Herramientas}{36}{section.105}
 \contentsline {subsection}{\numberline {3.2.1}Eclipse}{36}{subsection.106}
 \contentsline {subsection}{\numberline {3.2.2}JUnit}{36}{subsection.107}
-\contentsline {subsection}{\numberline {3.2.3}JDepend}{36}{subsection.108}
+\contentsline {subsection}{\numberline {3.2.3}RefactorIT}{36}{subsection.108}
 \contentsline {subsection}{\numberline {3.2.4}Source Monitor}{37}{subsection.109}
 \contentsline {subsection}{\numberline {3.2.5}Astah}{37}{subsection.110}
 \contentsline {subsection}{\numberline {3.2.6}GitHub}{37}{subsection.111}
@@ -232,4 +232,12 @@
 \contentsline {subsubsection}{Otras ayudas}{189}{subsubsection*.435}
 \contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{190}{subsection.436}
 \contentsline {chapter}{Ap\IeC {\'e}ndices}{191}{subsection.436}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{195}{subsection.436}
+\contentsline {chapter}{\numberline {A}Comparativas}{193}{appendix.437}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{193}{section.438}
+\contentsline {section}{\numberline {A.2}Modificaciones}{193}{section.439}
+\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{193}{section.440}
+\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{193}{subsection.441}
+\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{193}{subsection.442}
+\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{195}{subsection.444}
+\contentsline {section}{\numberline {A.4}Rendimiento}{197}{section.447}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{199}{section.447}
