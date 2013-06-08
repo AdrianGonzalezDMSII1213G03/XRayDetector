@@ -85,6 +85,7 @@ La carpeta \textit{res} contiene los archivos para la correcta ejecución y func
 \item Img: contiene, por un lado, imágenes de ejemplo para usar la aplicación, y, por otro lado, los iconos necesarios para la interfaz de la aplicación (en la carpeta \textit{app}).
 \item Log: contiene el archivo generado por el gestor de log integrado en la aplicación. Además, cuando el usuario exporta el contenido del log de la interfaz, se guarda automáticamente en la carpeta \textit{html} dentro de esta misma carpeta.
 \item Model: contiene clasificadores de ejemplo para poder usar la aplicación.
+\item Test: contiene recursos para la ejecución de los tests.
 \end{itemize}
 
 La carpeta \textit{lib} contiene las bibliotecas necesarias para la compilación y ejecución de la aplicación. Estas librerías se corresponden con los archivos .JAR, descritos en el apartado \ref{bib}.
@@ -141,6 +142,36 @@ Una vez realizado, se habrá creado una carpeta llamada \textit{JavaHelpSearch},
 \end{itemize}
 
 \section{Pruebas unitarias}
+Las pruebas unitarias son una forma de comprobar el funcionamiento correcto de nuestro código fuente. Así podemos observar si nuestras funciones o métodos funcionan por separado o qué problemas presentan.
+
+En nuestro caso, basándonos en las pruebas de integración que se analizaron en el anexo III de esta memoria, realizamos pruebas sobre las clases que calculan características o preprocesamiento por separado por un lado, y por otro lado probamos el funcionamiento correcto de los procesos en conjunto.
+
+\subsection{Pruebas sobre el subpaquete modelo.feature}
+Se han diseñado una serie de pruebas sobre las clases que extraen las características de la imagen de forma separada. Lo que buscamos es comprobar la integridad de estas operaciones, ya que siempre deben devolver el mismo valor para la misma entrada. Esta entrada es una fragmento de tamaño $100\times100$ de una radiografía.
+
+Estas clases se encuentran en el paquete es.ubu.XRayDetector.test.modelo.feature.
+
+\subsection{Pruebas sobre el subpaquete modelo.preprocesamiento}
+Se ha diseñado una clase que comprueba el valor de ciertos píxeles de una imagen resultado de aplicar el filtro \textit{saliency} sobre una imagen de test, con una idea similar a la que vimos en las pruebas anteriores.
+
+Esta clase se encuentra en el paquete es.ubu.XRayDetector.test.modelo.preprocesamiento.
+
+\subsection{Pruebas sobre las propiedades}
+Buscando comprobar que el almacenamiento y recuperación de propiedades funciona correctamente, se ha creado una clase que testea esta funcionalidad, escribiendo valores y comprobando que realmente son esos valores los que se han escrito en el fichero de propiedades.
+
+Esta clase se encuentra en el paquete es.ubu.XRayDetector.test.utils.
+
+\subsection{Pruebas sobre la fachada}
+Con el objetivo de comprobar que la aplicación funciona bien en su conjunto, se han diseñado unos métodos de prueba sobre la clase Fachada, de tal forma que se comprueba que todas las clases del modelo funcionan como deben funcionar.
+
+Esta clase se encuentra en el paquete es.ubu.XRayDetector.test.modelo.
+
+\subsection{Ejecución de los tests}
+Para ejecutar el conjunto de pruebas unitarias, hemos creado una clase llamada TestSuite que se encarga de llamar a todos los tests que hemos mencionado anteriormente.
+
+Esta clase se encuentra en el paquete test.
+
+\subsection{Resultados}
 FALTA
 
  

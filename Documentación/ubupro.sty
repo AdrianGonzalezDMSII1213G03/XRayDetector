@@ -155,6 +155,24 @@
  \end{table}
 }
 
+% Nuevo comando para tablas pequeñas (menos de una página).
+\newcommand{\tablaSmallPosicion}[6]{%
+ \begin{table}[#6]
+  \begin{center}
+   \rowcolors {2}{gray!35}{}
+   \begin{tabular}{#2}
+    \toprule
+    #4
+    \otoprule
+    #5
+    \bottomrule
+   \end{tabular}
+   \caption{#1}
+   \label{tabla:#3}
+  \end{center}
+ \end{table}
+}
+
 %
 % Nuevo comando para tablas pequeñas (menos de una página).
 \newcommand{\tablaSmallSinColores}[5]{%

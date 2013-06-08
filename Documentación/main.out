@@ -130,36 +130,42 @@
 \BOOKMARK [2][-]{subsection.346}{RF-12 Calcular \253Precision \046 Recall\273}{section.333}% 130
 \BOOKMARK [1][-]{section.347}{Pruebas}{appendix.292}% 131
 \BOOKMARK [2][-]{subsection.348}{Pruebas de integraci\363n}{section.347}% 132
-\BOOKMARK [1][-]{section.349}{Entorno tecnol\363gico del sistema}{appendix.292}% 133
-\BOOKMARK [1][-]{section.351}{Plan de desarrollo e implantaci\363n}{appendix.292}% 134
-\BOOKMARK [0][-]{appendix.353}{Manual del programador}{}% 135
-\BOOKMARK [1][-]{section.354}{Introducci\363n}{appendix.353}% 136
-\BOOKMARK [1][-]{section.355}{Documentaci\363n de las bibliotecas}{appendix.353}% 137
-\BOOKMARK [2][-]{subsection.356}{Bibliotecas de Java}{section.355}% 138
-\BOOKMARK [2][-]{subsection.357}{ImageJ}{section.355}% 139
-\BOOKMARK [2][-]{subsection.358}{Weka}{section.355}% 140
-\BOOKMARK [2][-]{subsection.359}{JavaHelp}{section.355}% 141
-\BOOKMARK [2][-]{subsection.360}{Apache Commons IO}{section.355}% 142
-\BOOKMARK [2][-]{subsection.361}{EJML}{section.355}% 143
-\BOOKMARK [1][-]{section.362}{C\363digo fuente}{appendix.353}% 144
-\BOOKMARK [2][-]{subsection.363}{Recursos necesarios por el c\363digo fuente}{section.362}% 145
-\BOOKMARK [1][-]{section.364}{Manual del programador}{appendix.353}% 146
-\BOOKMARK [2][-]{subsection.365}{Agregar nuevos elementos a la aplicaci\363n}{section.364}% 147
-\BOOKMARK [2][-]{subsection.367}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.364}% 148
-\BOOKMARK [1][-]{section.368}{Pruebas unitarias}{appendix.353}% 149
-\BOOKMARK [0][-]{appendix.369}{Manual del usuario}{}% 150
-\BOOKMARK [1][-]{section.370}{Documento de instalaci\363n y configuraci\363n}{appendix.369}% 151
-\BOOKMARK [2][-]{subsection.371}{Requisitos}{section.370}% 152
-\BOOKMARK [2][-]{subsection.372}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.370}% 153
-\BOOKMARK [1][-]{section.373}{Manual de usuario}{appendix.369}% 154
-\BOOKMARK [2][-]{subsection.374}{Ventana principal de la aplicaci\363n}{section.373}% 155
-\BOOKMARK [2][-]{subsection.384}{Configuraci\363n de la aplicaci\363n}{section.373}% 156
-\BOOKMARK [2][-]{subsection.397}{Entrenar un clasificador}{section.373}% 157
-\BOOKMARK [2][-]{subsection.400}{Abrir una imagen}{section.373}% 158
-\BOOKMARK [2][-]{subsection.403}{Analizar imagen}{section.373}% 159
-\BOOKMARK [2][-]{subsection.409}{Analizar y exportar los resultados}{section.373}% 160
-\BOOKMARK [2][-]{subsection.411}{Exportar y limpiar Log}{section.373}% 161
-\BOOKMARK [2][-]{subsection.413}{Ayuda}{section.373}% 162
-\BOOKMARK [2][-]{subsection.421}{Salir de la aplicaci\363n}{section.373}% 163
-\BOOKMARK [0][-]{subsection.421}{Ap\351ndices}{}% 164
-\BOOKMARK [0][-]{subsection.421}{Bibliograf\355a}{}% 165
+\BOOKMARK [1][-]{section.358}{Entorno tecnol\363gico del sistema}{appendix.292}% 133
+\BOOKMARK [1][-]{section.360}{Plan de desarrollo e implantaci\363n}{appendix.292}% 134
+\BOOKMARK [0][-]{appendix.362}{Manual del programador}{}% 135
+\BOOKMARK [1][-]{section.363}{Introducci\363n}{appendix.362}% 136
+\BOOKMARK [1][-]{section.364}{Documentaci\363n de las bibliotecas}{appendix.362}% 137
+\BOOKMARK [2][-]{subsection.365}{Bibliotecas de Java}{section.364}% 138
+\BOOKMARK [2][-]{subsection.366}{ImageJ}{section.364}% 139
+\BOOKMARK [2][-]{subsection.367}{Weka}{section.364}% 140
+\BOOKMARK [2][-]{subsection.368}{JavaHelp}{section.364}% 141
+\BOOKMARK [2][-]{subsection.369}{Apache Commons IO}{section.364}% 142
+\BOOKMARK [2][-]{subsection.370}{EJML}{section.364}% 143
+\BOOKMARK [1][-]{section.371}{C\363digo fuente}{appendix.362}% 144
+\BOOKMARK [2][-]{subsection.372}{Recursos necesarios por el c\363digo fuente}{section.371}% 145
+\BOOKMARK [1][-]{section.373}{Manual del programador}{appendix.362}% 146
+\BOOKMARK [2][-]{subsection.374}{Agregar nuevos elementos a la aplicaci\363n}{section.373}% 147
+\BOOKMARK [2][-]{subsection.376}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.373}% 148
+\BOOKMARK [1][-]{section.377}{Pruebas unitarias}{appendix.362}% 149
+\BOOKMARK [2][-]{subsection.378}{Pruebas sobre el subpaquete modelo.feature}{section.377}% 150
+\BOOKMARK [2][-]{subsection.379}{Pruebas sobre el subpaquete modelo.preprocesamiento}{section.377}% 151
+\BOOKMARK [2][-]{subsection.380}{Pruebas sobre las propiedades}{section.377}% 152
+\BOOKMARK [2][-]{subsection.381}{Pruebas sobre la fachada}{section.377}% 153
+\BOOKMARK [2][-]{subsection.382}{Ejecuci\363n de los tests}{section.377}% 154
+\BOOKMARK [2][-]{subsection.383}{Resultados}{section.377}% 155
+\BOOKMARK [0][-]{appendix.384}{Manual del usuario}{}% 156
+\BOOKMARK [1][-]{section.385}{Documento de instalaci\363n y configuraci\363n}{appendix.384}% 157
+\BOOKMARK [2][-]{subsection.386}{Requisitos}{section.385}% 158
+\BOOKMARK [2][-]{subsection.387}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.385}% 159
+\BOOKMARK [1][-]{section.388}{Manual de usuario}{appendix.384}% 160
+\BOOKMARK [2][-]{subsection.389}{Ventana principal de la aplicaci\363n}{section.388}% 161
+\BOOKMARK [2][-]{subsection.399}{Configuraci\363n de la aplicaci\363n}{section.388}% 162
+\BOOKMARK [2][-]{subsection.412}{Entrenar un clasificador}{section.388}% 163
+\BOOKMARK [2][-]{subsection.415}{Abrir una imagen}{section.388}% 164
+\BOOKMARK [2][-]{subsection.418}{Analizar imagen}{section.388}% 165
+\BOOKMARK [2][-]{subsection.424}{Analizar y exportar los resultados}{section.388}% 166
+\BOOKMARK [2][-]{subsection.426}{Exportar y limpiar Log}{section.388}% 167
+\BOOKMARK [2][-]{subsection.428}{Ayuda}{section.388}% 168
+\BOOKMARK [2][-]{subsection.436}{Salir de la aplicaci\363n}{section.388}% 169
+\BOOKMARK [0][-]{subsection.436}{Ap\351ndices}{}% 170
+\BOOKMARK [0][-]{subsection.436}{Bibliograf\355a}{}% 171

@@ -389,7 +389,87 @@ En este apartado se recogen las pruebas de integración del sistema y aspectos r
 Las pruebas de integración testean los módulos de la aplicación de forma combinada, es decir, como un grupo. Estas pruebas se realizan testeando un conjunto de elementos unitarios.
 
 \subsection{Pruebas de integración}
-FALTA
+
+\subsubsection{Datos de prueba}
+Para poder realizar las pruebas se necesitan una serie de datos de entrada. Los datos de entrada que hemos usado son:
+
+\begin{itemize}
+\item Una radiografía completa, junto con su máscara.
+\item Un fragmento de la radiografía completa, de $100\times100$ píxeles.
+\item Carpeta de imágenes preparadas para entrenar (una sola imagen con su máscara).
+\item Un fichero \arff{} correcto.
+\item Un fichero \arff{} incorrecto.
+\end{itemize}
+
+\subsubsection{Pruebas del cálculo de características}
+En la tabla \vertabla{pcar} se muestra un resumen de las pruebas sobre el cálculo de características que se han realizado.
+
+\tablaSmall{Pruebas cálculo de características}{ c  p{6cm}  c  c}{pcar}{
+  \multicolumn{1}{c}{Prueba} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Datos entrada} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PI-01 & Prueba del cálculo de \textit{mean} & Imagen $100\times100$ & OK\\
+  PI-02 & Prueba del cálculo de \textit{standard deviation} & Imagen $100\times100$ & OK\\
+  PI-03 & Prueba del cálculo de \textit{first derivative} & Imagen $100\times100$ & OK\\
+  PI-04 & Prueba del cálculo de \textit{second derivative} & Imagen $100\times100$ & OK\\
+  PI-05 & Prueba del cálculo de los 59 \textit{LBP} & Imagen $100\times100$ & OK\\
+  PI-06 & Prueba del cálculo de \textit{gray level co-ocurrence matrix} & Imagen $100\times100$ & OK\\
+  PI-07 & Prueba del cálculo de \textit{angular second moment} & Imagen $100\times100$ & OK\\
+  PI-08 & Prueba del cálculo de \textit{contrast} & Imagen $100\times100$ & OK\\
+  PI-09 & Prueba del cálculo de \textit{sum of squares} & Imagen $100\times100$ & OK\\
+  PI-10 & Prueba del cálculo de \textit{inverse different moment} & Imagen $100\times100$ & OK\\
+  PI-11 & Prueba del cálculo de \textit{sum average} & Imagen $100\times100$ & OK\\
+  PI-12 & Prueba del cálculo de \textit{sum entropy} & Imagen $100\times100$ & OK\\
+  PI-13 & Prueba del cálculo de \textit{sum variance} & Imagen $100\times100$ & OK\\
+  PI-14 & Prueba del cálculo de \textit{entropy} & Imagen $100\times100$ & OK\\
+  PI-15 & Prueba del cálculo de \textit{difference variance} & Imagen $100\times100$ & OK\\
+  PI-16 & Prueba del cálculo de \textit{difference entropy} & Imagen $100\times100$ & OK\\
+  PI-17 & Prueba del cálculo de \textit{imc\_1} & Imagen $100\times100$ & OK\\
+  PI-18 & Prueba del cálculo de \textit{imc\_2} & Imagen $100\times100$ & OK\\
+  PI-19 & Prueba del cálculo de \textit{maximal correlation coefficient} & Imagen $100\times100$ & OK\\
+ }
+ 
+\subsubsection{Pruebas de preprocesamiento}
+En la tabla \vertabla{ppre} se muestra un resumen de las pruebas sobre el cálculo de preprocesamiento de imágenes que se han realizado.
+
+\tablaSmallPosicion{Pruebas preprocesamiento}{ c  p{6cm}  c  c}{ppre}{
+  \multicolumn{1}{c}{Prueba} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Datos entrada} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PI-20 & Prueba del cálculo de \textit{saliency map} & Imagen $100\times100$ & OK\\
+ }{H}
+ 
+\subsubsection{Pruebas de las propiedades}
+En la tabla \vertabla{ppro} se muestra un resumen de las pruebas sobre la gestión de propiedades de la aplicación que se han realizado.
+
+\tablaSmallPosicion{Pruebas propiedades}{ c  p{6cm}  c  c}{ppro}{
+  \multicolumn{1}{c}{Prueba} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Datos entrada} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PI-21 & Prueba de \textit{getInstance} &  & OK\\
+  PI-22 & Prueba del valor del umbral & Umbral 10 & OK\\
+  PI-23 & Prueba del valor del tipo de entrenamiento & Tipo 0 & OK\\
+  PI-24 & Prueba del valor del tamaño de ventana & Tamaño 12 & OK\\
+  PI-25 & Prueba del valor del salto & Salto 0.2 & OK\\
+  PI-26 & Prueba del valor del tipo de detección & Tipo 0 & OK\\
+  PI-27 & Prueba del valor del tipo de ventana defectuosa & Tipo 0 & OK\\
+  PI-28 & Prueba del valor del porcentaje de píxeles defectuosos & Porcentaje 50.0 & OK\\
+  PI-29 & Prueba del valor del tipo de características & Tipo 0 & OK\\
+  PI-30 & Prueba del valor del path del \arff{} & Path & OK\\
+  PI-31 & Prueba del valor del path del modelo & Path & OK\\
+ }{H}
+ 
+\subsubsection{Pruebas de la fachada}
+En la tabla \vertabla{pfachada} se muestra un resumen de las pruebas sobre el funcionamiento del conjunto de la aplicación, es decir, sobre la fachada.
+
+\tablaSmallPosicion{Pruebas fachada}{ c  p{6cm}  c  c}{pfachada}{
+  \multicolumn{1}{c}{Prueba} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Datos entrada} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PI-32 & Prueba de apertura de imagen & Imagen completa & OK\\
+  PI-33 & Prueba de apertura de imagen & Path incorrecto & Fallo\\
+  PI-34 & Prueba de extracción de imagen & Imagen completa & OK\\
+ }{H}
 
 \newpage
 
