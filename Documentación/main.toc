@@ -214,30 +214,30 @@
 \contentsline {subsection}{\numberline {D.5.4}Pruebas sobre la fachada}{170}{subsection.381}
 \contentsline {subsection}{\numberline {D.5.5}Ejecuci\IeC {\'o}n de los tests}{170}{subsection.382}
 \contentsline {subsection}{\numberline {D.5.6}Resultados}{170}{subsection.383}
-\contentsline {chapter}{\numberline {E}Manual del usuario}{173}{appendix.384}
-\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{173}{section.385}
-\contentsline {subsection}{\numberline {E.1.1}Requisitos}{173}{subsection.386}
-\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{173}{subsection.387}
-\contentsline {section}{\numberline {E.2}Manual de usuario}{173}{section.388}
-\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{173}{subsection.389}
-\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{178}{subsection.399}
-\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{180}{subsection.412}
-\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{181}{subsection.415}
-\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{182}{subsection.418}
-\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{185}{subsection.424}
-\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{186}{subsection.426}
-\contentsline {subsection}{\numberline {E.2.8}Ayuda}{186}{subsection.428}
-\contentsline {subsubsection}{Tabla de contenidos}{187}{subsubsection*.431}
-\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{188}{subsubsection*.433}
-\contentsline {subsubsection}{Otras ayudas}{189}{subsubsection*.435}
-\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{190}{subsection.436}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{191}{subsection.436}
-\contentsline {chapter}{\numberline {A}Comparativas}{193}{appendix.437}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{193}{section.438}
-\contentsline {section}{\numberline {A.2}Modificaciones}{193}{section.439}
-\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{195}{section.461}
-\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{195}{subsection.462}
-\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{195}{subsection.463}
-\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{196}{subsection.465}
-\contentsline {section}{\numberline {A.4}Rendimiento}{198}{section.468}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{199}{section.468}
+\contentsline {chapter}{\numberline {E}Manual del usuario}{175}{appendix.385}
+\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{175}{section.386}
+\contentsline {subsection}{\numberline {E.1.1}Requisitos}{175}{subsection.387}
+\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{175}{subsection.388}
+\contentsline {section}{\numberline {E.2}Manual de usuario}{175}{section.389}
+\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{175}{subsection.390}
+\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{180}{subsection.400}
+\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{182}{subsection.413}
+\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{183}{subsection.416}
+\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{184}{subsection.419}
+\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{187}{subsection.425}
+\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{188}{subsection.427}
+\contentsline {subsection}{\numberline {E.2.8}Ayuda}{188}{subsection.429}
+\contentsline {subsubsection}{Tabla de contenidos}{189}{subsubsection*.432}
+\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{190}{subsubsection*.434}
+\contentsline {subsubsection}{Otras ayudas}{191}{subsubsection*.436}
+\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{192}{subsection.437}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{193}{subsection.437}
+\contentsline {chapter}{\numberline {A}Comparativas}{195}{appendix.438}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{195}{section.439}
+\contentsline {section}{\numberline {A.2}Modificaciones}{195}{section.440}
+\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{197}{section.462}
+\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{197}{subsection.463}
+\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{197}{subsection.464}
+\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{198}{subsection.466}
+\contentsline {section}{\numberline {A.4}Rendimiento}{200}{section.469}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{203}{table.470}

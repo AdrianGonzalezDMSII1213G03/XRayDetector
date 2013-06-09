@@ -153,27 +153,27 @@
 \BOOKMARK [2][-]{subsection.381}{Pruebas sobre la fachada}{section.377}% 153
 \BOOKMARK [2][-]{subsection.382}{Ejecuci\363n de los tests}{section.377}% 154
 \BOOKMARK [2][-]{subsection.383}{Resultados}{section.377}% 155
-\BOOKMARK [0][-]{appendix.384}{Manual del usuario}{}% 156
-\BOOKMARK [1][-]{section.385}{Documento de instalaci\363n y configuraci\363n}{appendix.384}% 157
-\BOOKMARK [2][-]{subsection.386}{Requisitos}{section.385}% 158
-\BOOKMARK [2][-]{subsection.387}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.385}% 159
-\BOOKMARK [1][-]{section.388}{Manual de usuario}{appendix.384}% 160
-\BOOKMARK [2][-]{subsection.389}{Ventana principal de la aplicaci\363n}{section.388}% 161
-\BOOKMARK [2][-]{subsection.399}{Configuraci\363n de la aplicaci\363n}{section.388}% 162
-\BOOKMARK [2][-]{subsection.412}{Entrenar un clasificador}{section.388}% 163
-\BOOKMARK [2][-]{subsection.415}{Abrir una imagen}{section.388}% 164
-\BOOKMARK [2][-]{subsection.418}{Analizar imagen}{section.388}% 165
-\BOOKMARK [2][-]{subsection.424}{Analizar y exportar los resultados}{section.388}% 166
-\BOOKMARK [2][-]{subsection.426}{Exportar y limpiar Log}{section.388}% 167
-\BOOKMARK [2][-]{subsection.428}{Ayuda}{section.388}% 168
-\BOOKMARK [2][-]{subsection.436}{Salir de la aplicaci\363n}{section.388}% 169
-\BOOKMARK [0][-]{subsection.436}{Ap\351ndices}{}% 170
-\BOOKMARK [0][-]{appendix.437}{Comparativas}{}% 171
-\BOOKMARK [1][-]{section.438}{Introducci\363n}{appendix.437}% 172
-\BOOKMARK [1][-]{section.439}{Modificaciones}{appendix.437}% 173
-\BOOKMARK [1][-]{section.461}{M\351tricas}{appendix.437}% 174
-\BOOKMARK [2][-]{subsection.462}{M\351tricas: introducci\363n}{section.461}% 175
-\BOOKMARK [2][-]{subsection.463}{M\351tricas de RefactorIT}{section.461}% 176
-\BOOKMARK [2][-]{subsection.465}{M\351tricas de SourceMonitor}{section.461}% 177
-\BOOKMARK [1][-]{section.468}{Rendimiento}{appendix.437}% 178
-\BOOKMARK [0][-]{section.468}{Bibliograf\355a}{}% 179
+\BOOKMARK [0][-]{appendix.385}{Manual del usuario}{}% 156
+\BOOKMARK [1][-]{section.386}{Documento de instalaci\363n y configuraci\363n}{appendix.385}% 157
+\BOOKMARK [2][-]{subsection.387}{Requisitos}{section.386}% 158
+\BOOKMARK [2][-]{subsection.388}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.386}% 159
+\BOOKMARK [1][-]{section.389}{Manual de usuario}{appendix.385}% 160
+\BOOKMARK [2][-]{subsection.390}{Ventana principal de la aplicaci\363n}{section.389}% 161
+\BOOKMARK [2][-]{subsection.400}{Configuraci\363n de la aplicaci\363n}{section.389}% 162
+\BOOKMARK [2][-]{subsection.413}{Entrenar un clasificador}{section.389}% 163
+\BOOKMARK [2][-]{subsection.416}{Abrir una imagen}{section.389}% 164
+\BOOKMARK [2][-]{subsection.419}{Analizar imagen}{section.389}% 165
+\BOOKMARK [2][-]{subsection.425}{Analizar y exportar los resultados}{section.389}% 166
+\BOOKMARK [2][-]{subsection.427}{Exportar y limpiar Log}{section.389}% 167
+\BOOKMARK [2][-]{subsection.429}{Ayuda}{section.389}% 168
+\BOOKMARK [2][-]{subsection.437}{Salir de la aplicaci\363n}{section.389}% 169
+\BOOKMARK [0][-]{subsection.437}{Ap\351ndices}{}% 170
+\BOOKMARK [0][-]{appendix.438}{Comparativas}{}% 171
+\BOOKMARK [1][-]{section.439}{Introducci\363n}{appendix.438}% 172
+\BOOKMARK [1][-]{section.440}{Modificaciones}{appendix.438}% 173
+\BOOKMARK [1][-]{section.462}{M\351tricas}{appendix.438}% 174
+\BOOKMARK [2][-]{subsection.463}{M\351tricas: introducci\363n}{section.462}% 175
+\BOOKMARK [2][-]{subsection.464}{M\351tricas de RefactorIT}{section.462}% 176
+\BOOKMARK [2][-]{subsection.466}{M\351tricas de SourceMonitor}{section.462}% 177
+\BOOKMARK [1][-]{section.469}{Rendimiento}{appendix.438}% 178
+\BOOKMARK [0][-]{table.470}{Bibliograf\355a}{}% 179

@@ -106,4 +106,45 @@ La métrica de la profundidad de bloque confirma también todo lo dicho sobre lo
 
 
 \section{Rendimiento}\label{rendimiento}
-FALTA
+Como ya hemos dicho, uno de los objetivos del proyecto era mejorar el rendimiento del anterior. Algunas de las mejoras que hemos mencionado estaban enfocadas a ello. Para evaluar cómo se comportan las dos aplicaciones, hemos medido el tiempo que se tarda en realizar cada una de ellas.
+
+Todas las pruebas se han realizado con la misma máquina: un ordenador con Windows 8 Pro, con un procesador Intel Core2Duo E4400 a 2GHz y 4 GB de RAM.
+
+En la tabla \vertabla{rendimiento} se pueden ver los resultados de las pruebas.
+
+\tablaSmall{Pruebas de rendimiento}{p{8cm}  c  c}{rendimiento}{
+  \multicolumn{1}{c}{Operación} & \multicolumn{1}{c}{Nueva versión} & \multicolumn{1}{c}{Versión antigua}\\
+  }
+ {
+ Ejecución ventana $12\times12$, Haralick & 2.2 s & 139.2 s\\
+ Ejecución ventana $16\times16$, Haralick & 2.4 s & 161.6 s\\
+ Ejecución ventana $24\times24$, Haralick & 3.1 s & 161.6 s\\
+ Ejecución ventana $32\times32$, Haralick & 5.0 s & 159.1 s\\
+ Ejecución ventana $12\times12$ & 201 ms & 202.3 ms\\
+ Ejecución ventana $16\times16$ & 203.2 ms & 201.9 ms\\
+ Ejecución ventana $24\times24$ & 231.8 ms & 202.1 ms\\
+ Ejecución ventana $32\times32$ & 278.4 ms & 221.8 ms\\
+ Análisis normal, ventana $12\times12$ & 251.5 s & 306 s\\
+ Análisis normal, ventana $24\times24$ & 51.3 s & 59.9 s\\
+ Análisis normal, ventana $32\times32$ & 16.7 s & 37.6 s\\
+ Análisis regiones blancas, ventana $12\times12$ & 159.3 s & -\\
+ Análisis regiones blancas, ventana $24\times24$ & 99.1 s & -\\
+ Análisis regiones blancas, ventana $32\times32$ & 7.7 s & -\\
+ Entrenamiento, 10 imágenes, ventana $12\times12$ & 6.96 m & 13.93 m\\
+ Entrenamiento, 10 imágenes, ventana $24\times24$ & 7.11 m & 16.14 m\\
+ }
+ 
+Las pruebas las hemos realizado siempre con los mismos parámetros. En el caso de los análisis, hemos intentado que la región escogida sea lo más parecida posible a la imagen que se usa para los tests, de $100\times100$ píxeles. Aunque al tener que hacerlo a mano, es posible que no siempre haya quedado igual, lo que puede producir algún cambio en los resultados. De todas formas, estos cambios serían poco significativos, ya que no va haber mucha diferencia. Estos análisis se han medido sin la parte de dibujado de los defectos.
+
+En cuanto a los resultados, lo primero que vemos es la diferencia abismal que existe entre usar \textit{maximal correlation coefficient} de Haralick a no usarla. Además, vemos que la biblioteca EJML funciona muy bien, ya que el cambio es inmenso.
+
+Si no calculamos esta característica, el proyecto anterior parece ser algo más rápido. Lo consideramos normal, ya que nuestras llamadas son un poco más complicadas al haber dividido los cálculos de características en más métodos, lo que introduce un pequeño retraso. También estamos usando la clase \textit{Differentials\_}, que puede estar introduciendo algún pequeño retraso adicional. De todas formas, las diferencias son muy pequeñas.
+
+Si nos fijamos en los análisis, vemos que la detección normal es más rápida en nuestro caso. Aquí se ve la diferencia que introduce el uso de multihilo. Es de suponer que con un procesador de 4 núcleos, la diferencia se podría haber notado más, aunque no sabemos hasta qué punto el cuello de botella que representa el dibujado de las ventanas sobre la imagen retrasaría el conjunto.
+
+El análisis usando las regiones blancas de los umbrales locales acelera aún más el proceso, aunque en el caso de la ventana de $24\times24$ ha sido más lento. Esto ha podido ser por un pequeño fallo al escoger la región, ya que había demasiada región <<vacía>>, lo que provoca que el método esté analizando ventanas para nada. Una posible mejora para versiones posteriores es intentar minimizar esto. De todas formas, por experiencia sabemos que para regiones pequeñas, centrándose más en un defecto o en zonas no vacías, este método es muchísimo más rápido que cualquiera de los vistos hasta ahora.
+
+Por último, vemos que el proceso de entrenamiento también ha sido mucho más rápido en nuestro proyecto, lo que vuelve a poner de manifiesto la ventaja de usar un enfoque multihilo.
+
+Queríamos comentar también que no se ha considerado la última característica de haralick ni en el análisis ni en el entrenamiento, ya que es evidente que en nuestro caso va a ser mucho más rápido. Pero no sólo eso, sino que en el caso del proyecto anterior se vuelve totalmente inviable realizar estas pruebas. 
+

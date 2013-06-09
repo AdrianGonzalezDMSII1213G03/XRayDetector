@@ -462,13 +462,24 @@ En la tabla \vertabla{ppro} se muestra un resumen de las pruebas sobre la gesti�
 \subsubsection{Pruebas de la fachada}
 En la tabla \vertabla{pfachada} se muestra un resumen de las pruebas sobre el funcionamiento del conjunto de la aplicación, es decir, sobre la fachada.
 
-\tablaSmallPosicion{Pruebas fachada}{ c  p{6cm}  c  c}{pfachada}{
+\tablaSmallPosicion{Pruebas fachada}{ c  p{8cm}  c  c}{pfachada}{
   \multicolumn{1}{c}{Prueba} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Datos entrada} & \multicolumn{1}{c}{Resultado}\\
  }
  {
   PI-32 & Prueba de apertura de imagen & Imagen completa & OK\\
   PI-33 & Prueba de apertura de imagen & Path incorrecto & Fallo\\
   PI-34 & Prueba de extracción de imagen & Imagen completa & OK\\
+  PI-35 & Prueba de análisis normal con selección & Imagen completa con selección & OK\\
+  PI-36 & Prueba de análisis normal con completa & Imagen completa & OK\\
+  PI-37 & Prueba de análisis de regiones con selección & Imagen completa con selección & OK\\
+  PI-38 & Prueba de análisis de regiones con completa & Imagen completa & OK\\
+  PI-39 & Prueba de entrenamiento con ARFF & Fichero ARFF & OK\\
+  PI-40 & Prueba de entrenamiento con ARFF incorrecto & Fichero ARFF incorrecto & Fallo\\
+  PI-41 & Prueba de entrenamiento con imágenes, ventana aleatoria, heurística 1 & Carpeta de imágenes & OK\\
+  PI-42 & Prueba de entrenamiento con imágenes, ventana deslizante, heurística 2 & Carpeta de imágenes & OK\\
+  PI-43 & Prueba de cálculo de <<Precision \& Recall>> & Imagen y máscara & OK\\
+  PI-44 & Prueba de recuperación de excepción & Excepción & OK\\
+  PI-45 & Prueba de recuperación de imagen binarizada & - & OK\\
  }{H}
 
 \newpage

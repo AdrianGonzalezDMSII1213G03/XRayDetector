@@ -172,6 +172,12 @@ Para ejecutar el conjunto de pruebas unitarias, hemos creado una clase llamada T
 Esta clase se encuentra en el paquete test.
 
 \subsection{Resultados}
-FALTA
+JUnit proporciona un informe detallado de los resultados de las pruebas unitarias. Estos resultados podemos verlos en forma de cobertura, la cual puede verse en la imagen \ver{cobertura}.
+
+\figuraConPosicion{1}{imgs/cobertura.png}{Cobertura de los tests}{cobertura}{}{h}
+
+También, se generó un informe detallado en formato html, que se encuentra en la carpeta XRayDetector/docs/pruebas.
+
+Nos interesa que las clases del modelo tengan una alta cobertura, cosa que se ha conseguido en la medida de lo posible. También interesa tener una alta cobertura de la clase \textit{Propiedades}, pero no del resto del paquete \textit{utils}, ya que el resto de clases están fuera de nuestro control al ser de ImageJ.
 
  
