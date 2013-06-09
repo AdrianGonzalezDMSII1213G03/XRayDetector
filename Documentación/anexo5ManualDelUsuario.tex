@@ -69,7 +69,7 @@ Muestra al usuario información referente al estado de la aplicación y los resu
 \item \textbf{Exportar log:} Exporta el contenido actual del log a un archivo HTML.
 \end{itemize}
 
-\figuraConPosicion{0.6}{imgs/Exportarlog.png}{Control de Log}{log}{}{H}
+\figuraConPosicion{0.4}{imgs/log.png}{Control de Log}{log}{}{H}
 
 \subsubsection*{Visor}
 Aquí se muestra la imagen cargada en la aplicación, así como el resultado del proceso de detección de defectos. Una vez analizada la imagen, se marcarán los defectos en la imagen y podrán ser seleccionados a partir directamente sobre la misma o sobre la tabla de resultados con la lista de defectos y sus características.
@@ -126,7 +126,7 @@ Mediante el menú \textbf{Opciones}, de la barra de menú y seleccionando \textb
 
 \begin{enumerate}
 \item Clases Nominales: Las ventanas se etiquetan indicando si son defectuosas o no mediante TRUE o FALSE.
-\item Regresión: Las ventanas se etiquetan indicando el numero de píxeles defectuosos que se han encontrado.
+\item Regresión: Se usan clases numéricas.
 \end{enumerate}
 
 \item \textbf{Heurística ventana defectuosa:} Las ventanas se marcarán como defectuosas en función al tipo de heurística seleccionada.
@@ -196,13 +196,13 @@ XRayDetector da la opción de analizar sólo una región de la imagen. Para ello
 
 A continuación, la aplicación inicia el proceso de análisis en busca de defectos sobre la imagen. Durante este proceso de análisis, se verá cómo se van dibujando unas ventanas amarillas, que representan las regiones que se están analizando en ese momento. Si alguna es clasificada como defecto, se quedarán dibujadas en color verde.
 
-\figuraConPosicion{0.6}{imgs/analizando.png}{Análisis en ejecución}{analizando}{}{H}
+\figuraConPosicion{0.4}{imgs/analizando.png}{Análisis en ejecución}{analizando}{}{H}
 
 También se irá mostrando el progreso de la aplicación mediante una barra de progreso. Junto a esta barra se encuentra el botón de \textit{Stop} (el aspa roja), que permite detener el proceso en cualquier momento.
 
 Una vez que ha finalizado el proceso de detección, y si no ha habido ningún error, se muestran los defectos detectados con su contorno en el visor.
 
-\figuraConPosicion{0.6}{imgs/dibujados.png}{Defectos detectados}{dibujados}{}{H}
+\figuraConPosicion{0.4}{imgs/dibujados.png}{Defectos detectados}{dibujados}{}{H}
 
 Los resultados obtenidos pueden observarse tanto en el visor como en la tabla de resultados que se encuentra bajo el visor. Esta tabla contiene una lista con todos los defectos encontrados, junto con sus características geométricas asociadas a cada defecto.
 

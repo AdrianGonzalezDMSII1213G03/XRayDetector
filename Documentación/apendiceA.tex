@@ -10,7 +10,31 @@ Como hemos podido ver en varias partes de la presente memoria, este proyecto es 
 En este apéndice se explican, primero, las modificaciones realizadas respecto al proyecto anterior (\ref{modificaciones}), seguido de una comparativa de métricas de software (\ref{metricas}) y terminando con una comparativa de rendimiento entre las dos aplicaciones (\ref{rendimiento}).
 
 \section{Modificaciones}\label{modificaciones}
-FALTA
+Las modificaciones que se han hecho respecto al proyecto anterior han sido:
+
+\begin{enumerate}
+\item Rediseño de la estructura de la aplicación, usando una arquitectura en capas y patrones de diseño que permitan ampliar la aplicación de una forma sencilla.
+\item Refactorización de las clases de cálculo de características, buscando dividir los métodos tan largos que tenían en métodos más pequeños.
+\item Modificación de las clases de cálculo de características para que puedan usarse los métodos por separado (por ejemplo, si sólo quiero calcular la media ahora es posible).
+\item Rediseño de la interfaz de usuario, buscando que sea más intuitiva y funcional. Ahora el usuario sólo puede realizar ciertas operaciones en un determinado momento, ya que activamos y desactivamos los botones.
+\item Rediseño de las clases de la interfaz, buscando dividir el único método que había antes en varios métodos. También se han movido los \textit{listeners} de los botones a clases internas, en vez de ser clases anónimas en medio del código.
+\item Implementación de multihilo. Se particionan las imágenes al analizar y al entrenar, de tal forma que cada hilo sólo considerará una partición de la imagen, lo que aumenta el rendimiento.
+\item Implementación de una nueva forma de calcular los autovalores, sustituyendo la clase \textit{Matrix} que había antes por llamadas a la biblioteca \textit{EJML}, lo que hace pasar de ser inviable el cálculo de los mismos a ser sólo un poco lento.
+\item Sustitución de los cálculos de la primera y segunda derivadas por llamadas a la clase \textit{Differentials\_} de ImageJ.
+\item Implementación de nuevas estrategias de etiquetado de ventanas: píxel central, píxel central más región de vecinos y porcentaje del total de píxeles, de las cuales sólo nos hemos quedado con las dos últimas por ser las que mejor rendimiento daban. Con esto se pretende mejorar la precisión.
+\item Implementación de nuevas estrategias de detección de defectos: detección normal más superposición con filtro de umbrales locales para descartar falsos positivos y lista de píxeles en regiones blancas en la imagen de umbrales locales. Lo que se busca con esto es, primero, aumentar la precisión y, segundo, aumentar la rapidez.
+\item Implementación de un botón para guardar una binarización de los defectos encontrados, que es el paso previo para poder dibujarlos después. Esto permite tener un mayor conocimiento de cómo de bien está funcionando la detección.
+\item Implementación del cálculo de características geométricas de los defectos dibujados y muestra de las mismas en una tabla en la interfaz. Esto permite conocer mejor las características de los defectos y, en un futuro, permitirá clasificar los defectos en diversos tipos.
+\item Interactividad con los defectos dibujados: se permite seleccionar un defecto en el visor (mediante la combinación de la tecla \textit{control} con click del ratón), lo que resaltará la fila de la tabla de características geométricas que le corresponde. Esto también resaltará el propio defecto, dibujándolo en un tono rojizo transparente. De la misma forma, si se selecciona una fila de la tabla, se resaltará el defecto al que corresponde. Todo esto le da más valor a la interfaz.
+\item Implementación del cálculo de <<Precision \& Recall>>, lo que permite conocer cómo de bien se están detectando los defectos. En un futuro, esto también servirá para comparar nuevos métodos de detección con los que ya existen de una forma numérica, más exacta.
+\item Implementación de un log de excpeciones.
+\item Se ha cambiado el log de la interfaz para que sea texto HTML, lo que permite usar colores. Esto aumenta la intuitividad de la aplicación, ya que el usuario enseguida ve si cierto mensaje implica que se ha realizado algo con éxito o si ha habido un error (colores verde y rojo).
+\item La exportación del log de la interfaz también se hace en formato HTML, lo que permite exportar los colores.
+\item Implementación de un aviso si no se selecciona región para analizar. Antes se obligaba a seleccionar una región, pero quizás el usuario en ocasiones prefiera analizar la imagen completa.
+\item Opciones del programa en fichero de opciones.
+\item Implementación de un módulo de ayuda en línea, lo que permite acceder directamente a la ayuda de lo que estamos usando en este momento, además de tener un buscador.
+\item Mejora de la documentación de código, eliminando errores gramaticales en aquellos métodos que se han reutilizado y documentando todos los elementos del código, cosa que antes no pasaba.
+\end{enumerate}
 
 
 \section{Métricas}\label{metricas}
@@ -24,7 +48,7 @@ Para consultar más información sobre estas métricas se recomienda usar la ayu
 \subsection{Métricas de RefactorIT}
 En la tabla \vertabla{refactorit} hemos incluido un resumen de alguna de las métricas que nos han parecido más interesantes, seguido de una explicación de las mismas y otras que no hemos incluido en la tabla.
 
-\tablaSmall{Métricas RefactorIT}{p{5cm}  c  c}{refactorit}{
+\tablaSmallPosicion{Métricas RefactorIT}{p{5cm}  c  c}{refactorit}{
   \multicolumn{1}{c}{Métrica} & \multicolumn{1}{c}{Nueva versión} & \multicolumn{1}{c}{Versión antigua}\\
   }
  {
@@ -33,7 +57,7 @@ En la tabla \vertabla{refactorit} hemos incluido un resumen de alguna de las mé
  WMC medio & 16.4 & 27.1\\
  RFC medio & 28 & 28\\
  Dn media & 0.244 & 0.465\\
- }
+ }{H}
  
 Los resultados de las métricas completas pueden consultarse en los archivos HTML incluidos en docs/métricas/RefactorIT.
 
@@ -60,11 +84,11 @@ Por último, vemos que los valores de NOA (\textit{Number of Attributes}, númer
 \subsection{Métricas de SourceMonitor}
 En primer lugar, vemos en \ver{kiviat1} un diagrama de Kiviat que muestra los valores de las métricas que ha calculado esta herramienta para nuestro proyecto.
 
-\figuraConPosicion{0.8}{imgs/kiviat1.png}{Métricas SourceMonitor para nuestro proyecto}{kiviat1}{}{H}
+\figuraConPosicion{1}{imgs/kiviat1.png}{Métricas SourceMonitor para nuestro proyecto}{kiviat1}{}{H}
 
 En \ver{kiviat2}, vemos el mismo diagrama para el proyecto antiguo.
 
-\figuraConPosicion{0.8}{imgs/kiviat2.png}{Métricas SourceMonitor para el proyecto antiguo}{kiviat2}{}{H}
+\figuraConPosicion{1}{imgs/kiviat2.png}{Métricas SourceMonitor para el proyecto antiguo}{kiviat2}{}{H}
 
 En el caso de nuestro proyecto, vemos que casi todos los valores están dentro de los rangos que la herramienta considera como normales, lo cual en principio es bueno. Sí que es cierto que la complejidad máxima se dispara un poco, pero lo consideramos normal, ya que el proyecto tiene una complejidad inherente bastante alta. De todas formas, la complejidad media se mantiene dentro de los límites, lo cual parece indicar que es un caso aislado.
 

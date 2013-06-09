@@ -235,9 +235,9 @@
 \contentsline {chapter}{\numberline {A}Comparativas}{193}{appendix.437}
 \contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{193}{section.438}
 \contentsline {section}{\numberline {A.2}Modificaciones}{193}{section.439}
-\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{193}{section.440}
-\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{193}{subsection.441}
-\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{193}{subsection.442}
-\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{195}{subsection.444}
-\contentsline {section}{\numberline {A.4}Rendimiento}{197}{section.447}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{199}{section.447}
+\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{195}{section.461}
+\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{195}{subsection.462}
+\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{195}{subsection.463}
+\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{196}{subsection.465}
+\contentsline {section}{\numberline {A.4}Rendimiento}{198}{section.468}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{199}{section.468}
