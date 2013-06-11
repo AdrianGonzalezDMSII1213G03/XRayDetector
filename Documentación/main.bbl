@@ -88,6 +88,14 @@ Leo Breiman.
 {Carlos López Nozal}.
 \newblock Apuntes de diseño y mantenimiento del software {II}, 2012.
 
+\bibitem{chidamber1994metrics}
+Shyam~R Chidamber and Chris~F Kemerer.
+\newblock A metrics suite for object oriented design.
+\newblock {\em Software Engineering, IEEE Transactions on}, 20(6):476--493,
+  1994.
+\newblock URL:
+  \url{http://faculty.salisbury.edu/~stlauterburg/COSC425/MetricForOOD_ChidamberKemerer94.pdf}.
+
 \bibitem{daugman1988complete}
 j.g. Daugman.
 \newblock Complete discrete 2-d gabor transforms by neural networks for image
@@ -185,6 +193,11 @@ S.~Belaifa M.~Tridi and N.~Nacereddine.
   model.
 \newblock 2005.
 
+\bibitem{mark_lorenz_object_1994}
+{Mark Lorenz} and {Jeff Kidd}.
+\newblock Object oriented metrics.
+\newblock {\em Englewood, {NJ:} Prentice Hall}, 1994.
+
 \bibitem{marcosmartin2004}
 Marcos Martin.
 \newblock Tecnicas clasicas de segmentacion de la imagen.
@@ -231,6 +244,12 @@ M.~Presutti.
 \newblock {\em 4{\textordfeminine} jornada de educa{\c{c}}{\~a}o em
   sensoriamento remoto no {\^a}mbito do mercosul, s{\~a}o leopoldo, brasil},
   2004.
+
+\bibitem{robert_martin_oo_1994}
+{Robert Martin}.
+\newblock {OO} design quality metrics.
+\newblock October 1994.
+\newblock URL: \url{http://www.cin.ufpe.br/~alt/mestrado/oodmetrc.pdf}.
 
 \bibitem{Sauvola00adaptivedocument}
 J.~Sauvola and M.~Pietikäinen.

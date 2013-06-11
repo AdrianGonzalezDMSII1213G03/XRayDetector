@@ -31,10 +31,10 @@
 \contentsline {subsubsection}{Estrategias de etiquetado}{22}{subsubsection*.73}
 \contentsline {subsubsection}{Detecci\IeC {\'o}n de defectos}{23}{subsubsection*.75}
 \contentsline {subsubsection}{Multihilo}{24}{subsubsection*.77}
-\contentsline {subsection}{\numberline {2.3.2}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{25}{subsection.78}
+\contentsline {subsection}{\numberline {2.3.2}Fundamentos te\IeC {\'o}ricos de la versi\IeC {\'o}n final}{24}{subsection.78}
 \contentsline {subsubsection}{Primera innovaci\IeC {\'o}n: detecci\IeC {\'o}n normal con posterior intersecci\IeC {\'o}n con umbrales locales}{25}{subsubsection*.79}
 \contentsline {subsubsection}{Segunda innovaci\IeC {\'o}n: p\IeC {\'\i }xeles blancos en umbrales locales}{25}{subsubsection*.80}
-\contentsline {subsubsection}{C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{27}{subsubsection*.82}
+\contentsline {subsubsection}{C\IeC {\'a}lculo de caracter\IeC {\'\i }sticas geom\IeC {\'e}tricas}{26}{subsubsection*.82}
 \contentsline {subsubsection}{Precision \& Recall}{27}{subsubsection*.83}
 \contentsline {chapter}{\numberline {3}T\IeC {\'e}cnicas y herramientas}{29}{chapter.85}
 \contentsline {section}{\numberline {3.1}T\IeC {\'e}cnicas}{29}{section.86}
@@ -112,23 +112,23 @@
 \contentsline {subsection}{\numberline {A.5.7}Sprint 7}{83}{subsection.204}
 \contentsline {subsection}{\numberline {A.5.8}Sprint 8}{85}{subsection.206}
 \contentsline {subsection}{\numberline {A.5.9}Sprint 9}{88}{subsection.208}
-\contentsline {section}{\numberline {A.6}Estudio de viabilidad del proyecto}{90}{section.210}
-\contentsline {subsection}{\numberline {A.6.1}Viabilidad temporal}{90}{subsection.211}
+\contentsline {section}{\numberline {A.6}Estudio de viabilidad del proyecto}{91}{section.210}
+\contentsline {subsection}{\numberline {A.6.1}Viabilidad temporal}{91}{subsection.211}
 \contentsline {subsubsection}{C\IeC {\'a}lculos de estimaci\IeC {\'o}n seg\IeC {\'u}n los casos de uso}{91}{subsubsection*.212}
-\contentsline {subsection}{\numberline {A.6.2}Viabilidad econ\IeC {\'o}mica}{92}{subsection.214}
-\contentsline {subsubsection}{An\IeC {\'a}lisis de costes}{92}{subsubsection*.215}
+\contentsline {subsection}{\numberline {A.6.2}Viabilidad econ\IeC {\'o}mica}{94}{subsection.214}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de costes}{94}{subsubsection*.215}
 \contentsline {paragraph}{Costes de personal}{94}{paragraph*.216}
-\contentsline {paragraph}{Seguridad Social}{94}{paragraph*.217}
-\contentsline {paragraph}{Coste del hardware}{94}{paragraph*.218}
-\contentsline {paragraph}{Coste del software}{94}{paragraph*.219}
-\contentsline {paragraph}{Otros costes}{94}{paragraph*.221}
-\contentsline {paragraph}{Total costes}{95}{paragraph*.223}
-\contentsline {subsubsection}{An\IeC {\'a}lisis de beneficios}{95}{subsubsection*.225}
-\contentsline {paragraph}{Beneficios no econ\IeC {\'o}micos}{95}{paragraph*.226}
-\contentsline {paragraph}{Beneficios econ\IeC {\'o}micos}{96}{paragraph*.227}
-\contentsline {subsubsection}{Conclusiones Viabilidad econ\IeC {\'o}mica del Proyecto}{96}{subsubsection*.228}
+\contentsline {paragraph}{Seguridad Social}{95}{paragraph*.217}
+\contentsline {paragraph}{Coste del hardware}{95}{paragraph*.218}
+\contentsline {paragraph}{Coste del software}{95}{paragraph*.219}
+\contentsline {paragraph}{Otros costes}{96}{paragraph*.221}
+\contentsline {paragraph}{Total costes}{96}{paragraph*.223}
+\contentsline {subsubsection}{An\IeC {\'a}lisis de beneficios}{96}{subsubsection*.225}
+\contentsline {paragraph}{Beneficios no econ\IeC {\'o}micos}{96}{paragraph*.226}
+\contentsline {paragraph}{Beneficios econ\IeC {\'o}micos}{97}{paragraph*.227}
+\contentsline {subsubsection}{Conclusiones Viabilidad econ\IeC {\'o}mica del Proyecto}{97}{subsubsection*.228}
 \contentsline {subsection}{\numberline {A.6.3}Viabilidad Legal}{97}{subsection.229}
-\contentsline {subsection}{\numberline {A.6.4}Viabilidad T\IeC {\'e}cnica \IeC {\'o} Tecnol\IeC {\'o}gica}{97}{subsection.230}
+\contentsline {subsection}{\numberline {A.6.4}Viabilidad T\IeC {\'e}cnica \IeC {\'o} Tecnol\IeC {\'o}gica}{98}{subsection.230}
 \contentsline {chapter}{\numberline {B}Especificaci\IeC {\'o}n de requisitos}{101}{appendix.231}
 \contentsline {section}{\numberline {B.1}Introducci\IeC {\'o}n}{101}{section.232}
 \contentsline {section}{\numberline {B.2}Objetivos del proyecto}{102}{section.233}
@@ -207,37 +207,43 @@
 \contentsline {subsection}{\numberline {D.4.1}Agregar nuevos elementos a la aplicaci\IeC {\'o}n}{170}{subsection.373}
 \contentsline {subsubsection}{Creaci\IeC {\'o}n de nuevos elementos en las estrategias}{170}{subsubsection*.374}
 \contentsline {subsection}{\numberline {D.4.2}Modificaci\IeC {\'o}n del m\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea de la aplicaci\IeC {\'o}n y del motor de b\IeC {\'u}squeda}{170}{subsection.375}
-\contentsline {section}{\numberline {D.5}Pruebas unitarias}{171}{section.376}
-\contentsline {subsection}{\numberline {D.5.1}Pruebas sobre el subpaquete modelo.feature}{171}{subsection.377}
-\contentsline {subsection}{\numberline {D.5.2}Pruebas sobre el subpaquete modelo.preprocesamiento}{172}{subsection.378}
-\contentsline {subsection}{\numberline {D.5.3}Pruebas sobre las propiedades}{172}{subsection.379}
-\contentsline {subsection}{\numberline {D.5.4}Pruebas sobre la fachada}{172}{subsection.380}
-\contentsline {subsection}{\numberline {D.5.5}Ejecuci\IeC {\'o}n de los tests}{172}{subsection.381}
-\contentsline {subsection}{\numberline {D.5.6}Resultados}{172}{subsection.382}
-\contentsline {chapter}{\numberline {E}Manual del usuario}{177}{appendix.384}
-\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{177}{section.385}
-\contentsline {subsection}{\numberline {E.1.1}Requisitos}{177}{subsection.386}
-\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{177}{subsection.387}
-\contentsline {section}{\numberline {E.2}Manual de usuario}{177}{section.388}
-\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{177}{subsection.389}
-\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{182}{subsection.399}
-\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{184}{subsection.412}
-\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{185}{subsection.415}
-\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{186}{subsection.418}
-\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{189}{subsection.424}
-\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{190}{subsection.426}
-\contentsline {subsection}{\numberline {E.2.8}Ayuda}{190}{subsection.428}
-\contentsline {subsubsection}{Tabla de contenidos}{191}{subsubsection*.431}
-\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{192}{subsubsection*.433}
-\contentsline {subsubsection}{Otras ayudas}{193}{subsubsection*.435}
-\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{194}{subsection.436}
-\contentsline {chapter}{Ap\IeC {\'e}ndices}{195}{subsection.436}
-\contentsline {chapter}{\numberline {A}Comparativas}{197}{appendix.437}
-\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{197}{section.438}
-\contentsline {section}{\numberline {A.2}Modificaciones}{197}{section.439}
-\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{199}{section.461}
-\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{199}{subsection.462}
-\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{199}{subsection.463}
-\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{200}{subsection.465}
-\contentsline {section}{\numberline {A.4}Rendimiento}{202}{section.468}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{205}{table.469}
+\contentsline {subsection}{\numberline {D.4.3}Configuraci\IeC {\'o}n de la construcci\IeC {\'o}n}{171}{subsection.376}
+\contentsline {subsubsection}{Compilaci\IeC {\'o}n}{171}{subsubsection*.377}
+\contentsline {subsection}{\numberline {D.4.4}Ejecuci\IeC {\'o}n}{172}{subsection.378}
+\contentsline {subsection}{\numberline {D.4.5}Documentaci\IeC {\'o}n}{172}{subsection.379}
+\contentsline {subsection}{\numberline {D.4.6}Pruebas}{172}{subsection.380}
+\contentsline {subsection}{\numberline {D.4.7}Importaci\IeC {\'o}n del proyecto a Eclipse}{172}{subsection.381}
+\contentsline {section}{\numberline {D.5}Pruebas unitarias}{172}{section.382}
+\contentsline {subsection}{\numberline {D.5.1}Pruebas sobre el subpaquete modelo.feature}{172}{subsection.383}
+\contentsline {subsection}{\numberline {D.5.2}Pruebas sobre el subpaquete modelo.preprocesamiento}{173}{subsection.384}
+\contentsline {subsection}{\numberline {D.5.3}Pruebas sobre las propiedades}{173}{subsection.385}
+\contentsline {subsection}{\numberline {D.5.4}Pruebas sobre la fachada}{173}{subsection.386}
+\contentsline {subsection}{\numberline {D.5.5}Ejecuci\IeC {\'o}n de los tests}{173}{subsection.387}
+\contentsline {subsection}{\numberline {D.5.6}Resultados}{173}{subsection.388}
+\contentsline {chapter}{\numberline {E}Manual del usuario}{177}{appendix.390}
+\contentsline {section}{\numberline {E.1}Documento de instalaci\IeC {\'o}n y configuraci\IeC {\'o}n}{177}{section.391}
+\contentsline {subsection}{\numberline {E.1.1}Requisitos}{177}{subsection.392}
+\contentsline {subsection}{\numberline {E.1.2}Instalaci\IeC {\'o}n y ejecuci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{177}{subsection.393}
+\contentsline {section}{\numberline {E.2}Manual de usuario}{177}{section.394}
+\contentsline {subsection}{\numberline {E.2.1}Ventana principal de la aplicaci\IeC {\'o}n}{177}{subsection.395}
+\contentsline {subsection}{\numberline {E.2.2}Configuraci\IeC {\'o}n de la aplicaci\IeC {\'o}n}{182}{subsection.405}
+\contentsline {subsection}{\numberline {E.2.3}Entrenar un clasificador}{184}{subsection.418}
+\contentsline {subsection}{\numberline {E.2.4}Abrir una imagen}{185}{subsection.421}
+\contentsline {subsection}{\numberline {E.2.5}Analizar imagen}{186}{subsection.424}
+\contentsline {subsection}{\numberline {E.2.6}Analizar y exportar los resultados}{189}{subsection.430}
+\contentsline {subsection}{\numberline {E.2.7}Exportar y limpiar Log}{190}{subsection.432}
+\contentsline {subsection}{\numberline {E.2.8}Ayuda}{190}{subsection.434}
+\contentsline {subsubsection}{Tabla de contenidos}{191}{subsubsection*.437}
+\contentsline {subsubsection}{Motor de b\IeC {\'u}squeda}{192}{subsubsection*.439}
+\contentsline {subsubsection}{Otras ayudas}{193}{subsubsection*.441}
+\contentsline {subsection}{\numberline {E.2.9}Salir de la aplicaci\IeC {\'o}n}{194}{subsection.442}
+\contentsline {chapter}{Ap\IeC {\'e}ndices}{195}{subsection.442}
+\contentsline {chapter}{\numberline {A}Comparativas}{197}{appendix.443}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{197}{section.444}
+\contentsline {section}{\numberline {A.2}Modificaciones}{197}{section.445}
+\contentsline {section}{\numberline {A.3}M\IeC {\'e}tricas}{199}{section.467}
+\contentsline {subsection}{\numberline {A.3.1}M\IeC {\'e}tricas: introducci\IeC {\'o}n}{199}{subsection.468}
+\contentsline {subsection}{\numberline {A.3.2}M\IeC {\'e}tricas de RefactorIT}{199}{subsection.469}
+\contentsline {subsection}{\numberline {A.3.3}M\IeC {\'e}tricas de SourceMonitor}{200}{subsection.471}
+\contentsline {section}{\numberline {A.4}Rendimiento}{202}{section.474}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{205}{table.475}

@@ -2,11 +2,11 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {\relax 2.1}{\ignorespaces Proceso de adquisici\IeC {\'o}n de im\IeC {\'a}genes de radiograf\IeC {\'\i }a \cite {wiki:EnsayoNoDestructivo}}}{8}{figure.35}
-\contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map. La imagen original a la izquierda, con el correspondiente saliency map a la derecha}}{9}{figure.39}
+\contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map}}{9}{figure.39}
 \contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Ejemplo del funcionamiento de los Local Binary Patterns \cite {de2011transformaciones}}}{16}{figure.60}
 \contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Vecindades de distinto tama\IeC {\~n}o en los LBP \cite {de2011transformaciones}}}{17}{figure.61}
 \contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas \cite {DomingoMery}}}{20}{figure.69}
-\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Ejemplo de m\IeC {\'a}scara junto a imagen original}}{21}{figure.71}
+\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Ejemplo de m\IeC {\'a}scara junto a imagen original}}{20}{figure.71}
 \contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Esquema de la ventana deslizante \cite {DomingoMery}}}{22}{figure.72}
 \contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Experimento estrategias de etiquetado}}{23}{figure.74}
 \contentsline {figure}{\numberline {\relax 2.9}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto}}{24}{figure.76}
@@ -61,33 +61,33 @@
 \contentsline {figure}{\numberline {\relax C.24}{\ignorespaces Diagrama de componentes}}{162}{figure.358}
 \contentsline {figure}{\numberline {\relax C.25}{\ignorespaces Diagrama de despliegue}}{163}{figure.360}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax D.1}{\ignorespaces Cobertura de los tests}}{173}{figure.383}
+\contentsline {figure}{\numberline {\relax D.1}{\ignorespaces Cobertura de los tests}}{174}{figure.389}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax E.1}{\ignorespaces Ventana principal de XRayDetector}}{178}{figure.390}
-\contentsline {figure}{\numberline {\relax E.2}{\ignorespaces Men\IeC {\'u} control}}{178}{figure.391}
-\contentsline {figure}{\numberline {\relax E.3}{\ignorespaces Men\IeC {\'u} progreso}}{179}{figure.392}
-\contentsline {figure}{\numberline {\relax E.4}{\ignorespaces Nivel de tolerancia}}{179}{figure.393}
-\contentsline {figure}{\numberline {\relax E.5}{\ignorespaces Analizar resultados}}{180}{figure.394}
-\contentsline {figure}{\numberline {\relax E.6}{\ignorespaces Control de Log}}{180}{figure.395}
-\contentsline {figure}{\numberline {\relax E.7}{\ignorespaces Visor}}{181}{figure.396}
-\contentsline {figure}{\numberline {\relax E.8}{\ignorespaces Tabla de resultados}}{181}{figure.397}
-\contentsline {figure}{\numberline {\relax E.9}{\ignorespaces Barra de men\IeC {\'u}s}}{182}{figure.398}
-\contentsline {figure}{\numberline {\relax E.10}{\ignorespaces Opciones avanzadas}}{182}{figure.400}
-\contentsline {figure}{\numberline {\relax E.11}{\ignorespaces Bot\IeC {\'o}n entrenar}}{184}{figure.413}
-\contentsline {figure}{\numberline {\relax E.12}{\ignorespaces Elecci\IeC {\'o}n del tipo de entrenamiento}}{184}{figure.414}
-\contentsline {figure}{\numberline {\relax E.13}{\ignorespaces Bot\IeC {\'o}n abrir imagen}}{185}{figure.416}
-\contentsline {figure}{\numberline {\relax E.14}{\ignorespaces Explorador archivos para abrir imagen}}{186}{figure.417}
-\contentsline {figure}{\numberline {\relax E.15}{\ignorespaces Bot\IeC {\'o}n analizar imagen}}{186}{figure.419}
-\contentsline {figure}{\numberline {\relax E.16}{\ignorespaces Aviso al analizar imagen}}{187}{figure.420}
-\contentsline {figure}{\numberline {\relax E.17}{\ignorespaces An\IeC {\'a}lisis en ejecuci\IeC {\'o}n}}{187}{figure.421}
-\contentsline {figure}{\numberline {\relax E.18}{\ignorespaces Defectos detectados}}{188}{figure.422}
-\contentsline {figure}{\numberline {\relax E.19}{\ignorespaces Resultados coloreados}}{189}{figure.423}
-\contentsline {figure}{\numberline {\relax E.20}{\ignorespaces Resultados de Precision \& Recall}}{190}{figure.425}
-\contentsline {figure}{\numberline {\relax E.21}{\ignorespaces Bot\IeC {\'o}n exportar}}{190}{figure.427}
-\contentsline {figure}{\numberline {\relax E.22}{\ignorespaces M\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea}}{191}{figure.429}
-\contentsline {figure}{\numberline {\relax E.23}{\ignorespaces Pesta\IeC {\~n}as de la ayuda en l\IeC {\'\i }nea}}{191}{figure.430}
-\contentsline {figure}{\numberline {\relax E.24}{\ignorespaces Ejemplo b\IeC {\'u}squeda tabla de contenidos}}{192}{figure.432}
-\contentsline {figure}{\numberline {\relax E.25}{\ignorespaces Ejemplo de motor de b\IeC {\'u}squeda}}{193}{figure.434}
+\contentsline {figure}{\numberline {\relax E.1}{\ignorespaces Ventana principal de XRayDetector}}{178}{figure.396}
+\contentsline {figure}{\numberline {\relax E.2}{\ignorespaces Men\IeC {\'u} control}}{178}{figure.397}
+\contentsline {figure}{\numberline {\relax E.3}{\ignorespaces Men\IeC {\'u} progreso}}{179}{figure.398}
+\contentsline {figure}{\numberline {\relax E.4}{\ignorespaces Nivel de tolerancia}}{179}{figure.399}
+\contentsline {figure}{\numberline {\relax E.5}{\ignorespaces Analizar resultados}}{180}{figure.400}
+\contentsline {figure}{\numberline {\relax E.6}{\ignorespaces Control de Log}}{180}{figure.401}
+\contentsline {figure}{\numberline {\relax E.7}{\ignorespaces Visor}}{181}{figure.402}
+\contentsline {figure}{\numberline {\relax E.8}{\ignorespaces Tabla de resultados}}{181}{figure.403}
+\contentsline {figure}{\numberline {\relax E.9}{\ignorespaces Barra de men\IeC {\'u}s}}{182}{figure.404}
+\contentsline {figure}{\numberline {\relax E.10}{\ignorespaces Opciones avanzadas}}{182}{figure.406}
+\contentsline {figure}{\numberline {\relax E.11}{\ignorespaces Bot\IeC {\'o}n entrenar}}{184}{figure.419}
+\contentsline {figure}{\numberline {\relax E.12}{\ignorespaces Elecci\IeC {\'o}n del tipo de entrenamiento}}{184}{figure.420}
+\contentsline {figure}{\numberline {\relax E.13}{\ignorespaces Bot\IeC {\'o}n abrir imagen}}{185}{figure.422}
+\contentsline {figure}{\numberline {\relax E.14}{\ignorespaces Explorador archivos para abrir imagen}}{186}{figure.423}
+\contentsline {figure}{\numberline {\relax E.15}{\ignorespaces Bot\IeC {\'o}n analizar imagen}}{186}{figure.425}
+\contentsline {figure}{\numberline {\relax E.16}{\ignorespaces Aviso al analizar imagen}}{187}{figure.426}
+\contentsline {figure}{\numberline {\relax E.17}{\ignorespaces An\IeC {\'a}lisis en ejecuci\IeC {\'o}n}}{187}{figure.427}
+\contentsline {figure}{\numberline {\relax E.18}{\ignorespaces Defectos detectados}}{188}{figure.428}
+\contentsline {figure}{\numberline {\relax E.19}{\ignorespaces Resultados coloreados}}{189}{figure.429}
+\contentsline {figure}{\numberline {\relax E.20}{\ignorespaces Resultados de Precision \& Recall}}{190}{figure.431}
+\contentsline {figure}{\numberline {\relax E.21}{\ignorespaces Bot\IeC {\'o}n exportar}}{190}{figure.433}
+\contentsline {figure}{\numberline {\relax E.22}{\ignorespaces M\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea}}{191}{figure.435}
+\contentsline {figure}{\numberline {\relax E.23}{\ignorespaces Pesta\IeC {\~n}as de la ayuda en l\IeC {\'\i }nea}}{191}{figure.436}
+\contentsline {figure}{\numberline {\relax E.24}{\ignorespaces Ejemplo b\IeC {\'u}squeda tabla de contenidos}}{192}{figure.438}
+\contentsline {figure}{\numberline {\relax E.25}{\ignorespaces Ejemplo de motor de b\IeC {\'u}squeda}}{193}{figure.440}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para nuestro proyecto}}{201}{figure.466}
-\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para el proyecto antiguo}}{201}{figure.467}
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para nuestro proyecto}}{201}{figure.472}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para el proyecto antiguo}}{201}{figure.473}

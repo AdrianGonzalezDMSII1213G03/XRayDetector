@@ -25,7 +25,7 @@
 
 %
 % Cambiar colorlinks=false por colorlinks para la versión digital.
-\usepackage[colorlinks,hypertexnames=false]{hyperref}
+\usepackage[colorlinks=false,hypertexnames=false]{hyperref}
 
 
 %
@@ -113,6 +113,27 @@
     \end{center}%
   \end{figure}%
 }
+
+
+\newcommand{\figuraCaptionCorta}[6]{%
+  \setlength{\anchoFloat}{#1\textwidth}%
+  \addtolength{\anchoFloat}{-4\fboxsep}%
+  \setlength{\anchoFigura}{\anchoFloat}%
+  \begin{figure}
+    \begin{center}%
+      \Ovalbox{%
+        \begin{minipage}{\anchoFloat}%
+          \begin{center}%
+            \includegraphics[width=\anchoFigura,#5]{#2}%
+            \caption[#6]{#3}%
+            \label{#4}%
+          \end{center}%
+        \end{minipage}
+      }%
+    \end{center}%
+  \end{figure}%
+}
+
 
 %
 % Comando para incluir imágenes en formato apaisado (sin marco).

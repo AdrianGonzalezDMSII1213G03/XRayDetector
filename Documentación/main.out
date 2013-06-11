@@ -146,34 +146,39 @@
 \BOOKMARK [1][-]{section.372}{Manual del programador}{appendix.361}% 146
 \BOOKMARK [2][-]{subsection.373}{Agregar nuevos elementos a la aplicaci\363n}{section.372}% 147
 \BOOKMARK [2][-]{subsection.375}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.372}% 148
-\BOOKMARK [1][-]{section.376}{Pruebas unitarias}{appendix.361}% 149
-\BOOKMARK [2][-]{subsection.377}{Pruebas sobre el subpaquete modelo.feature}{section.376}% 150
-\BOOKMARK [2][-]{subsection.378}{Pruebas sobre el subpaquete modelo.preprocesamiento}{section.376}% 151
-\BOOKMARK [2][-]{subsection.379}{Pruebas sobre las propiedades}{section.376}% 152
-\BOOKMARK [2][-]{subsection.380}{Pruebas sobre la fachada}{section.376}% 153
-\BOOKMARK [2][-]{subsection.381}{Ejecuci\363n de los tests}{section.376}% 154
-\BOOKMARK [2][-]{subsection.382}{Resultados}{section.376}% 155
-\BOOKMARK [0][-]{appendix.384}{Manual del usuario}{}% 156
-\BOOKMARK [1][-]{section.385}{Documento de instalaci\363n y configuraci\363n}{appendix.384}% 157
-\BOOKMARK [2][-]{subsection.386}{Requisitos}{section.385}% 158
-\BOOKMARK [2][-]{subsection.387}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.385}% 159
-\BOOKMARK [1][-]{section.388}{Manual de usuario}{appendix.384}% 160
-\BOOKMARK [2][-]{subsection.389}{Ventana principal de la aplicaci\363n}{section.388}% 161
-\BOOKMARK [2][-]{subsection.399}{Configuraci\363n de la aplicaci\363n}{section.388}% 162
-\BOOKMARK [2][-]{subsection.412}{Entrenar un clasificador}{section.388}% 163
-\BOOKMARK [2][-]{subsection.415}{Abrir una imagen}{section.388}% 164
-\BOOKMARK [2][-]{subsection.418}{Analizar imagen}{section.388}% 165
-\BOOKMARK [2][-]{subsection.424}{Analizar y exportar los resultados}{section.388}% 166
-\BOOKMARK [2][-]{subsection.426}{Exportar y limpiar Log}{section.388}% 167
-\BOOKMARK [2][-]{subsection.428}{Ayuda}{section.388}% 168
-\BOOKMARK [2][-]{subsection.436}{Salir de la aplicaci\363n}{section.388}% 169
-\BOOKMARK [0][-]{subsection.436}{Ap\351ndices}{}% 170
-\BOOKMARK [0][-]{appendix.437}{Comparativas}{}% 171
-\BOOKMARK [1][-]{section.438}{Introducci\363n}{appendix.437}% 172
-\BOOKMARK [1][-]{section.439}{Modificaciones}{appendix.437}% 173
-\BOOKMARK [1][-]{section.461}{M\351tricas}{appendix.437}% 174
-\BOOKMARK [2][-]{subsection.462}{M\351tricas: introducci\363n}{section.461}% 175
-\BOOKMARK [2][-]{subsection.463}{M\351tricas de RefactorIT}{section.461}% 176
-\BOOKMARK [2][-]{subsection.465}{M\351tricas de SourceMonitor}{section.461}% 177
-\BOOKMARK [1][-]{section.468}{Rendimiento}{appendix.437}% 178
-\BOOKMARK [0][-]{table.469}{Bibliograf\355a}{}% 179
+\BOOKMARK [2][-]{subsection.376}{Configuraci\363n de la construcci\363n}{section.372}% 149
+\BOOKMARK [2][-]{subsection.378}{Ejecuci\363n}{section.372}% 150
+\BOOKMARK [2][-]{subsection.379}{Documentaci\363n}{section.372}% 151
+\BOOKMARK [2][-]{subsection.380}{Pruebas}{section.372}% 152
+\BOOKMARK [2][-]{subsection.381}{Importaci\363n del proyecto a Eclipse}{section.372}% 153
+\BOOKMARK [1][-]{section.382}{Pruebas unitarias}{appendix.361}% 154
+\BOOKMARK [2][-]{subsection.383}{Pruebas sobre el subpaquete modelo.feature}{section.382}% 155
+\BOOKMARK [2][-]{subsection.384}{Pruebas sobre el subpaquete modelo.preprocesamiento}{section.382}% 156
+\BOOKMARK [2][-]{subsection.385}{Pruebas sobre las propiedades}{section.382}% 157
+\BOOKMARK [2][-]{subsection.386}{Pruebas sobre la fachada}{section.382}% 158
+\BOOKMARK [2][-]{subsection.387}{Ejecuci\363n de los tests}{section.382}% 159
+\BOOKMARK [2][-]{subsection.388}{Resultados}{section.382}% 160
+\BOOKMARK [0][-]{appendix.390}{Manual del usuario}{}% 161
+\BOOKMARK [1][-]{section.391}{Documento de instalaci\363n y configuraci\363n}{appendix.390}% 162
+\BOOKMARK [2][-]{subsection.392}{Requisitos}{section.391}% 163
+\BOOKMARK [2][-]{subsection.393}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.391}% 164
+\BOOKMARK [1][-]{section.394}{Manual de usuario}{appendix.390}% 165
+\BOOKMARK [2][-]{subsection.395}{Ventana principal de la aplicaci\363n}{section.394}% 166
+\BOOKMARK [2][-]{subsection.405}{Configuraci\363n de la aplicaci\363n}{section.394}% 167
+\BOOKMARK [2][-]{subsection.418}{Entrenar un clasificador}{section.394}% 168
+\BOOKMARK [2][-]{subsection.421}{Abrir una imagen}{section.394}% 169
+\BOOKMARK [2][-]{subsection.424}{Analizar imagen}{section.394}% 170
+\BOOKMARK [2][-]{subsection.430}{Analizar y exportar los resultados}{section.394}% 171
+\BOOKMARK [2][-]{subsection.432}{Exportar y limpiar Log}{section.394}% 172
+\BOOKMARK [2][-]{subsection.434}{Ayuda}{section.394}% 173
+\BOOKMARK [2][-]{subsection.442}{Salir de la aplicaci\363n}{section.394}% 174
+\BOOKMARK [0][-]{subsection.442}{Ap\351ndices}{}% 175
+\BOOKMARK [0][-]{appendix.443}{Comparativas}{}% 176
+\BOOKMARK [1][-]{section.444}{Introducci\363n}{appendix.443}% 177
+\BOOKMARK [1][-]{section.445}{Modificaciones}{appendix.443}% 178
+\BOOKMARK [1][-]{section.467}{M\351tricas}{appendix.443}% 179
+\BOOKMARK [2][-]{subsection.468}{M\351tricas: introducci\363n}{section.467}% 180
+\BOOKMARK [2][-]{subsection.469}{M\351tricas de RefactorIT}{section.467}% 181
+\BOOKMARK [2][-]{subsection.471}{M\351tricas de SourceMonitor}{section.467}% 182
+\BOOKMARK [1][-]{section.474}{Rendimiento}{appendix.443}% 183
+\BOOKMARK [0][-]{table.475}{Bibliograf\355a}{}% 184

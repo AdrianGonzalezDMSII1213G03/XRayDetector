@@ -141,6 +141,26 @@ Donde el \textit{path\_java\_help} es el directorio en el que hemos descomprimid
 Una vez realizado, se habrá creado una carpeta llamada \textit{JavaHelpSearch}, que es la que contiene el motor de búsqueda.
 \end{itemize}
 
+
+\subsection{Configuración de la construcción}
+Para la construcción de los ejecutables, pruebas y documentación hemos creado ficheros \textit{.bat}, es decir, archivos de procesamiento por lotes. Todos ellos se pueden encontrar en la carpeta del cd.
+
+\subsubsection{Compilación}
+Para la compilación de los fuentes y los tests se ha utilizado el fichero <<compilar.bat>>. En este fichero se encuentra el comando \textit{javac} que permite compilar los fuentes, junto con la opción del \textit{classpath}. Si en un futuro se añaden nuevas librerías, deberá añadirse a esa línea.
+
+\subsection{Ejecución}
+Para ejecutar el programa se ha creado el fichero <<ejecutar.bat>>, en el que se utiliza el comando \textit{java} para ejecutar la clase que contiene el método \textit{main}. De nuevo, se hace necesaria la opción del \textit{classpath}.
+
+\subsection{Documentación}
+La generación de la API de la biblioteca, utilizando \textit{JavaDoc}, se realiza con el fichero <<documentar.bat>>. Para chequear la documentación con \textit{doccheck} se ha utilizado el fichero <<chequear.bat>>.
+
+\subsection{Pruebas}
+Para la ejecución de los tests se ha utilizado el fichero <<test.bat>>.
+
+\subsection{Importación del proyecto a Eclipse}
+Para poder modificar el proyecto, se hace necesario importarlo al espacio de trabajo de Eclipse. Para ello, en el menú <<File>> seleccionamos la opción <<Import>>. En el grupo <<General>> existe la opción <<Existing Projects into Workspace>>, que es la que tenemos que seleccionar. A continuación, pulsamos el botón <<Next>> y, en la nueva ventana, seleccionamos la ruta a la carpeta del proyecto en <<Select root directory>> mediante el botón <<Browse>>. La carpeta puede ser la misma que se entrega en el CD de este proyecto, sin necesidad de copiarla previamente. Es importante seleccionar la opción de <<Copy projects into workspace>> para obtener la nueva copia. Una vez listo, se pulsa el botón <<Finish>>, con lo que comienza la importación. Podremos ver que el proceso ha tenido éxito si vemos el proyecto en el <<Package explorer>>.
+
+
 \section{Pruebas unitarias}
 Las pruebas unitarias son una forma de comprobar el funcionamiento correcto de nuestro código fuente. Así podemos observar si nuestras funciones o métodos funcionan por separado o qué problemas presentan.
 
