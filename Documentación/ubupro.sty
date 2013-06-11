@@ -95,6 +95,25 @@
   \end{figure}%
 }
 
+\newcommand{\figuraConPosicionCaptionCorta}[7]{%
+  \setlength{\anchoFloat}{#1\textwidth}%
+  \addtolength{\anchoFloat}{-4\fboxsep}%
+  \setlength{\anchoFigura}{\anchoFloat}%
+  \begin{figure}[#6]
+    \begin{center}%
+      \Ovalbox{%
+        \begin{minipage}{\anchoFloat}%
+          \begin{center}%
+            \includegraphics[width=\anchoFigura,#5]{#2}%
+            \caption[#7]{#3}%
+            \label{#4}%
+          \end{center}%
+        \end{minipage}
+      }%
+    \end{center}%
+  \end{figure}%
+}
+
 %
 % Comando para incluir imágenes en formato apaisado (sin marco).
 \newcommand{\figuraApaisadaSinMarco}[5]{%

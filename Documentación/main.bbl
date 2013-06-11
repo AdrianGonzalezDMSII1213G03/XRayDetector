@@ -20,6 +20,17 @@ Auto local threshold - fiji.
 \newblock http://rsbweb.nih.gov/ij/docs/guide/146-30.html.
 \newblock URL: \url{http://rsbweb.nih.gov/ij/docs/guide/146-30.html}.
 
+\bibitem{product}
+Product backlog – should bugs be part of this? {\textbar} mountain goat
+  software.
+\newblock URL:
+  \url{http://www.mountaingoatsoftware.com/blog/bugs-on-the-product-backlog}.
+
+\bibitem{what}
+What is a story point ? {\textbar} {AgileFaq}.
+\newblock URL:
+  \url{http://agilefaq.wordpress.com/2007/11/13/what-is-a-story-point/}.
+
 \bibitem{patrones}
 {\em Design Patterns: Elements of Reusable Object-Oriented Software}.
 \newblock 1995.
@@ -68,6 +79,11 @@ Y.~Bazi, L.~Bruzzone, and F.~Melgani.
   gaussian distribution.
 \newblock {\em Pattern recognition}, 40(2):619--634, 2007.
 
+\bibitem{breiman1996bagging}
+Leo Breiman.
+\newblock Bagging predictors.
+\newblock {\em Machine learning}, 24(2):123--140, 1996.
+
 \bibitem{carlos_lopez_nozal_apuntes_2012}
 {Carlos López Nozal}.
 \newblock Apuntes de diseño y mantenimiento del software {II}, 2012.
@@ -89,6 +105,11 @@ E.J. de~Ram{\'o}n~Balmaseda.
 W.~Dunham.
 \newblock Euler: The master of us all (dolciani mathematical expositions 22).
 \newblock {\em Math. Assoc. Amer., Washington}, 1999.
+
+\bibitem{fowler1999uml}
+M.~Fowler, R.~SCOTT, and K.~Scott.
+\newblock {\em UML gota a gota}.
+\newblock Pearson Educaci{\'o}n, 1999.
 
 \bibitem{haralick1973textural}
 R.M. Haralick, K.~Shanmugam, and I.H. Dinstein.

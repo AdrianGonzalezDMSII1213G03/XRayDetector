@@ -11,7 +11,6 @@ A level-1 auxiliary file: anexo3EspecificacionDeDisenno.aux
 A level-1 auxiliary file: anexo4ManualDelProgramador.aux
 A level-1 auxiliary file: anexo5ManualDelUsuario.aux
 A level-1 auxiliary file: apendiceA.aux
-A level-1 auxiliary file: apendiceB.aux
 The style file: plainurl.bst
 Database file #1: referencias.bib
 Warning--to sort, need author or key in arquitectura
@@ -20,6 +19,8 @@ Warning--to sort, need author or key in autolocal
 Warning--to sort, need author or key in waveletdiscreta
 Warning--to sort, need author or key in analyzeij
 Warning--to sort, need author or key in particleij
+Warning--to sort, need author or key in what
+Warning--to sort, need author or key in product
 Warning--empty author and editor in patrones
 Warning--empty publisher in patrones
 Warning--empty author in waveletdiscreta
@@ -27,4 +28,4 @@ Warning--empty journal in de2011transformaciones
 Warning--empty journal in lamport1989latex
 Warning--empty journal in tridi
 Warning--empty journal in marcosmartin2004
-(There were 13 warnings)
+(There were 15 warnings)

@@ -1,179 +1,179 @@
 \BOOKMARK [0][-]{chapter.4}{Objetivos del proyecto}{}% 1
-\BOOKMARK [1][-]{section.12}{Objetivos T\351cnicos}{chapter.4}% 2
-\BOOKMARK [1][-]{section.13}{Objetivos personales}{chapter.4}% 3
-\BOOKMARK [0][-]{chapter.14}{Conceptos te\363ricos}{}% 4
-\BOOKMARK [1][-]{section.15}{Descripci\363n del problema: Ensayos no destructivos}{chapter.14}% 5
-\BOOKMARK [2][-]{subsection.16}{Radiograf\355a}{section.15}% 6
-\BOOKMARK [2][-]{subsection.17}{Ventajas del ensayo radiogr\341fico}{section.15}% 7
-\BOOKMARK [2][-]{subsection.22}{Limitaciones del ensayo radiogr\341fico}{section.15}% 8
-\BOOKMARK [2][-]{subsection.29}{Objetivos del ensayo radiogr\341fico}{section.15}% 9
-\BOOKMARK [2][-]{subsection.33}{Principios del ensayo radiogr\341fico}{section.15}% 10
-\BOOKMARK [1][-]{section.34}{Visi\363n por computador}{chapter.14}% 11
-\BOOKMARK [2][-]{subsection.35}{Adquisici\363n de la imagen}{section.34}% 12
-\BOOKMARK [2][-]{subsection.37}{Preprocesamiento}{section.34}% 13
-\BOOKMARK [2][-]{subsection.41}{Segmentaci\363n}{section.34}% 14
-\BOOKMARK [2][-]{subsection.44}{Descriptores de regiones}{section.34}% 15
-\BOOKMARK [2][-]{subsection.64}{Reconocimiento e interpretaci\363n de im\341genes}{section.34}% 16
-\BOOKMARK [1][-]{section.67}{Aplicaci\363n de la visi\363n artificial a la detecci\363n y segmentaci\363n de defectos}{chapter.14}% 17
-\BOOKMARK [2][-]{subsection.68}{Fundamentos te\363ricos de la versi\363n inicial}{section.67}% 18
-\BOOKMARK [2][-]{subsection.79}{Fundamentos te\363ricos de la versi\363n final}{section.67}% 19
-\BOOKMARK [0][-]{chapter.86}{T\351cnicas y herramientas}{}% 20
-\BOOKMARK [1][-]{section.87}{T\351cnicas}{chapter.86}% 21
-\BOOKMARK [2][-]{subsection.88}{Metodolog\355a Scrum}{section.87}% 22
-\BOOKMARK [2][-]{subsection.91}{Java}{section.87}% 23
-\BOOKMARK [2][-]{subsection.92}{UML}{section.87}% 24
-\BOOKMARK [2][-]{subsection.93}{Weka}{section.87}% 25
-\BOOKMARK [2][-]{subsection.103}{ImageJ}{section.87}% 26
-\BOOKMARK [2][-]{subsection.104}{Patrones de dise\361o}{section.87}% 27
-\BOOKMARK [1][-]{section.105}{Herramientas}{chapter.86}% 28
-\BOOKMARK [2][-]{subsection.106}{Eclipse}{section.105}% 29
-\BOOKMARK [2][-]{subsection.107}{JUnit}{section.105}% 30
-\BOOKMARK [2][-]{subsection.108}{RefactorIT}{section.105}% 31
-\BOOKMARK [2][-]{subsection.109}{Source Monitor}{section.105}% 32
-\BOOKMARK [2][-]{subsection.110}{Astah}{section.105}% 33
-\BOOKMARK [2][-]{subsection.111}{GitHub}{section.105}% 34
-\BOOKMARK [2][-]{subsection.112}{PivotalTracker}{section.105}% 35
-\BOOKMARK [2][-]{subsection.113}{MiKTeX}{section.105}% 36
-\BOOKMARK [2][-]{subsection.114}{TeXMaker}{section.105}% 37
-\BOOKMARK [2][-]{subsection.115}{WindowBuilder}{section.105}% 38
-\BOOKMARK [2][-]{subsection.116}{Auto Local Threshold}{section.105}% 39
-\BOOKMARK [2][-]{subsection.117}{Apache Commons IO}{section.105}% 40
-\BOOKMARK [2][-]{subsection.118}{EJML}{section.105}% 41
-\BOOKMARK [2][-]{subsection.119}{Zotero}{section.105}% 42
-\BOOKMARK [0][-]{chapter.120}{Aspectos relevantes del desarrollo del proyecto}{}% 43
-\BOOKMARK [1][-]{section.121}{Problemas y retos}{chapter.120}% 44
-\BOOKMARK [1][-]{section.126}{Mejoras respecto a la versi\363n previa}{chapter.120}% 45
-\BOOKMARK [1][-]{section.134}{Conocimientos adquiridos}{chapter.120}% 46
-\BOOKMARK [2][-]{subsection.135}{Miner\355a de datos}{section.134}% 47
-\BOOKMARK [2][-]{subsection.136}{Weka}{section.134}% 48
-\BOOKMARK [2][-]{subsection.137}{Metodolog\355a Scrum}{section.134}% 49
-\BOOKMARK [2][-]{subsection.138}{Programaci\363n multihilo}{section.134}% 50
-\BOOKMARK [2][-]{subsection.139}{Documentaci\363n en LaTeX}{section.134}% 51
-\BOOKMARK [0][-]{chapter.140}{Trabajos relacionados}{}% 52
-\BOOKMARK [1][-]{section.141}{Art\355culos Estudiados}{chapter.140}% 53
-\BOOKMARK [1][-]{section.143}{Revisi\363n del estado del arte}{chapter.140}% 54
-\BOOKMARK [2][-]{subsection.144}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.143}% 55
-\BOOKMARK [2][-]{subsection.154}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.143}% 56
-\BOOKMARK [2][-]{subsection.162}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.143}% 57
-\BOOKMARK [2][-]{subsection.168}{Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{section.143}% 58
-\BOOKMARK [0][-]{chapter.172}{Conclusiones y l\355neas de trabajo futuras}{}% 59
-\BOOKMARK [1][-]{section.173}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.172}% 60
-\BOOKMARK [1][-]{section.174}{Conclusiones}{chapter.172}% 61
-\BOOKMARK [1][-]{section.175}{L\355neas de trabajo futuras}{chapter.172}% 62
-\BOOKMARK [0][-]{appendix.176}{Plan del proyecto software}{}% 63
-\BOOKMARK [1][-]{section.177}{Introducci\363n}{appendix.176}% 64
-\BOOKMARK [1][-]{section.178}{Planificaci\363n temporal del proyecto}{appendix.176}% 65
-\BOOKMARK [1][-]{section.179}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.176}% 66
-\BOOKMARK [2][-]{subsection.180}{Actores}{section.179}% 67
-\BOOKMARK [2][-]{subsection.181}{Ciclo de desarrollo}{section.179}% 68
-\BOOKMARK [1][-]{section.183}{Product Backlog del proyecto}{appendix.176}% 69
-\BOOKMARK [1][-]{section.185}{Planificaci\363n por Sprint}{appendix.176}% 70
-\BOOKMARK [2][-]{subsection.186}{Sprint 1: Spike Arquitect\363nico 1}{section.185}% 71
-\BOOKMARK [2][-]{subsection.187}{Sprint 2: Spike Arquitect\363nico 2}{section.185}% 72
-\BOOKMARK [2][-]{subsection.194}{Sprint 3}{section.185}% 73
-\BOOKMARK [2][-]{subsection.199}{Sprint 4}{section.185}% 74
-\BOOKMARK [2][-]{subsection.201}{Sprint 5}{section.185}% 75
-\BOOKMARK [2][-]{subsection.203}{Sprint 6}{section.185}% 76
-\BOOKMARK [2][-]{subsection.205}{Sprint 7}{section.185}% 77
-\BOOKMARK [2][-]{subsection.207}{Sprint 8}{section.185}% 78
-\BOOKMARK [2][-]{subsection.209}{Sprint 9}{section.185}% 79
-\BOOKMARK [1][-]{section.211}{Estudio de viabilidad del proyecto}{appendix.176}% 80
-\BOOKMARK [2][-]{subsection.212}{Viabilidad temporal}{section.211}% 81
-\BOOKMARK [2][-]{subsection.215}{Viabilidad econ\363mica}{section.211}% 82
-\BOOKMARK [2][-]{subsection.230}{Viabilidad Legal}{section.211}% 83
-\BOOKMARK [2][-]{subsection.231}{Viabilidad T\351cnica \363 Tecnol\363gica}{section.211}% 84
-\BOOKMARK [0][-]{appendix.232}{Especificaci\363n de requisitos}{}% 85
-\BOOKMARK [1][-]{section.233}{Introducci\363n}{appendix.232}% 86
-\BOOKMARK [1][-]{section.234}{Objetivos del proyecto}{appendix.232}% 87
-\BOOKMARK [1][-]{section.235}{Usuarios participantes}{appendix.232}% 88
-\BOOKMARK [1][-]{section.236}{Descripci\363n del sistema actual}{appendix.232}% 89
-\BOOKMARK [1][-]{section.237}{Factores de riesgo}{appendix.232}% 90
-\BOOKMARK [1][-]{section.238}{Cat\341logo de requisitos del sistema}{appendix.232}% 91
-\BOOKMARK [2][-]{subsection.239}{Objetivos del proyecto}{section.238}% 92
-\BOOKMARK [2][-]{subsection.241}{Descripci\363n de los actores}{section.238}% 93
-\BOOKMARK [2][-]{subsection.243}{Funciones del producto}{section.238}% 94
-\BOOKMARK [2][-]{subsection.265}{Requisitos de usuario}{section.238}% 95
-\BOOKMARK [2][-]{subsection.266}{Requisitos de sistema}{section.238}% 96
-\BOOKMARK [1][-]{section.267}{Especificaci\363n de los requisitos}{appendix.232}% 97
-\BOOKMARK [2][-]{subsection.268}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.267}% 98
-\BOOKMARK [2][-]{subsection.269}{Especificaci\363n de requisitos de informaci\363n}{section.267}% 99
-\BOOKMARK [2][-]{subsection.271}{Requisitos funcionales}{section.267}% 100
-\BOOKMARK [2][-]{subsection.286}{Requisitos no funcionales}{section.267}% 101
-\BOOKMARK [1][-]{section.287}{Interfaz de usuario}{appendix.232}% 102
-\BOOKMARK [1][-]{section.290}{Pruebas de aceptaci\363n}{appendix.232}% 103
-\BOOKMARK [0][-]{appendix.292}{Especificaci\363n de dise\361o}{}% 104
-\BOOKMARK [1][-]{section.293}{Introducci\363n}{appendix.292}% 105
-\BOOKMARK [1][-]{section.294}{\301mbito del software}{appendix.292}% 106
-\BOOKMARK [1][-]{section.295}{Dise\361o Arquitect\363nico}{appendix.292}% 107
-\BOOKMARK [2][-]{subsection.296}{Estilos arquitect\363nicos utilizados}{section.295}% 108
-\BOOKMARK [2][-]{subsection.299}{Arquitectura final de la aplicaci\363n}{section.295}% 109
-\BOOKMARK [2][-]{subsection.300}{Patrones de dise\361o utilizados}{section.295}% 110
-\BOOKMARK [2][-]{subsection.310}{Diagrama de clases de dise\361o}{section.295}% 111
-\BOOKMARK [1][-]{section.312}{Dise\361o de la interfaz}{appendix.292}% 112
-\BOOKMARK [2][-]{subsection.313}{Ventana principal}{section.312}% 113
-\BOOKMARK [2][-]{subsection.315}{Ventana de opciones avanzadas}{section.312}% 114
-\BOOKMARK [2][-]{subsection.317}{Ventana de Precision \046 Recall}{section.312}% 115
-\BOOKMARK [1][-]{section.319}{Dise\361o procedimental}{appendix.292}% 116
-\BOOKMARK [1][-]{section.333}{Referencia cruzada a los requisitos}{appendix.292}% 117
-\BOOKMARK [2][-]{subsection.334}{RF-01 Abrir imagen}{section.333}% 118
-\BOOKMARK [2][-]{subsection.335}{RF-02 Entrenar clasificador}{section.333}% 119
-\BOOKMARK [2][-]{subsection.336}{RF-03 Entrenar clasificador con ARFF existente}{section.333}% 120
-\BOOKMARK [2][-]{subsection.337}{RF-04 Entrenar clasificador generando nuevo ARFF}{section.333}% 121
-\BOOKMARK [2][-]{subsection.338}{RF-05 Analizar imagen}{section.333}% 122
-\BOOKMARK [2][-]{subsection.339}{RF-06 Calcular caracter\355sticas}{section.333}% 123
-\BOOKMARK [2][-]{subsection.340}{RF-07 Seleccionar defecto}{section.333}% 124
-\BOOKMARK [2][-]{subsection.341}{RF-08 Exportar log}{section.333}% 125
-\BOOKMARK [2][-]{subsection.342}{RF-09 Abrir ayuda}{section.333}% 126
-\BOOKMARK [2][-]{subsection.343}{RF-10 Cambiar opciones}{section.333}% 127
-\BOOKMARK [2][-]{subsection.344}{RF-11 Guardar imagen analizada}{section.333}% 128
-\BOOKMARK [2][-]{subsection.345}{RF-12 Guardar imagen binarizada}{section.333}% 129
-\BOOKMARK [2][-]{subsection.346}{RF-12 Calcular \253Precision \046 Recall\273}{section.333}% 130
-\BOOKMARK [1][-]{section.347}{Pruebas}{appendix.292}% 131
-\BOOKMARK [2][-]{subsection.348}{Pruebas de integraci\363n}{section.347}% 132
-\BOOKMARK [1][-]{section.358}{Entorno tecnol\363gico del sistema}{appendix.292}% 133
-\BOOKMARK [1][-]{section.360}{Plan de desarrollo e implantaci\363n}{appendix.292}% 134
-\BOOKMARK [0][-]{appendix.362}{Manual del programador}{}% 135
-\BOOKMARK [1][-]{section.363}{Introducci\363n}{appendix.362}% 136
-\BOOKMARK [1][-]{section.364}{Documentaci\363n de las bibliotecas}{appendix.362}% 137
-\BOOKMARK [2][-]{subsection.365}{Bibliotecas de Java}{section.364}% 138
-\BOOKMARK [2][-]{subsection.366}{ImageJ}{section.364}% 139
-\BOOKMARK [2][-]{subsection.367}{Weka}{section.364}% 140
-\BOOKMARK [2][-]{subsection.368}{JavaHelp}{section.364}% 141
-\BOOKMARK [2][-]{subsection.369}{Apache Commons IO}{section.364}% 142
-\BOOKMARK [2][-]{subsection.370}{EJML}{section.364}% 143
-\BOOKMARK [1][-]{section.371}{C\363digo fuente}{appendix.362}% 144
-\BOOKMARK [2][-]{subsection.372}{Recursos necesarios por el c\363digo fuente}{section.371}% 145
-\BOOKMARK [1][-]{section.373}{Manual del programador}{appendix.362}% 146
-\BOOKMARK [2][-]{subsection.374}{Agregar nuevos elementos a la aplicaci\363n}{section.373}% 147
-\BOOKMARK [2][-]{subsection.376}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.373}% 148
-\BOOKMARK [1][-]{section.377}{Pruebas unitarias}{appendix.362}% 149
-\BOOKMARK [2][-]{subsection.378}{Pruebas sobre el subpaquete modelo.feature}{section.377}% 150
-\BOOKMARK [2][-]{subsection.379}{Pruebas sobre el subpaquete modelo.preprocesamiento}{section.377}% 151
-\BOOKMARK [2][-]{subsection.380}{Pruebas sobre las propiedades}{section.377}% 152
-\BOOKMARK [2][-]{subsection.381}{Pruebas sobre la fachada}{section.377}% 153
-\BOOKMARK [2][-]{subsection.382}{Ejecuci\363n de los tests}{section.377}% 154
-\BOOKMARK [2][-]{subsection.383}{Resultados}{section.377}% 155
-\BOOKMARK [0][-]{appendix.385}{Manual del usuario}{}% 156
-\BOOKMARK [1][-]{section.386}{Documento de instalaci\363n y configuraci\363n}{appendix.385}% 157
-\BOOKMARK [2][-]{subsection.387}{Requisitos}{section.386}% 158
-\BOOKMARK [2][-]{subsection.388}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.386}% 159
-\BOOKMARK [1][-]{section.389}{Manual de usuario}{appendix.385}% 160
-\BOOKMARK [2][-]{subsection.390}{Ventana principal de la aplicaci\363n}{section.389}% 161
-\BOOKMARK [2][-]{subsection.400}{Configuraci\363n de la aplicaci\363n}{section.389}% 162
-\BOOKMARK [2][-]{subsection.413}{Entrenar un clasificador}{section.389}% 163
-\BOOKMARK [2][-]{subsection.416}{Abrir una imagen}{section.389}% 164
-\BOOKMARK [2][-]{subsection.419}{Analizar imagen}{section.389}% 165
-\BOOKMARK [2][-]{subsection.425}{Analizar y exportar los resultados}{section.389}% 166
-\BOOKMARK [2][-]{subsection.427}{Exportar y limpiar Log}{section.389}% 167
-\BOOKMARK [2][-]{subsection.429}{Ayuda}{section.389}% 168
-\BOOKMARK [2][-]{subsection.437}{Salir de la aplicaci\363n}{section.389}% 169
-\BOOKMARK [0][-]{subsection.437}{Ap\351ndices}{}% 170
-\BOOKMARK [0][-]{appendix.438}{Comparativas}{}% 171
-\BOOKMARK [1][-]{section.439}{Introducci\363n}{appendix.438}% 172
-\BOOKMARK [1][-]{section.440}{Modificaciones}{appendix.438}% 173
-\BOOKMARK [1][-]{section.462}{M\351tricas}{appendix.438}% 174
-\BOOKMARK [2][-]{subsection.463}{M\351tricas: introducci\363n}{section.462}% 175
-\BOOKMARK [2][-]{subsection.464}{M\351tricas de RefactorIT}{section.462}% 176
-\BOOKMARK [2][-]{subsection.466}{M\351tricas de SourceMonitor}{section.462}% 177
-\BOOKMARK [1][-]{section.469}{Rendimiento}{appendix.438}% 178
-\BOOKMARK [0][-]{table.470}{Bibliograf\355a}{}% 179
+\BOOKMARK [1][-]{section.11}{Objetivos T\351cnicos}{chapter.4}% 2
+\BOOKMARK [1][-]{section.12}{Objetivos personales}{chapter.4}% 3
+\BOOKMARK [0][-]{chapter.13}{Conceptos te\363ricos}{}% 4
+\BOOKMARK [1][-]{section.14}{Descripci\363n del problema: Ensayos no destructivos}{chapter.13}% 5
+\BOOKMARK [2][-]{subsection.15}{Radiograf\355a}{section.14}% 6
+\BOOKMARK [2][-]{subsection.16}{Ventajas del ensayo radiogr\341fico}{section.14}% 7
+\BOOKMARK [2][-]{subsection.21}{Limitaciones del ensayo radiogr\341fico}{section.14}% 8
+\BOOKMARK [2][-]{subsection.28}{Objetivos del ensayo radiogr\341fico}{section.14}% 9
+\BOOKMARK [2][-]{subsection.32}{Principios del ensayo radiogr\341fico}{section.14}% 10
+\BOOKMARK [1][-]{section.33}{Visi\363n por computador}{chapter.13}% 11
+\BOOKMARK [2][-]{subsection.34}{Adquisici\363n de la imagen}{section.33}% 12
+\BOOKMARK [2][-]{subsection.36}{Preprocesamiento}{section.33}% 13
+\BOOKMARK [2][-]{subsection.40}{Segmentaci\363n}{section.33}% 14
+\BOOKMARK [2][-]{subsection.43}{Descriptores de regiones}{section.33}% 15
+\BOOKMARK [2][-]{subsection.63}{Reconocimiento e interpretaci\363n de im\341genes}{section.33}% 16
+\BOOKMARK [1][-]{section.66}{Aplicaci\363n de la visi\363n artificial a la detecci\363n y segmentaci\363n de defectos}{chapter.13}% 17
+\BOOKMARK [2][-]{subsection.67}{Fundamentos te\363ricos de la versi\363n inicial}{section.66}% 18
+\BOOKMARK [2][-]{subsection.78}{Fundamentos te\363ricos de la versi\363n final}{section.66}% 19
+\BOOKMARK [0][-]{chapter.85}{T\351cnicas y herramientas}{}% 20
+\BOOKMARK [1][-]{section.86}{T\351cnicas}{chapter.85}% 21
+\BOOKMARK [2][-]{subsection.87}{Metodolog\355a Scrum}{section.86}% 22
+\BOOKMARK [2][-]{subsection.90}{Java}{section.86}% 23
+\BOOKMARK [2][-]{subsection.91}{UML}{section.86}% 24
+\BOOKMARK [2][-]{subsection.92}{Weka}{section.86}% 25
+\BOOKMARK [2][-]{subsection.102}{ImageJ}{section.86}% 26
+\BOOKMARK [2][-]{subsection.103}{Patrones de dise\361o}{section.86}% 27
+\BOOKMARK [1][-]{section.104}{Herramientas}{chapter.85}% 28
+\BOOKMARK [2][-]{subsection.105}{Eclipse}{section.104}% 29
+\BOOKMARK [2][-]{subsection.106}{JUnit}{section.104}% 30
+\BOOKMARK [2][-]{subsection.107}{RefactorIT}{section.104}% 31
+\BOOKMARK [2][-]{subsection.108}{Source Monitor}{section.104}% 32
+\BOOKMARK [2][-]{subsection.109}{Astah}{section.104}% 33
+\BOOKMARK [2][-]{subsection.110}{GitHub}{section.104}% 34
+\BOOKMARK [2][-]{subsection.111}{PivotalTracker}{section.104}% 35
+\BOOKMARK [2][-]{subsection.112}{MiKTeX}{section.104}% 36
+\BOOKMARK [2][-]{subsection.113}{TeXMaker}{section.104}% 37
+\BOOKMARK [2][-]{subsection.114}{WindowBuilder}{section.104}% 38
+\BOOKMARK [2][-]{subsection.115}{Auto Local Threshold}{section.104}% 39
+\BOOKMARK [2][-]{subsection.116}{Apache Commons IO}{section.104}% 40
+\BOOKMARK [2][-]{subsection.117}{EJML}{section.104}% 41
+\BOOKMARK [2][-]{subsection.118}{Zotero}{section.104}% 42
+\BOOKMARK [0][-]{chapter.119}{Aspectos relevantes del desarrollo del proyecto}{}% 43
+\BOOKMARK [1][-]{section.120}{Problemas y retos}{chapter.119}% 44
+\BOOKMARK [1][-]{section.125}{Mejoras respecto a la versi\363n previa}{chapter.119}% 45
+\BOOKMARK [1][-]{section.133}{Conocimientos adquiridos}{chapter.119}% 46
+\BOOKMARK [2][-]{subsection.134}{Miner\355a de datos}{section.133}% 47
+\BOOKMARK [2][-]{subsection.135}{Weka}{section.133}% 48
+\BOOKMARK [2][-]{subsection.136}{Metodolog\355a Scrum}{section.133}% 49
+\BOOKMARK [2][-]{subsection.137}{Programaci\363n multihilo}{section.133}% 50
+\BOOKMARK [2][-]{subsection.138}{Documentaci\363n en LaTeX}{section.133}% 51
+\BOOKMARK [0][-]{chapter.139}{Trabajos relacionados}{}% 52
+\BOOKMARK [1][-]{section.140}{Art\355culos Estudiados}{chapter.139}% 53
+\BOOKMARK [1][-]{section.142}{Revisi\363n del estado del arte}{chapter.139}% 54
+\BOOKMARK [2][-]{subsection.143}{An automatic system of classification of weld defects in radiographic images - Rafael Vilar et al.}{section.142}% 55
+\BOOKMARK [2][-]{subsection.153}{Weld defect classification using EM algorithm for Gaussian mixture model - M.Tridi et al.}{section.142}% 56
+\BOOKMARK [2][-]{subsection.161}{Recognition of Welding Defects in Radiographic Images by Using Support Vector Machine - X.Wang et al.}{section.142}% 57
+\BOOKMARK [2][-]{subsection.167}{Multiclass defect detection and classification in weld radiographic images using geometric and texture features - Ioannis Valavanis}{section.142}% 58
+\BOOKMARK [0][-]{chapter.171}{Conclusiones y l\355neas de trabajo futuras}{}% 59
+\BOOKMARK [1][-]{section.172}{Aspectos que han complicado la realizaci\363n del proyecto}{chapter.171}% 60
+\BOOKMARK [1][-]{section.173}{Conclusiones}{chapter.171}% 61
+\BOOKMARK [1][-]{section.174}{L\355neas de trabajo futuras}{chapter.171}% 62
+\BOOKMARK [0][-]{appendix.175}{Plan del proyecto software}{}% 63
+\BOOKMARK [1][-]{section.176}{Introducci\363n}{appendix.175}% 64
+\BOOKMARK [1][-]{section.177}{Planificaci\363n temporal del proyecto}{appendix.175}% 65
+\BOOKMARK [1][-]{section.178}{Aplicando una metodolog\355a \341gil: SCRUM}{appendix.175}% 66
+\BOOKMARK [2][-]{subsection.179}{Actores}{section.178}% 67
+\BOOKMARK [2][-]{subsection.180}{Ciclo de desarrollo}{section.178}% 68
+\BOOKMARK [1][-]{section.182}{Product Backlog del proyecto}{appendix.175}% 69
+\BOOKMARK [1][-]{section.184}{Planificaci\363n por Sprint}{appendix.175}% 70
+\BOOKMARK [2][-]{subsection.185}{Sprint 1: Spike Arquitect\363nico 1}{section.184}% 71
+\BOOKMARK [2][-]{subsection.186}{Sprint 2: Spike Arquitect\363nico 2}{section.184}% 72
+\BOOKMARK [2][-]{subsection.193}{Sprint 3}{section.184}% 73
+\BOOKMARK [2][-]{subsection.198}{Sprint 4}{section.184}% 74
+\BOOKMARK [2][-]{subsection.200}{Sprint 5}{section.184}% 75
+\BOOKMARK [2][-]{subsection.202}{Sprint 6}{section.184}% 76
+\BOOKMARK [2][-]{subsection.204}{Sprint 7}{section.184}% 77
+\BOOKMARK [2][-]{subsection.206}{Sprint 8}{section.184}% 78
+\BOOKMARK [2][-]{subsection.208}{Sprint 9}{section.184}% 79
+\BOOKMARK [1][-]{section.210}{Estudio de viabilidad del proyecto}{appendix.175}% 80
+\BOOKMARK [2][-]{subsection.211}{Viabilidad temporal}{section.210}% 81
+\BOOKMARK [2][-]{subsection.214}{Viabilidad econ\363mica}{section.210}% 82
+\BOOKMARK [2][-]{subsection.229}{Viabilidad Legal}{section.210}% 83
+\BOOKMARK [2][-]{subsection.230}{Viabilidad T\351cnica \363 Tecnol\363gica}{section.210}% 84
+\BOOKMARK [0][-]{appendix.231}{Especificaci\363n de requisitos}{}% 85
+\BOOKMARK [1][-]{section.232}{Introducci\363n}{appendix.231}% 86
+\BOOKMARK [1][-]{section.233}{Objetivos del proyecto}{appendix.231}% 87
+\BOOKMARK [1][-]{section.234}{Usuarios participantes}{appendix.231}% 88
+\BOOKMARK [1][-]{section.235}{Descripci\363n del sistema actual}{appendix.231}% 89
+\BOOKMARK [1][-]{section.236}{Factores de riesgo}{appendix.231}% 90
+\BOOKMARK [1][-]{section.237}{Cat\341logo de requisitos del sistema}{appendix.231}% 91
+\BOOKMARK [2][-]{subsection.238}{Objetivos del proyecto}{section.237}% 92
+\BOOKMARK [2][-]{subsection.240}{Descripci\363n de los actores}{section.237}% 93
+\BOOKMARK [2][-]{subsection.242}{Funciones del producto}{section.237}% 94
+\BOOKMARK [2][-]{subsection.264}{Requisitos de usuario}{section.237}% 95
+\BOOKMARK [2][-]{subsection.265}{Requisitos de sistema}{section.237}% 96
+\BOOKMARK [1][-]{section.266}{Especificaci\363n de los requisitos}{appendix.231}% 97
+\BOOKMARK [2][-]{subsection.267}{Especificaci\363n de requisitos inherentes a la tecnolog\355a utilizada}{section.266}% 98
+\BOOKMARK [2][-]{subsection.268}{Especificaci\363n de requisitos de informaci\363n}{section.266}% 99
+\BOOKMARK [2][-]{subsection.270}{Requisitos funcionales}{section.266}% 100
+\BOOKMARK [2][-]{subsection.285}{Requisitos no funcionales}{section.266}% 101
+\BOOKMARK [1][-]{section.286}{Interfaz de usuario}{appendix.231}% 102
+\BOOKMARK [1][-]{section.289}{Pruebas de aceptaci\363n}{appendix.231}% 103
+\BOOKMARK [0][-]{appendix.291}{Especificaci\363n de dise\361o}{}% 104
+\BOOKMARK [1][-]{section.292}{Introducci\363n}{appendix.291}% 105
+\BOOKMARK [1][-]{section.293}{\301mbito del software}{appendix.291}% 106
+\BOOKMARK [1][-]{section.294}{Dise\361o Arquitect\363nico}{appendix.291}% 107
+\BOOKMARK [2][-]{subsection.295}{Estilos arquitect\363nicos utilizados}{section.294}% 108
+\BOOKMARK [2][-]{subsection.298}{Arquitectura final de la aplicaci\363n}{section.294}% 109
+\BOOKMARK [2][-]{subsection.299}{Patrones de dise\361o utilizados}{section.294}% 110
+\BOOKMARK [2][-]{subsection.309}{Diagrama de clases de dise\361o}{section.294}% 111
+\BOOKMARK [1][-]{section.311}{Dise\361o de la interfaz}{appendix.291}% 112
+\BOOKMARK [2][-]{subsection.312}{Ventana principal}{section.311}% 113
+\BOOKMARK [2][-]{subsection.314}{Ventana de opciones avanzadas}{section.311}% 114
+\BOOKMARK [2][-]{subsection.316}{Ventana de Precision \046 Recall}{section.311}% 115
+\BOOKMARK [1][-]{section.318}{Dise\361o procedimental}{appendix.291}% 116
+\BOOKMARK [1][-]{section.332}{Referencia cruzada a los requisitos}{appendix.291}% 117
+\BOOKMARK [2][-]{subsection.333}{RF-01 Abrir imagen}{section.332}% 118
+\BOOKMARK [2][-]{subsection.334}{RF-02 Entrenar clasificador}{section.332}% 119
+\BOOKMARK [2][-]{subsection.335}{RF-03 Entrenar clasificador con ARFF existente}{section.332}% 120
+\BOOKMARK [2][-]{subsection.336}{RF-04 Entrenar clasificador generando nuevo ARFF}{section.332}% 121
+\BOOKMARK [2][-]{subsection.337}{RF-05 Analizar imagen}{section.332}% 122
+\BOOKMARK [2][-]{subsection.338}{RF-06 Calcular caracter\355sticas}{section.332}% 123
+\BOOKMARK [2][-]{subsection.339}{RF-07 Seleccionar defecto}{section.332}% 124
+\BOOKMARK [2][-]{subsection.340}{RF-08 Exportar log}{section.332}% 125
+\BOOKMARK [2][-]{subsection.341}{RF-09 Abrir ayuda}{section.332}% 126
+\BOOKMARK [2][-]{subsection.342}{RF-10 Cambiar opciones}{section.332}% 127
+\BOOKMARK [2][-]{subsection.343}{RF-11 Guardar imagen analizada}{section.332}% 128
+\BOOKMARK [2][-]{subsection.344}{RF-12 Guardar imagen binarizada}{section.332}% 129
+\BOOKMARK [2][-]{subsection.345}{RF-12 Calcular \253Precision \046 Recall\273}{section.332}% 130
+\BOOKMARK [1][-]{section.346}{Pruebas}{appendix.291}% 131
+\BOOKMARK [2][-]{subsection.347}{Pruebas de integraci\363n}{section.346}% 132
+\BOOKMARK [1][-]{section.357}{Entorno tecnol\363gico del sistema}{appendix.291}% 133
+\BOOKMARK [1][-]{section.359}{Plan de desarrollo e implantaci\363n}{appendix.291}% 134
+\BOOKMARK [0][-]{appendix.361}{Manual del programador}{}% 135
+\BOOKMARK [1][-]{section.362}{Introducci\363n}{appendix.361}% 136
+\BOOKMARK [1][-]{section.363}{Documentaci\363n de las bibliotecas}{appendix.361}% 137
+\BOOKMARK [2][-]{subsection.364}{Bibliotecas de Java}{section.363}% 138
+\BOOKMARK [2][-]{subsection.365}{ImageJ}{section.363}% 139
+\BOOKMARK [2][-]{subsection.366}{Weka}{section.363}% 140
+\BOOKMARK [2][-]{subsection.367}{JavaHelp}{section.363}% 141
+\BOOKMARK [2][-]{subsection.368}{Apache Commons IO}{section.363}% 142
+\BOOKMARK [2][-]{subsection.369}{EJML}{section.363}% 143
+\BOOKMARK [1][-]{section.370}{C\363digo fuente}{appendix.361}% 144
+\BOOKMARK [2][-]{subsection.371}{Recursos necesarios por el c\363digo fuente}{section.370}% 145
+\BOOKMARK [1][-]{section.372}{Manual del programador}{appendix.361}% 146
+\BOOKMARK [2][-]{subsection.373}{Agregar nuevos elementos a la aplicaci\363n}{section.372}% 147
+\BOOKMARK [2][-]{subsection.375}{Modificaci\363n del m\363dulo de ayuda en l\355nea de la aplicaci\363n y del motor de b\372squeda}{section.372}% 148
+\BOOKMARK [1][-]{section.376}{Pruebas unitarias}{appendix.361}% 149
+\BOOKMARK [2][-]{subsection.377}{Pruebas sobre el subpaquete modelo.feature}{section.376}% 150
+\BOOKMARK [2][-]{subsection.378}{Pruebas sobre el subpaquete modelo.preprocesamiento}{section.376}% 151
+\BOOKMARK [2][-]{subsection.379}{Pruebas sobre las propiedades}{section.376}% 152
+\BOOKMARK [2][-]{subsection.380}{Pruebas sobre la fachada}{section.376}% 153
+\BOOKMARK [2][-]{subsection.381}{Ejecuci\363n de los tests}{section.376}% 154
+\BOOKMARK [2][-]{subsection.382}{Resultados}{section.376}% 155
+\BOOKMARK [0][-]{appendix.384}{Manual del usuario}{}% 156
+\BOOKMARK [1][-]{section.385}{Documento de instalaci\363n y configuraci\363n}{appendix.384}% 157
+\BOOKMARK [2][-]{subsection.386}{Requisitos}{section.385}% 158
+\BOOKMARK [2][-]{subsection.387}{Instalaci\363n y ejecuci\363n de la aplicaci\363n}{section.385}% 159
+\BOOKMARK [1][-]{section.388}{Manual de usuario}{appendix.384}% 160
+\BOOKMARK [2][-]{subsection.389}{Ventana principal de la aplicaci\363n}{section.388}% 161
+\BOOKMARK [2][-]{subsection.399}{Configuraci\363n de la aplicaci\363n}{section.388}% 162
+\BOOKMARK [2][-]{subsection.412}{Entrenar un clasificador}{section.388}% 163
+\BOOKMARK [2][-]{subsection.415}{Abrir una imagen}{section.388}% 164
+\BOOKMARK [2][-]{subsection.418}{Analizar imagen}{section.388}% 165
+\BOOKMARK [2][-]{subsection.424}{Analizar y exportar los resultados}{section.388}% 166
+\BOOKMARK [2][-]{subsection.426}{Exportar y limpiar Log}{section.388}% 167
+\BOOKMARK [2][-]{subsection.428}{Ayuda}{section.388}% 168
+\BOOKMARK [2][-]{subsection.436}{Salir de la aplicaci\363n}{section.388}% 169
+\BOOKMARK [0][-]{subsection.436}{Ap\351ndices}{}% 170
+\BOOKMARK [0][-]{appendix.437}{Comparativas}{}% 171
+\BOOKMARK [1][-]{section.438}{Introducci\363n}{appendix.437}% 172
+\BOOKMARK [1][-]{section.439}{Modificaciones}{appendix.437}% 173
+\BOOKMARK [1][-]{section.461}{M\351tricas}{appendix.437}% 174
+\BOOKMARK [2][-]{subsection.462}{M\351tricas: introducci\363n}{section.461}% 175
+\BOOKMARK [2][-]{subsection.463}{M\351tricas de RefactorIT}{section.461}% 176
+\BOOKMARK [2][-]{subsection.465}{M\351tricas de SourceMonitor}{section.461}% 177
+\BOOKMARK [1][-]{section.468}{Rendimiento}{appendix.437}% 178
+\BOOKMARK [0][-]{table.469}{Bibliograf\355a}{}% 179
