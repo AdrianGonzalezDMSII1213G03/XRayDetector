@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  11 JUN 2013 18:39
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.2.19)  11 JUN 2013 18:50
 entering extended mode
 **main.tex
 (C:\Users\Adri√°n\Documents\GitHub\XRayDetector\Documentaci√≥n\main.tex
@@ -805,7 +805,7 @@ Now handling font encoding PD1 ...
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `colorlinks' set `false' on input line 3941.
+Package hyperref Info: Option `colorlinks' set `true' on input line 3941.
 Package hyperref Info: Option `hypertexnames' set `false' on input line 3941.
 Package hyperref Info: Hyper figures OFF on input line 4062.
 Package hyperref Info: Link nesting OFF on input line 4067.
@@ -823,7 +823,7 @@ Package hyperref Info: Hyper figures OFF on input line 5773.
 Package hyperref Info: Link nesting OFF on input line 5778.
 Package hyperref Info: Hyper index ON on input line 5781.
 Package hyperref Info: backreferencing OFF on input line 5788.
-Package hyperref Info: Link coloring OFF on input line 5793.
+Package hyperref Info: Link coloring ON on input line 5791.
 Package hyperref Info: Link coloring with OCG OFF on input line 5798.
 Package hyperref Info: PDF/A mode OFF on input line 5803.
 LaTeX Info: Redefining \ref on input line 5843.
@@ -907,7 +907,7 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) ABD: EveryShipout initializing macros
 \c@lstlisting=\count154
 \AtBeginShipoutBox=\box48
-Package hyperref Info: Link coloring OFF on input line 49.
+Package hyperref Info: Link coloring ON on input line 49.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -1223,28 +1223,28 @@ LaTeX Font Info:    Try loading font information for T1+pcr on input line 227.
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 Overfull \hbox (1.37909pt too wide) in paragraph at lines 249--250
-[]\T1/ptm/m/n/10.95 P·gina web de la he-rra-mien-ta: []$\T1/pcr/m/n/10.95 http 
-: / / sourceforge . net / projects / refactorit/$[]\T1/ptm/m/n/10.95 . 
+[]\T1/ptm/m/n/10.95 P·gina web de la he-rra-mien-ta: [][]$\T1/pcr/m/n/10.95 htt
+p : / / sourceforge . net / projects / refactorit/$[][]\T1/ptm/m/n/10.95 . 
  []
 
 [36]
 Overfull \hbox (7.94908pt too wide) in paragraph at lines 257--258
-[]\T1/ptm/m/n/10.95 P·gina web de la he-rra-mien-ta: []$\T1/pcr/m/n/10.95 http 
-: / / www . campwoodsw . com / sourcemonitor . html$[]\T1/ptm/m/n/10.95 . 
+[]\T1/ptm/m/n/10.95 P·gina web de la he-rra-mien-ta: [][]$\T1/pcr/m/n/10.95 htt
+p : / / www . campwoodsw . com / sourcemonitor . html$[][]\T1/ptm/m/n/10.95 . 
  []
 
 [37] [38]
 Overfull \hbox (16.1183pt too wide) in paragraph at lines 332--333
 []\T1/ptm/m/n/10.95 P·gina web del \T1/ptm/m/it/10.95 plu-gin\T1/ptm/m/n/10.95 
-: []$\T1/pcr/m/n/10.95 http : / / fiji . sc / wiki / index . php / Auto _ Local
- _ Threshold$[]\T1/ptm/m/n/10.95 . 
+: [][]$\T1/pcr/m/n/10.95 http : / / fiji . sc / wiki / index . php / Auto _ Loc
+al _ Threshold$[][]\T1/ptm/m/n/10.95 . 
  []
 
 
 Overfull \hbox (32.67027pt too wide) in paragraph at lines 339--340
-[]\T1/ptm/m/n/10.95 La p·-gi-na web de la he-rra-mien-ta es: []$\T1/pcr/m/n/10.
-95 http : / / commons . apache . org / proper / commons-[]io/$[]\T1/ptm/m/n/10.
-95 . 
+[]\T1/ptm/m/n/10.95 La p·-gi-na web de la he-rra-mien-ta es: [][]$\T1/pcr/m/n/1
+0.95 http : / / commons . apache . org / proper / commons-[]io/$[][]\T1/ptm/m/n
+/10.95 . 
  []
 
 [39]) [40]
@@ -2527,7 +2527,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [155 <C:/Users/Adri√°n/Documents/GitHub/XRayDetector/Documentaci√≥n/imgs/dsecu
 enciaPrecision.png>] [156] [157] [158] [159]
-Overfull \hbox (60.78717pt too wide) in paragraph at lines 483--483
+Underfull \hbox (badness 1521) in paragraph at lines 483--483
+[]|\T1/ptm/m/n/10.95 Prueba de an·-li-sis de re-gio-nes con
+ []
+
+
+Overfull \hbox (3.88165pt too wide) in paragraph at lines 483--483
  [] 
  []
 
@@ -2994,7 +2999,7 @@ iat2.png>]
 (C:\Users\Adri√°n\Documents\GitHub\XRayDetector\Documentaci√≥n\main.bbl
 Underfull \hbox (badness 1803) in paragraph at lines 4--7
 []\T1/ptm/m/n/10.95 Analyze me-nu.  http://rsbweb.nih.gov/ij/docs/menus/analyze
-.html.  URL: []$\T1/pcr/m/n/10.95 http : / /$
+.html.  URL: [][]$\T1/pcr/m/n/10.95 http : / /$
  []
 
 
@@ -3005,14 +3010,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--28
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 24--28
-\T1/ptm/m/n/10.95 wa-re.  URL: []$\T1/pcr/m/n/10.95 http : / / www . mountaingo
-atsoftware . com / blog /$
+\T1/ptm/m/n/10.95 wa-re.  URL: [][]$\T1/pcr/m/n/10.95 http : / / www . mountain
+goatsoftware . com / blog /$
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 63--65
-[]\T1/ptm/m/n/10.95 æQuÈ es Scrum? [on-li-ne].  URL: []$\T1/pcr/m/n/10.95 http 
-: / / www . proyectosagiles . org /$
+[]\T1/ptm/m/n/10.95 æQuÈ es Scrum? [on-li-ne].  URL: [][]$\T1/pcr/m/n/10.95 htt
+p : / / www . proyectosagiles . org /$
  []
 
 
@@ -3029,8 +3034,8 @@ Underfull \hbox (badness 3364) in paragraph at lines 92--98
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 92--98
-\T1/ptm/m/n/10.95 URL: []$\T1/pcr/m/n/10.95 http : / / faculty . salisbury . ed
-u / ~stlauterburg / COSC425 /$
+\T1/ptm/m/n/10.95 URL: [][]$\T1/pcr/m/n/10.95 http : / / faculty . salisbury . 
+edu / ~stlauterburg / COSC425 /$
  []
 
 
@@ -3052,8 +3057,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [207]
 Underfull \hbox (badness 10000) in paragraph at lines 314--318
-[]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w / index . php ? title 
-= Local _ binary _$
+[][]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w / index . php ? titl
+e = Local _ binary _$
  []
 
 
@@ -3064,8 +3069,8 @@ Underfull \hbox (badness 5592) in paragraph at lines 320--324
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 320--324
-\T1/ptm/m/n/10.95 URL: []$\T1/pcr/m/n/10.95 http : / / es . wikipedia . org / w
- / index . php ? title = Ensayo _ no _$
+\T1/ptm/m/n/10.95 URL: [][]$\T1/pcr/m/n/10.95 http : / / es . wikipedia . org /
+ w / index . php ? title = Ensayo _ no _$
  []
 
 
@@ -3076,14 +3081,14 @@ ee ency-clo-pe-dia, 2013.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 326--330
-\T1/ptm/m/n/10.95 URL: []$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w
- / index . php ? title = Image _$
+\T1/ptm/m/n/10.95 URL: [][]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org /
+ w / index . php ? title = Image _$
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 332--336
-[]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w / index . php ? title 
-= Precision _ and _$
+[][]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w / index . php ? titl
+e = Precision _ and _$
  []
 
 
@@ -3095,7 +3100,7 @@ Underfull \hbox (badness 3525) in paragraph at lines 338--342
 
 Underfull \hbox (badness 1242) in paragraph at lines 344--348
 []\T1/ptm/m/n/10.95 Wikipedia.  Ra-dio-gra-fÌa --- wi-ki-pe-dia, la en-ci-clo-p
-e-dia li-bre, 2013.  URL: []$\T1/pcr/m/n/10.95 http :$
+e-dia li-bre, 2013.  URL: [][]$\T1/pcr/m/n/10.95 http :$
  []
 
 
@@ -3106,8 +3111,8 @@ af % C3 % ADa&oldid =$
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 350--355
-\T1/ptm/m/n/10.95 URL: []$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org / w
- / index . php ? title = Thresholding _$
+\T1/ptm/m/n/10.95 URL: [][]$\T1/pcr/m/n/10.95 http : / / en . wikipedia . org /
+ w / index . php ? title = Thresholding _$
  []
 
 )
@@ -3147,7 +3152,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 118.
 Here is how much of TeX's memory you used:
  13909 strings out of 494045
  207451 string characters out of 3148381
- 423192 words of memory out of 3000000
+ 423229 words of memory out of 3000000
  16005 multiletter control sequences out of 15000+200000
  82195 words of font info for 92 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
@@ -3170,7 +3175,7 @@ b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on main.pdf (224 pages, 6441347 bytes).
+Output written on main.pdf (224 pages, 6443787 bytes).
 PDF statistics:
  2981 PDF objects out of 2984 (max. 8388607)
  766 named destinations out of 1000 (max. 500000)
