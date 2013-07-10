@@ -1,0 +1,118 @@
+% Fuentes de la documentación del proyecto 
+
+\documentclass{memoriaPFC}
+
+% Incluir el estilo definido para la Universidad de Burgos por Álvar Arnáiz 2009/12/20.
+\usepackage{ubupro}
+
+%\usepackage{cgotest}
+
+%
+% Incluir los comandos para las palabras t'ecnicas.
+\input{comandosIS}
+
+%
+% DATOS DEL DOCUMENTO
+%\autores{Nombre1 Apellidos1}{Nombre2 Apellidos2}
+\title{X-RayDetector: Detección automática de defectos en piezas
+metálicas mediante análisis de radiografías}
+\autores{Adrián González Duarte}{Joaquín Bravo Panadero}
+% Modificado por C´esar Garc´ia Osorio 6/12/2012
+%\director{César I. García Osorio, Juan José Rodríguez Díez}
+\directores{Dr. César I. García Osorio}{José Francisco Díez Pastor}
+
+\date{junio de 2013}
+\titulacion{ii}
+
+\resumen{%
+La inspección de defectos es una tarea muy importante para asegurar la seguridad y la fiabilidad de los procesos industriales. Una de las últimas tendencias en la inspección y control de calidad de los procesos industriales son las técnicas de prueba no destructiva (NDT - Non-Destructive Testing). En estas técnicas se evalúan los defectos superficiales o internos a través de distintos métodos como son la radiografía y la ecografía, entre otros.
+
+La radiografía se ha mostrado como uno de los métodos más efectivos a la hora de identificar defectos en procesos de inyección de material en molde. Este método se basa en que las zonas con algún tipo de defecto absorben distinta cantidad de energía que el resto de zonas, lo que ocasiona regiones más oscuras o claras en la imagen.
+
+La etapa de interpretación de los defectos en imágenes de radiografía es un proceso costoso en tiempo y subjetivo, produciéndose contradicciones entre las evaluaciones de los distintos inspectores de la imagen. Este trabajo es la segunda iteración de un proyecto que pretende desarrollar un método para la detección y clasificación de defectos en imágenes de radiografía de piezas de magnesio, que acelere el proceso de inspección de fallos y elimine la ambigüedad y subjetividad del proceso manual.
+}
+\descriptores{Detección de defectos, minería de datos, procesamiento digital de la imagen, visión artificial, aprendizaje automático, radiografías}
+
+\abstract{%
+The defect inspection is an important task to ensure the safety and reliability of industrial processes.
+Some of the latest trends in inspection and quality control of industrial processes are the non-destructive testing techniques (NDT - Non-Destructive Testing). These techniques are evaluated on the surface or internal defects through different methods such as radiography and ultrasound, among others.
+
+Radiography has proven to be one of the most effective techniques to identify defects in the process of injection-molded material. This method is based on the fact that areas with some kind of defect absorb different amounts of energy than other areas, resulting in darker or lighter regions in the image.
+
+The stage of defects interpretation in radiographic images is a subjective and time consuming process, resulting in contradictions between different operators examining the same. This work is the second iteration of a project for the detection and classification of defects in radiographic images of magnesium parts, which aim is to speed up the process of defect detection and the elimination of the ambiguity and subjectivity of the human inspection.
+}
+\keywords{Defect detection, Data Mining, digital image processing, computer vision, Machine Learning, radiography}
+
+
+%
+% COMIENZO DEL DOCUMENTO
+\begin{document}
+
+%
+% Portada, resumen, indices
+\frontmatter
+\ubuportada
+\hacerresumen
+\tableofcontents
+\listoffigures % Opcional
+\listoftables % Opcional
+%\lstlistoflistings % Opcional
+
+%
+% Contenidos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+\subsection*{Agradecimientos}
+\input{0agradecimientos}
+
+
+%\include{0introduccion}
+\include{1objetivosDelProyecto}
+\include{2conceptosTeoricos}
+\include{3tecnicasYherramientas}
+\include{4aspectosRelevantes}
+\include{5trabajosRelacionados}
+\include{6conclusionesYfuturo}
+
+% APÉNDICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\appendix
+
+\portadasAuxiliares{Anexo I - Plan del proyecto software}
+\include{anexo1PlanDeProyectoSoftware}
+
+\portadasAuxiliares{Anexo II - Especificación de requisitos}
+\include{anexo2EspecificacionDeRequisitos}
+
+\portadasAuxiliares{Anexo III - Especificación de diseño}
+\include{anexo3EspecificacionDeDisenno}
+
+\portadasAuxiliares{Anexo IV - Manual del programador}
+\include{anexo4ManualDelProgramador}
+
+\portadasAuxiliares{Anexo V - Manual del usuario}
+\include{anexo5ManualDelUsuario}
+
+%
+% APÉNDICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\appendix
+
+% Añadir entrada en el índice: Apéndices
+\addcontentsline{toc}{chapter}{Apéndices}
+
+\portadasAuxiliares{Apéndice A - Comparativas}
+\include{apendiceA}
+
+%\portadasAuxiliares{Apéndice B - Licencia GNU GPL}
+%\include{apendiceB}
+
+%
+%Bibliografía
+\bibliografia{referencias}
+
+%
+% Otras referencias
+%\bibliografiaOtras{otrasreferencias}
+
+\end{document}

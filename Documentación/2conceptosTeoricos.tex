@@ -1,0 +1,579 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Conceptos teóricos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este apartado se van a describir, por una parte, conceptos básicos de la visión por computador, comenzado con la descripción del problema (\ref{desc}), seguido de unas nociones básicas del tratamiento digital de imágenes como la adquisición (\ref{adquisicion}), el preprocesamiento (\ref{preprocesamiento}) y la segmentación (\ref{segmentacion}). A continuación, se describirán distintas técnicas de análisis de imágenes como la extracción de características (\ref{descriptores}) y el reconocimiento e interpretación (\ref{reconocimiento}). Por otra parte se hará una breve introducción a cómo se utilizan técnicas de visión artificial en los ensayos no destructivos y una descripción más pormenorizada de estás técnicas dentro de nuestro proyecto (\ref{aplicacion}).
+
+
+\section{Descripción del problema: Ensayos no destructivos}\label{desc}
+Los ensayos no destructivos \cite{wiki:EnsayoNoDestructivo} son pruebas que, practicadas sobre un material, no alteran de forma permanente sus propiedades físicas, químicas, mecánicas o dimensionales. Los ensayos no destructivos implican un daño imperceptible o nulo.
+
+Los diferentes métodos de ensayos no destructivos se basan en la aplicación de fenómenos físicos tales como ondas electromagnéticas, acústicas, elásticas, emisión de partículas subatómicas, capilaridad, absorción y cualquier tipo de prueba que no implique un daño considerable a la muestra examinada.
+
+Los datos aportados por este tipo de ensayos suelen ser menos exactos que los de los ensayos destructivos. Sin embargo, suelen ser más baratos, ya que no implican la destrucción de la pieza a examinar. En ocasiones los ensayos no destructivos buscan únicamente verificar la homogeneidad y continuidad del material analizado, por lo que se complementan con los datos provenientes de los ensayos destructivos.
+
+Uno de los aspectos más importantes de cualquier método de ensayo no destructivo es que todo el personal debe estar entrenado, cualificado y certificado. El personal debe estar familiarizado con las técnicas, el equipamiento, el objeto a ensayar y cómo interpretar los resultados.
+
+El objetivo de este proyecto es proporcionar una herramienta que automatice en la medida de lo posible (o que en última instancia, sirva de asistencia al operador humano) el proceso de ensayo radiográfico.
+
+\subsection{Radiografía}
+Una radiografía \cite{wiki:Radiografia} es una imagen registrada en una placa o película fotográfica, o de forma digital en una base de datos. La imagen se obtiene al exponer al receptor de imagen radiográfica a una fuente de radiación de alta energía, comúnmente rayos X o radiación gamma procedente de isótopos radiactivos. Al interponer un objeto entre la fuente de radiación y el receptor, las partes más densas aparecen con diferentes tonos dentro de una escala de grises, en función inversa a la densidad del objeto. Por ejemplo, si la radiación incide directamente sobre el receptor, se registra un tono negro.
+
+Sus usos pueden ser tanto médicos, para detectar fisuras en huesos, como industriales en la detección de defectos en materiales y soldaduras, tales como grietas, poros, rebabas, etc.
+
+La radiografía se usa para ensayar una variedad de productos, tales como objetos de fundición, objetos forjados y soldaduras. Es también muy usada en la industria aeroespacial para la detección de grietas (fisuras) en las estructuras de los aviones, la detección de agua en las estructuras tipo panal y detección de objetos extraños. Los objetos a ensayar se exponen a rayos X o gamma y se procesa un film o se visualiza digitalmente. El personal de ensayos radiográficos instala, expone y procesa la película o digitalmente procesa las señales e interpreta las imágenes de acuerdo con códigos.
+
+\subsection{Ventajas del ensayo radiográfico}
+Las ventajas del ensayo radiográfico \cite{wiki:Radiografia} son, entre otras, las siguientes:
+
+\begin{enumerate}
+\item Puede usarse con la mayoría de los materiales.
+\item Puede usarse para proporcionar un registro visual permanente del objeto ensayado o un registro digital con la subsiguiente visualización en un monitor de computadora.
+\item Puede revelar algunas discontinuidades dentro del material.
+\item Revela errores de fabricación y a menudo indica la necesidad de acciones correctivas.
+\end{enumerate}
+
+\subsection{Limitaciones del ensayo radiográfico}
+Las limitaciones de la radiografía \cite{wiki:Radiografia} incluyen consideraciones físicas y económicas.
+
+\begin{enumerate}
+\item Deben seguirse siempre los procedimientos de seguridad para las radiaciones.
+\item La accesibilidad puede estar limitada. El operador debe tener acceso a ambos lados del objeto a ensayar.
+\item Las discontinuidades que no son paralelas con el haz de radiación son difíciles de localizar.
+\item La radiografía es un método caro de ensayo.
+\item Es un método de ensayo que consume mucho tiempo. Después de tomar la radiografía, la película debe ser procesada, secada e interpretada (aunque este problema desaparece cuando la imagen de rayos X se registra digitalmente).
+\item Algunas discontinuidades superficiales pueden ser difíciles, si no imposible, de detectar.
+\end{enumerate}
+
+\subsection{Objetivos del ensayo radiográfico}
+El objetivo del ensayo radiográfico \cite{wiki:Radiografia} es asegurar la confiabilidad del producto. Esto puede lograrse sobre la base de los siguientes factores.
+
+\begin{enumerate}
+\item La radiografía permite al técnico ver la calidad interna del objeto ensayado o evidencia la
+configuración interna de los componentes.
+\item Revela la naturaleza del objeto ensayado sin perjudicar la utilidad del material.
+\item Revela discontinuidades estructurales, fallas mecánicas y errores de montaje.
+\end{enumerate}
+
+La realización del ensayo radiográfico es sólo una parte del procedimiento. Los resultados del ensayo deben ser interpretados de acuerdo con normas de aceptación, y luego el objeto ensayado es aceptado o rechazado.
+
+\subsection{Principios del ensayo radiográfico}
+Los rayos X y gamma \cite{wiki:Radiografia} tienen la capacidad de penetrar los materiales incluso los materiales que no transmiten la luz. Al pasar a través de un material, algunos de esos rayos son absorbidos. La cantidad de radiación que se transmite a través de un objeto ensayado varía dependiendo del espesor y densidad del material y del tamaño de la fuente que se use. La radiación transmitida a través del objeto produce una imagen radiográfica. El objeto ensayado absorbe radiación, pero hay menos absorción donde el objeto es más fino o donde se presenta un vacío. Las porciones más gruesas del objeto o las inclusiones más densas se verán como imágenes más claras en la radiografía porque aumenta el espesor y la absorción es mayor.
+
+
+\section{Visión por computador}
+
+\subsection{Adquisición de la imagen}\label{adquisicion}
+La primera etapa del proceso es la adquisición de la imagen. Para ello se necesitarán dos elementos:
+
+\begin{itemize}
+
+\item Un sensor de imágenes, es decir, un dispositivo físico sensible a una determinada banda del espectro de energía electromagnética (como las bandas de rayos X, ultravioleta, visible o
+infrarrojo). En nuestro caso será un sistema de rayos X.
+
+\item Un digitalizador, dispositivo que permitirá convertir la señal de salida del sensor a forma digital.
+
+\end{itemize}
+
+%Figura de Adquisicón de imágenes
+\figura{1}{imgs/adquisicion_imagen}{Proceso de adquisición de imágenes de radiografía \cite{wiki:EnsayoNoDestructivo}}{img_rad}{}
+
+En este proyecto no se está realizando la adquisición de la imagen, ya que trabajamos con imágenes cedidas por el Grupo Antolín.
+
+
+\subsection{Preprocesamiento}\label{preprocesamiento}
+El preprocesamiento de la imagen es una etapa que consiste en reducir la información de la
+misma, de forma que pueda ser interpretada por una computadora, facilitando así la posterior fase de análisis.
+
+Se utiliza un conjunto de técnicas que, aplicadas a las imágenes digitales, mejoran su calidad o facilitan la búsqueda de información. A partir de una imagen origen, se obtiene otra imagen final cuyo resultado sea más adecuado para una aplicación específica, optimizando ciertas características de la misma que hagan posible realizar operaciones de procesado sobre ella.
+
+A continuación se explican algunas de las técnicas que comprenden esta etapa.
+
+
+\subsubsection{Binarización}
+La binarización de una imagen consiste en un proceso mediante el cual los valores de gris de una imagen quedan reducidos a dos (que podrían interpretarse como falso y verdadero). En una imagen digital, estos valores pueden representarse por los valores 0 y 1 o, más frecuentemente, por los colores negro (valor de gris 0) y blanco (valor de gris 255).
+
+Para hacer esto, primero se debe convertir la imagen a escala de grises. Después hay que fijar
+un valor umbral entre 0 y 255. Una vez que se tenga dicho umbral, se convertirán a 255 todos
+los valores de la imagen superiores al umbral, mientras que los inferiores se convertirán a 0. El resultado será una imagen en blanco y negro que permitirá realizar tareas como la detección de contornos, separar regiones u objetos de interés del resto de la imagen, etc.
+
+La binarización es, además, un método de segmentación. Hablaremos más sobre este tema en la sección \ref{segmentacion}.
+
+
+\subsubsection{Saliency}\label{saliencymap}
+El «Saliency Map» o «Mapa de Prominencia» \cite{Niebur:2007} es un mapa topográfico que permite representar
+la prominencia visual de una determinada imagen.
+
+Uno de los mayores problemas de la percepción es la sobrecarga de información. Se hace necesario identificar qué partes de la información disponible merecen ser seleccionadas para ser analizadas y qué partes deben descartarse. Este algoritmo busca solucionar este problema.
+
+Koch y Ulman propusieron en 1985 \cite{koch1985shifts} que las diferentes características visuales que contribuyen a la selección de atención ante un estímulo (color, orientación, movimiento, etc.) fueran combinadas en un único mapa topográfico, el Saliency Map, que integraría la información normalizada de los mapas de características individuales en una medida global de visibilidad.
+
+La saliencia de una posición dada es determinada principalmente por cómo de diferente es dicha
+localización de las que la rodean, en color, orientación, movimiento, profundidad, etc.
+
+La implementación del mapa de saliencia usada en este proyecto está basada en la variante
+descrita en el artículo \emph{Human Detection Using a Mobile Platform and Novel Features Derived
+From a Visual Saliency Mechanism} \cite{montabone2010human}.
+
+%Figura de Saliency Map
+\figuraCaptionCorta{1}{imgs/saliency.png}{Ejemplo de Saliency Map. La imagen original a la izquierda,
+con el correspondiente saliency map a la derecha}{saliency}{}{Ejemplo de Saliency Map}
+
+\subsection{Segmentación}\label{segmentacion}
+Además de calcular ciertas características de las imágenes, como hemos visto en el apartado anterior, se hace necesaria realizar una segmentación de la imagen, para aumentar la precisión de la detección de los defectos, y también para poder extraer características morfológicas y geométricas del defecto que podría, en futuras versiones del proyecto, ayudar a clasificar el tipo y gravedad del defecto.
+
+La segmentación de una imagen \cite{wiki:segmentation} consiste en particionar esa imagen en múltiples segmentos (conjuntos de píxeles). El objetivo es simplificar y/o cambiar la representación de una imagen en algo que sea más significativo o fácil de analizar. Se suele usar típicamente para localizar objetos y bordes. Más precisamente, la segmentación de una imagen es el proceso de asignar una etiqueta a cada píxel de una imagen, con lo que los píxeles que tengan la misma etiqueta compartirán ciertas características.
+
+De entre todos los posibles métodos de segmentación que existen, nosotros hemos usado el denominado \textit{Thresholding} \cite{wiki:thresholding}. Es uno de los métodos más simples. Está basado en considerar un valor, llamado \textbf{umbral}, que se usa para convertir una imagen en escala de grises a una binaria (es decir, binarizar la imagen). La clave está, por tanto, en el valor umbral. De acuerdo a la taxonomía definida por Sezgin and Sankur \cite{sezgin}, existen varias opciones:
+
+\begin{itemize}
+\item Basados en la forma del histograma.
+\item Basados en clustering.
+\item Basados en entropía.
+\item Basados en atributos de objetos.
+\item Métodos espaciales.
+\item Métodos locales.
+\end{itemize}
+
+De todos estos, nosotros hemos usado los locales. Estos métodos se basan en adaptar el valor umbral en cada píxel, de acuerdo a las características del vecindario de ese píxel. El radio del vecindario es un parámetro que afecta al funcionamiento del método.
+
+Hay varios de estos métodos. A continuación, vamos a describir los que hemos probado en este proyecto.
+
+\subsubsection{MidGrey}
+Este método selecciona el umbral de acuerdo a la media del máximo y mínimo valor de la distribución local de escala de grises.
+
+Por lo tanto, el umbral viene dado por la siguiente fórmula \cite{autolocal}:
+
+\[T = \left(\frac{\max+\min}{2}\right)-c\]
+
+Donde $c$ es una constante que sirve para afinar el método. Por defecto, es cero.
+
+Para determinar a qué región pertenece el píxel, se comprueba con el umbral. Si es mayor que éste último, el píxel pertenece al objeto. Si no, pertenece al fondo.
+
+\subsubsection{Mean}
+En este caso, el umbral es la media de la distribución local en escala de grises \cite{autolocal}. Por lo tanto, para determinar a qué región pertenece el píxel, se compara con la media de la región de vecinos (menos el parámetro $c$, en caso de que se especifique). Si es mayor, es parte del objeto. Si no, es parte del fondo.
+
+
+\subsection{Descriptores de regiones}\label{descriptores}
+Una vez realizada la etapa de preprocesamiento, la imagen ya estará lista para ser analizada.
+Nosotros vamos a trabajar directamente con los píxeles de la imagen, a diferencia de otros métodos de análisis, que extraen otros tipos de atributos. Para analizar las características de la imagen, se utilizarán los descriptores que se explican a continuación:
+
+\begin{itemize}
+\item Descriptores simples.
+\item Descriptores de textura.
+\item Descriptores geométricos.
+\end{itemize}
+
+\subsubsection{Descriptores simples}
+También se les conoce como características estándar o de primer orden \cite{presutti2004matriz}. Son medidas que se calculan a partir de los valores de gris originales de la imagen y su frecuencia, como la media, varianza, desviación estándar, etc. En estas medidas no se considera la relación de co-ocurrencia entre los píxeles.
+
+Las características más comunes y que se han usado en este proyecto son:
+
+\paragraph*{Media}\mbox{} \\
+\indent Se calcula el promedio de los niveles de intensidad de todos los píxeles de la imagen. Esta es una medida útil ya que nos permite determinar de forma sencilla la claridad de la imagen. Si la media es alta, la imagen será más clara, mientras que si la media es baja, será más oscura.
+
+\paragraph*{Desviación estándar}\mbox{} \\
+\indent Es una medida de dispersión que nos indica cuánto se alejan los valores respecto a la media. Nos sirve para apreciar el grado de variabilidad entre los valores de intensidad de los píxeles de una región.
+
+\paragraph*{Primera y segunda derivadas}\mbox{} \\
+\indent Se utilizan operadores de detección de bordes \cite{marcosmartin2004} basados en aproximaciones de la primera y segunda derivada de los niveles de grises de la imagen. La primera derivada del perfil de gris será positiva en el borde de entrada de la transición entre una zona clara y otra oscura. En el borde de salida será negativa, mientras que en las zonas de nivel de gris constante será cero. El módulo de la primera derivada podrá utilizarse, por lo tanto, para detectar la presencia de un borde en una imagen. En cuanto a la segunda derivada, será positiva en la parte de la transición asociada con el lado oscuro del borde, negativa en la parte de la transición asociada con el lado claro y cero en las zonas de nivel de gris constante. El signo de la segunda derivada nos permitirá determinar si un píxel perteneciente a un borde está situado en el lado oscuro o claro del mismo.
+
+
+\subsubsection{Descriptores de textura}
+La texturas son propiedades asociadas a las superficies, como rugosidad, suavizado, granularidad, regularidad. En el campo de las imágenes, significa la repetición espacial de ciertos patrones sobre una superficie.
+
+Otra definición de la textura podría ser la variación entre píxeles en una pequeña vecindad de una imagen. Alternativamente, la textura puede describirse también como un atributo que representa la distribución espacial de los niveles de intensidad en una región dada de una imagen digital.
+
+
+El análisis de la textura de las imágenes nos ofrecerá datos útiles para nuestro trabajo. Hemos utilizado los siguientes descriptores:
+
+\paragraph*{Características de Haralick}\mbox{} \\
+\indent Siguiendo la propuesta de Haralick \cite{haralick1992computer}, se extrae información de textura de la distribución de los valores de intensidad de los píxeles. Dichos valores se calculan utilizando matrices de coocurrencia que representan información de textura de segundo orden.
+
+Haralick propuso un conjunto de 14 medidas de textura basada en la dependencia espacial de los tonos de grises. Esas dependencias están especificadas en la matriz de co-ocurrencia espacial (o de niveles de gris). Se sigue la descripción de \cite{presutti2004matriz} para calcular dicha matriz.
+
+La matriz de co-ocurrencia, una vez normalizada, tiene las siguientes propiedades:
+
+\begin{itemize}
+
+\item Es cuadrada.
+
+\item Tiene el mismo número de filas y columnas que el número de bits de la imagen. Con una imagen de 8 bits ($2^{8} = 256$ posibles valores) la matriz de co-ocurrencia será de 256$x$256, es decir, 65536 celdas.
+
+\item Es simétrica con respecto a la diagonal.
+
+\item Los elementos de la diagonal representan pares de píxeles que no tienen diferencias en su nivel de gris. Si estos elementos tienen probabilidades grandes, entonces la imagen no muestra mucho contraste, ya que la mayoría de los píxeles son idénticos a sus vecinos.
+
+\item Sumando los valores de la diagonal tenemos la probabilidad de que un píxel tenga el mismo nivel de gris que su vecino.
+
+\item Las líneas paralelas a la diagonal separadas por una celda, representan los pares de píxeles con una diferencia de un nivel de gris. De la misma manera sumando los elementos separados dos celdas de la diagonal, tenemos los pares de píxeles con dos valores de grises de diferencia. A medida que nos alejamos de la diagonal la diferencia entre niveles de grises es mayor.
+
+\item Sumando los valores de estas diagonales secundarias (y paralelas a la diagonal principal) obtenemos la probabilidad de que un píxel tenga 1, 2, 3, etc niveles de grises de diferencia con su vecino.
+
+\end{itemize}
+
+Una vez construida la matriz de co-ocurrencia, de ella pueden derivarse diferentes medidas. Se obtendrán matrices para las direcciones 0º, 90º, 180º y 270º y para distancias 1, 2, 3, 4 y 5. Para cada una de estas distancias se calculará un vector con las medias de las cuatro direcciones y otro con los rangos. Las características a calcular a partir de la matriz son las siguientes:
+
+\begin{enumerate}
+
+\item \textbf{Segundo Momento Angular}
+
+Mide la homogeneidad local. Cuanto más suave es la textura, mayor valor toma. Si la matriz de co-ocurrencia tiene pocas entradas de gran magnitud, toma valores altos. Es baja cuando todas las entradas son similares \cite{waveletdiscreta}.
+
+\[f_1 = \sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j)^2\]
+
+$p(i,j)$ es el valor de la matriz de coocurrencia en la fila $i$ y la columna $j$
+$N_g$ es la dimensión de la matriz
+
+\item \textbf{Contraste}
+
+Es lo opuesto a la homogeneidad, es decir, es una medida de la variación local en una imagen. Tiene un valor alto cuando la región tiene un alto contraste.
+
+\[f_2 =\sum_{n=0}^{N_g-1}n^2 \sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j)\]
+
+\item \textbf{Correlación}
+
+Mide las dependencias lineales de los niveles de grises, la similitud entre píxeles vecinos. Un objeto tiene mayor correlación dentro de él que con los objetos adyacentes. Píxeles cercanos están más correlacionados entre sí que los píxeles más distantes.
+
+\[f_3 = \frac{\sum_i \sum_j (i,j)\cdot p(i,j) - v_xv_y}{\sigma_x\sigma_y}\]
+
+Donde $v_x, v_y, \sigma_x, \sigma_y$ son las medias y desviaciones estándar de $p_x$ y $p_y$, las funciones de densidad de probabilidad parcial.
+
+\item \textbf{Suma de cuadrados}
+
+Es la medida del contraste del nivel de gris.
+
+\[f_4 = \sum_{i=1}^{N_g}\sum_{j=1}^{N_g}(i-j)^2\cdot p(i,j)\]
+
+\item \textbf{Momento Diferencial Inverso}
+
+También llamado homogeneidad, es más alto cuando la matriz de co-ocurrencia se concentra a lo largo de la diagonal. Esto ocurre cuando la imagen es localmente homogénea de acuerdo al tamaño de la ventana.
+
+\[f_5 = \sum_{i}\sum_{j}\frac{1}{1+(i-j)^2}\cdot p(i,j)\]
+
+\item \textbf{Suma promedio}
+
+\[f_6 = \sum_{i=2}^{2N_g}i \cdot p_{x+y}(i)\]
+
+\item \textbf{Suma de Entropías}
+
+\[f_7 = \sum_{i=2}^{2N_g}(i-f_8)^2 \cdot p_{x+y}(i)\]
+
+\item \textbf{Suma de Varianzas}
+
+\[f_8 = -\sum_{i=2}^{2N_g}p_{x+y}(i)\log(p_{x+y}(i))\]
+
+\item \textbf{Entropía}
+
+Es alta cuando los elementos de la matriz de co-ocurrencia tienen valores relativamente iguales. Es baja cuando los elementos son cercanos a 0 ó 1.
+
+\[f_9 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log(p(i,j))\]
+
+\item \textbf{Diferencia de Varianzas}
+
+\[f_{10} = \sum_{i=0}^{N_g-1} i^2 p_{x-y}(i)\]
+
+\item \textbf{Diferencia de Entropías}
+
+\[f_{11} = -\sum_{i=0}^{N_g-1}p_{x-y}(i)\log(p_{x-y}(i))\]
+
+\item \textbf{Medidas de Información de Correlación 1}
+
+\[f_{12} = \frac{HXY-HXY1}{\max(HX,HY)}\]
+
+Donde:
+
+\[HXY = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log \big(p(i,j)\big)\]
+\[HXY1 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p(i,j)\log \big(p_x(i) p_y(j)\big)\]
+\[HXY2 = -\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}p_x(i) p_y(j)\log \big(p_x(i) p_y(j)\big)\]
+
+\item \textbf{Medidas de Información de Correlación 2}
+
+\[f_{13} = \big(1- \exp(-2 |HXY2 - HXY|)\big)^{1/2}\]
+
+\item \textbf{Coeficiente de Correlación Máxima}
+
+\[f_{14} = \sqrt{\lambda_2 }\]
+
+Donde $\lambda_2$ es el segundo valor propio de la matriz Q definida como:
+
+\[Q(i,j) = \sum_k\frac{p(i,k)p(j,k)}{p_x(i)p_y(i)}\]
+\end{enumerate}
+
+
+\paragraph*{Local Binary Patterns}\mbox{} \\
+\indent Los Local Binary Patterns (LBP) \cite{wiki:LocalBinaryPatterns} son un tipo de característica usado para la clasificación de texturas. Fueron descritos por primera vez en 1994 \cite{ojala}.
+
+Debido a su poder de discriminación y su simplicidad de cálculo, se ha convertido en un método popular que se usa en varios tipos de aplicaciones, como por ejemplo la clasificación de expresiones faciales \cite{de2011transformaciones}.
+
+Este operador de textura etiqueta los píxeles de una imagen comparando los valores de intensidad de los píxeles de una vecindad de 3x3 con el del píxel central.
+
+Cuando el valor del píxel vecino es mayor que el del píxel central, se escribe «1». En caso contrario, se escribe «0». El resultado es un número binario de 8 dígitos, que suele convertirse a decimal por comodidad o para mayor facilidad de cálculo. Este número recibe también el nombre de «patrón».
+
+Luego se realiza un histograma que contendrá la frecuencia con la que se ha producido cada patrón. Dicho histograma podrá utilizarse como descriptor de textura.
+
+Posteriormente se ha extendido el uso de diferentes tamaños, no sólo a ocho puntos, sino a muestreos circulares donde la bilinealidad se consigue con la interpolación de los valores de los píxeles, lo que permite utilizar cualquier radio y por lo tanto cualquier número de píxeles vecinos.
+
+Para reducir la longitud del vector de características se utilizan los patrones uniformes. Un local binary pattern es uniforme si el patrón contiene un máximo de dos transiciones a nivel de bit, de «0» a «1» o viceversa.
+
+\figuraConPosicion{1}{imgs/lbp.png}{Ejemplo del funcionamiento de los Local Binary Patterns \cite{de2011transformaciones}}{lbp}{}{H}
+
+Por ejemplo, los patrones 00000000 (0 transiciones), 01110000 (2 transiciones) y 11001111 (2 transiciones) son uniformes mientras que los patrones 11001001 (4 transiciones) y 01010010 (6 transiciones) no lo son. El número de transiciones se guarda en un valor llamado medida de uniformidad \textit{U}.
+
+En el cálculo de los LBP, se utiliza una etiqueta para cada uno de los patrones uniformes, mientras que todos los patrones no uniformes son agrupados en una sola etiqueta. Por ejemplo, cuando se usa una vecindad (8,$R$) (donde $R$ es el radio), hay un total de 256 patrones, 58 de los cuales son uniformes, lo cual produce un total de 59 etiquetas diferentes. Todo esto dará como resultado un histograma con 59 intervalos.
+\newpage
+
+\figura{1}{imgs/vecindades_lbp.png}{Vecindades de distinto tamaño en los LBP \cite{de2011transformaciones}}{vecindades_lbp}{}
+
+
+
+
+
+\subsubsection{Características geométricas}
+Además de los descriptores de regiones que ya hemos visto, pensamos en la posibilidad de realizar algunos cálculos de características geométricas sobre las regiones segmentadas, con la mirada puesta en poder clasificar mediante ellas a los defectos en distintos tipos.
+
+Las características geométricas que se han empleado son aquellas que se encuentran disponibles en ImageJ \cite{analyzeij}, que son las siguientes:
+
+\begin{itemize}
+
+\item \textbf{Área:} es la superficie de la región de interés medida en píxeles cuadrados.
+
+\item \textbf{Perímetro:} es la longitud del límite exterior de la región.
+
+\item \textbf{Circularidad:} descriptor de forma dado por la siguiente fórmula: 
+\[\frac{4\pi \times \acute{a}rea}{per\acute{i}metro^2}\]
+Un valor de 1 indica que se trata de un círculo perfecto. Según se acerca a cero, indica que la forma es cada vez más alargada.
+
+\item \textbf{Redondez:} descriptor de forma dado por la siguiente fórmula:
+\[\frac{4\pi\times \acute{a}rea}{\pi \times semieje\_mayor^2}\]
+Es el inverso del cociente entre el semieje mayor y el menor de la mejor elipse que puede ser dibujada en la región.
+
+\item \textbf{Semieje mayor:} semieje mayor de la mayor elipse que puede ser dibujada en la región.
+
+\item \textbf{Semieje menor:} semieje menor de la mayor elipse que puede ser dibujada en la región.
+
+\item \textbf{Ángulo:} es el ángulo entre el semieje mayor y una línea paralela al eje $x$.
+
+\item \textbf{Distancia Feret:} también llamada diámetro de Feret. Es la máxima distancia entre dos puntos cualesquiera de la región.
+
+\end{itemize}
+
+
+
+
+\subsection{Reconocimiento e interpretación de imágenes}\label{reconocimiento}
+Una vez obtenidas las características de la imagen, el siguiente paso será reconocer dichos datos e interpretarlos. Para ello será necesario entrenar un clasificador. Una vez entrenado, podrá predecir dónde estarán los defectos que buscamos.
+
+Un clasificador \cite{wiki:Clasificadores} es un elemento que, tomando un conjunto de características como entrada, proporciona a la salida una etiqueta de clase. En nuestro caso, el atributo de clase sería el «defecto», que podría tomar dos valores: «verdadero» o «falso». En el caso de que sea una regresión, en vez de una clasificación de clases nominales, los valores que devolverá el clasificador serán entre 0 y 1, siendo 0 cuando no hay píxeles defectuosos y 1 cuando lo son todos.
+
+Utilizaremos el clasificador por su capacidad de aprender a partir de imágenes de ejemplo y de generalizar este conocimiento para que se pueda aplicar a nuevas y diferentes imágenes.
+
+Para construir el clasificador utilizaremos un conjunto de imágenes etiquetadas. Para etiquetarlas, se creará una máscara de cada imagen en la que se marcarán a mano los defectos. Estas máscaras permitirán al clasificador saber qué partes de la imagen son defectos y cuales no.  Es lo que se denomina \emph{ground truth} en la literatura de procesamiento digital de imágenes. Se puede ver un ejemplo de las máscaras en \ver{mascara}.
+
+Los clasificadores que hemos utilizado no pueden trabajar directamente con imágenes, sino con vectores de características, que serán las que se calculen a partir de las imágenes de ejemplo. Estos vectores de características se guardarán en ficheros \textit{ARFF}, que tendrán una serie de atributos definidos en la cabecera, cada uno de ellos correspondiente a una característica. El fichero contendrá un conjunto de instancias, que son cada serie de valores que toman los atributos. Los ficheros \textit{ARFF} son el formato propio de \textit{Weka}, y en su estructura se pueden diferenciar las siguientes secciones:
+
+\begin{itemize}
+\item \textbf{@relation:} Los ficheros \textit{ARFF} deben empezar con esta declaración en su primera línea (no puede haber líneas en blanco antes). Será una cadena de caracteres.
+
+\item \textbf{@attribute:} En esta sección hay que poner una línea por cada atributo que vaya a tener el conjunto de datos. Para cada atributo habrá que indicar su nombre y el tipo de dato. El tipo puede ser \emph{numeric}, \emph{string}, etc.
+
+\item \textbf{@data:} En esta sección se incluyen los datos. Cada columna se separa por comas y todas las
+filas deberán tener el mismo número de columnas, que coincidirá con el número de atributos declarados.
+\end{itemize}
+
+Al entrenar al clasificador obtendremos un modelo, el cual usaremos cuando queramos detectar los defectos de una nueva imagen.
+
+Nos hemos basado en el estudio con varios clasificadores que hicieron los alumnos que desarrollaron la versión de la aplicación que este proyecto esta mejorando y ampliando, así que hemos usado el que ellos consideraron mejor: \textit{Bagging}.
+
+Como algoritmo base hemos usado \textit{REPTree}, que, por sus características, también lo hemos podido usar para la regresión.
+
+\subsubsection{REPTree}
+El algoritmo de \textit{REPTree} \cite{ian_h._witten_data_2005} permite construir tanto un árbol de clasificación como un árbol de regresión, usando las medidas de \textit{ganancia de información} y de \textit{reducción de la varianza}. Puede podar los árboles generados usando la \textit{poda de error reducido}. Además, está optimizado para la rápida ejecución. Sólo ordena valores para atributos numéricos una única vez.
+
+La ganancia de información es una reducción de la entropía esperada (es decir, de la impureza de un conjunto de ejemplos), causada por la partición de los ejemplos de acuerdo al atributo \cite{juan_jose_rodriguez_diez_apuntes_2012}. La reducción de la varianza es una técnica que se usa para aumentar la precisión, disminuyendo el error que se produce cuando se entrena con diferentes conjuntos de datos.
+
+Considera los valores desconocidos partiendo instancias en pedazos, como hace \textit{C4.5}. Se puede especificar el mínimo número de instancias por hoja, profundidad máxima del árbol (útil cuando se utiliza la técnica de \textit{boosting}), la mínima proporción de la varianza de los datos del conjunto de entrenamiento que se consideran para partir (sólo para clases numéricas), y el número de pliegues por poda \cite{ian_h._witten_data_2005}.
+
+\subsubsection{Bagging}
+\textit{Bagging} (de \textit{Bootstrap Aggregating}) \cite{breiman1996bagging} es un algoritmo que busca combinar predicciones de un cierto tipo de modelo (en nuestro caso, \textit{REPTree}) mediante votación o media, teniendo los modelos el mismo peso.
+
+Lo que se hace es, teniendo un conjunto de datos, generar a partir de él un cierto número de conjuntos de datos mediante muestreo con reemplazamiento, para entrenar con ellos un cierto número de modelos. Después, se combinan las predicciones de todos los clasificadores entrenados para obtener la predicción final.
+
+La combinación de estas predicciones se puede hacer con una media de las salidas (regresión) o con una media de las probabilidades de cada clase (clasificación).
+
+Con esto conseguimos que métodos inestables, como árboles de decisión, mejoren su rendimiento.
+
+
+
+\section{Aplicación de la visión artificial a la detección y segmentación de defectos}\label{aplicacion}
+
+
+\subsection{Fundamentos teóricos de la versión inicial}
+En este apartado se describe la primera versión que realizamos de la detección de defectos. Esta primera versión es una versión mejorada de la versión final de los alumnos del año pasado.
+
+Se ha continuado la misma idea que utilizaron los desarrolladores de la versión inicial, basada en el artículo «\emph{Automated Detection of Welding Defects without Segmentation}» de Domingo Mery \cite{DomingoMery}. Los cambios realizadas en esta versión inicial con respecto a la versión de la que se partía han sido:
+\begin{itemize}
+\item Se ha realizado un nuevo diseño artquitectónico.
+\item Se ha cambiado parte del código de la interfaz.
+\item Se ha cambiado el proceso de entrenamiento.
+\item Ahora se utiliza un enfoque multihilo.
+\end{itemize}
+
+\subsubsection{Preproceso}
+Para la realización del análisis de la imagen y su posterior detección de defectos, hay que partir una imagen original en escala de grises. A dicha imagen se la pasa un filtro \textit{«Saliency Map»} (ver \ref{saliency}). Con todo esto, se obtiene la imagen original y la imagen Saliency que son analizadas paralelamente.
+
+\figuraConPosicion{1}{imgs/extraccion.png}{Esquema del proceso de extracción de características \cite{DomingoMery}}{extraccion}{}{H}
+
+\subsubsection{Extracción de características y etiquetado de instancias}
+Antes de detectar cualquier tipo de defecto, es necesario entrenar un clasificador para que pueda predecir donde están los defectos buscados. Para ello se analizan un conjunto de imágenes de las que se crean máscaras en las que se pintan los defectos. Estas máscaras sirven para que el clasificador sepa qué partes de la imagen son defectos y cuáles no. En la imagen \ver{mascara} vemos un ejemplo de cómo son estas máscaras (también conocidas como \textit{ground truth}).
+
+\figuraConPosicion{1}{imgs/mascara.png}{Ejemplo de máscara junto a imagen original}{mascara}{}{H}
+
+Para analizar cada imagen se utiliza una ventana que recorre toda la región de interés analizando sus características. En el artículo original de Mery \cite{DomingoMery} sólo aparecía el número total de características, lo cual dificultó la identificación del número que había que calcular para cada tipo, por eso nosotros las hemos desglosado según su clase:
+
+\begin{itemize}
+\item \textbf{Características estándar:} 4 características.
+\item \textbf{Características de Haralick:} Se calculan 14 características, obteniendo 5 vectores de medias
+y 5 de rangos. $14 \times 10 = 140$ características.
+\item \textbf{Características LBP:} Se obtiene un histograma con 59 intervalos, es decir, 59 características.
+\end{itemize}
+
+El número final de características habrá que multiplicarlo por dos, ya que todas las características se calculan tanto para la imagen original como para la imagen con \emph{saliency map} aplicado. Por lo tanto, el total sería:
+
+\begin{center}
+( 4 estándar + 140 haralick + 59 lbp )$\times$2 = 406 CARACTERÍSTICAS
+\end{center}
+
+Estas características serán las que se guarden en los ficheros \textit{ARFF} que se utilicen para entrenar
+al clasificador, junto con la clase, que tendrá valor «true» si la instancia tiene defecto, o «false» si
+no. En caso de que se use regresión lineal serán valores entre 0 y 1 (0 Cuando no haya ningún píxel defectuoso en la ventana y 1 cuando lo sean todos, siendo para todos los casos número de píxeles defectuosos/número de píxeles de la ventana). El defecto se identificará gracias a las máscaras mencionadas anteriormente.
+
+La ventana irá analizando cada vez una región de la imagen, recorriendo todos y cada uno de sus píxeles, de los que extraerá las características que posteriormente se analizarán. Cada vez que la ventana se mueva y analice una nueva región, se creará una nueva instancia, que se corresponderá con una línea del fichero \textit{ARFF} en el que se guardan las características. Nosotros hemos hecho que el tamaño de la ventana sea configurable, aunque por defecto se utilizará una ventana de 24$\times$24 píxeles, como en el artículo de Mery \cite{DomingoMery}. Utilizamos dos tipos de estrategias de desplazamiento:
+
+\begin{itemize}
+\item Ventana deslizante.
+\item Ventana aleatoria.
+\end{itemize}
+
+\paragraph*{Ventana deslizante}\mbox{} \\
+\indent La ventana comienza desde la esquina superior izquierda de la imagen y se va moviendo cada cierto porcentaje del tamaño de la ventana. Cuando llega al extremo derecho baja ese mismo porcentaje y comienza de nuevo desde el lado izquierdo. A diferencia del artículo, donde se usa siempre un salto de 4 píxeles, nosotros hemos hecho que se pueda seleccionar el tamaño del salto.
+
+\figuraConPosicion{1}{imgs/ventana_deslizante.png}{Esquema de la ventana deslizante \cite{DomingoMery}}{ventana_deslizante}{}{H}
+
+\paragraph*{Ventana aleatoria}\mbox{} \\
+\indent Se obtienen 300 muestras de ventanas por imagen, seleccionándolas aleatoriamente entre aquellas que tienen defecto y las que no.
+
+\subsubsection{Estrategias de etiquetado}
+Como hemos visto, se hace necesario determinar cuándo una ventana tiene defecto o no, ya que se necesita etiquetar las muestras de cada ventana como «defecto» o «no defecto». Los alumnos que desarrollaron la versión previa utilizaron una aproximación muy simple: consideraban que una ventana era defectuosa cuando, al poner esa ventana sobre la máscara coloreada manualmente, al menos un píxel de la misma estaba coloreado. Comprobamos que esto provoca falsos positivos, con lo que se pierde exactitud. Por lo tanto, decidimos implementar otras posibilidades:
+
+\paragraph*{Píxel central}\mbox{} \\
+\indent En este caso, se considera una ventana defectuosa cuando el píxel central de la misma es defectuoso. Es un poco más preciso que la versión del año pasado, pero sigue sin ser demasiado buena.
+
+\paragraph*{Porcentaje de la ventana}\mbox{} \\
+\indent En esta aproximación, se considera defectuosa una ventana cuando al menos un cierto porcentaje de la ventana contiene píxeles coloreados, es decir, defectuosos. Hemos obtenido resultados muy buenos con porcentajes que van desde el 50\% al 75\%.
+
+\paragraph*{Píxel central más región de vecinos}\mbox{} \\
+\indent En este caso, no sólo consideramos el píxel central, si no que creamos una región cuadrada de $3 \times 3$ píxeles a su alrededor. Consideramos entonces una ventana como defectuosa cuando un cierto porcentaje de esta región de vecinos está coloreada. Obtenemos unos resultados muy parecidos a los de la anterior aproximación con porcentajes parecidos.
+
+Se realizó un experimento con todas estas opciones para determinar cuáles eran las que mejor funcionaba. En \ver{experimentos}, se pueden ver algunos de los resultados que se obtuvieron, a la vista de los cuales decidimos quedarnos con las opciones de porcentaje de la ventana y píxel centrar más región de vecinos. La línea amarilla que se puede observar en la imagen es el dibujado del defecto realizado por la aplicación, proceso que se explicará más adelante.
+
+\figuraConPosicionCaptionCorta{0.5}{imgs/experimentos.png}{Experimento estrategias de etiquetado
+\newline
+Píxel central \newline
+Porcentaje de ventana \newline
+Región de vecinos}{experimentos}{}{H}{Experimento estrategias de etiquetado}
+
+
+\subsubsection{Detección de defectos}
+El proceso es prácticamente igual al entrenamiento del clasificador. Se genera una imagen \emph{Saliency Map} a partir de la imagen original, al igual que antes, y a partir de las dos imágenes (la original y la \emph{Saliency}) se analizan mediante una ventana deslizante.
+
+Cada vez que la ventana se desplaza se genera una instancia que contiene todas las características analizadas. Esta instancia es utilizada por el modelo que predice si la ventana está situada sobre un defecto.
+
+Si la ventana contiene un defecto, es marcada con un cuadrado verde y a cada uno de sus píxeles se le suma una unidad (este valor de los píxeles desde ahora será llamado factor).
+
+Estos píxeles son almacenados en una matriz global del mismo tamaño que la imagen a analizar, por lo que según se desplaza la ventana deslizante se van actualizando todos los valores de los píxeles que contienen defectos.
+
+Una vez finalizado el proceso de detección, se binariza la matriz resultante según su factor. Para este proceso en el artículo original \cite{DomingoMery} se utiliza un umbral de 24.
+
+Este factor es descrito como el número de veces que ha sido marcado un píxel como defecto. Si un píxel tiene un factor menor que 24, dicho pixel se considera como no defecto. En cambio, si un píxel tiene un factor de 24 o más será considerado como defecto.
+
+Dicho esto, en el proyecto utilizamos un factor variable. Por defecto el factor es de 8, pero tras la ejecución se puede variar para observar los cambios en la imagen en tiempo real.
+
+Como ya se ha descrito, el proceso de binarización recae en el factor de un píxel. Si el factor es 8 o mayor, al pixel se le asigna un 1 (defecto), si es menor que 8 se le asigna un 0 (no defecto). Al tener una matriz de ceros y unos es sencillo obtener una imagen binaria con la región de defectos.
+
+\figuraConPosicionCaptionCorta{0.7}{imgs/dibujado_defectos.png}{Proceso de dibujado de defectos en nuestro proyecto. \newline
+a)Imagen con defectos marcados \newline
+b)Imagen binarizada con el área de defectos \newline
+c)Imagen con filtro de detección de bordes\newline
+d)Resultado final}{procesoBorde}{}{h}{Proceso de dibujado de defectos en nuestro proyecto}
+
+Una vez obtenida la imagen binarizada con la región de defectos se le aplica un filtro de detección de bordes para marcar una línea que rodee el defecto mostrando su ubicación. En este caso se ha utilizado el filtro por defecto de detección de bordes de ImageJ.
+
+Observamos que el proceso de detección de bordes invierte los colores, la línea queda en blanco y el fondo en negro, así que invertimos los colores utilizando uno de los filtros de ImageJ.
+
+Hecho esto, solo queda poner el fondo transparente y superponer la imagen del borde sobre la imagen original.
+
+\subsubsection{Multihilo}
+Como ya hemos dicho varias veces, uno de los objetivos del proyecto es mejorar el rendimiento de la versión previa. Una de las principales modificaciones para conseguir esto ha sido la inclusión de una estrategia multihilo, aprovechando las oportunidades que nos brindan los procesadores actuales.
+
+Lo que hemos hecho ha sido dividir la imagen en tantas partes como procesadores disponibles tenga la máquina que está ejecutando el programa. Por ejemplo, si tenemos 2 procesadores, la imagen se dividirá en 2, en su dimensión vertical. Hay que tener en cuenta un pequeño margen, necesario para que el cálculo de algunas características sea correcto. Por ello, en el ejemplo anterior, las 2 imágenes no serían exactamente de la mitad de altura que la original, si no que serían un poco más grandes. Hay un pequeño solapamiento.
+
+Una vez que tenemos dividida la imagen, se ejecuta el proceso de detección o de entrenamiento sobre cada uno de los trozos de imagen. Con esto obtenemos un rendimiento mucho mayor que la versión del año pasado.
+
+
+\subsection{Fundamentos teóricos de la versión final}
+Con las modificaciones descritas en el apartado anterior, ya observamos que tanto el rendimiento como la precisión habían aumentado con respecto al año pasado. Aún así, teniendo en mente la posibilidad de calcular otra serie de características (como las geométricas) sobre los defectos detectados para, en un futuro, poder clasificarlos en sus diferentes tipos, se decidió intentar mejorar aún más esta precisión.
+
+Se implementaron dos nuevas aproximaciones a la hora de detectar defectos (por lo tanto, el proceso de entrenamiento cambia). En ambas aproximaciones nos valemos de una imagen segmentada con los filtros de umbrales locales que ya hemos visto. Lo que cambia entre ellas es cómo consideramos estos filtros.
+
+\subsubsection{Primera innovación: detección normal con posterior intersección con umbrales locales}
+En esta primera aproximación, primero se realiza la detección de defectos como en la primera versión del proyecto. La diferencia está en el dibujado definitivo de los defectos.
+
+Con la detección de defectos normal, obtenemos una matriz del mismo tamaño que la imagen, a partir de la cual se dibujan los defectos. En esta matriz se guarda, en cada posición (es decir, en cada píxel), el número de ventanas que los han cubierto y que se han marcado como defecto. Si este número supera cierto umbral, habrá una segunda matriz, en la que habrá un uno en todos aquellos píxeles en los que la probabilidad de ser defecto es mayor. A partir de esta matriz, se crea el dibujado definitivo.
+
+En nuestra aproximación, introducimos un paso intermedio antes de generar la matriz definitiva. En vez de poner directamente un uno o un cero, lo que hacemos es segmentar la imagen mediante el filtro de umbrales locales. A continuación, los píxeles que superan el umbral seleccionado son comparados con la imagen de umbrales locales. Si en esta imagen aparecen como blancos, se consideran defecto. Si no, se descarta.
+
+\subsubsection{Segunda innovación: píxeles blancos en umbrales locales}
+Esta aproximación difiere bastante más respecto a las opciones ya vistas.
+
+En este caso, lo primero que se hace es generar la imagen de umbrales locales. A partir de esta imagen, generamos una lista con las coordenadas de los píxeles que se han marcado como blancos \ver{segunda_opcion}, parte b.
+
+Después, hacemos una inversión de la imagen de umbrales locales para aplicar un análisis de partículas sobre ella, con el objetivo de obtener todas las regiones que destacan, a las que consideramos regiones candidatas de albergar un defecto \ver{segunda_opcion}, parte c. Este análisis de partículas se hace con las clases de \emph{ImageJ}, que va a aplicar ciertas medidas a los objetos que vaya encontrando en una imagen, buscando sus bordes \cite{particleij} \ver{segunda_opcion}, parte d.
+
+Cuando tenemos la lista y las regiones, vamos sacando coordenadas de la lista y vamos determinando la región a la que pertenecen. Dependiendo del tamaño de la región y el tamaño de la ventana, se considera la coordenada o se desecha. En caso de que se considere, centramos una ventana sobre ella y aplicamos el cálculo de características y clasificación ya vistos anteriormente.
+
+\figuraConPosicionCaptionCorta{0.85}{imgs/segunda_opcion.png}{Proceso de detección en la segunda opción \newline
+a)Imagen original \newline
+b)Imagen segmentada con los umbrales locales \newline
+c)Inversión de los umbrales locales\newline
+d)Identificación de las regiones candidatas}{segunda_opcion}{}{h}{Proceso de detección en la segunda opción}
+
+El dibujado de los defectos se realiza con la misma matriz que en la primera versión del proyecto.
+
+La parte de analizar las regiones para determinar si hay que considerar la coordenada o no fue añadida después de una primera versión de esta opción, en la que se consideraba toda la lista de píxeles blancos. Se decidió cambiar porque si considerábamos toda la lista obteníamos muchísimos falsos positivos, con lo que la precisión no era buena.
+
+Para aumentar el rendimiento, antes de empezar a calcular características, se divide la lista de píxeles blancos en tantas partes como procesadores disponibles haya. Después, habrá tantos hilos como partes, en los que en cada uno de ellos se iterará sobre cada una de las partes, de forma paralela.
+
+\subsubsection{Cálculo de características geométricas}
+Una vez que se ha realizado el proceso de detección y dibujado de defectos, podemos calcular los descriptores geométricos de estos defectos. Para ello, se usa la imagen binarizada con la región de defectos para aplicar sobre ella un proceso de segmentación, a través del cual vamos a poder obtener una serie de regiones, sobre las cuales se puede aplicar el cálculo de las características geométricas ya mencionadas. Con estos resultados creamos una tabla que se irá refrescando si el usuario selecciona otro umbral de detección.
+
+Estas características permitirán, en un futuro, aplicar un proceso de clasificación sobre las regiones detectadas como defecto en distintos tipos (burbuja, poros...).
+
+\subsubsection{Precision \& Recall}
+En reconocimiento de patrones y recuperación de información, \textit{precision} (precisión, también llamada valor predictivo positivo) es la fracción de instancias recuperadas que son relevantes, mientras que \textit{recall} (exhaustividad, también llamada sensitividad) es la fracción de instancias relevantes que son recuperadas \cite{wiki:precisionandrecall}.
+
+Para tareas de clasificación, los términos verdaderos positivos, verdaderos negativos, falsos positivos y falsos negativos comparan los resultados del clasificador con juicios externos de confianza. Los términos positivo y negativo se refieren a la predicción del clasificador (también conocida como expectación), y los términos verdadero y falso hacen referencia a si la predicción se corresponde con el ya mencionado juicio externo (también conocido como observación). En la imagen \ver{pr} se puede ver mejor cómo se ilustran estas situaciones.
+
+\figuraConPosicion{0.5}{imgs/precisionrecall.png}{Términos precision and recall \cite{wiki:precisionandrecall}}{pr}{}{H}
+
+Con esta idea en mente, ya se pueden entender las fórmulas que definen a \textit{precision}:
+
+\[Precision=\frac{tp}{tp+fp}\]
+
+Y a \textit{recall}:
+
+\[Recall=\frac{tp}{tp+fn}\]
+
+Con estas medidas podemos ver cómo ha sido de preciso el proceso de detección de defectos, mediante la comparación de cuántos píxeles han sido clasificados realmente como defecto y cuántos son realmente defectuosos. Esta información se saca de las máscaras que ya vimos antes.

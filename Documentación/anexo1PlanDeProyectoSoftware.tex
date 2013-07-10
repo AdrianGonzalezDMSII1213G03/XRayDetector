@@ -1,0 +1,1088 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Plan del proyecto software}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Introducción
+\section{Introducción}
+En este anexo se detalla el estudio desde el punto de vista temporal y de la viabilidad del proyecto software.
+
+La planificación es una de las tareas más importantes en el desarrollo de un proyecto software y servirá para determinar objetivos, evaluar la viabilidad del proyecto, priorizar actividades\dots
+
+En la primera parte del anexo se detallará la planificación temporal del proyecto teniendo en cuenta la metodología ágil que se va a utilizar: \scrum{}. En esta fase se determinarán los elementos que forman el \productbacklog{} y la prioridad de cada uno de ellos.
+
+Debido a la metodología empleada, no se utilizará el clásico diagrama de \textit{GANTT}. En lugar de esto, se definirá el \productbacklog{} y para el seguimiento se utilizará una herramienta de gestión especializada en metodologías ágiles, \textit{PivotalTracker}, que permite el seguimiento diario de las tareas por parte del equipo de desarrollo.
+
+En la segunda parte se calcularán los costes, analizando la rentabilidad del proyecto y justificando su desarrollo desde diversos puntos de vista: viabilidad técnica, legal, económica\dots
+\newpage
+
+
+
+%Planifiación temporal del proyecto
+\section{Planificación temporal del proyecto} 
+Como se explicó en la memoria, para el desarrollo del proyecto de final de carrera se va a utilizar una metodología ágil llamada \scrum{}. Esta metodología establece una serie de prácticas que serán llevadas a cabo con algunas limitaciones debido al reducido tamaño del equipo de desarrollo.
+
+El proyecto comienza a principios de noviembre de 2012, y termina a mediados de junio de
+2013, con una duración total de siete meses y medio. En un principio, se planificaron unos 7 sprints, pero al final se vio que se necesitó alguno más para terminar funcionalidad.
+
+
+
+%Aplicando una metodología ágil: SCRUM
+\section{Aplicando una metodología ágil: \textit{SCRUM}}
+En esta sección se repasa de una manera rápida los principales aspectos del desarrollo de proyectos con \scrum{}. Al mismo tiempo se analizan los distintos roles que va a asumir cada uno de los participantes en el proyecto de final de carrera.
+
+Conviene aclarar que los términos que define la metodología \scrum {} se encuentran en inglés, han sido mantenidos en el idioma original para no confundir con las traducciones.
+
+\scrum{} \cite{scrum} es una metodología para la gestión y desarrollo de proyectos software basada en un proceso iterativo e incremental. Cada iteración termina con una pieza de software ejecutable que incorpora una nueva funcionalidad o mejora las ya existentes. Estas iteraciones suelen durar de dos a cuatro semanas.
+
+\scrum{} busca priorizar los trabajos que mayor valor aportan al negocio evitando, en la medida de lo posible, complejos manuales de documentación que no tengan utilidad en el proceso.
+
+Los requerimientos y prioridades se revisan y ajustan durante el proyecto en intervalos cortos y regulares. De esta forma es sencillo adaptarse a los cambios solicitados por el cliente y responder de una forma rápida a los mismos.
+
+\subsection{Actores}
+\scrum{} define un conjunto de roles o actores detallados a continuación:
+\begin{itemize}
+ \item \textit{Scrum Master} (o facilitador): coordina el desarrollo del proyecto y trabaja de manera similar al director de proyectos. Una de sus tareas es eliminar los obstáculos que puedan dificultar al equipo de desarrollo o \textit{team} la consecución de sus objetivos. En el proyecto, este rol lo han tomado los autores del mismo: Adrián González y Joaquín Bravo.
+ \item \textit{Scrum Team} (o equipo): incluye a los desarrolladores y son los encargados de realizar las tareas que se definen en cada \sprint{}. En el proyecto, este rol lo han tomado los autores del mismo.
+ \item \textit{Product Owner} (o cliente): representa la voz del cliente y aporta la visión del negocio. Representa el destinatario final del proyecto a desarrollar y el que, en última instancia, realiza las pruebas de aceptación. Es también el encargado de mantener al día el listado de las tareas o \productbacklog{} y sus prioridades. En el proyecto este rol sería tomado por la Universidad de Burgos, en concreto, personalizado en los tutores del proyecto César I. García Osorio y José Francisco Díez Pastor.
+\end{itemize}
+
+\subsection{Ciclo de desarrollo}
+Al inicio del proyecto se definen una serie de requisitos que serán los objetivos a cumplir. Todos ellos quedan reflejados en el \productbacklog{}. Cada uno de estos objetivos serán subdivididos en tareas pequeñas y atómicas al inicio de cada \sprint{}.
+
+El ciclo de desarrollo, como se muestra \ver{ScrumProcess}, es iterativo a nivel de \sprint{}, al inicio del mismo se extraen una serie de tareas de los elementos del \productbacklog{} que conforman el \sprintbacklog{}. Estas tareas deberán ser completadas durante el ciclo.
+
+%Ciclo de desarrollo con Scrum.
+\figura{1}{imgs/ScrumProcess.png}{Metodología Scrum}{ScrumProcess}{}
+
+\scrum{} define que debe realizarse una breve reunión diaria, \textit{Daily Meeting}, en la que cada miembro del equipo de desarrollo explica lo que ha hecho desde la última sincronización, que va a hacer a partir de ese momento y las dificultades encontradas o que espera encontrar. En este caso, debido a problemas de tiempo y problemas para quedar, no se harán explícitamente estas reuniones.
+
+Los \sprints{} se definirán, como establece \scrum{}, con una duración de dos a cuatro semanas que podrán alargarse o contraerse para coincidir con los tutores para las reuniones periódicas que establece:
+\begin{itemize}
+ \item \textit{Planning meeting}: reunión inicial de cada \sprint{} en la que se extraen los \textit{item backlog}. Se numeran las tareas extraídas del \productbacklog{} para desarrollar durante el \sprint{}. Esta reunión tiene una gran importancia ya que, durante el desarrollo del \sprint{}, no se podrá modificar ni añadir nuevas tareas.
+ \item \textit{Review meeting}: reunión final (4 horas máximo) de cada \sprint{} donde se detallan los objetivos cumplidos durante el mismo. Se muestra al usuario el producto, en caso de que sea posible. En función de los resultados mostrados y de los cambios que haya habido en el contexto del proyecto, el cliente realiza las adaptaciones necesarias de manera objetiva, ya desde la primera iteración, replanificando el proyecto.
+ \item \textit{Retrospective meeting}: en esta reunión (4 horas máximo), el equipo analiza cómo ha sido su manera de trabajar y cuáles son los problemas que podrían impedirle progresar adecuadamente, mejorando de manera continua su productividad. El \textit{Scrum Master}, o \textit{Facilitador}, se encargará de ir eliminando los obstáculos identificados.
+\end{itemize}
+
+En este caso, todas las reuniones requieren de la presencia de los tutores y del equipo de desarrollo ya que entre ambos, agrupan los roles que se ven implicados en dichas reuniones.
+\newpage
+
+
+
+%Product backlog
+\section{Product Backlog del proyecto}
+En esta sección, aparece redactado el \productbacklog{} \vertabla{productBacklog} o lista de objetivos, con la prioridad de cada uno de los \productitem{}, el \textit{sprint} al que pertenecen y la estimación que les dimos en su momento, basándonos en una escala de puntos tipo Fibonacci (1, 2, 3, 5, 8) \cite{what}. Esta escala no es equivalente al número de horas, sino que da una idea de cómo de difíciles son las historias de usuario o cuánto vamos a tardar comparativamente entre ellas. Hemos decidido incluir también los \textit{bugs} que se han ido localizando \cite{product}.
+
+\scrum{} no define un método o herramienta para llevar el día a día del trabajo realizado, por lo que el seguimiento se puede realizar con una simple hoja de cálculo, o con herramientas de gestión especializadas en este tipo de desarrollos.
+
+En este caso, se ha utilizado \textit{PivotalTracker} (\url{https://www.pivotaltracker.com/}) para el seguimiento. Es un software potente al que se accede mediante un navegador y sirve de control de tareas y defectos. Su licencia ha sido gratuita por tratarse de un proyecto público.
+
+%Tabla que contiene el Product Backlog
+\tabla{Product Backlog}{c p{5cm} p{2cm} c c c}{4}{productBacklog}{
+  \multicolumn{1}{c}{ID} & \multicolumn{1}{c}{Backlog Item} & \multicolumn{1}{c}{Propietario} & \multicolumn{1}{c}{Prioridad} & \multicolumn{1}{c}{Estimación} & \multicolumn{1}{c}{Sprint} \\
+ }
+ {
+  S-01001 & Se debe poder cargar una imagen y sacar información de sus píxeles & César, José & Alta & 2 & Sprint 1 \\
+  S-01002 & Se debe poder analizar una imagen y extraer sus características & César, José & Alta & 5 & Sprint 2  \\
+  S-01003 & La aplicación debe ser capaz de calcular una imagen Saliency Map & César, José & Alta & 5 & Sprint 3 \\
+  S-01004 & La aplicación debe poder calcular las características de Haralick & César, José & Alta & 8 & Sprint 3 \\
+  S-01005 & La aplicación debe ser capaz de generar ficheros ARFF & César, José & Alta & 5 & Sprint 3 \\
+  S-01006 & La aplicación debe ser capaz de calcular los eigenvalues mediante weka.Matrix o COLT & César, José & Baja & 1 & Sprint 4 \\
+  S-01007 & La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas  & César, José & Alta & 1 & Sprint 4  \\
+  S-01008 & La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media & César, José & Media & 3 & Sprint 4  \\
+  S-01009 & La aplicación debe ser capaz de albergar varios tipos de ventana & César, José & Alta & 1 & Sprint 4  \\
+  S-01010 & La aplicación debe ser capaz de entrenar un clasificador y clasificar & César, José & Alta & 5 & Sprint 4  \\
+  S-01011 & La aplicación debe ser capaz de mostrar un GUI con las principales opciones & César, José & Alta & 5 & Sprint 4  \\
+  S-01012 & La aplicación debe mostrar el progreso en una Progress Bar & César, José & Baja & 2 & Sprint 5  \\
+  S-01013 & La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar & César, José & Baja & 1 & Sprint 5  \\
+  S-01014 & La ventana de resultados se debe limpiar después de cada análisis & César, José & Media & 1 & Sprint 5  \\
+  S-01015 & La aplicación debe escribir un ARFF por cada hilo, uniéndolos al terminar el proceso & César, José & Alta & 3 & Sprint 5  \\
+  S-01016 & La aplicación debe mostrar eventos de funcionamiento en la interfaz & César, José & Media & 2 & Sprint 5  \\
+  S-01017 & La aplicación debe guardar y cargar en un fichero las opciones & César, José & Media & 3 & Sprint 5  \\
+  S-01018 & La aplicación debe ser capaz de guardar un log de errores & César, José & Baja & 2 & Sprint 5  \\
+  S-01019 & La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar & César, José & Alta & 3 & Sprint 5  \\
+  S-01020 & La aplicación debe usar la convolución de la imagen completa, en el caso de que no se elija región, o toda la región más un margen & César, José & Alta & 3 & Sprint 5  \\
+  S-01021 & La aplicación debe poder dibujar los defectos encontrados & César, José & Alta & 3 & Sprint 5  \\
+  S-01022 & La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no & César, José & Alta & 8 & Sprint 5  \\
+  S-01023 & La aplicación debe mostrar un slider para seleccionar el umbral de detección & César, José & Alta & 3 & Sprint 5  \\
+  S-01024 & La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log & César, José & Baja & 3 & Sprint 6  \\
+  S-01025 & La aplicación debe ser capaz de exportar el log en formato HTML & César, José & Baja & 2 & Sprint 6  \\
+  S-01026 & La aplicación debe tener un menú con varias opciones & César, José & Media & 2 & Sprint 6  \\
+  S-01027 & La aplicación debe usar REPTree para resolver el problema de regresión & César, José & Media & 1 & Sprint 6  \\
+  S-01028 & La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara & César, José & Alta & 5 & Sprint 6  \\
+  S-01029 & La aplicación debe dirigir la búsqueda de defectos usando filtros de umbrales locales & César, José & Alta & 5 & Sprint 6  \\
+  B-01001 & BUG: la primera y segunda derivadas deben estar bien calculadas  & César, José & Alta & - & Sprint 6  \\
+  S-01030 & La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos & César, José & Media & 2 & Sprint 7  \\
+  S-01031 & La aplicación debe calcular los umbrales locales con un pequeño margen & César, José & Media & 2 & Sprint 7  \\
+  S-01032 & La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante & César, José & Alta & 3 & Sprint 7  \\
+  S-01033 & La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos & César, José & Alta & 5 & Sprint 7  \\
+  S-01034 & La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas & César, José & Alta & 5 & Sprint 7  \\
+  S-01035 & Se debe poder mostrar una tabla resumen de los defectos & César, José & Alta & 5 & Sprint 7  \\
+  S-01036 & La aplicación debe permitir al usuario elegir qué tipo de clasificación se va a usar: clases nominales o regresión & César, José & Media & 2 & Sprint 8  \\
+  S-01037 & La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen & César, José & Media & 3 & Sprint 8  \\
+  S-01038 & La aplicación debe permitir al usuario elegir qué tipo de ventana defectuosa quiere usar  & César, José & Media & 3 & Sprint 8  \\
+  S-01039 & Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1)  & César, José & Media & 3 & Sprint 8  \\
+  S-01040 & La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente  & César, José & Alta & 5 & Sprint 8  \\
+  S-01041 & La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores  & César, José & Media & 3 & Sprint 9  \\
+  S-01042 & La aplicación debe tratar las excepciones de forma correcta, mostrando avisos  & César, José & Media & 3 & Sprint 8  \\
+  B-01002 & BUG: la aplicación debe impedir la reselección mientras se analiza  & César, José & Alta & - & Sprint 8  \\
+  S-01043 & La aplicación debe permitir guardar la imagen final  & César, José & Media & 2 & Sprint 9  \\
+  S-01044 & La aplicación debe permitir guardar los defectos binarizados  & César, José & Media & 2 & Sprint 9  \\
+  S-01045 & La aplicación debe calcular <<precision and recall>> del resultado  & César, José & Media & 3 & Sprint 9  \\
+  B-01003 & BUG: coordenadas en lista de píxeles blancos  & César, José & Alta & - & Sprint 9  \\
+ }
+\newpage
+
+
+%Planificación por Sprint
+\section{Planificación por Sprint}
+En esta sección aparece el listado de los diversos \sprints{} del proyecto. La información de cada uno está dividida del siguiente modo:
+\begin{itemize}
+ \item \textit{Planning meeting}: acta de la reunión inicial de cada \sprint{} en la que se detallan los objetivos a cumplir durante el transcurso del mismo.
+ \item \textit{Sprint planning}: se numeran las tareas extraídas del \productbacklog{} para desarrollar durante el \sprint{}.
+ \item \textit{Burndown chart}: gráfico que muestra la evolución a lo largo del \sprint{} en comparación a la línea óptima.
+ \item \textit{Retrospective meeting}: acta de la reunión retrospectiva realizada al final del \sprint{} y donde se analizan los problemas detectados durante su ejecución y las desviaciones (en caso de haberlas).
+\end{itemize}
+
+Debido a la falta de conocimiento inicial y a la incertidumbre sobre el desarrollo, se inicia el proyecto con \sprints{} de corta duración, aproximadamente dos semanas. Se ha intentado mantener siempre esta duración, aunque a veces nos ha podido el optimismo y hemos metido demasiado trabajo o no se han tenido en cuenta ciertos problemas de tiempo.
+
+Las reuniones inicial y final de cada \sprint{} se solaparon para poder hacerlas el mismo día, debido a problemas de tiempo y de disponibilidad. Así, media parte de esta reunión se centraba en la \textit{Planning meeting} y la otra en la \textit{Retrospective meeting}.
+
+
+\subsection{Sprint 1: Spike Arquitectónico 1}
+\subsubsection*{Planning meeting}
+En este primer \sprint{} se pretende comenzar el proyecto, empezar a usar ImageJ, familiarizarnos con el proyecto del año pasado... Se empiezan a poner en práctica algunas de las ideas que teníamos para el diseño de la aplicación. Lo llamamos \textit{spike arquitectónico} debido a que es una primera aproximación al proyecto, tomando prestado el nombre de otra metodología ágil (\textit{Extreme Programming}).
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este primer \sprint{} comienza el 19/11/2012 y su fecha límite es el 27/11/2012. Es un \sprint{} muy corto debido a que es una primera aproximación. Los puntos totales estimados en este \sprint{} son de 2.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+\item  S-01001: Se debe poder cargar una imagen y sacar información de sus píxeles.
+	\begin{itemize}
+	\item TK-00001: Carga y manejo de la imagen con ImageJ.
+	\item TK-00002: Creación de la ventana deslizante (simple).
+	\item TK-00003: Creación de una pequeña interfaz que muestre los resultados.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+Para este \sprint{} no disponemos de \burndownchart{} debido a un fallo en el uso de \textit{Pivotal Tracker}. Como aún no estábamos familiarizados con él, finalizamos antes la \textit{release} que la historia de usuario, con lo que no se ve reflejado en el \burndownchart{}.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item La lectura de artículos y comprensión del proyecto avanza por buen camino.
+ \item Nos vamos familiarizando con ImageJ y el resto de nuevas herramientas.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Familiarizarse con ImageJ es difícil. Por ello, llegamos a plantearnos el uso de alguna otra librería, como \textit{OpenCV}, pero acabamos descartándolo debido a que ImageJ tienen muy buena documentación, cosa que el resto no.
+ \item Adaptación a la nueva metodología.
+\end{itemize}
+
+
+\subsection{Sprint 2: Spike Arquitectónico 2}
+\subsubsection*{Planning meeting}
+Como seguimos probando cosas más que implementar funcionalidad nueva, consideramos a este \sprint{} otro \textit{spike}, aunque éste está ya más orientado a nueva funcionalidad. Básicamente, lo que buscamos en este \sprint{} es:
+
+\begin{enumerate}
+\item Seguir familiarizándonos con ImageJ.
+\item Convertir la aplicación en multihilo, dividiendo la imagen a analizar en tantas partes como procesadores tenga la máquina y analizando cada trozo en un hilo separado.
+\item Implementar los algoritmos de extracción de características, usando lo que se pueda del proyecto del año pasado.
+\end{enumerate}
+
+También comentamos otras cosas como que, de momento, vamos a sacar los resultados por pantalla, pero que hay que ir pensando en sacarlos a un fichero. También tenemos que pensar que hay que usar \textit{Saliency Map} para el preprocesamiento.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} comienza el 27/11/2012 y la fecha límite es el 11/12/2012. El número total de puntos estimado es de 5.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+\item S-01002: Se debe poder analizar una imagen y extraer sus características.
+	\begin{itemize}
+	\item TK-00004: Implementación de la ventana deslizante multihilo.
+	\item TK-00005: Implementación de los algoritmos de selección de características.
+	\item TK-00006: Implementación de las llamadas a los algoritmos de selección de características y muestra de los resultados.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint2} podemos ver 2 cosas:
+
+\begin{enumerate}
+\item Hay una incoherencia en las fecha de inicio, ya que, de nuevo, por la falta de conocimientos del uso de \textit{PivotalTracker}, metimos una historia de usuario antes de tiempo y después nos limitamos a cambiar el nombre, dándonos cuenta mucho después de que lo habíamos hecho mal.
+\item Tuvimos ciertos problemas de tiempo y de implementación, por lo que hay un tiempo totalmente plano en el que no pudimos terminar ninguna tarea, lo que llevó a pasarnos de fecha hasta el 18/12/2012.
+\end{enumerate}
+
+%Burndown chart del Sprint 2.
+\figura{0.6}{imgs/burndownChartSprint2.png}{Burndown Chart del segundo Sprint}{burndownChartSprint2}{}
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Cada vez dominamos más ImageJ.
+ \item Hemos conseguido implementar con éxito el multihilo.
+ \item Las implementaciones de los algoritmos de extracción de características del año pasado parece que van bien, por lo que decidimos mantenerlas.
+ \item El diseño que habíamos pensado está probando ser bueno.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Hemos planificado mal este \sprint{}, ya que fuimos muy optimistas respecto al tiempo y a las dificultades. Tuvimos mucha carga de trabajo de otras asignaturas.
+ \item Tuvimos problemas con las coordenadas, lo que nos quitó mucho tiempo.
+\end{itemize}
+
+\subsection{Sprint 3}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{enumerate}
+\item Implementar las características de Haralick, que por ser muy pesadas, no se hicieron en el anterior \sprint{}.
+\item Calcular el \textit{Saliency Map} para el preprocesamiento de la imagen.
+\item Generar un fichero ARFF con el resultado de los análisis.
+\end{enumerate}
+
+Como vemos, algunas de las cosas que se hablaron en anteriores reuniones se ponen en práctica en este \sprint{}.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se planificó de manera especial, ya que por medio están las vacaciones de Navidad y el periodo de exámenes del primer cuatrimestre. Por eso es más largo de lo normal: del 19/12/2012 al 24/01/2013. El número total de puntos estimado es de 18.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01003: La aplicación debe ser capaz de calcular una imagen Saliency Map.
+ \begin{itemize}
+  \item TK-00007: Implementar el cálculo de Saliency Map.
+  \item TK-00008: Adición de los Saliency Map a la estructura del programa.
+ \end{itemize} 
+ \item S-01004: La aplicación debe poder calcular las características de Haralick.
+ \begin{itemize}
+  \item TK-00009: Implementar características de Haralick.
+  \item TK-00010: Añadirlo a la estructura del patrón Estrategia de algoritmos.
+ \end{itemize}
+ \item S-01005: La aplicación debe ser capaz de generar ficheros ARFF.
+ \begin{itemize}
+  \item TK-00011: Generación de ARFF a partir de los datos de las características.
+ \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint3} podemos ver que hay un gran periodo totalmente plano, en el que no pudimos prácticamente hacer nada del proyecto. Esto estaba previsto y controlado, y por eso planificamos este \sprint{} con tanto tiempo.
+
+%Burndown chart del Sprint 3.
+\figura{0.6}{imgs/burndownChartSprint3.png}{Burndown Chart del tercer Sprint}{burndownChartSprint3}{}
+
+Por lo demás, vemos que en este \sprint{} no nos pasamos de la fecha límte.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Los algoritmos de la versión anterior parecen funcionar bien, por lo que decidimos mantenerlo (excepto una cosa, de la que hablaremos más tarde).
+ \item El diseño que habíamos pensado vuelve a probar ser bueno, ya que permite añadir nuevos algoritmos muy fácilmente.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item La implementación de la última característica de Haralick es muy lenta. Hemos observado que los alumnos del año pasado hicieron su propia clase de cálculos de matrices, cosa que nos pareció absurda y contraproducente. De hecho, ellos anularon esta característica para presentar el proyecto.
+ \item En este \sprint{} quizás nos pasamos estimando el tiempo de cada tarea, debido en parte a lo que nos pasó en el anterior \sprint{}.
+\end{itemize}
+
+
+\subsection{Sprint 4}
+\subsubsection*{Planning meeting}
+En este \sprint{} planeamos hacer:
+
+\begin{itemize}
+\item Probar implementaciones alternativas para los autovalores de una matriz (Weka, COLT...).
+\item Añadir un solapamiento al dividir las imágenes para el multihilo, para tener en cuenta la importancia de los píxeles de la división, ya que pueden ser importantes en la otra parte de la imagen.
+\item Modificar la convolución de las imágenes para hacerlo con la imagen completa.
+\item Entrenar un clasificador, para lo que hace falta una ventana aleatoria.
+\item Implementar la interfaz de usuario.
+\end{itemize}
+
+Además, se habló de otras cosas, como el ir probando los umbrales adaptitivos en ImageJ, o cosas que deben ir en la memoria (la metodología debe aparecer en el apartado de técnicas, resaltar los aspectos relevantes y nuevos del proyecto de este año \textit{versus} la versión del año pasado...). Llegamos incluso a hablar de la idea de clasificar los defectos en tipos, para lo cual es necesario calcular características geométricas.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 26/01/2013 y tiene como fecha límite el 15/02/2013. Tiene un total de puntos estimados de 20.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01006: La aplicación debe ser capaz de calcular los valores propios mediante weka.Matrix o COLT.
+ \begin{itemize}
+  \item TK-00012: Añadir las librerías necesarias.
+  \item TK-00013: Sustituir la llamada a la función de cálculo de valores propios por el método correspondiente de las nuevas librerías.
+ \end{itemize}
+ \item S-01007: La aplicación debe ser capaz de dividir la imagen según los hilos disponibles, con solapamiento entre las mismas.
+ \begin{itemize}
+  \item TK-00014: Modificar la división de las imágenes para permitir un solapamiento.
+ \end{itemize}
+ \item S-01008: La aplicación debe ser capaz de realizar la convolución de la imagen completa, para extraer la media.
+ \begin{itemize}
+  \item TK-00015: Calcular la convolución de la imagen completa.
+  \item TK-00016: Calcular sobre la convolución la primera y segunda derivadas.
+ \end{itemize}
+ \item S-01009: La aplicación debe ser capaz de albergar varios tipos de ventana.
+ \begin{itemize}
+  \item TK-00017: Crear el patrón estrategia.
+  \item TK-00018: Creación de la clase de la ventana aleatoria.
+ \end{itemize}
+ \item S-01010: La aplicación debe ser capaz de entrenar un clasificador y clasificar.
+ \begin{itemize}
+  \item TK-00019: Crear 2 listas de píxeles centrales: una con defectos y otra sin defectos.
+  \item TK-00020: Seleccionar de forma aleatoria ventanas sobre las que calcular características, a partir de las 2 listas.
+  \item TK-00021: Entrenar a un clasificador y guardar el modelo obtenido.
+  \item TK-00022: Clasificar defectos.
+ \end{itemize}
+ \item S-01011: La aplicación debe ser capaz de mostrar un GUI con las principales opciones.
+ \begin{itemize}
+  \item TK-00023: Implementación de la GUI.
+  \item YK-00024: Adaptación del resto del código.
+ \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint4} podemos ver que el desarrollo fue bastante escalonado, teniendo periodos planos en los que no podíamos avanzar debido a las dificultades.
+
+%Burndown chart del Sprint 4.
+\figura{0.6}{imgs/burndownChartSprint4.png}{Burndown Chart del cuarto Sprint}{burndownChartSprint4}{}
+
+Todo esto al final hizo que nos pasáramos de fecha, ya que acabamos el 21 de febrero.
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item El diseño que habíamos pensado vuelve a probar ser bueno, ya que, usando la misma idea para las ventanas que para los algoritmos, nos permite añadir nuevos tipos de ventana fácilmente.
+ \item El entrenamiento funciona bien. Esto nos permitió ganar mucha comprensión acerca de cómo funciona esta parte del proyecto.
+ \item La GUI implementada es más intuitiva que la del año pasado.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item El cálculo de los autovalores siguen siendo muy lentos.
+ \item Mala planificación: nos pasamos metiendo historias de usuario en este \sprint{}, por lo que nos ha llevado algo más de tiempo del previsto.
+ \item Fallo extraño al crear el ARFF de entrenamiento: hay veces que los hilos no lo hacen bien.
+\end{itemize}
+
+
+\subsection{Sprint 5}
+\subsubsection*{Planning meeting}
+En este \sprint{} planeamos hacer:
+
+\begin{itemize}
+\item Mejorar ciertos aspectos de la interfaz (barra de progreso, eventos en el log...).
+\item Solucionar el fallo al escribir los ARFF (decidimos que cada hilo escriba en un fichero y luego se fusionen).
+\item Dibujar los defectos encontrados.
+\item Solucionar ciertos aspectos que no habían quedado claros respecto a los \textit{Saliency Map} y a las convoluciones.
+\item Implementar nuevas formas de determinar cuándo una ventana es defectuosa o no en el entrenamiento.
+\item Implementar la selección del umbral de detección de defectos.
+\item Implementar la carga y almacenamiento de opciones.
+\end{itemize}
+
+Las nuevas formas de determinar cuándo una ventana es defectuosa son las que ya mencionamos en la parte teórica de esta memoria:
+
+\begin{itemize}
+\item Un píxel mal, toda la ventana mala (enfoque del año pasado).
+\item Píxel central malo, toda la ventana mala.
+\item Porcentaje de píxeles malos.
+\item Porcentaje de píxeles malos en una región de vecinos $3\times3$ centrada en el píxel central.
+\end{itemize}
+
+Además, se habla de analizar si es mejor \textit{Random Forest}(que es un método de construcción de ensembles[REFERENCIA]) que \textit{Bagging} y la posibilidad de incluir un árbol para poder seleccionar el algoritmo de clasificación.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 21/02/2013 y tiene como fecha límite el 12/03/2013. Tiene un total de puntos estimados de 34.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01012: La aplicación debe mostrar el progreso en una \emph{Progress Bar}.
+ \begin{itemize}
+   \item TK-00025: Actualizar el progreso de la \emph{Progress Bar} en el análisis de la imagen.
+   \item TK-00026: Actualizar el progreso de la \emph{Progress Bar} en el entrenamiento.
+  \end{itemize}
+ \item S-01013: La aplicación debe mostrar un aviso si no se selecciona una región de la imagen a analizar.
+ \begin{itemize}
+   \item TK-00027: Creación del aviso con 2 botones: Continuar y Cancelar el proceso.
+  \end{itemize}
+ \item S-01014: La ventana de resultados se debe limpiar después de cada análisis.
+  \begin{itemize}
+   \item TK-00028: Limpiar la ventana si se para la ejecución o si se vuelve a lanzar el proceso.
+  \end{itemize}
+ \item S-01015: La aplicación debe escribir un ARFF por cada hilo, uniéndolos al terminar el proceso.
+  \begin{itemize}
+   \item TK-00029: Generación de un ARFF nuevo en cada hilo, sobre el que va a escribir cada uno.
+   \item TK-00030: Fusión de todos los ARFF generados al terminar el proceso.
+   \item TK-00031: Entrenamiento del clasificador con el ARFF fusionado.
+   \item TK-00032: Mover la funcionalidad de generar el modelo a otra clase.
+  \end{itemize}
+ \item S-01016: La aplicación debe mostrar eventos de funcionamiento en la interfaz.
+  \begin{itemize}
+   \item TK-00033: Escritura en el campo de texto de la interfaz cada vez que ocurre un evento.
+  \end{itemize}
+ \item S-01017: La aplicación debe guardar y cargar en un fichero las opciones.
+  \begin{itemize}
+   \item TK-00034: Creación de un fichero de propiedades, con las opciones por defecto.
+   \item TK-00035: Creación de una clase de utilería que sea capaz de leer y escribir el fichero de opciones.
+   \item TK-00036: Sustituir algunos de los parámetros dentro del programa por llamadas a la clase de lectura/escritura de propiedades.
+  \end{itemize}
+ \item S-01018: La aplicación debe ser capaz de guardar un log de errores.
+  \begin{itemize}
+   \item TK-00037: Creación de una clase que escriba el log.
+   \item TK-00038: Escritura en el log en cada excepción.
+  \end{itemize}
+ \item S-01019: La aplicación debe usar el filtro saliency para calcular características para entrenar y clasificar.
+  \begin{itemize}
+   \item TK-00039: Uso de las imágenes saliency al mismo tiempo que las normales a la hora de calcular las características.
+   \item TK-00040: Generación de un ARFF con las características de las imágenes saliency.
+  \end{itemize}
+ \item S-01020: La aplicación debe usar la convolución de la imagen completa, en el caso de que no se elija región, o toda la región más un margen.
+  \begin{itemize}
+   \item TK-00041: Calcular el margen de la región y crear con ello una nueva imagen, para pasarla a la ventana.
+  \end{itemize}
+ \item S-01021: La aplicación debe poder dibujar los defectos encontrados.
+  \begin{itemize}
+   \item TK-00042: Creación de matriz de píxeles, en la que cada pixel será considerado como error si se supera el umbral.
+   \item TK-00043: Dibujado de los píxeles con defecto en una imagen nueva (máscara).
+   \item TK-00044: Superposición de la máscara con la imagen original para crear la nueva imagen.
+   \item TK-00045: Dibujado de la imagen en el panel de visualización.
+  \end{itemize}
+ \item S-01022: La aplicación debe ser capaz de usar varios tipos de métodos para determinar si una ventana es defectuosa o no.
+  \begin{itemize}
+   \item TK-00046: Implementación de <<píxel central -> todo mal>>.
+   \item TK-00047: Creación del ARFF para que se pueda usar en regresión (valor de la clase numérico).
+   \item TK-00048: Implementación de <<píxel central más tanto por ciento de vecinos>>.
+   \item TK-00049: Implementación de <<porcentaje de todos los píxeles de la ventana>>.
+   \item TK-00050: Entrenamiento de un modelo de regresión lineal y usarlo para clasificar.
+  \end{itemize}
+ \item S-01023: La aplicación debe mostrar un slider para seleccionar el umbral de detección.
+  \begin{itemize}
+   \item TK-00051: Creación del \emph{slider}, junto con su \emph{listener}.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint5} podemos ver que el desarrollo fue bastante cercano a la recta ideal.
+
+%Burndown chart del Sprint 5.
+\figura{0.6}{imgs/burndownChartSprint5.png}{Burndown Chart del quinto Sprint}{burndownChartSprint5}{}
+
+Esto hizo que, pese a tener mucha carga de trabajo en este \sprint{}, terminásemos dentro del tiempo. Fue una buena planificación.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item El dibujado de defectos del año pasado funciona muy bien, por lo que hemos decidido mantenerlo.
+ \item La regresión lineal funciona.
+ \item Es muy sencillo generar el fichero de opciones. Decidimos meter alguna más.
+ \item Dos de las nuevas formas de determinar si una ventana es defectuosa han resultado ser muy buenas, por lo que se mejora la precisión respecto al año pasado.
+ \item El log con colores queda más intuitivo que el del año pasado.
+ \item Se solucionó el problema de la escritura en los ARFF.
+ \item Buena planificación del \sprint{}.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item No hemos encontrado ninguna forma de automatizar el valor del umbral de detección de defectos. Se deja, por lo tanto, con el \emph{slider} sin más.
+ \item La barra de progreso nos ha dado algunos problemas.
+\end{itemize}
+
+
+
+\subsection{Sprint 6}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Cambiar la escritura del log por HTML.
+\item Exportación del log.
+\item Crear un menú de opciones avanzadas, aprovechando las posibilidades que nos da el fichero de opciones.
+\item Arreglar un fallo con la primera y segunda derivadas.
+\item Implementar dos nuevas formas de enfocar la detección de defectos
+\end{itemize}
+
+Las nuevas formas de detección de defectos son las que ya se explicaron en la parte teórica de la memoria:
+
+\begin{itemize}
+\item Detección normal más intersección con filtros de umbrales locales.
+\item Lista de píxeles blancos en umbrales locales.
+\end{itemize}
+
+Además, también se habla de otras cosas, como que la documentación \textit{Javadoc} debería ir en inglés y que se deben añadir todas las mejoras que hemos hecho a la presente memoria.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 12/03/2013 y tiene como fecha límite el 26/03/2013. Tiene un total de puntos estimados de 18.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01024: La aplicación debe ser capaz de escribir texto formateado en HTML en el panel de log.
+  \begin{itemize}
+   \item TK-00052: Crear un CSS con una clase por cada tipo de cadena.
+   \item TK-00053: Sustituir las escrituras con \emph{SimpleAttributeSet} por HTML.
+  \end{itemize}
+ \item S-01025: La aplicación debe ser capaz de exportar el log en formato HTML.
+  \begin{itemize}
+   \item TK-00054: Creación del botón junto con su \emph{listener}.
+   \item TK-00055: Escritura del texto formateado en HTML en el fichero seleccionado.
+  \end{itemize}
+ \item S-01026: La aplicación debe tener un menú con varias opciones.
+  \begin{itemize}
+   \item TK-00056: Creación de la barra de menús, con sus diferentes apartados.
+   \item TK-00057: Creación del diálogo de <<opciones avanzadas>>.
+  \end{itemize}
+ \item S-01027: La aplicación debe usar REPTree para resolver el problema de regresión.
+  \begin{itemize}
+   \item TK-00058: Sustituir LinearRegression por REPTree.
+  \end{itemize}
+ \item S-01028: La aplicación debe ser capaz de calcular filtros de umbrales locales y comprobar si las regiones candidatas están dentro de la máscara.
+  \begin{itemize}
+   \item TK-00059: Calcular filtros de umbrales locales.
+   \item TK-00060: Comprobar píxeles de regiones candidatas.
+   \item TK-00061: Segmentar el defecto.
+  \end{itemize}
+ \item S-01029: La aplicación debe dirigir la búsqueda de defectos usando filtros de umbrales locales.
+  \begin{itemize}
+   \item TK-00062: Calcular filtros de umbrales locales.
+   \item TK-00063: Sacar lista de píxeles marcados como blancos en los umbrales locales.
+   \item TK-00064: Dividir la lista en tantas partes como hilos haya.
+   \item TK-00065: Centrar una ventana en cada píxel de las regiones candidatas, calcular características y clasificar.
+   \item TK-00066: Segmentar el defecto con el algoritmo actual.
+  \end{itemize}
+ \item B-01001: BUG: la primera y segunda derivadas deben estar bien calculadas.
+  \begin{itemize}
+   \item TK-00067: Verificar, comprobar y arreglar la primera y segunda derivadas.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint6} podemos ver que el desarrollo fue cercano a la recta ideal.
+
+%Burndown chart del Sprint 6.
+\figura{0.6}{imgs/burndownChartSprint6.png}{Burndown Chart del sexto Sprint}{burndownChartSprint6}{}
+
+Esto hizo que terminásemos dentro de tiempo. Es más, podríamos incluso haber metido más carga de trabajo, ya que terminamos algo antes de tiempo. La planificación no fue mala.
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item El log en HTML queda muy bien y es muy sencillo de hacer.
+ \item La exportación del log ha quedado mucho más fina que la del año pasado.
+ \item Ha sido sencillo adaptar las clases de ImageJ para poder usar los umbrales locales.
+ \item El uso de los umbrales locales nos da más conocimientos sobre análisis de imágenes y nos abre una nueva forma de poder solucionar el problema.
+ \item Se solucionó el problema de la barra de progreso.
+ \item Se refinó el cálculo de la primera y segunda derivadas usando métodos de ImageJ.
+ \item El menú ha sido muy fácil de hacer y nos permite muchas opciones.
+ \item Buena planificación del \sprint{}.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item La segunda aproximación de la detección de defectos (lista de píxeles blancos) no devuelve tan buenos resultados como pensábamos.
+\end{itemize}
+
+
+\subsection{Sprint 7}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Permitir al usuario elegir más opciones.
+\item Mejorar el cálculo de los umbrales locales.
+\item Calcular características geométricas sobre los defectos dibujados.
+\item Mostrar una tabla resumen.
+\item Intentar encontrar una buena solución para el problema de los autovalores.
+\item Solucionar el problema de la lista de píxeles blancos.
+\end{itemize}
+
+Como vemos, se van a poner en práctica ideas ya comentadas en reuniones anteriores.
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 26/03/2013 y tiene como fecha límite el 18/04/2013. Lo hemos planificado con una semana extra debido a que están las vacaciones de Semana Santa de por medio y nos puede dar problemas. Tiene un total de puntos estimados de 22.
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01030: La aplicación debe dar la oportunidad al usuario de elegir el proceso de detección de defectos.
+  \begin{itemize}
+   \item TK-00068: Adición de las opciones a la interfaz.
+   \item TK-00069: Lanzamiento de una opción u otra según la selección.
+  \end{itemize}
+ \item S-01031: La aplicación debe calcular los umbrales locales con un pequeño margen.
+  \begin{itemize}
+   \item TK-00070: Generación de la imagen a calcular, partiendo de la selección más el radio del algoritmo.
+  \end{itemize}
+ \item S-01032: La aplicación debe ser capaz de generar un conjunto de datos a partir de la ventana deslizante.
+ \begin{itemize}
+   \item TK-00071: Generación de un ARFF a partir de la ventana deslizante.
+   \item TK-00072: Inclusión de la opción en la interfaz.
+  \end{itemize}  
+ \item S-01033: La aplicación debe poder remuestrear la lista de píxeles blancos, de tal manera que no considere todos.
+ \begin{itemize}
+   \item TK-00073: Sacar una lista de ROIs marcados como blancos en los umbrales locales.
+   \item TK-00074: Crear una regla para decidir si el píxel que toca realmente se va a considerar o no.
+  \end{itemize}
+ \item S-01034: La aplicación debe ser capaz de calcular características geométricas sobre las regiones segmentadas.
+ \begin{itemize}
+  \item TK-00075: Cambiar la llamada a \emph{ParticleAnalyzer} para que calcule características geométricas.
+  \item TK-00076: Creación de un método para mostrar los resultados por cada ROI.
+ \end{itemize}
+ \item S-01035: Se debe poder mostrar una tabla resumen de los defectos.
+  \begin{itemize}
+   \item TK-00077: Generación de una JTable en la interfaz que contenga una fila por cada región.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint7} podemos ver que hubo una primera parte en la que la curva es totalmente plana. Coincide con las vacaciones.
+
+%Burndown chart del Sprint 7.
+\figura{0.6}{imgs/burndownChartSprint7.png}{Burndown Chart del séptimo Sprint}{burndownChartSprint7}{}
+
+Pese a ello, terminamos a tiempo. Esto es debido a que tuvimos en cuenta esta eventualidad, dando lugar a una buena planificación.
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Se vuelve a ver que el fichero de opciones nos da muchas posibilidades para personalizar el funcionamiento de la aplicación.
+ \item El cálculo de las características geométricas funciona perfectamente.
+ \item Se ha encontrado una buena solución al problema de los autovalores con \textit{EJML} (\textit{Efficient Java Matrix Library}), aunque sigue siendo algo lento. Tendremos que decidir si lo usamos finalmente o no.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item No se ha solucionado del todo el problema del remuestreo de píxeles blancos. Lo que hemos hecho es considerar aleatoriamente píxeles de cada región, hasta un máximo del 10\% del área de la misma. Esto provoca que se consideren muy pocos píxeles, por lo que habrá que probar con un porcentaje mayor.
+\end{itemize}
+
+
+\subsection{Sprint 8}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Dejar el código limpio y bien refactorizado, ya que se pretende que sea la última iteración.
+\item Añadir las últimas funcionalidades: permitir seleccionar una fila de la tabla resumen e resaltar el defecto al que pertenece y viceversa, es decir, seleccionar un defecto en la imagen y resaltar la fila a la que pertenece.
+\item Mejorar el margen de la selección al calcular umbrales locales.
+\item Permitir al usuario seleccionar más opciones.
+\item Permitir el cálculo de sólo las mejores características.
+\item Incluir un módulo de ayuda en línea, que el año pasado no existía.
+\item Solucionar algún BUG.
+\end{itemize}
+
+Además, se dan algunas ideas para líneas futuras, ya que a nosotros ya no nos da tiempo a meter más funcionalidad. Por ejemplo, se propone dar la opción al usuario de elegir él mismo qué características quiere calcular, automatizar la selección de las mejores características... También se propone comprobar qué tal funcionan las operaciones morfológicas de ImageJ, para ver si se puede incluir algo en nuestro proyecto o dejarlo como línea futura.
+
+Se habla también de aspectos de la memoria, ya que tenemos que añadir unas breves descripciones de los algoritmos de clasificación utilizados y se determina que debemos incluir una extensa comparativa con el proyecto del año pasado en un anexo propio.
+
+Por lo tanto, en este último \sprint{} pretendemos cerrar (o prácticamente dejarlo cerrado) toda la parte del código del proyecto, para dedicarnos a partir de aquí a finalizar la memoria y realizar una extensa comparativa con el año pasado (métricas, rendimiento...).
+
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 18/04/2013 y tiene como fecha límite el 04/05/2013. Tiene un total de 22 puntos estimados.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01036: La aplicación debe permitir al usuario qué tipo de clasificación se va a usar: clases nominales o regresión.
+  \begin{itemize}
+   \item TK-00078: Añadir la opción al fichero de propiedades, junto con su \emph{set} y su \emph{get}.
+   \item TK-00079: Añadir la opción al diálogo de opciones avanzadas.
+  \end{itemize}
+ \item S-01037: La aplicación debe añadir un borde a la selección en aquellas zonas que no coincidan con los bordes de la imagen.
+  \begin{itemize}
+   \item TK-00080: Modificar margen umbrales locales.
+  \end{itemize}
+ \item S-01038: La aplicación debe permitir al usuario qué tipo de ventana defectuosa quiere usar.
+  \begin{itemize}
+   \item TK-00081: Añadir la opción al fichero de opciones, junto con su set y su get.
+   \item TK-00082: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00083: Añadir un Slider para seleccionar el porcentaje.
+  \end{itemize}
+ \item S-01039: Se debe añadir un módulo de ayuda en línea (JavaHelp), accesible desde el menú y con teclas rápidas (F1).
+  \begin{itemize}
+   \item TK-00084: Implementación del módulo de ayuda en línea.
+   \item TK-00085: Crear un buscador.
+   \item TK-00086: Implementar el acceso a la ayuda desde el menú y desde teclas rápidas (F1).
+  \end{itemize}
+ \item S-01040: La aplicación debe poder permitir seleccionar una fila de la tabla de resultados e iluminar el defecto correspondiente.
+  \begin{itemize}
+   \item TK-00087: Al seleccionar una fila, dibujar sólo el ROI al que pertenece.
+   \item TK-00088: Al seleccionar un defecto en la imagen, mostrar a qué fila de la tabla pertenece.
+  \end{itemize}
+ \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores.
+  \begin{itemize}
+   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su \emph{get} y su \emph{set}.
+   \item TK-00090: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00091: En función de la opción, seleccionar todas las características o sólo las mejores.
+  \end{itemize}
+ \item S-01042: La aplicación debe tratar las excepciones de forma correcta, mostrando avisos.
+  \begin{itemize}
+   \item TK-00092: Capturar las excepciones de los hilos y almacenarlas.
+   \item TK-00093: Parar los hilos que aún estén en ejecución.
+   \item TK-00094: En el hilo de la interfaz comprobar si hay excepciones lanzadas. En caso positivo mostrar un mensaje con la excepción pertinente.
+  \end{itemize}
+ \item B-01002: BUG: la aplicación debe impedir la reselección mientras se analiza.
+  \begin{itemize}
+   \item TK-00095: Deshabilitar la selección de regiones mientras se analiza.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint8} podemos ver que nos adaptamos muy bien a la curva ideal en un principio, llegando incluso a adelantarnos y terminar antes de tiempo.
+
+%Burndown chart del Sprint 7.
+\figura{0.6}{imgs/burndownChartSprint8.png}{Burndown Chart del octavo Sprint}{burndownChartSprint8}{}
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item La interacción con la tabla de resultados y los defectos dibujados ha salido bien y queda realmente bien.
+ \item Las modificaciones realizadas funcionan bien.
+ \item El módulo de ayuda en línea funciona perfectamente.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item Por unas dudas que tuvimos, no pudimos implementar la selección de características, por lo que se deja para el siguiente \sprint{}. Es necesario, por tanto, hacer una iteración más.
+\end{itemize}
+
+\subsection{Sprint 9}
+\subsubsection*{Planning meeting}
+En este \sprint{} lo que se pretende es:
+
+\begin{itemize}
+\item Terminar toda la parte del código definitivamente.
+\item Implementar lo que no se pudo implementar en el anterior \sprint{}
+\item Solucionar algún BUG.
+\item Añadir la última funcionalidad que surgió en la reunión anterior.
+\end{itemize}
+
+Como vemos, se pretende cerrar lo que no se pudo cerrar en el anterior \sprint{}. Será una iteración corta, con pocas historias de usuario.
+
+La última funcionalidad hace referencia a la posibilidad de exportar la imagen con los defectos dibujados y la imagen con los defectos binarizados, así como la implementación de una medida de precisión, como es \emph{Precision \& Recall}.
+
+
+\subsubsection*{Fechas de desarrollo y tiempo estimado}
+Este \sprint{} se inicia el 20/05/2013 y tiene como fecha límite el 03/06/2013. Tiene un total de 10 puntos estimados.
+
+
+\subsubsection*{Sprint planning}
+\begin{itemize}
+ \item S-01041: La aplicación debe dar la opción de elegir si se calculan todas las características o sólo las mejores.
+  \begin{itemize}
+   \item TK-00089: Añadir la opción al fichero de propiedades, junto con su \emph{get} y su \emph{set}.
+   \item TK-00090: Añadir la opción al diálogo de opciones avanzadas.
+   \item TK-00091: En función de la opción, seleccionar todas las características o sólo las mejores.
+  \end{itemize}
+ \item S-01043: La aplicación debe permitir guardar la imagen final.
+  \begin{itemize}
+   \item TK-00096: Creación del botón y su \textit{listener}.
+  \end{itemize}
+  \item S-01044: La aplicación debe permitir guardar los defectos binarizados.
+  \begin{itemize}
+   \item TK-00097: Creación del botón y su \textit{listener}.
+  \end{itemize}
+  \item S-01045: La aplicación debe calcular <<precision and recall>> del resultado.
+  \begin{itemize}
+   \item TK-00098: Creación de un botón y su \textit{listener}.
+   \item TK-00099: Implementación de un diálogo modal con los datos.
+   \item TK-00100: Implementación del cálculo de <<precision \& recall>>.
+  \end{itemize}
+ \item B-01003: BUG: coordenadas en lista de píxeles blancos.
+  \begin{itemize}
+   \item TK-00101: Cambiar la forma en que se pasa la imagen a la estrategia.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{Burndown chart}
+En el \burndownchart{} \ver{burndownChartSprint9} podemos ver que hay una gran parte de la iteración en la que la curva es plana. Esto es normal y lo tuvimos en cuenta al planificar, ya que teníamos los exámenes en esas semanas. Pese a ello, acabamos a tiempo.
+
+%Burndown chart del Sprint 9.
+\figura{0.6}{imgs/burndownChartSprint9.png}{Burndown Chart del noveno Sprint}{burndownChartSprint9}{}
+
+
+\subsubsection*{Retrospective meeting}
+¿Qué ha ido bien?
+\begin{itemize}
+ \item Se han conseguido todos los objetivos del \sprint{} sin demasiadas dificultades.
+ \item Se han aprendido los conceptos de precisión y sensitividad.
+ \item Se considera cerrada la parte de implementación del proyecto.
+\end{itemize}
+
+¿Qué dificultades ha habido?
+\begin{itemize}
+ \item No ha habido grandes dificultades.
+\end{itemize}
+
+\newpage
+
+\newcommand{\pesoscasosdeuso}{\operatorname{Peso De Casos De Uso}}
+\newcommand{\pesosactores}{\operatorname{Peso De Actores}}
+
+\section{Estudio de viabilidad del proyecto}
+En este apartado, vamos a comprobar si el tiempo y el dinero invertidos en el proyecto están bien aprovechados, lo que implicaría que se trata de un proyecto rentable.
+
+Normalmente, el estudio de viabilidad se centra en la viabilidad económica realizando el análisis coste-beneficio que proporciona una justificación económica, aunque, en nuestro caso, se van a realizar algunos estudios más.
+
+Se van a realizar distintos tipos de estudio de viabilidad:
+
+\begin{itemize}
+\item \textbf{Viabilidad temporal}. Una estimación del tiempo esperado para desarrollar el proyecto software que se trata en esta memoria.
+\item \textbf{Viabilidad económica}. Una valoración del coste de desarrollo frente al beneficio producido por el sistema desarrollado.
+\item \textbf{Viabilidad legal}. Una determinación de cualquier infracción, violación o ilegalidad que pudiera resultar del desarrollo del sistema.
+\item \textbf{Viabilidad técnica}. Un estudio de la funcionalidad, rendimiento y restricciones que pueden afectar a la posibilidad de realización de un sistema aceptable.
+\end{itemize}
+ 
+\subsection{Viabilidad temporal}
+El estudio de la viabilidad temporal sirve para planificar el coste temporal que tendrá un proyecto software. Para ello, se tienen en cuenta diversos factores que intervienen en el desarrollo del mismo.
+
+Utilizando los casos de uso, elementos ya fijados por medio de los requisitos exigibles para la elaboración del proyecto, y realizando una serie de cálculos, se obtendrá a una estimación del tiempo necesario para desarrollar el proyecto y comprobar si es viable o no. Los casos de uso que vamos a usar vienen definidos en el Anexo II de esta memoria.
+
+
+\subsubsection{Cálculos de estimación según los casos de uso}
+Los diagramas de casos de uso son eficaces tanto para la identificación de requisitos y comportamiento del sistema como para la planificación de la viabilidad global del proyecto. En este apartado, vamos a utilizar técnicas de estimación del trabajo basadas en los casos de uso \cite{wiki:casosuso}. Para ello, debemos tener en cuenta los siguientes factores:
+
+\subsubsection*{Pesos de los actores}
+se asigna un factor clasificándolos si son actores simples (1), promedios (2) o complejos (3). En nuestro caso, sólo hay un actor: el usuario de la aplicación, que consideramos que es complejo.
+
+\subsubsection*{Peso de los casos de uso}
+Se realiza la misma operación que para los actores: se determina su peso en función de si son casos de uso simples (5), promedios (10) o complejos (15). Además se determinan las transacciones de cada caso de uso, es decir, cada una de las etapas o pasos de un caso de uso necesarios para alcanzar el objetivo previsto.
+
+\[ \pesoscasosdeuso = \sum_{i = 0}^{i} Factor_{i} \]
+
+\subsubsection*{UUCP}
+Con los pesos de actores y casos de uso determinamos el UUCP, es decir, los Puntos de Caso de Uso sin Ajustar (Unadjusted Use Case Points):
+
+\[ UUCP = \pesosactores + \pesoscasosdeuso \]
+
+\subsubsection*{Peso de los factores técnicos}
+Para este cálculo se emplea la variable TFC, o lo que es lo mismo, Factor Técnico de Complejidad (Tecnical Complexity Factor). La fórmula para calcular su valor es la siguiente:
+
+\[ TFC = 0,6 + 0,01 \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
+
+\subsubsection*{EF (Environmental Factor)}
+Factor de Entorno: nos sirve para valorar lo familiarizado que está el equipo de desarrollo con este tipo de proyectos. Como en los casos anteriores tenemos una tabla con una serie de factores a los que se les asigna un peso (0-Nada, 3-Promedio, 5-Experto). Su fórmula es la siguiente:
+
+ \[ EF = 1,4 + (-0,03) \cdot \sum_{i = 0}^{i} Factor_{i} \cdot Peso_{i} \]
+ 
+Todos estos pesos están calculados en \vertabla{tablaEstimacionTemporalCasosDeUso}.
+
+
+% Estimación temporal a partir de casos de uso.
+\tablaSmallSinColores{Estimación temporal a partir de casos de uso}{p{8cm} c c c}{tablaEstimacionTemporalCasosDeUso}{
+  \multicolumn{1}{c}{Factor} & \multicolumn{1}{c}{Peso} & \multicolumn{1}{c}{$ F_{i} $} & \multicolumn{1}{c}{Total} \\
+ }
+ {
+  Actores simples                                              & 0  & 1   & 0    \\
+  Actores medios                                               & 0  & 2   & 0    \\
+  Actores complejos                                            & 1  & 3   & 3    \\
+  \rowcolor[gray]{.8} Total peso actores                       &    &     & 3    \\
+  Casos de uso simples                                         & 8  & 5   & 40   \\
+  Casos de uso medios                                          & 1  & 10  & 10   \\
+  Casos de uso complejos                                       & 0  & 15  & 0   \\
+  \rowcolor[gray]{.8} Total peso casos de uso                  &    &     & 50   \\
+  \rowcolor[gray]{.8} UUCP (Puntos de caso de uso no ajustados)&    &     & 53  \\
+  Sistema distribuido                                          & 1  & 2   & 2    \\
+  Tiempos de respuesta críticos                                & 5  & 1   & 5    \\
+  En línea                                                     & 1  & 1   & 1    \\
+  Procesos internos complejos                                  & 5  & 1   & 5    \\
+  El código debe ser reutilizable                              & 4  & 1   & 4    \\
+  Fácil de instalar                                            & 1  & 0,5 & 0,5  \\
+  Fácil de utilizar                                            & 5  & 0,5 & 2,5  \\
+  Portable                                                     & 1  & 2   & 2    \\
+  Fácil de modificar                                           & 4  & 1   & 4    \\
+  Concurrencia                                                 & 4  & 1   & 1    \\
+  Incluye características de seguridad                         & 1  & 1   & 1    \\
+  Acceso a software creado por otras compañías                 & 3  & 1   & 3    \\
+  Incluye facilidades de aprendizaje para usuario              & 1  & 1   & 1    \\
+  \rowcolor[gray]{.8} TF (Factores técnicos)                   &    &     & 0,92 \\
+  Familiarizado con \scrum{}                                   & 1  & 1,5 & 1,5  \\
+  Experiencia en este tipo de aplicaciones                     & 1  & 1   & 1    \\
+  Experiencia en Orientación a Objetos                         & 5  & 0,5 & 2,5  \\
+  Capacidad de liderazgo del analista                          & 5  & 1   & 5    \\
+  Motivación                                                   & 5  & 1   & 5    \\
+  Requisitos estables                                          & 1  & 2   & 3    \\
+  Trabajadores a tiempo parcial                                & 5  & -1  & -5   \\
+  Lenguaje de programación difícil de utilizar                 & 2  & -1  & -2   \\
+  \rowcolor[gray]{.8} EF (Factores de entorno)                 &    &     & 1,07 \\
+ }
+
+Los puntos de casos de uso se calculan según la siguiente fórmula:
+\[ UCP = UUCP \cdot TF \cdot EF \]
+
+Para calcular los puntos de casos de uso hay que sustituir, en la fórmula anterior, con los valores de la tabla, es decir:
+\[ UCP = 53 \cdot 0,92 \cdot 1,07 = 52,173 \]
+
+Para obtener la duración del proyecto estimado según los casos de uso hay que multiplicar el valor de \textit{UCP} por un factor que depende del número de factores de entorno (\textit{EF}) a los cuales se les haya dado peso 0. En este caso, como no se ha dado ningún valor cero se multiplica por 20.
+
+Por lo expuesto anteriormente: $ Nº horas = 20 \cdot 52,173 $, es decir, 1043 horas/hombre.
+
+Conviene destacar que los resultados obtenidos son meramente orientativos, ya que se va a utilizar una metodología ágil, por lo que la planificación va a ser a nivel de \sprint{} (de 15 a 30 días). Al comenzar cada uno de ellos, se definirán una serie de tareas que deberán ser completadas en dicho \sprint{}.
+
+El proyecto comenzará en noviembre de 2012 y se desea finalizar en junio de 2013, es decir, se trabajará durante 7 meses. Se deben realizar los cálculos de horas para comprobar si es viable el desarrollo en las fechas previstas:
+\newcommand{\tiempo}{\operatorname{Tiempo}}
+\newcommand{\horas}{\operatorname{horas}}
+\newcommand{\persona}{\operatorname{personas}}
+\newcommand{\jornada}{\operatorname{jornada}}
+\newcommand{\jornadas}{\operatorname{jornadas}}
+\newcommand{\mes}{\operatorname{mes}}
+\newcommand{\meses}{\operatorname{meses}}
+\newcommand{\semana}{\operatorname{semana}}
+\newcommand{\hora}{\operatorname{hora}}
+
+\[
+ \tiempo = \dfrac{1043 \horas}{2 \persona} \cdot \dfrac{1 \jornada}{4 \horas} \cdot \dfrac{1 \mes}{20 \jornadas} = 6,52 \meses
+\]
+
+Como vemos, nos sobra un mes más para toda la parte de realizar la documentación y otras tareas, por lo que el proyecto es viable. Cierto es que estos valores son orientativos, ya que se pueden tener problemas en el desarrollo, cosa que no está contemplada en estos cálculos.
+
+
+\subsection{Viabilidad económica}
+En este apartado, se hará un análisis de los costes que producirán el desarrollo del proyecto y los beneficios que proporcionará una vez que esté acabado y en fase de explotación.
+
+\subsubsection{Análisis de costes}
+Los cálculos se realizan para los 7,5 meses que hemos tomado como referencia de la estimación temporal más el mes extra que ya hemos comentado.
+
+\paragraph{Costes de personal}\mbox{} \\
+\indent Se asignarán dos programadores, titulados en Ingeniería Técnica en Informática de Gestión, que llevarán a cabo la implementación de la aplicación, que trabajarán durante un periodo aproximado de 7.5 meses y cobrarán en función de las horas dedicadas al proyecto. Se ha determinado que percibirán un salario  de 10\euro /hora. Como se trabajan durante 4 horas diarias, se tiene que se cobran 40\euro /día. Cada mes se trabajan 20 días, con lo que tenemos un total de $40\times20=800$\euro mensuales, que, multiplicados por los 7,5 meses, da un total de 6000\euro por cada desarrollador. Total: 12000\euro en sueldos.
+
+Además, hay que tener en cuenta a los tutores del proyecto. Los tutores son titulados en Ingeniería en  Informática que cobrarán 20 \euro /hora. Calculando que la dedicación media va a ser de 2 horas/semana. Teniendo en cuenta de nuevo la estimación de la planificación el proyecto durará 7,5 meses se tiene un total de 1200\euro por tutor en todo el proyecto. En total, 2400\euro.
+
+Sumando los costes de los desarrolladores y de los tutores, tenemos un total de 14400\euro.
+
+\paragraph{Seguridad Social}\mbox{} \\
+\indent La ley de Seguridad Social marca que un porcentaje de sueldos deben ser abonado al estado en concepto de impuestos, entonces los gastos de personal quedarían de la siguiente manera: Gastos de personal mes = Sueldo Bruto + Seguridad Social.
+
+El importe de la Seguridad Social es el 32,4\% del salario neto. Por lo tanto: $12000\times32.4\%=3888$\euro de Seguridad Social.
+
+Por lo tanto, el gasto de personal final es: 14400\euro netos + 4665,6\euro de Seguridad Social = 19065,6\euro.
+
+
+\newcommand{\software}{\operatorname{Software}}
+\newcommand{\hardware}{\operatorname{Hardware}}
+
+\paragraph{Coste del hardware}\mbox{} \\
+Para el desarrollo del proyecto han sido necesarios dos ordenadores de sobremesa. Se ha estimado el coste de cada uno en torno a los 800\euro. Teniendo en cuenta que la vida útil del equipo es de dos a cuatro años, los cálculos están realizados teniendo en cuenta la vida media del inmovilizado en 3 años.
+
+ \[ 
+   \hardware = \dfrac{800 \textup{ \euro} + 800\textup{ \euro}}{36 \meses} \cdot 7,5 \meses = 333,33 \textup{ \euro}
+ \]
+
+
+
+\paragraph{Coste del software}\mbox{} \\
+A continuación \vertabla{costeSoftware} aparece detallado el software empleado y el precio de las licencias correspondientes:
+
+%Tabla de licencias de software
+\tablaSmall{Licencias de Software}{p{7cm} c c r}{costeSoftware}{
+  \multicolumn{1}{c}{Software} & \multicolumn{1}{c}{Nº licencias} & \multicolumn{1}{c}{\euro/Licencia}  & \multicolumn{1}{c}{Total} \\
+ }
+ {
+  Microsoft Windows 8 Pro	 	& 1 &   199,99 & 199,99 \\
+  Microsoft Windows XP						 	& 1 & 70 &   70 \\
+  Eclipse                            	& 2 & Gratuito &		0,00 \\
+  Java Development Kit               	& 2 & Gratuito &   	0,00 \\
+  Weka                              	& 2 & Gratuito &   	0,00 \\
+  JUnit                                	& 2 & Gratuito &   	0,00 \\
+  Astah Community                		& 2 & Gratuito &   	0,00 \\
+  \TeX{}Maker                          	& 2 & Gratuito &   	0,00 \\
+  MiK\TeX{}                            	& 2 & Gratuito &   	0,00 \\
+  ImageJ                         	  	& 2 & Gratuito &   	0,00 \\
+  EJML                          	  	& 2 & Gratuito &   	0,00 \\
+  Apache Commons IO                          	  	& 2 & Gratuito &   	0,00 \\
+  JavaHelp                          	  	& 2 & Gratuito &   	0,00 \\
+  Pivotal Tracker                          	  	& 2 & Gratuito &   	0,00 \\
+  GitHub                          	  	& 2 & Gratuito &   	0,00 \\
+  Zotero                          	  	& 2 & Gratuito &   	0,00 \\
+  RefactorIT                         	  	& 2 & Gratuito &   	0,00 \\
+  Source Monitor                          	  	& 2 & Gratuito &   	0,00 \\
+  Total                                	&   &          & 	269,99 \\
+ }
+
+
+Estimando que la vida útil de las licencias necesarias es de, aproximadamente, 3 años hay que amortizar el precio total para este intervalo. 
+
+Amortización del software = Amortización anual x periodo de utilización
+ \[ 
+   \software = \dfrac{269,99 \textup{ \euro}}{36 \meses} \cdot 7,5 \meses = 56,25 \textup{ \euro}
+ \]
+
+\paragraph{Otros costes}\mbox{} \\
+\indent No se puede concluir en análisis de costes sin tener en cuenta los costes de oficina. En la siguiente tabla \vertabla{costeOficina}, se muestra un resumen de todos ellos. El precio de la impresión del proyecto no ha sido estimado por no haber decidido, todavía, el tipo de impresión y encuadernación.
+
+%Tabla de costes de oficina
+\tablaSmall{Costes de oficina}{p{6cm} r c r}{costeOficina}{
+  \multicolumn{1}{c}{Concepto} & \multicolumn{1}{c}{\euro/mes} & \multicolumn{1}{c}{Cantidad}  & \multicolumn{1}{c}{Importe} \\
+ }
+ {
+  Alquiler de oficina                  & 300,00 &   9 & 2400,00 \\
+  Electricidad                         &  12,00 &   9 &   96,00 \\
+  Teléfono                             &  10,00 &   9 &   80,00 \\
+  Conexión a Internet                  &  23,00 &   9 &  184,00 \\
+  Material de oficina                  &   5,00 &   9 &   40,00 \\
+  Agua                                 &   6,00 &   9 &   48,00 \\
+  Calefacción                          &  21,00 &   9 &  168,00 \\
+  Total                                &        &     & 3016,00 \\
+ }
+
+\paragraph{Total costes}\mbox{} \\
+\indent Tras el análisis de todos los costes \vertabla{costeTotal}: personal, software, hardware y otros, el proyecto asciende a un total de $ 26574 \textup{ \euro} $.
+
+%Tabla total de costes
+\tablaSmall{Lista de costes}{p{6cm} r}{costeTotal}{
+  \multicolumn{1}{c}{Costes} & \multicolumn{1}{c}{Importe} \\
+ }
+ {
+  Software                  &    56,25 \\
+  Hardware                  &   333,33 \\
+  Personal                  & 19065,60 \\
+  Otros costes              &  3016,00 \\
+  Total                     & 22471,18 \\
+ }
+ 
+ 
+\subsubsection{Análisis de beneficios}
+Para justificar el desembolso calculado en la sección anterior se debe realizar un análisis de beneficios que se esperan obtener del proyecto.
+
+\paragraph{Beneficios no económicos}\mbox{} \\
+\indent En primer lugar, cabe destacar el beneficio que aportará la aplicación a la investigación y detección de defectos en todo tipo de empresas que utilicen radiografías para comprobar la presencia de defectos de fundición.
+
+En segundo lugar, como todo proyecto de final de carrera, supondrá una formación adicional a los estudiantes que aprenderán una serie de nuevas técnicas y herramientas como por ejemplo: conocimientos teóricos sobre el entrenamiento de clasificadores, nuevas formas de escribir textos con \LaTeX{}\dots
+
+Por último, pero no por ello menos importante, hay que destacar que la consecución del proyecto será el último paso del alumno para la finalización de la Ingeniería en Informática.
+
+\paragraph{Beneficios económicos}\mbox{} \\
+\indent El coste total del proyecto ha sido estimado en $ 22471,18 \textup{ \euro} $ por lo que calculando el precio de la licencia en $ 550 \textup{ \euro} $ el número de licencias a vender para empezar a obtener beneficios sería de 45. El público al que se encuentra orientado es el principalmente el empresarial.
+
+Teniendo en cuenta que multitud de empresas internacionales analizan radiografías en busca de defectos de fundición, es factible que pronto diversas empresas adquieran nuestra licencia con la que comencemos a obtener beneficios de su venta.
+
+Cabe destacar que la utilización de \weka{} hace que el software que se venda tendrá licencia \gnu{} y el usuario gozará de las mismas ventajas y libertades. Dicho de otro modo, la venta de las licencias ofrecerán el código fuente y la total libertad del mismo.
+
+\subsubsection{Conclusiones Viabilidad económica del Proyecto}
+Analizando los beneficios económicos y no económicos, está más que justificada la inversión a realizar en pro de los beneficios que ofrece, no sólo a los autores del proyecto sino también a la Universidad de Burgos y a los tutores del proyecto.
+
+Por todo lo expuesto en el capítulo, se considera viable el proyecto software.
+
+
+\subsection{Viabilidad Legal}
+La utilización de bibliotecas de terceros (\weka{} y \textit{EJML}) que se encuentran bajo licencia \gnu{} hace que el software desarrollado herede esta licencia. De este modo todas las aplicaciones que utilicen la biblioteca que se va a generar también deberán ser bajo esta licencia y se consigue que se extienda. Por todo ello la legalidad técnica queda demostrada.
+
+En el interior del CD se puede encontrar un pdf con una copia de la licencia, dentro de la carpeta <<Licencia>>. No obstante, para obtener la última versión de la misma, acceder a la dirección web: \url{http://www.gnu.org/licenses/gpl.html}.
+
+Además, Apache Commons IO usa una licencia de Apache (\url{http://www.apache.org/licenses/}), compatible con GPLv3. Esta licencia permite la distribución de la librería.
+
+\subsection{Viabilidad Técnica ó Tecnológica}
+Entendiendo por viabilidad técnica la condición que hace posible el funcionamiento del sistema, proyecto o idea prestando atención a sus características tecnológicas.
+
+Las mayores dificultades se centran en el desconocimiento, por parte del equipo de desarrollo en temas que no han sido vistos en la carrera. Aunque las técnicas utilizadas son novedosas y desconocidas para nosotros, los tutores tienen mucha experiencia en el campo de la minería de datos y cierta experiencia en el campo del análisis de imágenes, lo que hace que el proyecto sea factible técnicamente a pesar de las dificultades.
+
+Recordemos que pretendemos resolver un problema real, con datos y radiografías reales, lo que complica considerablemente la situación al no tratarse de un problema teórico.
+
+También hay que recordar que uno de los objetivos del proyecto es mejorar la versión anterior, por lo que ha sido necesario invertir una gran cantidad de horas en entender el código de los otros desarrolladores y pensar formas para mejorarlo, lo que ha restado mucho tiempo.
+
+El desconocimiento citado anteriormente se contrapone a la voluntad de los desarrolladores por obtener nuevos conocimientos y superar retos. La inexistencia de aplicaciones que detecten defectos en radiografias y la visualización de éste tipo de características, hacen del software a crear una herramienta empresarial muy útil.
+
+Todo lo anteriormente expuesto hace al proyecto viable técnicamente.

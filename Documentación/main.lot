@@ -1,0 +1,42 @@
+\select@language {spanish}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\relax 5.1}{\ignorespaces Tabla comparativa de art\IeC {\'\i }culos}}{48}{table.141}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\relax A.1}{\ignorespaces Product Backlog}}{69}{table.183}
+\contentsline {table}{\numberline {\relax A.2}{\ignorespaces Estimaci\IeC {\'o}n temporal a partir de casos de uso}}{93}{table.213}
+\contentsline {table}{\numberline {\relax A.3}{\ignorespaces Licencias de Software}}{95}{table.220}
+\contentsline {table}{\numberline {\relax A.4}{\ignorespaces Costes de oficina}}{96}{table.222}
+\contentsline {table}{\numberline {\relax A.5}{\ignorespaces Lista de costes}}{96}{table.224}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\relax B.1}{\ignorespaces Objetivos}}{106}{table.239}
+\contentsline {table}{\numberline {\relax B.2}{\ignorespaces Actores}}{106}{table.241}
+\contentsline {table}{\numberline {\relax B.3}{\ignorespaces Requisitos de informaci\IeC {\'o}n}}{111}{table.269}
+\contentsline {table}{\numberline {\relax B.4}{\ignorespaces Caso de uso: RF-01 Abrir imagen}}{113}{table.272}
+\contentsline {table}{\numberline {\relax B.5}{\ignorespaces Caso de uso: RF-02 Entrenar clasificador}}{114}{table.273}
+\contentsline {table}{\numberline {\relax B.6}{\ignorespaces Caso de uso: RF-03 Entrenar clasificador con ARFF existente}}{115}{table.274}
+\contentsline {table}{\numberline {\relax B.7}{\ignorespaces Caso de uso: RF-04 Entrenar clasificador generando nuevo ARFF}}{116}{table.275}
+\contentsline {table}{\numberline {\relax B.8}{\ignorespaces Caso de uso: RF-05 Analizar imagen}}{117}{table.276}
+\contentsline {table}{\numberline {\relax B.9}{\ignorespaces Caso de uso: RF-06 Calcular caracter\IeC {\'\i }sticas}}{118}{table.277}
+\contentsline {table}{\numberline {\relax B.10}{\ignorespaces Caso de uso: RF-07 Seleccionar defecto}}{119}{table.278}
+\contentsline {table}{\numberline {\relax B.11}{\ignorespaces Caso de uso: RF-08 Exportar Log}}{120}{table.279}
+\contentsline {table}{\numberline {\relax B.12}{\ignorespaces Caso de uso: RF-09 Abrir ayuda}}{121}{table.280}
+\contentsline {table}{\numberline {\relax B.13}{\ignorespaces Caso de uso: RF-10 Cambiar opciones}}{122}{table.281}
+\contentsline {table}{\numberline {\relax B.14}{\ignorespaces Caso de uso: RF-11 Guardar imagen analizada}}{123}{table.282}
+\contentsline {table}{\numberline {\relax B.15}{\ignorespaces Caso de uso: RF-12 Guardar imagen binarizada}}{124}{table.283}
+\contentsline {table}{\numberline {\relax B.16}{\ignorespaces Caso de uso: RF-13 Calcular <<Precision \& Recall>>}}{125}{table.284}
+\contentsline {table}{\numberline {\relax B.17}{\ignorespaces Pruebas de aceptaci\IeC {\'o}n}}{128}{table.290}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\relax C.1}{\ignorespaces Pruebas c\IeC {\'a}lculo de caracter\IeC {\'\i }sticas}}{159}{table.350}
+\contentsline {table}{\numberline {\relax C.2}{\ignorespaces Pruebas preprocesamiento}}{160}{table.352}
+\contentsline {table}{\numberline {\relax C.3}{\ignorespaces Pruebas propiedades}}{160}{table.354}
+\contentsline {table}{\numberline {\relax C.4}{\ignorespaces Pruebas fachada}}{161}{table.356}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\relax A.1}{\ignorespaces M\IeC {\'e}tricas RefactorIT}}{199}{table.470}
+\contentsline {table}{\numberline {\relax A.2}{\ignorespaces Pruebas de rendimiento}}{203}{table.475}

@@ -1,0 +1,729 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Especificación de requisitos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Introducción
+\section{Introducción}
+Este anexo tiene como objetivo analizar y documentar las necesidades funcionales que deberán ser soportadas por el sistema a desarrollar. Para  ello, hay que identificar los requisitos que debe satisfacer el nuevo sistema, el estudio de los problemas de las unidades afectadas y sus necesidades actuales.
+
+El objetivo de esta fase es describir lo que el sistema deberá ser capaz de hacer pero no cómo debe hacerlo.
+
+Los tutores del proyecto toma un papel fundamental en este punto del proyecto, ya que asume el rol de cliente, es el encargado de especificar la funcionalidad que la aplicación debe implementar y establecer los plazos para lograrla.
+
+Otra de las tareas a llevar a cabo en el presente anexo es la de priorizar cada una de las funcionalidades a implementar. Teniendo claras cuales son las tareas más críticas se podrá prestar un especial interés en ellas y asignar una cantidad mayor de recursos.
+
+Hay que destacar la importancia de este documento, ya que sirve como punto de partida para el resto del trabajo. Por eso hay que hacer un esfuerzo extraordinario a la hora de definir y declarar correctamente todos los artefactos de ingeniería de software, para no tener que volver sobre nuestros pasos en etapas posteriores del trabajo. En primer lugar y de forma general, se recogen los objetivos que se quieren alcanzar con este trabajo. Estos objetivos son de muy alto nivel y estarán expresados por el cliente en lenguaje natural, siendo tarea del ingeniero su desglose y formalización. A continuación se detalla una lista de los usuarios que han participado en la toma de requisitos así como su relación con el sistema a construir.
+
+Además, se incluye un catálogo con los requisitos que deberá cumplir el sistema a construir, junto con una breve explicación de cada uno, su tipo y su importancia. De estos requisitos se puede confeccionar la lista de los usuarios que interactúan con él, llamados actores. Se debe conocer el perfil de los usuarios para los que está destinada la aplicación, ya que esto condicionará en el futuro muchos aspectos del diseño, como por ejemplo las interfaces o la ayuda.
+\newpage
+
+
+
+%Objetivos del proyecto
+\section{Objetivos del proyecto}\label{obj}
+El objetivo principal de este proyecto es el de mejorar la aplicación en diversos aspectos, entre los que se encuentran:
+
+\begin{itemize}
+\item Mejora del rendimiento, mediante inclusión de programación multihilo y sustitución de algunos cálculos por otros más eficientes.
+\item Mejora de la precisión en la detección de defectos, mediante la implementación de nuevos enfoques.
+\item Mejora de la interfaz gráfica, haciéndola más intuitiva y funcional.
+\item Mejora del diseño arquitectónico, enfocándolo hacia el mantenimiento y ampliación y solucionando fallos.
+\item Mejora del código.
+\item Implementación de nuevas funcionalidades, como el cálculo de características geométricas.
+\end{itemize}
+
+El proyecto, como vemos, está basado en uno anterior, pero se han tenido que cambiar un gran número de aspectos. Tenemos una parte muy orientada al mantenimiento, como es la mejora de todos los aspectos que ya existen, y otra de adición de nuevas funcionalidades.
+
+Las nuevas funcionalidades incluyen la detección de defectos usando nuevos enfoques, es decir, mediante el uso de los filtros de umbrales locales y nuevas formas de determinar cuándo una ventana es defecto, así como una detección de defectos más interactiva, permitiendo al usuario interactuar con los defectos dibujados. También se incluye la implementación del cálculo de características geométricas y la inclusión de estos cálculos en una tabla interactiva. Estos cálculos permitirán, de una forma sencilla, incluir una clasificación de los defectos en tipos.
+\newpage
+
+
+
+%Usuarios participantes
+\section{Usuarios participantes}
+Durante la fase de análisis han participado diversos usuarios, cada uno desempeñando uno o varios papeles. De este modo han sido establecidos los requisitos necesarios para el desarrollo del proyecto software. Cabe destacar la participación de los tutores de este proyecto.
+\begin{itemize}
+ \item José Francisco Díez Pastor y César Ignacio García Osorio, tutores del proyecto, han asumido diversos roles durante el proceso:
+ \begin{itemize}
+  \item Como \textit{cliente}, han participado en la fase de análisis describiendo las funcionalidades y el comportamiento del sistema a desarrollar. Asimismo, han organizado el calendario y marcado los plazos de entrega.
+  \item Como técnicos, ofreciendo sus conocimientos sobre la minería de datos. Además, César ha aportado sus conocimientos de LaTeX y experiencia en la realización de proyectos previos, y José su experiencia con la biblioteca Weka y con la programación en Java y sus conocimientos en las técnicas de procesamiento digital de imagen.
+ \end{itemize}
+ \item Por último, Adrián González Duarte y Joaquín Bravo Panadero han asumido el rol de \textit{analista}. Este rol agrupa las siguientes responsabilidades: analizar y describir el problema planteado por el cliente y realizar el diseño con la solución propuesta.
+\end{itemize}
+
+
+\section{Descripción del sistema actual}
+En este apartado se pretende hacer referencia a la aplicación en la que hemos integrado las funcionalidades descritas anteriormente.
+
+El proyecto en el que está basada nuestra herramienta es \textbf{X-Ray Detector: Detección de defectos en piezas metálicas mediante análisis de radiografías}, por Alan Blanco Álamo y Víctor Barbero García, junio de 2012. Este proyecto incluía la funcionalidad de entrenamiento, detección y dibujado de defectos que tiene nuestros proyecto. En un principio, se pensó en simplemente refactorizar su código e ir incluyendo sobre él las nuevas modificaciones, pero al poco tiempo se vio que esto no era del todo sencillo, ya que el diseño y el propio código no eran de la calidad esperada (diseño sin ningún tipo de patrón que facilite la inclusión de nuevas funcionalidades, defectos de código o \textit{bad smells}...), por lo que decidimos rediseñar la aplicación desde el principio prácticamente.
+
+Se ha aprovechado todo lo que se ha podido del proyecto anterior, como son los cálculos de características, si bien se han cambiado un poco para permitir, por ejemplo, que puedan ser usadas a modo de librería. También se ha mejorado alguno de estos cálculos, bien usando funciones e ImageJ o bien usando otras librerías, como EJML.
+
+Una vez rediseñada la aplicación, se ha procedido a incluir las nuevas funcionalidades o mejoras poco a poco sobre este nuevo diseño.
+
+\newpage
+
+%Factores de riesgo
+\section{Factores de riesgo}
+En este apartado se analizan las dificultades a las que se va a tener que enfrentar el desarrollo de este proyecto software. Identificar los riesgos servirá para estar alerta sobre los posibles problemas que puedan surgir y los retrasos que éstos desencadenen.
+
+Los factores de riesgo que han sido identificados son:
+\begin{itemize}
+ \item Falta de conocimiento: la primera dificultad encontrada es el desconocimiento de los fundamentos teóricos sobre temas como análiss de imágenes, etc. 
+ \item Complejidad de la documentación existente: la documentación disponible se basa en los artículos sobre los algoritmos a implementar y en algún que otro artículo de investigación, por lo que la labor de comprensión de información se presenta difícil.
+ \item Complejidad de la aplicación del proyecto del año pasado: se hace difícil comprender el proyecto del año pasado, sobre todo en cuanto al código.
+ \item Desconocimiento sobre herramientas: nunca habíamos trabajado con una herramienta como ImageJ, o con librerías complejas como EJML, lo que hace complicado su uso.
+ \item Desconocimiento sobre la metodología de desarrollo: si bien es cierto que teníamos una buena base teórica al respecto, nunca habíamos podido poner en práctica los conocimientos sobre las metodologías ágiles, como Scrum, lo que hace algo complicado crear un \textit{backlog}, usar un \textit{tracker}, etc.
+ \item Nuevo sistema de composición de texto: para la documentación se va a utilizar \LaTeX{} lo que provocará una carga extra al desarrollo de la memoria del proyecto. Se utilizará para lograr una apariencia más sólida y profesional.
+\end{itemize}
+
+Se hace patente que para la creación de la aplicación se requerirá de una gran labor de investigación y análisis que posibilite superar todos los riesgos identificados y que concluyan con la superación de los objetivos marcados en los plazos establecidos.
+\newpage
+
+
+
+%Catálogo de requisitos del sistema
+\section{Catálogo de requisitos del sistema}
+El objetivo de este apartado es definir de forma clara, precisa, completa y verificable todas las funcionalidades y restricciones del sistema a construir.
+
+\subsection{Objetivos del proyecto}
+Los objetivos salen, en parte, de los ya descritos en el apartado \ref{obj} y, por otra parte, de los objetivos de la aplicación del año pasado. A continuación, se especifican los objetivos en la correspondiente plantilla de objetivos:
+
+\tablaSinCabecera{Objetivos}{p{3.5cm} p{10cm}}{2}{tablaObjetivos}{
+  \rowcolor[gray]{.8}\textbf{OBJ - 01}       & \textbf{Abrir imagen} \\\hline
+  Descripción                      & La aplicación debe ser capaz de abrir y mostrar una imagen en la aplicación.\\\hline
+ \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Importancia                      & Vital \\\hline
+  Urgencia                      & Alta \\\hline
+  Comentarios                      & Es uno de los objetivos principales de la aplicación y, por tanto, un objetivo general \\\\
+
+  \rowcolor[gray]{.8}\textbf{OBJ - 02}       & \textbf{Entrenar Clasificador} \\\hline
+  Descripción                      & La aplicación debe ser capaz de entrenar un clasificador para realizar posteriormente el proceso de detección de defectos.\\\hline
+  \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Importancia                      & Vital \\\hline
+  Urgencia                      & Alta \\\hline
+  Comentarios                      & Es uno de los objetivos principales de la aplicación y, por tanto, un objetivo general \\\\
+  
+  \rowcolor[gray]{.8}\textbf{OBJ - 03}       & \textbf{Analizar Imagen} \\\hline
+  Descripción                      & La aplicación debe ser capaz de analizar imágenes y detectar defectos si los tuviera. \\\hline
+  \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Importancia                      & Vital \\\hline
+  Urgencia                      & Alta \\\hline
+  Comentarios                      & Es uno de los objetivos principales de la aplicación y, por tanto, un objetivo general \\\\
+  
+  \rowcolor[gray]{.8}\textbf{OBJ - 04}       & \textbf{Exportar Resultados} \\\hline
+  Descripción                      & La aplicación debe ser capaz de exportar los resultados de las operaciones que ha ido realizando la aplicación a un log. \\\hline
+ \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Importancia                      & Alta \\\hline
+  Urgencia                      & Media \\\hline
+  Comentarios                      & El formato del informe a exportar será en HTML. \\\\
+  
+  \rowcolor[gray]{.8}\textbf{OBJ - 05}       & \textbf{Mostrar Características y Seleccionar Defecto} \\\hline
+  Descripción                      & La aplicación debe ser capaz de mostrar las características de un defecto e identificarlo seleccionándolo en una tabla de resultados o directamente sobre la imagen analizada. \\\hline
+ \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Importancia                      & Alta \\\hline
+  Urgencia                      & Media \\\hline
+  Comentarios                      & Nos referimos a las características geométricas. \\\\
+  }
+
+\subsection{Descripción de los actores}
+A continuación, se describen los actores, es decir, los usuarios externos que interactúan con el sistema.
+
+\tablaSinCabecera{Actores}{p{3.5cm} p{10cm}}{2}{tablaActores}{
+  \rowcolor[gray]{.8}\textbf{ACT - 01}       & \textbf{Usuario} \\\hline
+  Versión                      & 1.0\\\hline
+  \multirow{2}*{Autores} 		& Adrián González Duarte \\ 
+                                & Joaquín Bravo Panadero\\\hline
+  Descripción                      & Este actor representa al usuario que quiere utilizar la aplicación. \\\hline
+  Comentarios                      & Persona física que interactúa con el sistema y realiza las operaciones pertinentes de entrenamiento de clasificadores y análisis de imágenes. \\\\
+  }
+
+
+\subsection{Funciones del producto}
+Una de las características más importantes de la aplicación que pretende desarrollarse es la facilidad de uso. Dado que su empleo está orientado a convertirse en una herramienta empresarial que ayude a los operarios a identificar piezas defectuosas, debe ser fácil de usar y tener la versatilidad para poder entrenar nuevos conjuntos de imágenes de cualquier nueva pieza que pueda desarrollar la empresa.
+
+La aplicación cuenta con un panel de Log que muestra al usuario datos sobre el progreso del proceso que se está ejecutando.
+
+Para cargar y guardar los conjuntos de datos se usará el formato nativo de \weka{} (\arff{}).
+
+
+\subsubsection{Características a calcular}
+La aplicación deberá calcular las siguientes características, tanto para la imagen normal como para la imagen con Saliency Map aplicado.
+\begin{itemize}
+ \item Características estándar: 
+ \begin{enumerate}
+ \item Media
+ \item Desviación estándar
+ \item Primera derivada
+ \item Segunda derivada
+ \end{enumerate}
+ \item Características de Haralick:
+ \begin{enumerate}
+ \item Segundo Momento Angular
+ \item Contraste
+ \item Correlación
+ \item Suma de cuadrados
+ \item Momento Diferencial Inveros
+ \item Suma Promedio
+ \item Suma de Entropías
+ \item Suma de Varianzas
+ \item Entropía
+ \item Diferencia de Varianzas
+ \item Diferencia de Entropías
+ \item Medidas de Información de Correlación 1
+ \item Medidas de Información de Correlación 2
+ \item Coeficiente de Correlación
+ \end{enumerate}
+ \item Local Binary Patterns
+\end{itemize}
+
+Además, debe ser capaz de calcular las siguientes características geométricas sobre los defectos encontrados:
+\begin{itemize}
+\item Área
+\item Perímetro
+\item Circularidad
+\item Redondez
+\item Semieje mayor
+\item Semieje menor
+\item Ángulo
+\item Distancia Feret
+\end{itemize}
+
+
+\subsubsection{Entrenar el clasificador}
+Esta parte deberá posibilitar las siguientes funciones:
+\begin{itemize}
+ \item Se permitirá al usuario abrir un directorio que contenga radiografías etiquetadas y listas para entrenar.
+  \item Se informará al usuario en caso de que el directorio no sea apropiado, ya sea porque el número de imágenes originales y máscaras no coinciden, sus nombres no son los mismos, etc.
+ \item Una vez cargado el directorio, se podrá crear un fichero \arff{} que contendrá el cálculo de todas las características para las imágenes de dicho directorio. Este fichero podrá ser guardado donde elija el usuario.
+ \item El usuario podrá decidir si quiere que la extracción de características se haga mediante regiones aleatorias o con una ventana deslizante que recorra toda la imagen.
+ \item Durante el cálculo de características, se informará al usuario del progreso y de los pasos que se van ejecutando mediante un Log, que podrá ser guardado en el disco duro. Asimismo, una barra de progreso le indicará el porcentaje aproximado de proceso ejecutado.
+ \item La ejecución del cálculo de características podrá ser detenida en cualquier momento a petición del usuario.
+ \item El entrenamiento se puede realizar también con un \arff{} generado previamente.
+\end{itemize}
+
+
+\subsubsection{Usar el clasificador para detectar defectos}
+En este apartado se incluyen las siguientes funciones:
+\begin{itemize}
+ \item El usuario podrá abrir una imagen para detectar sus defectos.
+ \item Se podrá iniciar la detección de defectos, teniendo que cargar un modelo entrenado.
+ \item Se podrá seleccionar un área de la imagen para detectar los defectos contenidos en él. Si no se selecciona un área, se debe avisar al usuario de que el proceso puede llevar mucho tiempo.
+ \item La detección de defectos podrá ser detenida en cualquier momento a petición del usuario.
+ \item Se mostrará la imagen con los defectos marcados en un panel y la información de las características geométricas en una tabla.
+ \item Se podrá seleccionar un defecto en la imagen para identificar la fila de la tabla de características geométricas que contiene sus datos. La inversa, seleccionar una fila y que se ilumine el defecto, también debe ser posible.
+\end{itemize}
+
+\subsection{Requisitos de usuario}
+El usuario debe ser capaz de utilizar la aplicación mediante la interfaz gráfica cargando imágenes, detectando defectos y visualizando los resultados.
+
+La ayuda será un punto a tener en cuenta y en todo momento el usuario podrá solicitarla para orientarse y resolver dudas que le puedan surgir durante el manejo de la misma.
+
+
+\subsection{Requisitos de sistema}
+Al tratarse de una aplicación de escritorio será necesario contar con un hardware que tenga unos requisitos mínimos.
+
+La aplicación se va a desarrollar en \java{} por lo que no debe ser muy exigente, es decir, cualquier máquina capaz de hacer correr la máquina virtual de \java{} debe ser capaz de ejecutar la aplicación.
+
+No obstante, dependiendo del tamaño del fichero \arff{} que se vaya a cargar, o del número de características que se quieran calcular, será recomendable una mayor capacidad hardware para reducir el tiempo de ejecución.
+
+Los requisitos mínimos serán:
+\begin{itemize}
+ \item Equivalente a 2.8 GHz.
+ \item 2 GB de memoria RAM.
+ \item Resolución de pantalla igual o superior a 1200 x 720
+\end{itemize}
+
+Mientras que los requisitos recomendados serán:
+\begin{itemize}
+ \item Equivalente a 2.8 GHz(doble núcleo).
+ \item 4 GB de memoria RAM.
+ \item Resolución de pantalla igual o superior a 1280 x 960
+\end{itemize}
+
+Aunque estos requisitos dependerán en gran medida de el número de instancias o características con el que se trabaje.
+
+En cuanto al sistema operativo, deberá ser posible la ejecución en todos los que exista una versión de máquina virtual de \java{}. Uno de los beneficios de que el proyecto se implemente en un lenguaje interpretado es que maximiza las posibilidades de uso en distintos entornos.
+
+La versión de \java{} sobre la que se desarrollará el proyecto es la 1.7 (o 7 directamente).
+\newpage
+
+
+
+%Especificación de los requisitos
+\section{Especificación de los requisitos}
+Esta sección del anexo recoge los casos de uso que representan la funcionalidad que debe cubrir la aplicación a desarrollar. Cada caso de uso es una descripción de una secuencia de acciones que se ejecutan en un sistema para producir la salida esperada por un actor.
+
+El primer lugar quedan definidos los requisitos inherentes a la tecnología utilizada y después los requisitos de información. Con este primer análisis se detallan a continuación los requisitos funcionales, apoyados en los casos de uso, y por último los requisitos no funcionales.
+
+
+\subsection{Especificación de requisitos inherentes a la tecnología utilizada}
+Son los requisitos que vienen <<heredados>> por la tecnología a utilizar.
+
+Se ha elegido el lenguaje de programación \java{} para el desarrollo del proyecto, concretamente la versión 7. El requisito necesario para poder ejecutar la aplicación será que el terminal tenga instalada una máquina virtual de \java{}.
+
+
+\subsection{Especificación de requisitos de información}
+El objetivo de este apartado es determinar la información que se debe almacenar para cumplir los objetivos anteriormente descritos y que el programa funcione.
+Con objeto de identificar cada uno de los requisitos de información se les ha asignado un código único y un nombre descriptivo. A continuación \vertabla{tablaRequisitosInformacion} se detallan de manera tabulada cada uno de los requisitos en plantillas.
+
+\tablaSinCabecera{Requisitos de información}{p{3.5cm} p{10cm}}{2}{tablaRequisitosInformacion}{
+  \rowcolor[gray]{.8}\textbf{RI - 01}       & \textbf{Información cálculo de características} \\\hline
+  Descripción                      & Almacena la información resultante del cálculo de características de una radiografía mediante ficheros \arff{}\\\hline
+  Datos específicos                & Características calculadas a partir de una radiografía \\\hline
+  Importancia                      & Alta \\\hline
+  Comentarios                      & Esta información se utilizará para entrenar un clasificador \\\\
+
+  \rowcolor[gray]{.8}\textbf{RI - 02}       & \textbf{Información de configuración de la ventana de análisis} \\\hline
+  Descripción                      & Almacena la información necesaria para analizar la imagen mediante ventanas\\\hline
+  \multirow{4}*{Datos específicos} & Tamaño de la ventana \\\cline{2-2} 
+                                   & Salto entre ventanas \\\cline{2-2}
+                                   & Tipo de ventana (aleatoria, deslizante) \\\cline{2-2}	
+                                   & Cuándo una ventana es defectuosa (entrenamiento) \\\hline
+  Importancia                      & Alta \\\hline
+  Comentarios                      & Se almacena todo en un mismo fichero de configuración \\\\
+  
+  \rowcolor[gray]{.8}\textbf{RI - 03}       & \textbf{Información para el entrenamiento del clasificador o para el dibujado de características} \\\hline
+  Descripción                      & Almacena la información necesaria para entrenar un clasificador o para dibujar características \\\hline
+ Datos específicos				   & Fichero \arff{} generado al calcular las características de una radiografía  \\\hline
+  Importancia                      & Alta \\\hline
+  Comentarios                      & Es obligatorio para poder entrenar al clasificador\\\\
+  
+  \rowcolor[gray]{.8}\textbf{RI - 04}       & \textbf{Información para la detección de defectos} \\\hline
+  Descripción                      & Almacena la información necesaria detectar los defectos de una radiografía \\\hline
+ Datos específicos				   & Modelo entrenado que utilizará la aplicación para detectar los defectos de una radiografía  \\\hline
+  Importancia                      & Alta \\\hline
+  Comentarios                      & Es obligatorio para poder detectar los defectos \\\\
+  }
+
+
+\subsection{Requisitos funcionales}
+La definición de los requisitos funcionales servirá de ayuda para el diseño de la herramienta.
+
+En la lista aparecen todos los requisitos identificados en la aplicación:
+\begin{itemize}
+ \item Cargar imágenes: el usuario podrá cargar imágenes para detectar defectos.
+ \item Detención del proceso: se podrá detener el proceso en cualquier momento.
+ \item Cargar instancias: la aplicación debe estar capacitada para abrir conjuntos de instancias en el formato \arff{} soportado por \weka{}.
+ \item Entrenar clasificador: se podrá entrenar un clasificador para detectar los defectos de nuevas radiografías, bien sea con un \arff{} ya creado o creando uno nuevo.
+ \item Detectar defectos: se podrá realizar la detección de defectos de cualquier imagen que el usuario cargue, pudiendo seleccionar la región exacta de la imagen que se quiera analizar.
+ \item Visualización de resultados: se podrán visualizar los defectos detectados, así como una tabla con las características geométricas.
+ \item Interacción con los resultados: se podrá seleccionar un defecto y se iluminará la fila de la tabla correspondiente a ese defecto. Se podrá seleccionar también una fila de la tabla y se iluminará el defecto.
+ \item Guardar Log: el usuario podrá visualizar el progreso en un log y guardarlo en el disco duro.
+ \item Visualización de la ayuda: las interfaces deberán ofrecer la ayuda al usuario que necesite para poder utilizarlas.
+ \item Guardar imagen analizada: se permite guardar los resultados del análisis en un fichero.
+ \item Guardar imagen binarizada: se permite guardar una binarización de los defectos encontrados.
+ \item Calcular <<Precision \& Recall>>: se realiza el cálculo de estas medidas de precisión, a través de una máscara.
+\end{itemize}
+
+Para la definición formal de los casos de uso se hace uso de los diagramas de casos de uso. Para completar la información de los diagramas se utilizan las plantillas donde quedan reflejados los aspectos funcionales.
+
+En el primer diagrama \ver{DiagramaCasosDeUsoGeneralGUI} se muestra el diagrama de casos de uso principal.
+
+%Diagrama general de casos de uso GUI.
+\figura{0.9}{imgs/casosdeusogeneral.png}{Diagrama de casos de uso principal}{DiagramaCasosDeUsoGeneralGUI}{}
+
+
+
+
+\newpage
+A continuación, aparecen los casos de uso listados y cada una de las plantillas:
+\begin{itemize}
+ \item RF-01 Abrir imagen \vertabla{tablaRF1}
+ \item RF-02 Entrenar clasificador \vertabla{tablaRF2}
+ \item RF-03 Entrenar clasificador con ARFF existente \vertabla{tablaRF3}
+ \item RF-04 Entrenar clasificador generando nuevo ARFF \vertabla{tablaRF4}
+ \item RF-05 Analizar imagen \vertabla{tablaRF5}
+ \item RF-06 Calcular características \vertabla{tablaRF6}
+ \item RF-07 Seleccionar defecto \vertabla{tablaRF7}
+ \item RF-08 Exportar Log \vertabla{tablaRF8}
+ \item RF-09 Abrir ayuda \vertabla{tablaRF9}
+ \item RF-10 Cambiar opciones \vertabla{tablaRF10}
+ \item RF-11 Guardar imagen analizada \vertabla{tablaRF11}
+ \item RF-12 Guardar imagen binarizada \vertabla{tablaRF12}
+ \item RF-13 Calcular <<Precision \& Recall>> \vertabla{tablaRF13}
+\end{itemize}
+
+\tablaSmallSinColores{Caso de uso: RF-01 Abrir imagen}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF1}{
+  \multicolumn{3}{l}{\textbf{RF-01  Abrir imagen}} \\
+ }
+ {
+  Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-01}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite abrir una imagen en la aplicación y mostrarla al usuario para posteriormente ser analizada en busca de posibles defectos} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe existir la imagen en el sistema} \\\hline
+  \multirow{4}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & Seleccionar la opción de abrir imagen \\\cline{2-3}
+                                         & 2    & El sistema pedirá al usuario que especifique que imagen quiere cargar en la aplicación a partir de un explorador de archivos \\\cline{2-3}
+                                         & 3	& Se carga la imagen en la aplicación \\\hline
+  Postcondiciones                        & \multicolumn{2}{l}{Imagen importada en la aplicación} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 1    &  Si la operación se cancela el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \alta{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{l}{Va a permitir realizar más acciones, como analizar} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-02 Entrenar clasificador}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF2}{
+  \multicolumn{3}{l}{\textbf{RF-02 Entrenar clasificador}} \\
+ }
+ {
+  Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-02}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite a la aplicación entrenar un clasificador a partir de un conjunto de imágenes o de un archivo ARFF existente} \\\hline
+  Precondiciones                         & \multicolumn{2}{l}{Ninguna} \\\hline
+  \multirow{4}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona la opción de entrenar clasificador  \\\cline{2-3}
+                                         & 2    & El sistema pedirá al usuario cómo se va a entrenar el clasificador, mediante un ARFF existente o mediante un conjunto de imágenes \\
+                                         & 3 	& El sistema entrena un clasificador\\\hline
+  Postcondiciones                        & \multicolumn{2}{l}{El sistema entrena un clasificador} \\\hline
+  \multirow{3}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2     & Si la operación se cancela en el proceso de selección del tipo de entrenamiento el caso de uso finaliza\\\cline{2-3}
+                                         & 3     & Si el proceso se para a lo largo de su ejecución el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \media{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Es una característica imprescindible, ya que sin un clasificador la aplicación no puede detectar defectos en una imagen posteriormente} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-03 Entrenar clasificador con ARFF existente}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF3}{
+  \multicolumn{3}{l}{\textbf{RF-03 Entrenar clasificador con ARFF existente}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-02}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite a la aplicación entrenar un clasificador a partir de un archivo ARFF existente} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe existir un conjunto de imágenes en el sistema junto con su conjunto de máscaras} \\\hline
+  \multirow{4}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & Seleccionar la opción de entrenar clasificador. Y el usuario especifica que quiere entrenar un clasificador a partir de un archivo ARFF existente \\\cline{2-3}
+                                         & 2    & El sistema pedirá al usuario que especifique la ruta del archivo ARFF con el que se desea realizar el proceso de entrenamiento \\\cline{2-3} 							 							 & 3    & El sistema entrena un clasificador \\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Clasificador entrenado} \\\hline
+  \multirow{3}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si la operación se cancela antes de seleccionar que se desea utilizar un ARFF existente el caso de uso finaliza \\\cline{2-3}
+                                         & 3    & Si el proceso se para a lo largo de su ejecución el caso de uso finaliza \\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \media{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Es una característica imprescindible, ya que sin un clasificador la aplicación no puede detectar defectos en una imagen posteriormente} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-04 Entrenar clasificador generando nuevo ARFF}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF4}{
+  \multicolumn{3}{l}{\textbf{RF-04 Entrenar clasificador generando nuevo ARFF}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-02}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite a la aplicación entrenar un clasificador a partir de un conjunto de imágenes} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe existir un conjunto de imágenes en el sistema junto con su conjunto de máscaras} \\\hline
+  \multirow{5}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & Seleccionar la opción de entrenar clasificador. El usuario especificará que desea entrenar un clasificador a partir de un conjunto de imágenes \\\cline{2-3}
+                                         & 2    & El sistema pedirá al usuario que especifique la carpeta que contiene las imágenes con las que se va a entrenar el clasificador \\\cline{2-3} 																 & 3    & El sistema inicia un proceso de extracción de características sobre cada una de las imágenes generando un archivo ARFF nuevo. Se inicia el caso de uso RF-06 Calcular características \\\cline{2-3} 
+                                         & 4    & El sistema entrena un clasificador \\\hline 		
+  Postcondiciones                        & \multicolumn{2}{l}{Clasificador entrenado} \\\hline
+  \multirow{3}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si la operación se cancela antes de seleccionar que se desea generar un ARFF nuevo el caso de uso finaliza \\\cline{2-3}
+                                         & 2    & Si el proceso se para a lo largo de su ejecución el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \media{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Es una característica imprescindible, ya que sin un clasificador la aplicación no puede detectar defectos en una imagen posteriormente} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-05 Analizar imagen}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF5}{
+  \multicolumn{3}{l}{\textbf{RF-05 Analizar imagen}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite a la aplicación analizar una imagen en busca de posibles defectos} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe existir un clasificador entrenado así como una imagen importada en la aplicación} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & Seleccionar la opción de entrenar analizar imagen y elección de clasificador \\\cline{2-3}
+                                         & 2    & El sistema inicia el proceso de análisis de la imagen en busca de defectos. Se inicia en caso de uso RF-06 Calcular características \\\cline{2-3}
+                                         & 3    & La aplicación muestra los resultados del análisis \\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Imagen analizada: defectos dibujados y características geométricas listadas} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 1    & Si se cancelar la elección de clasificador, el casi de uso finaliza\\\cline{2-3}
+                                         & 2	& Si el proceso se para a lo largo de su ejecución el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \alta{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Es una característica imprescindible, ya que es el objetivo principal del proyecto} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-06 Calcular características}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF6}{
+  \multicolumn{3}{l}{\textbf{RF-06 Calcular características}} \\
+ }
+ {
+  Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-02, OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Calcular las características de uma imagen} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haberse iniciado el caso de uso RF-04 o el RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+										 & 1 	& El sistema reciba una región a analizar \\\cline{2-3}                                         
+                                         & 2    & El sistema calcula las características (todas o las mejores) sobre la región \\\cline{2-3}
+                                         & 3    & Si se había iniciado el caso de uso RF-04, se generará una nueva línea en el ARFF. Si era el RF-05, se pasarán las características al clasificador, que dirá si corresponden con un defecto o no\\\hline
+  Postcondiciones                        & \multicolumn{2}{l}{Características calculadas} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si hay algún problema al calcular, el sistema mostrará un error y el caso de uso finaliza \\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \alta{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \alta{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Es una característica básica, pues forma parte tanto del entrenamiento de clasificadores como de la detección de defectos} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-07 Seleccionar defecto}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF7}{
+  \multicolumn{3}{l}{\textbf{RF-07 Seleccionar defecto}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-05}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Muestra al usuario los defectos detectados en una imagen tras ser analizada con sus características. Permite seleccionar un defecto dibujado para ver sus características.} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & Se ejecuta el caso de uso RF-05 \\\cline{2-3} 
+                                         & 2    & La aplicación muestra los resultados del análisis indicando los defectos que ha encontrado junto con sus características en una tabla de resultados \\\cline{2-3} 
+                                         & 3	& El usuario selecciona bien el defecto o bien unos resultados en la tabla y tanto el defecto como sus características asociadas se seleccionan para ser mejor identificados \\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Defectos detectados y seleccionados y características calculadas} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         &      &  \\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \alta{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \media{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{En este caso de uso, nos estamos refiriendo a las características geométricas. Proporciona la interactividad con los resultados.} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-08 Exportar Log}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF8}{
+  \multicolumn{3}{l}{\textbf{RF-08 Exportar Log}} \\
+ }
+ {
+  Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-04}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite al usuario exportar un log con los resultados de los procesos ejecutados a lo largo de toda la aplicación} \\\hline
+  Precondiciones                         & \multicolumn{2}{l}{Ninguna} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario pulsa el botón <<Exportar Log>> \\\cline{2-3} 
+                                         & 2    & El sistema genera un log en formato HTML que mostrará todos los procesos llevados a cabo por la aplicación junto con sus resultados \\\hline
+  Postcondiciones                        & \multicolumn{2}{l}{Log exportado} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         &      &  \\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \media{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-09 Abrir ayuda}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF9}{
+  \multicolumn{3}{l}{\textbf{RF-09 Abrir ayuda}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite visualizar la ayuda de la aplicación} \\\hline
+  Precondiciones                         & \multicolumn{2}{l}{Ninguna} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario abre la ayuda, bien mediante una tecla especial o bien mediante una opción en un menú \\\cline{2-3}
+                                         & 2    & Se mostrará la ayuda \\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se mostrará una nueva ventana en la que se encuentra la ayuda} \\\hline
+  \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         &      &  \\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \media{2} \\\hline
+  Importancia                            & \media{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{l}{} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-10 Cambiar opciones}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF10}{
+  \multicolumn{3}{l}{\textbf{RF-10 Cambiar opciones}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-02, OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite cambiar algunas opciones de la aplicación que afectarán a los procesos de entrenamiento y detección} \\\hline
+  Precondiciones                         & \multicolumn{2}{l}{Ninguna} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<opciones avanzadas>> \\\cline{2-3} 
+                                         & 2    & El usuario determina cuáles de las opciones quiere cambiar y con qué valores \\\cline{2-3}
+                                         & 3	& El sistema guarda los cambios en un fichero de propiedades\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{El fichero de propiedades contiene los nuevos cambios} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 3    & Si se cancela el proceso, los cambios no se guardan\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \media{2} \\\hline
+  Importancia                            & \alta{2} \\\hline
+  Urgencia                               & \media{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Las opciones que se pueden cambiar están relacionadas con el tamaño de las ventanas y de su salto, el tipo de heurística de ventana defectuosa, el tipo de ventana para entrenar, el tipo de detección...} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-11 Guardar imagen analizada}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF11}{
+  \multicolumn{3}{l}{\textbf{RF-11 Guardar imagen analizada}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite exportar la imagen analizada junto con los defectos dibujados a un fichero} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<guardar imagen>> \\\cline{2-3} 
+                                         & 2    & El usuario determina el fichero en el que guardar la imagen \\\cline{2-3}
+                                         & 3	& El sistema guarda la imagen en el fichero especificado\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se ha creado un fichero con la imagen} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, la imagen no se guarda\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \baja{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{La imagen se guardará en un fichero con formato JPG} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-12 Guardar imagen binarizada}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF12}{
+  \multicolumn{3}{l}{\textbf{RF-12 Guardar imagen binarizada}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite exportar los defectos detectados en una imagen binarizada a un fichero} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<guardar defectos binarizados>> \\\cline{2-3} 
+                                         & 2    & El usuario determina el fichero en el que guardar la imagen \\\cline{2-3}
+                                         & 3	& El sistema guarda la imagen en el fichero especificado\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se ha creado un fichero con la imagen} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, la imagen no se guarda\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \baja{2} \\\hline
+  Urgencia                               & \baja{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{La imagen se guardará en un fichero con formato JPG} \\
+}
+
+\tablaSmallSinColores{Caso de uso: RF-13 Calcular <<Precision \& Recall>>}{p{3cm} p{.75cm} p{9.5cm}}{tablaRF13}{
+  \multicolumn{3}{l}{\textbf{RF-13 Calcular <<Precision \& Recall>>}} \\
+ }
+ {
+ Versión								 & 1.0\\\hline
+  \multirow{2}{3.5cm}{Autores} 		& \multicolumn{2}{p{10cm}}{Adrián González Duarte} \\
+                                	& \multicolumn{2}{p{10cm}}{Joaquín Bravo Panadero}\\\hline
+  Objetivos asociados					 & \multicolumn{2}{p{10cm}}{OBJ-03}\\\hline
+  Descripción                            & \multicolumn{2}{p{10cm}}{Permite realizar los cálculos de precision \& recall sobre los defectos localizados} \\\hline
+  Precondiciones                         & \multicolumn{2}{p{10cm}}{Debe haber finalizado el caso de uso RF-05} \\\hline
+  \multirow{2}{3.5cm}{Secuencia normal}  & Paso & Acción \\\cline{2-3}
+                                         & 1    & El usuario selecciona <<calcular precision \& recall>> \\\cline{2-3} 
+                                         & 2    & El usuario determina cuál es la máscara asociada a la imagen \\\cline{2-3}
+                                         & 3	& El sistema realiza los cálculos y los muestra\\\hline
+  Postcondiciones                        & \multicolumn{2}{p{10cm}}{Se muestra un diálogo con los datos} \\\hline
+   \multirow{2}{3.5cm}{Excepciones}       & Paso & Acción \\\cline{2-3}
+                                         & 2    & Si se cancela el proceso, el caso de uso finaliza\\\hline
+  Rendimiento                            &      & \\\hline
+  Frecuencia                             & \baja{2} \\\hline
+  Importancia                            & \media{2} \\\hline
+  Urgencia                               & \media{2} \\\hline
+  Comentarios                            & \multicolumn{2}{p{10cm}}{Debe existir una máscara sobre la cual se van a realizar las comparaciones} \\
+}
+
+
+\newpage
+\subsection{Requisitos no funcionales}
+Una vez analizados los requisitos de información y los funcionales falta un tipo de requisitos que, normalmente, suelen ser de carácter técnico y se engloban dentro de requisitos no funcionales.
+
+A continuación aparecen listados los requisitos no funcionales a tener en cuenta para el diseño de la aplicación:
+
+\begin{itemize}
+ \item \textbf{Extensible:} debe estar pensado para que se pueda ampliar añadiendo nuevas características a calcular, utilizando la misma interfaz.
+ \item \textbf{Facilidad de uso de la interfaz:} la aplicación debe tener una interfaz que sea fácil de manejar y de entender por cualquier tipo de usuario. Debe ser intuitiva.
+ \item \textbf{Ayuda:} la aplicación debe tener explicaciones de ayuda para los usuarios en las partes que puedan ser más difíciles de entender o manejar, o como aclaración de algún concepto.
+ \item \textbf{Documentado:} si se pretende que un software sea ampliado por terceros, o continuado en un futuro, éste debe estar debidamente documentado.
+\end{itemize}
+\newpage
+
+
+%Interfaz de usuario
+\section{Interfaz de usuario}
+En este apartado se muestran una serie de ventanas correspondientes a la interfaz de usuario con la que la aplicación es capaz de cumplir los requisitos funcionales que se han establecido anteriormente.
+
+Debido a que estamos aún en la parte de análisis del proyecto, estas interfaces tan solo son bocetos de las interfaces que tendrá la aplicación definitiva.
+
+En la imagen \ver{prototipoVentanaPpal} se muestra el prototipo de la ventana principal, desde la que se pueden realizar todas las funcionalidades.
+
+\figura{0.75}{imgs/prototipoVentanaPpal.png}{Prototipo de la ventana principal}{prototipoVentanaPpal}{}
+
+En la imagen \ver{prototipoOpciones} se muestra el prototipo de la ventana de opciones avanzadas, desde la que podemos cambiar un cierto número de opciones.
+
+\figura{0.75}{imgs/prototipoOpciones.png}{Prototipo de la ventana de opciones avanzadas}{prototipoOpciones}{}
+
+\newpage
+
+
+\section{Pruebas de aceptación}
+Las pruebas de aceptación del software son pruebas que debe realizar el cliente cuando la aplicación está terminada y antes de entregarle la versión definitiva. En estas pruebas, el cliente comprueba que el programa tenga toda la funcionalidad que ha pedido y se pueden descubrir fallos que al programador le habían pasado inadvertidos incluso después de realizar otro tipo de pruebas sobre la aplicación.
+
+A continuación, en la tabla \vertabla{pacept} se muestran algunas de las pruebas de aceptación más relevantes realizadas sobre el programa.
+
+\tablaSmall{Pruebas de aceptación}{ c  p{10cm}  c }{pacept}{
+  \multicolumn{1}{c}{Identificación} & \multicolumn{1}{c}{Descripción} & \multicolumn{1}{c}{Resultado}\\
+ }
+ {
+  PA-01 & El usuario puede cargar imágenes y visualizarlas en la aplicación & OK\\
+  PA-02 & El usuario puede entrenar un clasificador mediante un fichero ARFF ya existente & OK\\
+  PA-03 & El usuario puede entrenar un clasificador a partir de unas imágenes etiquetadas & OK\\
+  PA-04 & El usuario puede guardar el ARFF generado en el entrenamiento & OK\\
+  PA-05 & El usuario puede guardar el modelo generado en el entrenamiento & OK\\
+  PA-06 & El usuario puede seleccionar un área de la imagen y analizarla & OK\\
+  PA-07 & En caso de no seleccionar una región, se muestra una aviso & OK\\
+  PA-08 & La aplicación hace visible el progreso de las operaciones & OK\\
+  PA-09 & La aplicación es capaz de dibujar los defectos encontrados & OK\\
+  PA-10 & En caso de que ocurra un error, la aplicación informa de ello & OK\\
+  PA-11 & El usuario puede seleccionar un defecto dibujado y éste se resalta & OK\\
+  PA-12 & El usuario puede seleccionar un fila de la tabla y resaltar el defecto asociado & OK\\
+  PA-13 & El usuario puede calcular <<precision \& recall>>, usando una máscara & OK\\
+  PA-14 & El usuario puede guardar la imagen generada en el análisis & OK\\
+  PA-15 & El usuario puede guardar una binarización de los defectos encontrados & OK\\
+  PA-16 & El usuario puede cambiar las opciones del programa & OK\\
+  PA-17 & El usuario puede guardar en un fichero el log generado & OK\\
+  PA-18 & El usuario puede borrar la información del log & OK\\
+  PA-19 & El usuario puede acceder a la ayuda en línea & OK\\
+  PA-20 & El usuario puede detener cualquier proceso en marcha & OK\\
+ }

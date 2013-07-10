@@ -1,0 +1,149 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Comparativas}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+Como hemos podido ver en varias partes de la presente memoria, este proyecto es una evolución de uno comenzado anteriormente. Por ello, se hace necesario realizar una comparativa entre los dos proyectos, para tener una idea más clara de cuáles han sido las mejoras y modificaciones.
+
+En este apéndice se explican, primero, las modificaciones realizadas respecto al proyecto anterior (\ref{modificaciones}), seguido de una comparativa de métricas de software (\ref{metricas}) y terminando con una comparativa de rendimiento entre las dos aplicaciones (\ref{rendimiento}).
+
+\section{Modificaciones}\label{modificaciones}
+Las modificaciones que se han hecho respecto al proyecto anterior han sido:
+
+\begin{enumerate}
+\item Rediseño de la estructura de la aplicación, usando una arquitectura en capas y patrones de diseño que permitan ampliar la aplicación de una forma sencilla.
+\item Refactorización de las clases de cálculo de características, buscando dividir los métodos tan largos que tenían en métodos más pequeños.
+\item Modificación de las clases de cálculo de características para que puedan usarse los métodos por separado (por ejemplo, si sólo quiero calcular la media ahora es posible).
+\item Rediseño de la interfaz de usuario, buscando que sea más intuitiva y funcional. Ahora el usuario sólo puede realizar ciertas operaciones en un determinado momento, ya que activamos y desactivamos los botones.
+\item Rediseño de las clases de la interfaz, buscando dividir el único método que había antes en varios métodos. También se han movido los \textit{listeners} de los botones a clases internas, en vez de ser clases anónimas en medio del código.
+\item Implementación de multihilo. Se particionan las imágenes al analizar y al entrenar, de tal forma que cada hilo sólo considerará una partición de la imagen, lo que aumenta el rendimiento.
+\item Implementación de una nueva forma de calcular los autovalores, sustituyendo la clase \textit{Matrix} que había antes por llamadas a la biblioteca \textit{EJML}, lo que hace pasar de ser inviable el cálculo de los mismos a ser sólo un poco lento.
+\item Sustitución de los cálculos de la primera y segunda derivadas por llamadas a la clase \textit{Differentials\_} de ImageJ.
+\item Implementación de nuevas estrategias de etiquetado de ventanas: píxel central, píxel central más región de vecinos y porcentaje del total de píxeles, de las cuales sólo nos hemos quedado con las dos últimas por ser las que mejor rendimiento daban. Con esto se pretende mejorar la precisión.
+\item Implementación de nuevas estrategias de detección de defectos: detección normal más superposición con filtro de umbrales locales para descartar falsos positivos y lista de píxeles en regiones blancas en la imagen de umbrales locales. Lo que se busca con esto es, primero, aumentar la precisión y, segundo, aumentar la rapidez.
+\item Implementación de un botón para guardar una binarización de los defectos encontrados, que es el paso previo para poder dibujarlos después. Esto permite tener un mayor conocimiento de cómo de bien está funcionando la detección.
+\item Implementación del cálculo de características geométricas de los defectos dibujados y muestra de las mismas en una tabla en la interfaz. Esto permite conocer mejor las características de los defectos y, en un futuro, permitirá clasificar los defectos en diversos tipos.
+\item Interactividad con los defectos dibujados: se permite seleccionar un defecto en el visor (mediante la combinación de la tecla \textit{control} con click del ratón), lo que resaltará la fila de la tabla de características geométricas que le corresponde. Esto también resaltará el propio defecto, dibujándolo en un tono rojizo transparente. De la misma forma, si se selecciona una fila de la tabla, se resaltará el defecto al que corresponde. Todo esto le da más valor a la interfaz.
+\item Implementación del cálculo de <<Precision \& Recall>>, lo que permite conocer cómo de bien se están detectando los defectos. En un futuro, esto también servirá para comparar nuevos métodos de detección con los que ya existen de una forma numérica, más exacta.
+\item Implementación de un log de excpeciones.
+\item Se ha cambiado el log de la interfaz para que sea texto HTML, lo que permite usar colores. Esto aumenta la intuitividad de la aplicación, ya que el usuario enseguida ve si cierto mensaje implica que se ha realizado algo con éxito o si ha habido un error (colores verde y rojo).
+\item La exportación del log de la interfaz también se hace en formato HTML, lo que permite exportar los colores.
+\item Implementación de un aviso si no se selecciona región para analizar. Antes se obligaba a seleccionar una región, pero quizás el usuario en ocasiones prefiera analizar la imagen completa.
+\item Opciones del programa en fichero de opciones.
+\item Implementación de un módulo de ayuda en línea, lo que permite acceder directamente a la ayuda de lo que estamos usando en este momento, además de tener un buscador.
+\item Mejora de la documentación de código, eliminando errores gramaticales en aquellos métodos que se han reutilizado y documentando todos los elementos del código, cosa que antes no pasaba.
+\end{enumerate}
+
+
+\section{Métricas}\label{metricas}
+\subsection{Métricas: introducción}
+Las métricas de código son una herramienta muy útil para evaluar la calidad del código de una aplicación. Como uno de los objetivos era mejorar el código del proyecto anterior, hemos visto necesario hacer una pequeña comparativa objetiva entre ambos proyectos. Para ello se necesita usar una medida objetiva: las métricas.
+
+En concreto, las métricas que se han usado son las que permiten calcular los \textit{plugins} que ya vimos en la memoria: RefactorIT y SourceMonitor. Estas métricas son orientadas a objeto y se suelen dividir en métricas CK (Chidamber y Kemerer) \cite{chidamber1994metrics}, métricas LK (Lorenz y Kidd) \cite{mark_lorenz_object_1994} y métricas de R. Martin \cite{robert_martin_oo_1994}. Hemos hecho un resumen de las que nos han parecido más representativas.
+
+
+\subsection{Métricas de RefactorIT}
+En la tabla \vertabla{refactorit} hemos incluido un resumen de alguna de las métricas que nos han parecido más interesantes, seguido de una explicación de las mismas y otras que no hemos incluido en la tabla.
+
+\tablaSmallPosicion{Métricas RefactorIT}{p{5cm}  c  c}{refactorit}{
+  \multicolumn{1}{c}{Métrica} & \multicolumn{1}{c}{Nueva versión} & \multicolumn{1}{c}{Versión antigua}\\
+  }
+ {
+ V(G) máxima & 31 & 67\\
+ NP máximo & 10 & 17\\
+ WMC medio & 16.4 & 27.1\\
+ RFC medio & 28 & 28\\
+ Dn media & 0.244 & 0.465\\
+ }{H}
+ 
+Los resultados de las métricas completas pueden consultarse en los archivos HTML incluidos en docs/métricas/RefactorIT.
+
+Respecto a los resultados, lo primero que vemos es la diferencia en V(G), es decir, la complejidad ciclomática. Esto es muy importante, pues uno de los objetivos era mejorar el rendimiento, cosa que se ha conseguido parcialmente mejorando el código. En general, no sólo vemos una mejoría en el máximo, sino que la media parece menor, viendo la tabla completa.
+
+En cuanto a NP (número de parámetros), también vemos que se ha disminuido notablemente el máximo. En general, se ha disminuido en toda la aplicación, gracias al uso de un fichero de opciones. Aún asi, sigue siendo un poco alto, ya no que hemos podido meter todo en este fichero.
+
+Si observamos la fila de WMC (\textit{Weighted Methods per Class}, métodos ponderados por clase), también vemos una disminución en la media. De nuevo, vuelve a ser muy importante, ya que esta métrica representa la suma de las complejidades de los métodos de una clase. Sí que es cierto que sigue habiendo valores altos, pero en muchas ocasiones es debido al uso de los patrones de diseño ya explicados. Por ejemplo, el uso del patrón fachada hace que esta clase sea muy compleja, pero es normal. Lo mismo pasa con las superclases de las estrategias, ya que en ellas se ha implementado la lógica común a las subclases, que tiende a ser alta en nuestro caso. Esto hace que sea grande en esas clases pero que se reduzca en las otras.
+
+Respecto a RFC (\textit{Response For a Class}, respuesta para una clase), vemos que los valores se han mantenido. Nuevamente, lo consideramos como normal por el uso de patrones (sobre todo por el patrón fachada), ya que muchos métodos responderán a llamadas de esta clase.
+
+La Dn media (distancia a la \textit{main sequence}, una métrica que mide cómo de balanceado está un subsistema respecto a su estabilidad y abstracción) vemos que también es bastante menor en nuestro caso. Esto quiere decir que, en general, nuestros subsistemas no son demasiado abstractos para su estabilidad, ni demasiado inestables para su abstracción.
+
+Si miramos las tablas completas, podremos ver que la métrica DIT (\textit{Depth in Tree}, profundidad en el árbol de herencia), se puede ver que en nuestro caso hay valores más altos. Esto no quiere decir que sea malo. Simplemente significa que nosotros hemos usado más herencia que los anteriores desarrolladores, generando un diseño más complejo. Esta complejidad es asumible, ya que viene dada por el uso de los patrones estrategia, lo cual es bueno, ya que van a permitir la extensibilidad de la aplicación.
+
+Relacionada con la métrica anterior está NOC (\textit{Number of Children in Tree}, número de hijos en el árbol), que en el caso del proyecto anterior siempre es cero. Esto quiere decir que ellos no usaron nunca la herencia.
+
+En cuanto a otras métricas, se puede ver que en nuestro proyecto las dependencias cíclicas entre paquetes (CYC y DCYC) son siempre cero, lo cual es bueno. El que no existan dependencias cíclicas entre paquetes da una idea de que el diseño no es malo, ya que las dependencias van sólo en una dirección. Esto evita problemas de integración y de extensibilidad. En el proyecto anterior no siempre son cero, por lo que se pueden dar problemas.
+
+Respecto a LCOM (\textit{Lack of Coherence}, carencia de cohesión), los valores son bastante parecidos, si bien es cierto que ellos llegan a tener valores de uno, lo cual quizás sea demasiado. En nuestro caso, los valores altos vienen condicionados, de nuevo, por el uso de patrones. En el caso de la fachada, es la que se encarga de controlar el comportamiento general, por lo que es permisible cierto grado de acoplamiento entre métodos. En los patrones estrategia, la superclase engloba el comportamiento común, por lo que también es normal que el valor sea elevado. También es cierto que es posible que en futuras iteraciones sea recomendable dividir alguna de estas clases (sobre todo la fachada) si estos valores se disparan.
+
+Por último, vemos que los valores de NOA (\textit{Number of Attributes}, número de variables clase) son ligeramente altos en nuestro caso. De nuevo, vuelve a ponerse de manifiesto el uso de los patrones de diseño.
+
+\subsection{Métricas de SourceMonitor}
+En primer lugar, vemos en \ver{kiviat1} un diagrama de Kiviat que muestra los valores de las métricas que ha calculado esta herramienta para nuestro proyecto.
+
+\figuraConPosicion{1}{imgs/kiviat1.png}{Métricas SourceMonitor para nuestro proyecto}{kiviat1}{}{H}
+
+En \ver{kiviat2}, vemos el mismo diagrama para el proyecto antiguo.
+
+\figuraConPosicion{1}{imgs/kiviat2.png}{Métricas SourceMonitor para el proyecto antiguo}{kiviat2}{}{H}
+
+En el caso de nuestro proyecto, vemos que casi todos los valores están dentro de los rangos que la herramienta considera como normales, lo cual en principio es bueno. Sí que es cierto que la complejidad máxima se dispara un poco, pero lo consideramos normal, ya que el proyecto tiene una complejidad inherente bastante alta. De todas formas, la complejidad media se mantiene dentro de los límites, lo cual parece indicar que es un caso aislado.
+
+La profundidad media de bloque, que hace referencia a la profundidad de bloques anidados (sentencias \textit{if}, bucles, etc), vemos que es bastante alta, pero aún así es menor que el valor máximo del intervalo. También lo consideramos normal, ya que el código se complica en ocasiones, sobre todo con el cálculo de características.
+
+Los métodos por clase y el número de sentencias por método también se encuentran dentro de esos valores normales, lo que indica que el código es, en principio, fácil de leer y reutilizable.
+
+La métrica referente a los comentarios no la consideramos relevante, puesto que en la fecha en la que se sacó el informe aún no estaba terminada toda la documentación.
+
+Respecto al proyecto del año pasado, vemos que todas las métricas menos una están fuera de los intervalos. Son muy notables las diferencias de complejidades (tanto la máxima como la media), lo que parece indicar que nuestro código debería ser más eficiente. Además, esto coincide con lo visto en las métricas de RefactorIT.
+
+El porcentaje de comentarios parce también demasiado alto, lo que puede indicar un defecto de código, ya que demasiados comentarios pueden marcar las zonas donde se puede partir un método en otros métodos más pequeños. Relacionado con esto están las métricas de método por clase y sentencias por método. Vemos que los métodos por clase son pocos, cosa que quizás en un principio pueda parecer positivo. Realmente, en este caso, tener pocos métodos indica que estos métodos son muy largos. Esto parece confirmarse con las sentencias por método, que son demasiadas. Esto hace que el código sea muy poco reutilizable y muy difícil de leer, cosa que hemos podido comprobar a la hora de mejorar el código.
+
+La métrica de la profundidad de bloque confirma también todo lo dicho sobre los métodos demasiado largos, ya que en muchos casos se usa una gran cantidad de sentencias condicionales y bucles dentro del mismo método, lo que dispara la profundidad del mismo. Dividiendo los métodos, cosa que hemos hecho, se reduce esta profundidad.
+
+
+\section{Rendimiento}\label{rendimiento}
+Como ya hemos dicho, uno de los objetivos del proyecto era mejorar el rendimiento del anterior. Algunas de las mejoras que hemos mencionado estaban enfocadas a ello. Para evaluar cómo se comportan las dos aplicaciones, hemos medido el tiempo que se tarda en realizar cada una de ellas.
+
+Todas las pruebas se han realizado con la misma máquina: un ordenador con Windows 8 Pro, con un procesador Intel Core2Duo E4400 a 2GHz y 4 GB de RAM.
+
+En la tabla \vertabla{rendimiento} se pueden ver los resultados de las pruebas.
+
+\tablaSmall{Pruebas de rendimiento}{p{8cm}  c  c}{rendimiento}{
+  \multicolumn{1}{c}{Operación} & \multicolumn{1}{c}{Nueva versión} & \multicolumn{1}{c}{Versión antigua}\\
+  }
+ {
+ Ejecución ventana $12\times12$, Haralick & 2.2 s & 139.2 s\\
+ Ejecución ventana $16\times16$, Haralick & 2.4 s & 161.6 s\\
+ Ejecución ventana $24\times24$, Haralick & 3.1 s & 161.6 s\\
+ Ejecución ventana $32\times32$, Haralick & 5.0 s & 159.1 s\\
+ Ejecución ventana $12\times12$ & 201 ms & 202.3 ms\\
+ Ejecución ventana $16\times16$ & 203.2 ms & 201.9 ms\\
+ Ejecución ventana $24\times24$ & 231.8 ms & 202.1 ms\\
+ Ejecución ventana $32\times32$ & 278.4 ms & 221.8 ms\\
+ Análisis normal, ventana $12\times12$ & 251.5 s & 306 s\\
+ Análisis normal, ventana $24\times24$ & 51.3 s & 59.9 s\\
+ Análisis normal, ventana $32\times32$ & 16.7 s & 37.6 s\\
+ Análisis regiones blancas, ventana $12\times12$ & 159.3 s & -\\
+ Análisis regiones blancas, ventana $24\times24$ & 99.1 s & -\\
+ Análisis regiones blancas, ventana $32\times32$ & 7.7 s & -\\
+ Entrenamiento, 10 imágenes, ventana $12\times12$ & 6.96 m & 13.93 m\\
+ Entrenamiento, 10 imágenes, ventana $24\times24$ & 7.11 m & 16.14 m\\
+ }
+ 
+Las pruebas las hemos realizado siempre con los mismos parámetros. En el caso de los análisis, hemos intentado que la región escogida sea lo más parecida posible a la imagen que se usa para los tests, de $100\times100$ píxeles. Aunque al tener que hacerlo a mano, es posible que no siempre haya quedado igual, lo que puede producir algún cambio en los resultados. De todas formas, estos cambios serían poco significativos, ya que no va haber mucha diferencia. Estos análisis se han medido sin la parte de dibujado de los defectos.
+
+En cuanto a los resultados, lo primero que vemos es la diferencia abismal que existe entre usar \textit{maximal correlation coefficient} de Haralick a no usarla. Además, vemos que la biblioteca EJML funciona muy bien, ya que el cambio es inmenso.
+
+Si no calculamos esta característica, el proyecto anterior parece ser algo más rápido. Lo consideramos normal, ya que nuestras llamadas son un poco más complicadas al haber dividido los cálculos de características en más métodos, lo que introduce un pequeño retraso. También estamos usando la clase \textit{Differentials\_}, que puede estar introduciendo algún pequeño retraso adicional. De todas formas, las diferencias son muy pequeñas.
+
+Si nos fijamos en los análisis, vemos que la detección normal es más rápida en nuestro caso. Aquí se ve la diferencia que introduce el uso de multihilo. Es de suponer que con un procesador de 4 núcleos, la diferencia se podría haber notado más, aunque no sabemos hasta qué punto el cuello de botella que representa el dibujado de las ventanas sobre la imagen retrasaría el conjunto.
+
+El análisis usando las regiones blancas de los umbrales locales acelera aún más el proceso, aunque en el caso de la ventana de $24\times24$ ha sido más lento. Esto ha podido ser por un pequeño fallo al escoger la región, ya que había demasiada región <<vacía>>, lo que provoca que el método esté analizando ventanas para nada. Una posible mejora para versiones posteriores es intentar minimizar esto. De todas formas, por experiencia sabemos que para regiones pequeñas, centrándose más en un defecto o en zonas no vacías, este método es muchísimo más rápido que cualquiera de los vistos hasta ahora.
+
+Por último, vemos que el proceso de entrenamiento también ha sido mucho más rápido en nuestro proyecto, lo que vuelve a poner de manifiesto la ventaja de usar un enfoque multihilo.
+
+Queríamos comentar también que no se ha considerado la última característica de haralick ni en el análisis ni en el entrenamiento, ya que es evidente que en nuestro caso va a ser mucho más rápido. Pero no sólo eso, sino que en el caso del proyecto anterior se vuelve totalmente inviable realizar estas pruebas. 
+

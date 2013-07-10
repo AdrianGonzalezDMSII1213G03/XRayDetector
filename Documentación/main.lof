@@ -1,0 +1,93 @@
+\select@language {spanish}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 2.1}{\ignorespaces Proceso de adquisici\IeC {\'o}n de im\IeC {\'a}genes de radiograf\IeC {\'\i }a \cite {wiki:EnsayoNoDestructivo}}}{8}{figure.35}
+\contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Ejemplo de Saliency Map}}{9}{figure.39}
+\contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Ejemplo del funcionamiento de los Local Binary Patterns \cite {de2011transformaciones}}}{16}{figure.60}
+\contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Vecindades de distinto tama\IeC {\~n}o en los LBP \cite {de2011transformaciones}}}{17}{figure.61}
+\contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Esquema del proceso de extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas \cite {DomingoMery}}}{20}{figure.69}
+\contentsline {figure}{\numberline {\relax 2.6}{\ignorespaces Ejemplo de m\IeC {\'a}scara junto a imagen original}}{20}{figure.71}
+\contentsline {figure}{\numberline {\relax 2.7}{\ignorespaces Esquema de la ventana deslizante \cite {DomingoMery}}}{22}{figure.72}
+\contentsline {figure}{\numberline {\relax 2.8}{\ignorespaces Experimento estrategias de etiquetado}}{23}{figure.74}
+\contentsline {figure}{\numberline {\relax 2.9}{\ignorespaces Proceso de dibujado de defectos en nuestro proyecto}}{24}{figure.76}
+\contentsline {figure}{\numberline {\relax 2.10}{\ignorespaces Proceso de detecci\IeC {\'o}n en la segunda opci\IeC {\'o}n}}{26}{figure.81}
+\contentsline {figure}{\numberline {\relax 2.11}{\ignorespaces T\IeC {\'e}rminos precision and recall \cite {wiki:precisionandrecall}}}{27}{figure.84}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Diagrama de la metodolog\IeC {\'\i }a Scrum \cite {scrum_process_image}}}{30}{figure.88}
+\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Diagrama de etapas en Scrum \cite {scrum_stages_image}}}{31}{figure.89}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces Radiograf\IeC {\'\i }as usadas en otros art\IeC {\'\i }culos \cite {anand2009flaw} \cite {tridi} \cite {DomingoMery}}}{42}{figure.123}
+\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces Ejemplo de radiograf\IeC {\'\i }a usada en nuestro proyecto}}{43}{figure.124}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces Metodolog\IeC {\'\i }a Scrum}}{63}{figure.181}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces Burndown Chart del segundo Sprint}}{72}{figure.192}
+\contentsline {figure}{\numberline {\relax A.3}{\ignorespaces Burndown Chart del tercer Sprint}}{74}{figure.197}
+\contentsline {figure}{\numberline {\relax A.4}{\ignorespaces Burndown Chart del cuarto Sprint}}{76}{figure.199}
+\contentsline {figure}{\numberline {\relax A.5}{\ignorespaces Burndown Chart del quinto Sprint}}{80}{figure.201}
+\contentsline {figure}{\numberline {\relax A.6}{\ignorespaces Burndown Chart del sexto Sprint}}{83}{figure.203}
+\contentsline {figure}{\numberline {\relax A.7}{\ignorespaces Burndown Chart del s\IeC {\'e}ptimo Sprint}}{85}{figure.205}
+\contentsline {figure}{\numberline {\relax A.8}{\ignorespaces Burndown Chart del octavo Sprint}}{88}{figure.207}
+\contentsline {figure}{\numberline {\relax A.9}{\ignorespaces Burndown Chart del noveno Sprint}}{90}{figure.209}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax B.1}{\ignorespaces Diagrama de casos de uso principal}}{112}{figure.271}
+\contentsline {figure}{\numberline {\relax B.2}{\ignorespaces Prototipo de la ventana principal}}{126}{figure.287}
+\contentsline {figure}{\numberline {\relax B.3}{\ignorespaces Prototipo de la ventana de opciones avanzadas}}{127}{figure.288}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax C.1}{\ignorespaces Arquitectura en capas \cite {arquitectura}}}{134}{figure.297}
+\contentsline {figure}{\numberline {\relax C.2}{\ignorespaces Patr\IeC {\'o}n Fachada - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{135}{figure.302}
+\contentsline {figure}{\numberline {\relax C.3}{\ignorespaces Diagrama de clases de nuestra Fachada}}{136}{figure.303}
+\contentsline {figure}{\numberline {\relax C.4}{\ignorespaces Patr\IeC {\'o}n Singleton - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{136}{figure.305}
+\contentsline {figure}{\numberline {\relax C.5}{\ignorespaces Patr\IeC {\'o}n Estrategia - Diagrama de clases \cite {carlos_lopez_nozal_apuntes_2012}}}{137}{figure.307}
+\contentsline {figure}{\numberline {\relax C.6}{\ignorespaces Diagrama de clases de nuestras Estrategias}}{138}{figure.308}
+\contentsline {figure}{\numberline {\relax C.7}{\ignorespaces Diagrama de clases}}{139}{figure.310}
+\contentsline {figure}{\numberline {\relax C.8}{\ignorespaces Dise\IeC {\~n}o de la ventana principal}}{140}{figure.313}
+\contentsline {figure}{\numberline {\relax C.9}{\ignorespaces Dise\IeC {\~n}o de la ventana de opciones avanzadas}}{141}{figure.315}
+\contentsline {figure}{\numberline {\relax C.10}{\ignorespaces Dise\IeC {\~n}o de la ventana de precision \& recall}}{141}{figure.317}
+\contentsline {figure}{\numberline {\relax C.11}{\ignorespaces Diagrama de secuencia: Abrir imagen}}{143}{figure.319}
+\contentsline {figure}{\numberline {\relax C.12}{\ignorespaces Diagrama de secuencia: Entrenar clasificador (opci\IeC {\'o}n entrenamiento con ARFF)}}{144}{figure.320}
+\contentsline {figure}{\numberline {\relax C.13}{\ignorespaces Diagrama de secuencia: Entrenar clasificador (opci\IeC {\'o}n entrenamiento con im\IeC {\'a}genes, parte 1)}}{145}{figure.321}
+\contentsline {figure}{\numberline {\relax C.14}{\ignorespaces Diagrama de secuencia: Entrenar clasificador (opci\IeC {\'o}n entrenamiento con im\IeC {\'a}genes, parte 2)}}{146}{figure.322}
+\contentsline {figure}{\numberline {\relax C.15}{\ignorespaces Diagrama de secuencia: Entrenar clasificador (opci\IeC {\'o}n entrenamiento con im\IeC {\'a}genes, parte 3)}}{147}{figure.323}
+\contentsline {figure}{\numberline {\relax C.16}{\ignorespaces Diagrama de secuencia: Entrenar clasificador (opci\IeC {\'o}n entrenamiento con im\IeC {\'a}genes, parte 4)}}{148}{figure.324}
+\contentsline {figure}{\numberline {\relax C.17}{\ignorespaces Diagrama de secuencia: Analizar imagen (parte 1)}}{149}{figure.325}
+\contentsline {figure}{\numberline {\relax C.18}{\ignorespaces Diagrama de secuencia: Analizar imagen (parte 2)}}{150}{figure.326}
+\contentsline {figure}{\numberline {\relax C.19}{\ignorespaces Diagrama de secuencia: Analizar imagen (parte 3)}}{151}{figure.327}
+\contentsline {figure}{\numberline {\relax C.20}{\ignorespaces Diagrama de secuencia: Calcular caracter\IeC {\'\i }sticas (parte 1)}}{152}{figure.328}
+\contentsline {figure}{\numberline {\relax C.21}{\ignorespaces Diagrama de secuencia: Calcular caracter\IeC {\'\i }sticas (parte 2)}}{153}{figure.329}
+\contentsline {figure}{\numberline {\relax C.22}{\ignorespaces Diagrama de secuencia: Cambiar opciones}}{154}{figure.330}
+\contentsline {figure}{\numberline {\relax C.23}{\ignorespaces Diagrama de secuencia: Calcular <<Precision \& Recall>>}}{155}{figure.331}
+\contentsline {figure}{\numberline {\relax C.24}{\ignorespaces Diagrama de componentes}}{162}{figure.358}
+\contentsline {figure}{\numberline {\relax C.25}{\ignorespaces Diagrama de despliegue}}{163}{figure.360}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax D.1}{\ignorespaces Cobertura de los tests}}{174}{figure.389}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax E.1}{\ignorespaces Ventana principal de XRayDetector}}{178}{figure.396}
+\contentsline {figure}{\numberline {\relax E.2}{\ignorespaces Men\IeC {\'u} control}}{178}{figure.397}
+\contentsline {figure}{\numberline {\relax E.3}{\ignorespaces Men\IeC {\'u} progreso}}{179}{figure.398}
+\contentsline {figure}{\numberline {\relax E.4}{\ignorespaces Nivel de tolerancia}}{179}{figure.399}
+\contentsline {figure}{\numberline {\relax E.5}{\ignorespaces Analizar resultados}}{180}{figure.400}
+\contentsline {figure}{\numberline {\relax E.6}{\ignorespaces Control de Log}}{180}{figure.401}
+\contentsline {figure}{\numberline {\relax E.7}{\ignorespaces Visor}}{181}{figure.402}
+\contentsline {figure}{\numberline {\relax E.8}{\ignorespaces Tabla de resultados}}{181}{figure.403}
+\contentsline {figure}{\numberline {\relax E.9}{\ignorespaces Barra de men\IeC {\'u}s}}{182}{figure.404}
+\contentsline {figure}{\numberline {\relax E.10}{\ignorespaces Opciones avanzadas}}{182}{figure.406}
+\contentsline {figure}{\numberline {\relax E.11}{\ignorespaces Bot\IeC {\'o}n entrenar}}{184}{figure.419}
+\contentsline {figure}{\numberline {\relax E.12}{\ignorespaces Elecci\IeC {\'o}n del tipo de entrenamiento}}{184}{figure.420}
+\contentsline {figure}{\numberline {\relax E.13}{\ignorespaces Bot\IeC {\'o}n abrir imagen}}{185}{figure.422}
+\contentsline {figure}{\numberline {\relax E.14}{\ignorespaces Explorador archivos para abrir imagen}}{186}{figure.423}
+\contentsline {figure}{\numberline {\relax E.15}{\ignorespaces Bot\IeC {\'o}n analizar imagen}}{186}{figure.425}
+\contentsline {figure}{\numberline {\relax E.16}{\ignorespaces Aviso al analizar imagen}}{187}{figure.426}
+\contentsline {figure}{\numberline {\relax E.17}{\ignorespaces An\IeC {\'a}lisis en ejecuci\IeC {\'o}n}}{187}{figure.427}
+\contentsline {figure}{\numberline {\relax E.18}{\ignorespaces Defectos detectados}}{188}{figure.428}
+\contentsline {figure}{\numberline {\relax E.19}{\ignorespaces Resultados coloreados}}{189}{figure.429}
+\contentsline {figure}{\numberline {\relax E.20}{\ignorespaces Resultados de Precision \& Recall}}{190}{figure.431}
+\contentsline {figure}{\numberline {\relax E.21}{\ignorespaces Bot\IeC {\'o}n exportar}}{190}{figure.433}
+\contentsline {figure}{\numberline {\relax E.22}{\ignorespaces M\IeC {\'o}dulo de ayuda en l\IeC {\'\i }nea}}{191}{figure.435}
+\contentsline {figure}{\numberline {\relax E.23}{\ignorespaces Pesta\IeC {\~n}as de la ayuda en l\IeC {\'\i }nea}}{191}{figure.436}
+\contentsline {figure}{\numberline {\relax E.24}{\ignorespaces Ejemplo b\IeC {\'u}squeda tabla de contenidos}}{192}{figure.438}
+\contentsline {figure}{\numberline {\relax E.25}{\ignorespaces Ejemplo de motor de b\IeC {\'u}squeda}}{193}{figure.440}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {\relax A.1}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para nuestro proyecto}}{201}{figure.472}
+\contentsline {figure}{\numberline {\relax A.2}{\ignorespaces M\IeC {\'e}tricas SourceMonitor para el proyecto antiguo}}{201}{figure.473}

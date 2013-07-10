@@ -1,0 +1,359 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Técnicas y herramientas}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este apartado se comentan las técnicas y herramientas utilizadas durante el desarrollo del proyecto.
+
+
+
+\section{Técnicas}
+En esta sección aparecen recogidas las técnicas utilizadas para la realización del proyecto.
+
+
+\subsection{Metodología Scrum}
+\scrum{} \cite{scrum} es una metodología para la gestión y desarrollo de proyectos software basada en un proceso iterativo e incremental. Cada iteración termina con una pieza de software ejecutable que incorpora una nueva funcionalidad o mejora las ya existentes. Estas iteraciones suelen durar de dos a cuatro semanas.
+
+Enumerando los elementos clave de \scrum{} según \textit{Control Chaos} \cite{controlchaos}:
+\begin{itemize}
+ \item \scrum{} es un proceso ágil para gestionar y controlar el trabajo de desarrollo.
+ \item \scrum{} es un envoltorio para prácticas de ingeniería existentes.
+ \item \scrum{} es una aproximación basada en equipos para desarrollar sistemas y productos iterativa e incrementalmente cuando los requisitos cambian rápidamente.
+ \item \scrum{} es un proceso que controla el caos de necesidades e intereses en conflicto.
+ \item \scrum{} es una forma de mejorar las comunicaciones y maximizar la cooperación.
+ \item \scrum{} es una forma de detectar y eliminar cualquier cosa que se interponga en el desarrollo y distribución de productos.
+ \item \scrum{} es una forma de maximizar la productividad.
+ \item \scrum{} es escalable desde un único proyecto a organizaciones completas. Ha controlado y organizado el desarrollo e implementación de muchos   productos y proyectos interrelacionados con más de mil desarrolladores e implementadores.
+ \item \scrum{} es una forma de que todo el mundo se sienta bien con su trabajo, sus aportaciones, y que ellos han hecho lo mejor que pueden hacer.
+\end{itemize}
+
+Los principales beneficios que aporta \scrum{} son:
+\begin{itemize}
+ \item Entrega mensual o trimestral de resultados lo cual aporta las siguientes ventajas:
+  \begin{itemize}
+   \item Gestión regular de las expectativas del cliente y basada en resultados tangibles: el cliente establece sus prioridades y cuando espera tenerlo acabado.
+   \item Resultados anticipados: el cliente puede empezar a utilizar los resultados mas importantes antes de que esté totalmente finalizado el proyecto.
+   \item Flexibilidad de adaptación respecto a las necesidades del cliente, cambios en el mercado, etc.
+   \item Gestión sistemática del retorno de inversión (\textit{ROI}): el cliente maximiza el \textit{ROI} del proyecto, de este modo cuando el beneficio pendiente de obtener es menor que el coste del desarrollo el cliente puede finalizar el proyecto.
+   \item Mitigación sistemática de riesgos del proyecto: la cantidad de riesgo a la que se enfrenta el equipo está limitada a los requisitos que se puede desarrollar en una iteración.
+  \end{itemize}
+ \item Productividad y calidad: de manera regular el equipo de desarrollo va mejorando y simplificando su manera de trabajar.
+ \item Alineamiento entre cliente y el equipo de desarrollo: todos los participantes del proyecto conocen cuál es el objetivo a conseguir. El producto se enriquece con las aportaciones de todos.
+ \item Equipo motivado: las personas están más motivadas cuando pueden usar su creatividad para resolver problemas y cuando pueden decidir organizar su trabajo.
+\end{itemize}
+
+En el diagrama \ver{DiagramaFuncionamientoScrum} se muestra el funcionamiento y actividades de la metodología \scrum{}.
+
+%Proceso de Scrum
+\figura{1}{imgs/ScrumProcess.jpg}{Diagrama de la metodología Scrum \cite{scrum_process_image}}{DiagramaFuncionamientoScrum}{}
+
+Algunos conceptos básicos para entender \scrum{} son:
+\begin{itemize}
+ \item \productbacklog{}: conjunto de historias de usuario que representan los requisitos funcionales y no funcionales. Se trata de una lista priorizada en función de lo que el cliente da mayor importancia.
+ \item \sprintbacklog{}: conjunto de tareas extraídas del \productbacklog{} y que serán realizadas durante un \sprint{}.
+ \item \burndownchart{}: gráfico de tareas pendientes por hacer. Representan el esfuerzo y ofrece información sobre la evolución del proyecto.
+\end{itemize}
+
+El objetivo del diagrama adjunto \ver{DiagramaFasesScrum} es el de agrupar y sintetizar todos los elementos de la metodología \scrum{}.
+
+%Fases de Scrum
+\figura{1}{imgs/ScrumDiagram.png}{Diagrama de etapas en Scrum \cite{scrum_stages_image}}{DiagramaFasesScrum}{}
+
+\subsubsection*{Roles}
+\scrum{} \cite{scrum_wiki} define una serie de roles que se dividen en dos grupos: <<gallinas>> y <<cerdos>>.
+\begin{itemize}
+ \item Roles <<cerdo>>: son aquellos que están comprometidos a construir el software de manera regular y frecuente.
+  \begin{itemize}
+   \item \textit{Product Owner}: representa la voz del cliente. Debe asegurarse de que el equipo trabaja de forma adecuada desde la perspectiva de negocio. Escribe las historias de usuario, las prioriza y las coloca en el \productbacklog{}.
+   \item \textit{Scrum Master}: su principal trabajo es eliminar obstáculos que puedan hacer que el equipo no alcance el objetivo al final del sprint, no es el líder del equipo, pero sirve de pantalla y protección.
+   \item \textit{Team}: es el equipo de desarrollo y su responsabilidad es la de generar y entregar el producto (diseñadores, programadores,\dots).
+  \end{itemize}
+ \item Roles <<gallina>>: en realidad no son parte del proceso \scrum{}, pero deben tenerse en cuenta. Estos roles deben participar en el proceso.
+  \begin{itemize}
+   \item \textit{Stakeholders}: agrupa a la gente que hace posible el proyecto y para quienes el proyecto producirá el beneficio que justifica el coste. Dentro de este grupo estarían los clientes, \textit{stakeholders} \dots
+   \item \textit{Managers}: son la gente que establece el ambiente para el desarrollo del producto.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Reuniones}
+\scrum{} define una serie de reuniones para el correcto funcionamiento del equipo. Éstas se encuentran bien definidas en cuanto a contenido y a tiempo empleado.
+\begin{itemize}
+ \item \textit{Daily Scrum}: Cada día de un \sprint{} se realiza una reunión sobre el estado del proyecto.
+  \begin{itemize}
+   \item La duración es fija (15 minutos) independientemente del tamaño del equipo.
+   \item La reunión debe comenzar puntualmente a la hora. A menudo hay castigos para quien lo incumple.
+   \item Todos pueden estar presentes pero solo pueden hablar los <<cerdos>>.
+   \item La reunión se realiza de pie, facilitando no alargar la reunión.
+   \item El lugar y la hora deben ser fijos todos los días.
+   \item Preguntas que debe responder cada miembro del equipo:
+    \begin{itemize}
+     \item ¿Qué has hecho desde ayer?
+     \item ¿Qué vas a hacer hoy?
+     \item ¿Qué obstáculos te has encontrado?
+    \end{itemize}
+  \end{itemize}
+ \item \textit{Sprint Planning Meeting}: al inicio de cada \sprint{} se debe llevar a cabo una.
+  \begin{itemize}
+   \item Crear y planificar, el equipo completo, el \sprintbacklog{}. Se obtiene extrayendo tareas del \productbacklog{}.
+   \item Límite de ocho horas.
+  \end{itemize}
+ \item \textit{Sprint Review Meeting}: al finalizar cada \sprint{}.
+  \begin{itemize}
+   \item Revisar el trabajo que fue planificado y no ha sido completado.
+   \item Presentar el trabajo completado a los interesados. El trabajo incompleto no puede ser mostrado.
+   \item Límite de cuatro horas.
+  \end{itemize}
+ \item \textit{Sprint Retrospective}: al finalizar cada \sprint{}.
+  \begin{itemize}
+   \item Se analiza el \sprint{} y todos los miembros del equipo analizan qué mejoras podrían aplicarse.
+   \item Su objetivo es la mejora continua.
+   \item Límite de cuatro horas.
+  \end{itemize}
+\end{itemize}
+
+
+\subsection{Java}
+\java{} es un lenguaje de programación que data de finales de los años 70. Ha tenido una gran implantación debido a la sencillez respecto a otros lenguajes orientados a objetos como \cpp{}.
+
+\java{} ofrece un API (Application Program Interface) que ofrece a los programadores una serie de librerías y facilidades para el desarrollo de aplicaciones \java{}.
+
+El API se encuentra divido en paquetes, que son la estructura de organización lógica. En su interior se encuentran una gran cantidad de clases que cubren un amplio abanico de funcionalidades del desarrollo software en general.
+
+La documentación del API se encuentra disponible en la web y su consulta resulta imprescindible para cualquier tipo de desarrollo en \java{}.
+
+\subsubsection*{Máquina virtual}
+La máquina virtual es un programa capaz de interpretar y ejecutar instrucciones expresadas en un código especial (el \java{} \textit{bytecode}). Este código se obtiene al compilar el fuente original con el compilador de \java{}.
+
+Este código es un lenguaje máquina de bajo nivel que es interpretado por la máquina virtual para realizar las operaciones. Esto hace que el rendimiento de los programas escritos en \java{} sea inferior ya que aparece una nueva pieza intermedia que es la máquina virtual.
+
+La ventaja de ser un lenguaje interpretado es que cualquier programa escrito en \java{} puede ejecutarse en cualquier \textit{hardware} o sistema operativo, la única condición necesaria es que exista una máquina virtual disponible.
+
+\subsection{UML}
+El Lenguaje Unificado de Modelado (UML) \cite{fowler1999uml} es el lenguaje de modelado de sistemas de software más conocido y utilizado en la actualidad. Se trata de un lenguaje gráfico, llamado «lenguaje de modelado», que se utiliza para visualizar, especificar, construir y documentar un sistema, describiendo sus métodos o procesos. Es el lenguaje en el que está descrito el modelo.
+
+UML permite modelar la estructura, comportamiento y arquitectura de las aplicaciones. Además, la programación orientada a objetos, que ha sido la elegida para este proyecto, es un complemento perfecto de UML. Por estas razones se ha elegido UML, en su versión 2.0.
+
+UML cuenta con varios tipos de diagramas, los cuales muestran diferentes aspectos de las entidades
+representadas. Para la realización del proyecto se han utilizado los siguientes tipos:
+
+\begin{description}
+\item \textbf{Diagrama de Casos de Uso:} muestra los casos de uso, actores y sus interrelaciones.
+\item \textbf{Diagrama de Paquetes:} muestra como los elementos de modelado están organizados en
+paquetes, ademas de las dependencias entre esos paquetes.
+\item \textbf{Diagrama de Clases:} representa una colección de elementos de modelado estáticos, tales
+como clases y tipos, sus contenidos y sus relaciones.
+\item \textbf{Diagrama de Secuencias:} modela la lógica secuencial, ordenando en el tiempo los diferentes
+mensajes entre entidades.
+\end{description}
+
+El análisis, diseño e implementación del sistema se ha realizado empleando esta técnica, gracias a lo aprendido en las diferentes asignaturas de la carrera.
+
+
+\subsection{Weka}
+\weka{} \cite{weka} es una plataforma de software para aprendizaje automático y minería de datos, diseñada por la Universidad de Waikato. Está escrita en \java{}. Se trata de software libre distribuido bajo licencia \gnu{}.
+
+Las principales ventajas que nos ofrece son:
+\begin{enumerate}
+ \item Se encuentra escrita en \java{}, lenguaje que se va a usar en el proyecto.
+ \item Una consecuencia de lo anterior es que \weka{} es portable, puede funcionar en cualquier sistema operativo.
+ \item Se dispone del código fuente para ver cómo hace las cosas y cómo funciona.
+ \item Buena documentación (\textit{JavaDoc}) para ayudar a la programación.
+ \item Completa API capaz de representar de una manera sencilla la abstracción de las instancias.
+ \item Es capaz de obtener los datos de diversos orígenes, tanto de texto como \arff{} y \csv{}, como de bases de datos.
+ \item Su uso está muy generalizado en el mundo de la minería de datos.
+ \item Ya utilizado con anterioridad, por lo que su manejo no resulta nuevo.
+\end{enumerate}
+No todo son ventajas y a continuación se detallan los inconvenientes valorados:
+\begin{enumerate}
+ \item \weka{} carga todas las instancias en memoria por lo que se limita el número de instancias que es capaz de manejar.
+\end{enumerate}
+
+\weka{} soporta varias tareas estándar de minería de datos, especialmente, preprocesamiento de
+datos, clustering, clasificación, regresión, visualización, y selección. Todas las técnicas de \weka{} se fundamentan en la asunción de que los datos están disponibles en un fichero plano (\emph{flat file}) o una relación, en la que cada registro de datos está descrito por un número fijo de atributos (normalmente numéricos o nominales, aunque también se soportan otros tipos).
+
+
+\subsection{ImageJ}
+ImageJ \cite{abramoff04} es un programa de procesamiento de imagen digital de dominio público programado en \java{} desarrollado en el \emph{National Institute of Health}.
+
+La licencia de ImageJ es la siguiente:
+
+\begin{quotation}
+ImageJ is a work of the United States Government. It is in the public domain and
+open source. There is no copyright. You are free to do anything you want with this
+source but I like to get credit for my work and I would like you to offer your changes
+to me so I can possibly add them to the, “official” version.
+\end{quotation}
+
+Lo que quiere decir básicamente que somos libres de hacer lo que queramos con ImageJ pero que si realizamos algún cambio deberíamos ofrecérselos al creador para que los añada a la versión «oficial».
+
+ImageJ fue diseñado con una arquitectura abierta que proporciona extensibilidad vía plugins \java{} y macros (macroinstrucciones) grabables. Se pueden desarrollar plugins de escaneo personalizado, análisis y procesamiento usando el editor incluido en ImageJ y un compilador \java{}. Los plug-ins escritos por usuarios hacen posible resolver muchos problemas de procesado y análisis de imágenes, desde de imágenes en vivo de las células en tres dimensiones, procesado de imágenes radiológicas, comparaciones de múltiples datos de sistema de imagen hasta sistemas automáticos de hematología.
+
+Aunque ImageJ es extensible mediante plugins y macros, nosotros lo hemos elegido con la finalidad de utilizarlo como librería.
+
+ImageJ puede mostrar, editar, analizar, procesar, guardar, e imprimir imágenes de 8 bits (256 colores), 16 bits (miles de colores) y 32 bits (millones de colores). Puede leer varios formatos de imagen incluyendo TIFF, PNG, GIF, JPEG, BMP, DICOM, FITS, así como formatos RAW (formato plano).
+
+ImageJ soporta pilas o lotes, una serie de imágenes que comparten una sola ventana, y es multiproceso, de forma que las operaciones que requieren mucho tiempo se pueden realizar en paralelo en hardware multi-CPU.
+
+ImageJ puede calcular el área y las estadísticas de valor de píxel de selecciones definidas por el usuario y la intensidad de objetos umbral (\emph{thresholded objects}). Puede medir distancias y ángulos. Se puede crear histogramas de densidad y gráficos de línea de perfil.
+
+Es compatible con las funciones estándar de procesamiento de imágenes tales como operaciones lógicas y aritméticas entre imágenes, manipulación de contraste, convolución, análisis de Fourier, nitidez, suavizado, detección de bordes y filtrado de mediana. Hace transformaciones geométricas como ampliar, rotación y simetrías. El programa es compatible con cualquier número de imágenes al mismo tiempo, limitado solamente por la memoria disponible.
+
+Preferimos usar ImageJ frente a otras opciones, como OpenCV, principalmente por su buena documentación (\textit{JavaDoc}), cosa que facilita mucho la programación.
+
+
+\subsection{Patrones de diseño}
+Un patrón de diseño es una solución a un problema de diseño común en el desarrollo de software.
+
+La principal característica de un patrón de diseño es que debe ser reusable, es decir, debe poder aplicarse a diferentes problemas de diseño en distintas circunstancias y ser efectivo.
+
+Los patrones de diseño utilizados para el desarrollo de este proyecto se explican en el anexo 3 de esta memoria.
+
+
+
+\section{Herramientas}
+En esta sección aparecen cada una de las herramientas utilizadas para la realización del proyecto.
+
+
+\subsection{Eclipse}
+Como entorno de desarrollo de la aplicación se utilizará Eclipse. La decisión fue tomada por haber trabajado anteriormente con esta herramienta y conocer sus ventajas e inconvenientes. La disponibilidad de \textit{plugins} disponibles facilita el desarrollo, integrando el control de versiones, \textit{suites} de pruebas, \dots
+
+Eclipse es un producto realizado por la \textit{Eclipse Foundation}, que es una comunidad de codigo abierto que tiene como objetivo desarrollar una plataforma para el desarrollo software.
+
+Se encuentra escrito en \java{} bajo una licencia propia, la \epl{} (Eclipse Public License \cite{epl}).
+
+Aunque en su origen se creó para \java{} existen versiones de todo tipo para otros lenguajes como pueden ser \clang{} o adaptaciones comerciales para productos o lenguajes concretos.
+
+Página web de la herramienta: \url{http://www.eclipse.org/}.
+
+
+\subsection{JUnit}
+\textit{JUnit} es un conjunto de bibliotecas o \textit{framework} que son utilizadas para realizar las pruebas unitarias de aplicaciones \java{}. Dispone de una buena reputación dentro de la literatura sobre programación de pruebas.
+
+El propio \textit{framework} permite visualizar los resultados en texto, como gráficos o como tarea de \ant{}.
+
+Se utilizará el \textit{plugin} de Eclipse por la facilidad que aporta para la ejecución de las pruebas y su total integración con el entorno de desarrollo.
+
+Se ha utilizado por haber sido utilizado durante la carrera y ser el lanzador más conocido por los desarrolladores.
+
+Página web de la herramienta: \url{http://www.junit.org/}.
+
+
+\subsection{RefactorIT}
+Se trata de una herramienta de cálculo de  métricas que permite conocer información de utilidad de un proyecto software.
+
+Se utilizará el \textit{plugin} para Eclipse que permite visualizar los valores de las métricas y exportar informes en diversos formatos.
+
+Se ha utilizado esta herramienta debido al conocimiento previo de la misma, al haberla utilizado ya en otra asignatura. Además, es una herramienta bastante completa, que permite el cálculo de un buen número de la métricas que conocemos.
+
+Página web de la herramienta: \url{http://sourceforge.net/projects/refactorit/}.
+
+
+\subsection{Source Monitor}
+Se trata de una herramienta de análisis de código capaz de analizar proyectos escritos en diversos lenguajes.
+
+Su utilización ha sido motivada porque permitirá comparar las métricas obtenidas con los umbrales establecidos por la Universidad de Burgos.
+
+Página web de la herramienta: \url{http://www.campwoodsw.com/sourcemonitor.html}.
+
+
+\subsection{Astah}
+Es una herramienta de modelado \uml{} creado por la compañía \textit{ChangeVision}.
+
+Al estar pensado para \java{}, permite la importación y exportación de código fuente y la generación de gráficos automáticos.
+
+En el proyecto se utilizará la versión \textit{Community} porque es gratuita y cubre las necesidades de modelado del proyecto.
+
+Página web de la herramienta: \url{http://astah.net/editions/community}.
+
+
+\subsection{GitHub}
+\textit{GitHub} es una plataforma para el desarrollo colaborativo de software que utiliza el control de versiones \textit{Git}.
+
+Es una herramienta completa y robusta que permite la creación de grupos, ramas, etiquetas y todo tipo de artefactos necesarios para la organización de un proyecto de programación.
+
+Las principales ventajas que nos ofrece son:
+\begin{itemize}
+\item Nuestro código queda alojado en la nube, permitiendo acceder a él desde cualquier lugar.
+\item Nos permite trabajar con la metodología de \textit{Rama por tarea}, en la que se crea una rama por cada tarea a realizar, permitiendo trabajar en dos tareas simultáneamente, fusionando después los cambios.
+\item Tiene cliente propio multipltaforma, lo que nos permite gestionar el repositorio de una forma muy sencilla, pudiendo validar los cambios que hagamos en el código y subiendo estos cambios al servidor.
+\end{itemize}
+
+Página web de la herramienta: \url{https://github.com/}.
+
+
+\subsection{PivotalTracker}
+\textit{PivotalTracker} será utilizada como herramienta de gestión y control de tareas y errores.
+
+Está especializada en proyectos ágiles por lo que da soporte a todos los conceptos de la metodología \scrum{} utilizada en el proyecto.
+
+Se utilizará la versión de \textit{hosting} que permite acceder desde cualquier equipo al servidor desde un navegador. Además, permite sincronizarse con \textit{GitHub}, con lo que podemos ver cómo se van realizando las tareas tanto en la propia herramienta como en el código. En el Apéndice A, aparece un breve manual de usuario que permite visualizar la planificación y las tareas.
+
+Página web de la herramienta: \url{https://www.pivotaltracker.com/}.
+
+
+\subsection{MiK\TeX{}}
+Mik\TeX{} es una distribución \TeX{}/\LaTeX{} libre y de código abierto para Windows.
+
+Una de sus características es la capacidad que tiene para instalar paquetes automáticamente sin necesidad de intervención del usuario. Al contrario que otras distribuciones, su instalación es extremadamente sencilla.
+
+Ha sido utilizada por recomendación de uno de los tutores quien suministró un tutorial sobre su instalación.
+
+Página web de la herramienta: \url{http://miktex.org/}.
+
+
+\subsection{\TeX{}Maker}
+\TeX{}Maker es un editor de \LaTeX{} multiplataforma similar a \textit{Kile}.
+
+Aunque existen multitud de editores para \LaTeX{} se ha escogido este por haber sido recomendado por uno de los tutores, dado que nunca antes se ha trabajado con este lenguaje de documentación se aceptó la sugerencia. Además, aportó un tutorial de como instalar y configurar el editor en el sistema operativo Windows.
+
+Una de sus características es la posibilidad de trazabilidad de código desde PDF. Configurando el editor y un visor de PDF, el programa es capaz de detectar la línea a la que se corresponde un determinado comando \LaTeX{}. Esto es especialmente ventajoso cuando, como en este caso, no se conoce el lenguaje.
+
+En el enlace \url{http://en.wikipedia.org/wiki/Comparison_of_TeX_editors} aparece una comparativa entre diversos editores disponibles.
+
+Página web de la herramienta: \url{http://www.xm1math.net/texmaker/}.
+
+\subsection{WindowBuilder}
+WindowBuilder es un \textit{plugin} de Eclipse que permite diseñar de una forma fácil y rápida interfaces gráficas basadas en \textit{Swing}.
+
+Hemos elegido este editor de interfaces gráficas debido a su facilidad para crearlas, ya que incluye un editor \textit{WYSIWYG}, con el que podemos arrastrar los elementos a la ventana que estamos creando y moverlos hasta dejarlos en la posición deseada.
+
+La otra parte interesante de este \textit{plugin} es que genera el código automáticamente, con lo que nos ahorra mucho trabajo. Además, el código que genera está bien agrupado, con lo que después es muy fácil refactorizarlo.
+
+Página web del \textit{plugin}: \url{http://www.eclipse.org/windowbuilder/}.
+
+\subsection{Auto Local Threshold}
+Auto Local Threshold es un \textit{plugin} de ImageJ que implementa la segmentación de imágenes mediante los filtros de umbrales locales.
+
+Por defecto, ImageJ no tiene esta funcionalidad, así que tuvimos que descargarnos e instalar este \textit{plugin}, que permite realizar estas opciones de forma muy sencilla.
+
+Para poder usarlo en el proyecto, tuvimos que cambiar alguna cosa de la clase del \textit{plugin} para poder usarlo con nuestro código.
+
+Página web del \textit{plugin}: \url{http://fiji.sc/wiki/index.php/Auto_Local_Threshold}.
+
+\subsection{Apache Commons IO}
+Apache Commons IO es una librería de utilidades para asistir al desarrollo de funcionalidad relacionada con entrada/salida.
+
+Hemos decidido utlizarla debido a que simplifica mucho el realizar algunas operaciones con ficheros, como es la fusión de uno o más ficheros de texto, o la exportación de un cierto texto a un fichero externo.
+
+La página web de la herramienta es: \url{http://commons.apache.org/proper/commons-io/}.
+
+\subsection{EJML}
+EJML (Efficient Java Matrix Library) es una librería de código abierto de álgebra lineal para manipular matrices densas. Uno de los objetivos que se marcaron sus desarrolladores fue que sea lo más eficiente posible desde un punto de vista computacional y espacial, ya sea al manipular matrices grandes o pequeñas.
+
+Tiene una buena API que permite realizar un gran número de operaciones, desde las más sencillas, como sumar o multiplicar, hasta las más complicadas, como descomposiciones de diversos tipos.
+
+Se distribuye con una licencia LGPL. Puede encontrarse en \url{https://code.google.com/p/efficient-java-matrix-library/}.
+
+\subsection{Zotero}
+A la hora de realizar cualquier trabajo de investigación o documento de cierta envergadura, como puede ser la memoria de un trabajo final de carrera, el autor del mismo se va a encontrar con un gran número de información a su disposición. Toda esta información proviene de muchas y muy diversas fuentes (libros, artículos, revistas, bases de datos, internet...) y tiende a crecer de forma incontrolada a lo largo del desarrollo del proyecto. Es por ésto por lo que surge la necesidad de utilizar algún sistema que gestione toda esta información de forma eficaz.
+
+Este sistema es un gestor bibliográfico, con el que además de gestionar esta información, también se puede insertar citas en los documentos y crear la bibliografía en un formato normalizado.
+
+Zotero es un gestor bibliográfico de código abierto que se instala como una extensión del navegador Firefox y del navegador Chrome. De esta forma, permite añadir directamente a la bibliografía las páginas web visitadas y buscar documentos en línea.
+
+Permite exportar la bibliografía en formato \LaTeX{} directamente, lo cual es muy cómodo para integrarla directamente en el documento.
+
+Página web de la herramienta: \url{http://www.zotero.org/}.
+
+
