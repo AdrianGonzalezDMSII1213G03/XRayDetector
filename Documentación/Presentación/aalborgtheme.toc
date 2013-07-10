@@ -1,0 +1,17 @@
+\beamer@endinputifotherversion {3.26pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Introducci\IeC {\'o}n}{3}{0}{1}
+\beamer@sectionintoc {2}{Objetivos}{6}{0}{2}
+\beamer@sectionintoc {3}{Conceptos te\IeC {\'o}ricos}{7}{0}{3}
+\beamer@subsectionintoc {3}{1}{Preprocesamiento}{8}{0}{3}
+\beamer@subsectionintoc {3}{2}{Segmentaci\IeC {\'o}n}{10}{0}{3}
+\beamer@subsectionintoc {3}{3}{Extracci\IeC {\'o}n}{12}{0}{3}
+\beamer@subsectionintoc {3}{4}{Reconocimiento de im\IeC {\'a}genes}{14}{0}{3}
+\beamer@sectionintoc {4}{T\IeC {\'e}cnicas y herramientas}{19}{0}{4}
+\beamer@sectionintoc {5}{Planificaci\IeC {\'o}n}{20}{0}{5}
+\beamer@sectionintoc {6}{Viabilidad}{21}{0}{6}
+\beamer@sectionintoc {7}{Aspectos relevantes}{25}{0}{7}
+\beamer@sectionintoc {8}{Trabajos relacionados}{26}{0}{8}
+\beamer@sectionintoc {9}{Demostraci\IeC {\'o}n}{27}{0}{9}
+\beamer@sectionintoc {10}{Comparativa}{28}{0}{10}
+\beamer@sectionintoc {11}{Conclusiones y l\IeC {\'\i }neas futuras}{30}{0}{11}
