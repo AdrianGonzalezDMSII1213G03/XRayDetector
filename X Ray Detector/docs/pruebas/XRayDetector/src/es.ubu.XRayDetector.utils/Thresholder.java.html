@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Thresholder.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">Thresholder.java</span></div><h1>Thresholder.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.utils;
+
+
+import ij.CompositeImage;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.LookUpTable;
+import ij.Macro;
+import ij.Prefs;
+import ij.Undo;
+import ij.gui.GenericDialog;
+import ij.gui.Toolbar;
+import ij.measure.Measurements;
+import ij.plugin.PlugIn;
+import ij.plugin.frame.Recorder;
+import ij.process.AutoThresholder;
+import ij.process.ByteProcessor;
+import ij.process.ImageProcessor;
+import ij.process.StackProcessor;
+
+import java.awt.Choice;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Vector;
+
+/** This plugin implements the Process/Binary/Make Binary 
+	and Convert to Mask commands. */
+<span class="fc" id="L30">public class Thresholder implements PlugIn, Measurements, ItemListener {</span>
+	
+<span class="fc" id="L32">	public static final String[] methods = AutoThresholder.getMethods();</span>
+<span class="fc" id="L33">	public static final String[] backgrounds = {&quot;Default&quot;, &quot;Dark&quot;, &quot;Light&quot;};</span>
+	private double minThreshold;
+	private double maxThreshold;
+	boolean autoThreshold;
+	boolean skipDialog;
+<span class="fc" id="L38">	static boolean fill1 = true;</span>
+<span class="fc" id="L39">	static boolean fill2 = true;</span>
+<span class="fc" id="L40">	static boolean useBW = true;</span>
+<span class="fc" id="L41">	private boolean useLocal = true;</span>
+	boolean convertToMask;
+<span class="fc" id="L43">	private String method = methods[0];</span>
+<span class="fc" id="L44">	private String background = backgrounds[0];</span>
+<span class="fc" id="L45">	private static boolean staticUseLocal = true;</span>
+<span class="fc" id="L46">	private static String staticMethod = methods[0];</span>
+<span class="fc" id="L47">	private static String staticBackground = backgrounds[0];</span>
+	private ImagePlus imp;
+	@SuppressWarnings(&quot;rawtypes&quot;)
+	private Vector choices;
+
+	public void run(String arg) {
+<span class="fc" id="L53">		convertToMask = arg.equals(&quot;mask&quot;);</span>
+<span class="pc bpc" id="L54" title="2 of 4 branches missed.">		skipDialog = arg.equals(&quot;skip&quot;) || convertToMask;</span>
+//		ImagePlus imp = WindowManager.getCurrentImage();
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (imp==null)</span>
+<span class="nc" id="L57">			{IJ.noImage(); return;}</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (imp.getStackSize()==1) {</span>
+<span class="fc" id="L59">			Undo.setup(Undo.COMPOUND_FILTER, imp);</span>
+<span class="fc" id="L60">			applyThreshold(imp);</span>
+<span class="fc" id="L61">			Undo.setup(Undo.COMPOUND_FILTER_DONE, imp);</span>
+<span class="fc" id="L62">		} else</span>
+<span class="nc" id="L63">			convertStack(imp);</span>
+<span class="fc" id="L64">	}</span>
+	
+	void convertStack(ImagePlus imp) {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (imp.getStack().isVirtual()) {</span>
+<span class="nc" id="L68">			IJ.error(&quot;Thresholder&quot;, &quot;This command does not work with virtual stacks.\nUse Image&gt;Duplicate to convert to a normal stack.&quot;);</span>
+<span class="nc" id="L69">			return;</span>
+		}
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		boolean thresholdSet = imp.getProcessor().getMinThreshold()!=ImageProcessor.NO_THRESHOLD;</span>
+<span class="nc" id="L72">		this.imp = imp;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (!IJ.isMacro()) {</span>
+<span class="nc" id="L74">			method = staticMethod;</span>
+<span class="nc" id="L75">			background = staticBackground;</span>
+<span class="nc" id="L76">			useLocal = staticUseLocal;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (!thresholdSet)</span>
+<span class="nc" id="L78">				updateThreshold(imp);</span>
+		}
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (thresholdSet)</span>
+<span class="nc" id="L81">			useLocal = false;</span>
+<span class="nc" id="L82">		GenericDialog gd = new GenericDialog(&quot;Convert Stack to Binary&quot;);</span>
+<span class="nc" id="L83">		gd.addChoice(&quot;Method:&quot;, methods, method);</span>
+<span class="nc" id="L84">		gd.addChoice(&quot;Background:&quot;, backgrounds, background);</span>
+<span class="nc" id="L85">		gd.addCheckbox(&quot;Calculate threshold for each image&quot;, useLocal);</span>
+<span class="nc" id="L86">		gd.addCheckbox(&quot;Black background (mask)&quot;, Prefs.blackBackground);</span>
+<span class="nc" id="L87">		choices = gd.getChoices();</span>
+<span class="nc" id="L88">		((Choice)choices.elementAt(0)).addItemListener(this);</span>
+<span class="nc" id="L89">		((Choice)choices.elementAt(1)).addItemListener(this);</span>
+<span class="nc" id="L90">		gd.showDialog();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (gd.wasCanceled())</span>
+<span class="nc" id="L92">			return;</span>
+<span class="nc" id="L93">		this.imp = null;</span>
+<span class="nc" id="L94">		method = gd.getNextChoice();</span>
+<span class="nc" id="L95">		background = gd.getNextChoice();</span>
+<span class="nc" id="L96">		useLocal = gd.getNextBoolean();</span>
+<span class="nc" id="L97">		boolean saveBlackBackground = Prefs.blackBackground;</span>
+<span class="nc" id="L98">		Prefs.blackBackground = gd.getNextBoolean();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (!IJ.isMacro()) {</span>
+<span class="nc" id="L100">			staticMethod = method;</span>
+<span class="nc" id="L101">			staticBackground = background;</span>
+<span class="nc" id="L102">			staticUseLocal = useLocal;</span>
+		}
+<span class="nc" id="L104">		Undo.reset();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (useLocal)</span>
+<span class="nc" id="L106">			convertStackToBinary(imp);</span>
+		else
+<span class="nc" id="L108">			applyThreshold(imp);</span>
+<span class="nc" id="L109">		Prefs.blackBackground = saveBlackBackground; </span>
+<span class="nc" id="L110">	}</span>
+
+	void applyThreshold(ImagePlus imp) {
+<span class="fc" id="L113">		imp.deleteRoi();</span>
+<span class="fc" id="L114">		ImageProcessor ip = imp.getProcessor();</span>
+<span class="fc" id="L115">		ip.resetBinaryThreshold();</span>
+<span class="fc" id="L116">		int type = imp.getType();</span>
+<span class="pc bpc" id="L117" title="2 of 4 branches missed.">		if (type==ImagePlus.GRAY16 || type==ImagePlus.GRAY32) {</span>
+<span class="nc" id="L118">			applyShortOrFloatThreshold(imp);</span>
+<span class="nc" id="L119">			return;</span>
+		}
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (!imp.lock()) return;</span>
+<span class="fc" id="L122">		double saveMinThreshold = ip.getMinThreshold();</span>
+<span class="fc" id="L123">		double saveMaxThreshold = ip.getMaxThreshold();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		autoThreshold = saveMinThreshold==ImageProcessor.NO_THRESHOLD;</span>
+					
+<span class="fc" id="L126">		boolean useBlackAndWhite = true;</span>
+<span class="pc bpc" id="L127" title="3 of 4 branches missed.">		boolean noArgMacro =IJ.macroRunning() &amp;&amp; Macro.getOptions()==null;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (skipDialog)</span>
+<span class="nc" id="L129">			fill1 = fill2 = useBlackAndWhite = true;</span>
+<span class="pc bpc" id="L130" title="3 of 4 branches missed.">		else if (!(autoThreshold||noArgMacro)) {</span>
+<span class="nc" id="L131">			GenericDialog gd = new GenericDialog(&quot;Make Binary&quot;);</span>
+<span class="nc" id="L132">			gd.addCheckbox(&quot;Thresholded pixels to foreground color&quot;, fill1);</span>
+<span class="nc" id="L133">			gd.addCheckbox(&quot;Remaining pixels to background color&quot;, fill2);</span>
+<span class="nc" id="L134">			gd.addMessage(&quot;&quot;);</span>
+<span class="nc" id="L135">			gd.addCheckbox(&quot;Black foreground, white background&quot;, useBW);</span>
+<span class="nc" id="L136">			gd.showDialog();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (gd.wasCanceled())</span>
+<span class="nc" id="L138">				{imp.unlock(); return;}</span>
+<span class="nc" id="L139">			fill1 = gd.getNextBoolean();</span>
+<span class="nc" id="L140">			fill2 = gd.getNextBoolean();</span>
+<span class="nc" id="L141">			useBW = useBlackAndWhite = gd.getNextBoolean();</span>
+<span class="nc" id="L142">		} else {</span>
+<span class="fc" id="L143">			fill1 = fill2 = true;</span>
+<span class="fc" id="L144">			convertToMask = true;</span>
+		}
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (type!=ImagePlus.GRAY8)</span>
+<span class="fc" id="L148">			convertToByte(imp);</span>
+<span class="fc" id="L149">		ip = imp.getProcessor();</span>
+		
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (autoThreshold)</span>
+<span class="fc" id="L152">			autoThreshold(ip);</span>
+		else {
+<span class="nc bnc" id="L154" title="All 8 branches missed.">			if (Recorder.record &amp;&amp; !Recorder.scriptMode() &amp;&amp; (!IJ.isMacro()||Recorder.recordInMacros))</span>
+<span class="nc" id="L155">				Recorder.record(&quot;setThreshold&quot;, (int)saveMinThreshold, (int)saveMaxThreshold);</span>
+<span class="nc" id="L156"> 			minThreshold = saveMinThreshold;</span>
+<span class="nc" id="L157"> 			maxThreshold = saveMaxThreshold;</span>
+		}
+
+<span class="pc bpc" id="L160" title="2 of 4 branches missed.">		if (convertToMask &amp;&amp; ip.isColorLut())</span>
+<span class="nc" id="L161">			ip.setColorModel(ip.getDefaultColorModel());</span>
+		int fcolor, bcolor;
+<span class="fc" id="L163">		ip.resetThreshold();</span>
+<span class="fc" id="L164">		int savePixel = ip.getPixel(0,0);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (useBlackAndWhite)</span>
+<span class="fc" id="L166"> 			ip.setColor(Color.black);</span>
+ 		else
+<span class="nc" id="L168"> 			ip.setColor(Toolbar.getForegroundColor());</span>
+<span class="fc" id="L169">		ip.drawPixel(0,0);</span>
+<span class="fc" id="L170">		fcolor = ip.getPixel(0,0);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (useBlackAndWhite)</span>
+<span class="fc" id="L172"> 			ip.setColor(Color.white);</span>
+ 		else
+<span class="nc" id="L174"> 			ip.setColor(Toolbar.getBackgroundColor());</span>
+<span class="fc" id="L175">		ip.drawPixel(0,0);</span>
+<span class="fc" id="L176">		bcolor = ip.getPixel(0,0);</span>
+<span class="fc" id="L177">		ip.setColor(Toolbar.getForegroundColor());</span>
+<span class="fc" id="L178">		ip.putPixel(0,0,savePixel);</span>
+
+<span class="fc" id="L180">		int[] lut = new int[256];</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		for (int i=0; i&lt;256; i++) {</span>
+<span class="fc bfc" id="L182" title="All 4 branches covered.">			if (i&gt;=minThreshold &amp;&amp; i&lt;=maxThreshold)</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">				lut[i] = fill1?fcolor:(byte)i;</span>
+			else {
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">				lut[i] = fill2?bcolor:(byte)i;</span>
+			}
+		}
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (imp.getStackSize()&gt;1)</span>
+<span class="nc" id="L189">			new StackProcessor(imp.getStack(), ip).applyTable(lut);</span>
+		else
+<span class="fc" id="L191">			ip.applyTable(lut);</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (convertToMask) {</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			if (!imp.isInvertedLut()) {</span>
+<span class="fc" id="L194">				setInvertedLut(imp);</span>
+<span class="fc" id="L195">				fcolor = 255 - fcolor;</span>
+<span class="fc" id="L196">				bcolor = 255 - bcolor;</span>
+			}
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">			if (Prefs.blackBackground)</span>
+<span class="nc" id="L199">				ip.invertLut();</span>
+		}
+<span class="pc bpc" id="L201" title="7 of 12 branches missed.">		if (fill1 &amp;&amp; fill2 &amp;&amp; ((fcolor==0&amp;&amp;bcolor==255)||(fcolor==255&amp;&amp;bcolor==0)))</span>
+<span class="fc" id="L202">			imp.getProcessor().setThreshold(fcolor, fcolor, ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="fc" id="L203">		imp.updateAndRepaintWindow();</span>
+<span class="fc" id="L204">		imp.unlock();</span>
+<span class="fc" id="L205">	}</span>
+	
+	void applyShortOrFloatThreshold(ImagePlus imp) {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (!imp.lock()) return;</span>
+<span class="nc" id="L209">		int width = imp.getWidth();</span>
+<span class="nc" id="L210">		int height = imp.getHeight();</span>
+<span class="nc" id="L211">		int size = width*height;</span>
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		boolean isFloat = imp.getType()==ImagePlus.GRAY32;</span>
+<span class="nc" id="L214">		int nSlices = imp.getStackSize();</span>
+<span class="nc" id="L215">		ImageStack stack1 = imp.getStack();</span>
+<span class="nc" id="L216">		ImageStack stack2 = new ImageStack(width, height);</span>
+<span class="nc" id="L217">		ImageProcessor ip = imp.getProcessor();</span>
+<span class="nc" id="L218">		float t1 = (float)ip.getMinThreshold();</span>
+<span class="nc" id="L219">		float t2 = (float)ip.getMaxThreshold();</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (t1==ImageProcessor.NO_THRESHOLD) {</span>
+			//ip.resetMinAndMax();
+<span class="nc" id="L222">			double min = ip.getMin();</span>
+<span class="nc" id="L223">			double max = ip.getMax();</span>
+<span class="nc" id="L224">			ip = ip.convertToByte(true);</span>
+<span class="nc" id="L225">			autoThreshold(ip);</span>
+<span class="nc" id="L226">			t1 = (float)(min + (max-min)*(minThreshold/255.0));</span>
+<span class="nc" id="L227">			t2 = (float)(min + (max-min)*(maxThreshold/255.0));</span>
+		}
+		float value;
+		ImageProcessor ip1, ip2;
+<span class="nc" id="L231">		IJ.showStatus(&quot;Converting to mask&quot;);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		for(int i=1; i&lt;=nSlices; i++) {</span>
+<span class="nc" id="L233">			IJ.showProgress(i, nSlices);</span>
+<span class="nc" id="L234">			String label = stack1.getSliceLabel(i);</span>
+<span class="nc" id="L235">			ip1 = stack1.getProcessor(i);</span>
+<span class="nc" id="L236">			ip2 = new ByteProcessor(width, height);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			for (int j=0; j&lt;size; j++) {</span>
+<span class="nc" id="L238">				value = ip1.getf(j);</span>
+<span class="nc bnc" id="L239" title="All 4 branches missed.">				if (value&gt;=t1 &amp;&amp; value&lt;=t2)</span>
+<span class="nc" id="L240">					ip2.set(j, 255);</span>
+				else
+<span class="nc" id="L242">					ip2.set(j, 0);</span>
+			}
+<span class="nc" id="L244">			stack2.addSlice(label, ip2);</span>
+		}
+<span class="nc" id="L246">		imp.setStack(null, stack2);</span>
+<span class="nc" id="L247">		ImageStack stack = imp.getStack();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		stack.setColorModel(LookUpTable.createGrayscaleColorModel(!Prefs.blackBackground));</span>
+<span class="nc" id="L249">		imp.setStack(null, stack);</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (imp.isComposite()) {</span>
+<span class="nc" id="L251">			CompositeImage ci = (CompositeImage)imp;</span>
+<span class="nc" id="L252">			ci.setMode(CompositeImage.GRAYSCALE);</span>
+<span class="nc" id="L253">			ci.resetDisplayRanges();</span>
+<span class="nc" id="L254">			ci.updateAndDraw();</span>
+		}
+<span class="nc" id="L256">		imp.getProcessor().setThreshold(255, 255, ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="nc" id="L257">		IJ.showStatus(&quot;&quot;);</span>
+<span class="nc" id="L258">		imp.unlock();</span>
+<span class="nc" id="L259">	}</span>
+
+	void convertStackToBinary(ImagePlus imp) {
+<span class="nc" id="L262">		int nSlices = imp.getStackSize();</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if ((imp.getBitDepth()!=8)) {</span>
+<span class="nc" id="L264">			IJ.showStatus(&quot;Converting to byte&quot;);</span>
+<span class="nc" id="L265">			ImageStack stack1 = imp.getStack();</span>
+<span class="nc" id="L266">			ImageStack stack2 = new ImageStack(imp.getWidth(), imp.getHeight());</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			for (int i=1; i&lt;=nSlices; i++) {</span>
+<span class="nc" id="L268">				IJ.showProgress(i, nSlices);</span>
+<span class="nc" id="L269">				String label = stack1.getSliceLabel(i);</span>
+<span class="nc" id="L270">				ImageProcessor ip = stack1.getProcessor(i);</span>
+<span class="nc" id="L271">				ip.resetMinAndMax();</span>
+<span class="nc" id="L272">				stack2.addSlice(label, ip.convertToByte(true));</span>
+			}
+<span class="nc" id="L274">			imp.setStack(null, stack2);</span>
+		}
+<span class="nc" id="L276">		ImageStack stack = imp.getStack();</span>
+<span class="nc" id="L277">		IJ.showStatus(&quot;Auto-thresholding&quot;);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">		for (int i=1; i&lt;=nSlices; i++) {</span>
+<span class="nc" id="L279">			IJ.showProgress(i, nSlices);</span>
+<span class="nc" id="L280">			ImageProcessor ip = stack.getProcessor(i);</span>
+<span class="nc bnc" id="L281" title="All 4 branches missed.">			if (method.equals(&quot;Default&quot;) &amp;&amp; background.equals(&quot;Default&quot;))</span>
+<span class="nc" id="L282">				ip.setAutoThreshold(ImageProcessor.ISODATA2, ImageProcessor.NO_LUT_UPDATE);</span>
+			else
+<span class="nc bnc" id="L284" title="All 2 branches missed.">				ip.setAutoThreshold(method, !background.equals(&quot;Light&quot;), ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="nc" id="L285">			minThreshold = ip.getMinThreshold();</span>
+<span class="nc" id="L286">			maxThreshold = ip.getMaxThreshold();</span>
+<span class="nc" id="L287">			int[] lut = new int[256];</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">			for (int j=0; j&lt;256; j++) {</span>
+<span class="nc bnc" id="L289" title="All 4 branches missed.">				if (j&gt;=minThreshold &amp;&amp; j&lt;=maxThreshold)</span>
+<span class="nc" id="L290">					lut[j] = (byte)255;</span>
+				else
+<span class="nc" id="L292">					lut[j] = 0;</span>
+			}
+<span class="nc" id="L294">			ip.applyTable(lut);</span>
+		}
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		stack.setColorModel(LookUpTable.createGrayscaleColorModel(!Prefs.blackBackground));</span>
+<span class="nc" id="L297">		imp.setStack(null, stack);</span>
+<span class="nc" id="L298">		imp.getProcessor().setThreshold(255, 255, ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (imp.isComposite()) {</span>
+<span class="nc" id="L300">			CompositeImage ci = (CompositeImage)imp;</span>
+<span class="nc" id="L301">			ci.setMode(CompositeImage.GRAYSCALE);</span>
+<span class="nc" id="L302">			ci.resetDisplayRanges();</span>
+<span class="nc" id="L303">			ci.updateAndDraw();</span>
+		}
+<span class="nc" id="L305">		IJ.showStatus(&quot;&quot;);</span>
+<span class="nc" id="L306">	}</span>
+
+	void convertToByte(ImagePlus imp) {
+		ImageProcessor ip;
+<span class="fc" id="L310">		int currentSlice =  imp.getCurrentSlice();</span>
+<span class="fc" id="L311">		ImageStack stack1 = imp.getStack();</span>
+<span class="fc" id="L312">		ImageStack stack2 = imp.createEmptyStack();</span>
+<span class="fc" id="L313">		int nSlices = imp.getStackSize();</span>
+		String label;
+<span class="fc bfc" id="L315" title="All 2 branches covered.">		for(int i=1; i&lt;=nSlices; i++) {</span>
+<span class="fc" id="L316">			label = stack1.getSliceLabel(i);</span>
+<span class="fc" id="L317">			ip = stack1.getProcessor(i);</span>
+<span class="fc" id="L318">			ip.setMinAndMax(0, 255);</span>
+<span class="fc" id="L319">			stack2.addSlice(label, ip.convertToByte(true));</span>
+		}
+<span class="fc" id="L321">		imp.setStack(null, stack2);</span>
+<span class="fc" id="L322">		imp.setSlice(currentSlice);</span>
+<span class="fc" id="L323">		imp.setCalibration(imp.getCalibration()); //update calibration</span>
+<span class="fc" id="L324">	}</span>
+	
+	void setInvertedLut(ImagePlus imp) {
+<span class="fc" id="L327">		ImageProcessor ip = imp.getProcessor();</span>
+<span class="fc" id="L328">		ip.invertLut();</span>
+<span class="fc" id="L329">		int nImages = imp.getStackSize();</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (nImages==1)</span>
+<span class="fc" id="L331">			ip.invert();</span>
+		else {
+<span class="nc" id="L333">			ImageStack stack = imp.getStack();</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			for (int slice=1; slice&lt;=nImages; slice++)</span>
+<span class="nc" id="L335">				stack.getProcessor(slice).invert();</span>
+<span class="nc" id="L336">			stack.setColorModel(ip.getColorModel());</span>
+		}
+<span class="fc" id="L338">	}</span>
+
+	void autoThreshold(ImageProcessor ip) {
+<span class="fc" id="L341">		ip.setAutoThreshold(ImageProcessor.ISODATA2, ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="fc" id="L342">		minThreshold = ip.getMinThreshold();</span>
+<span class="fc" id="L343">		maxThreshold = ip.getMaxThreshold();</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (IJ.debugMode) IJ.log(&quot;Thresholder: &quot;+minThreshold+&quot;-&quot;+maxThreshold);</span>
+<span class="fc" id="L345"> 	}</span>
+ 	
+ 	public static void setMethod(String method) {
+<span class="nc" id="L348"> 		staticMethod = method;</span>
+<span class="nc" id="L349"> 	}</span>
+
+ 	public static void setBackground(String background) {
+<span class="nc" id="L352"> 		staticBackground = background;</span>
+<span class="nc" id="L353"> 	}</span>
+
+	public void itemStateChanged(ItemEvent e) {
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (imp==null)</span>
+<span class="nc" id="L357">			return;</span>
+<span class="nc" id="L358">		Choice choice = (Choice)e.getSource();</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (choice==choices.elementAt(0))</span>
+<span class="nc" id="L360">			method = choice.getSelectedItem();</span>
+		else
+<span class="nc" id="L362">			background = choice.getSelectedItem();</span>
+<span class="nc" id="L363">		updateThreshold(imp);</span>
+<span class="nc" id="L364">	}</span>
+	
+	private void updateThreshold(ImagePlus imp) {
+<span class="nc" id="L367">		ImageProcessor ip = imp.getProcessor();</span>
+<span class="nc bnc" id="L368" title="All 4 branches missed.">		if (method.equals(&quot;Default&quot;) &amp;&amp; background.equals(&quot;Default&quot;))</span>
+<span class="nc" id="L369">			ip.setAutoThreshold(ImageProcessor.ISODATA2, ImageProcessor.RED_LUT);</span>
+		else
+<span class="nc bnc" id="L371" title="All 2 branches missed.">			ip.setAutoThreshold(method, !background.equals(&quot;Light&quot;), ImageProcessor.RED_LUT);</span>
+<span class="nc" id="L372">		imp.updateAndDraw();</span>
+<span class="nc" id="L373">	}</span>
+	
+	//MÉTODOS NUESTROS
+	public void setImage(ImagePlus im){
+<span class="fc" id="L377">		imp = im;</span>
+<span class="fc" id="L378">	}</span>
+	
+	public ImagePlus getImage(){
+<span class="nc" id="L381">		return imp;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

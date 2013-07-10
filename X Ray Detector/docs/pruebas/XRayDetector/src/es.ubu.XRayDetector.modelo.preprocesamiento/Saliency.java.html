@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Saliency.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.preprocesamiento</a> &gt; <span class="el_source">Saliency.java</span></div><h1>Saliency.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.preprocesamiento;
+
+import ij.ImagePlus;
+import java.awt.image.BufferedImage;
+import ij.process.ShortProcessor;
+
+public class Saliency extends Preprocesamiento {
+
+	public Saliency(ImagePlus image, int type) {
+<span class="fc" id="L10">		super(image, type);</span>
+<span class="fc" id="L11">	}</span>
+
+	@Override
+	public BufferedImage calcular() {
+<span class="fc" id="L15">		return saliencyMap(getImage(), getType());</span>
+	}
+	/**
+	 * This method creates a saliency map from an ImagePlus image.
+	 * 
+	 * @param image
+	 *            Image to make saliency map
+	 * @param type
+	 *            Sigma
+	 * @return Saliency map image
+	 */
+	public BufferedImage saliencyMap(ImagePlus image, int type) {
+<span class="fc" id="L27">		int N_sigma = 0, w, N = image</span>
+<span class="fc" id="L28">				.getHeight(), M = image.getWidth();</span>
+<span class="fc" id="L29">		int[] sigma = null;</span>
+<span class="fc" id="L30">		int[][] sat = new int[N][M];</span>
+
+		// cumsum(I)
+<span class="fc" id="L33">		rellenarMatrizPixeles(image, N, M, sat);</span>
+
+		// cumsum(cumsum((I),2))
+<span class="fc" id="L36">		sumaColumnaAnterior(N, M, sat);</span>
+
+		// Por defecto es 1
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">		switch (type) {</span>
+			case 1:
+<span class="fc" id="L41">				int[] sigma1 = { 12, 24, 28, 48, 56, 112 };</span>
+<span class="fc" id="L42">				N_sigma = sigma1.length;</span>
+<span class="fc" id="L43">				sigma = sigma1.clone();</span>
+<span class="fc" id="L44">				break;</span>
+	
+			// Falta el caso 2 (opcional)
+			case 2:
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">				if (N &gt; M)</span>
+<span class="nc" id="L49">					w = N;</span>
+				else
+<span class="fc" id="L51">					w = M;</span>
+	
+<span class="fc" id="L53">				int[] sigma2 = { w / 8, w / 4, w / 2 };</span>
+<span class="fc" id="L54">				N_sigma = sigma2.length;</span>
+<span class="fc" id="L55">				sigma = sigma2.clone();</span>
+<span class="fc" id="L56">				break;</span>
+	
+			case 3:
+<span class="nc" id="L59">				int[] sigma3 = { 7, 9, 11, 13, 17, 19 };</span>
+<span class="nc" id="L60">				N_sigma = sigma3.length;</span>
+<span class="nc" id="L61">				sigma = sigma3.clone();</span>
+				break;
+		}
+
+<span class="fc" id="L65">		double[][][] J_off = new double[N][M][N_sigma];</span>
+
+<span class="fc" id="L67">		calcularEscalas(image, N_sigma, N, M, sigma, sat, J_off);</span>
+
+		// Suma las 6 matrices en una
+<span class="fc" id="L70">		ShortProcessor image2 = new ShortProcessor(M, N);</span>
+
+<span class="fc" id="L72">		sumarMatrices(N_sigma, N, M, J_off, image2);</span>
+
+<span class="fc" id="L74">		return image2.getBufferedImage();</span>
+	}
+
+	private void sumarMatrices(int N_sigma, int N, int M, double[][][] J_off,
+			ShortProcessor image2) {
+		double value;
+		int scales;
+		
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (int j = 0; j &lt; M; j++) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			for (int i = 0; i &lt; N; i++) {</span>
+<span class="fc" id="L84">				value = 0;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				for (scales = 0; scales &lt; N_sigma; scales++) {</span>
+<span class="fc" id="L86">					value = value + J_off[i][j][scales];</span>
+				}
+
+				// Hay que usarlo, si no queda mal el Saliency
+<span class="fc bfc" id="L90" title="All 2 branches covered.">				if (value &gt; 255) {</span>
+<span class="fc" id="L91">					value = 255;</span>
+				}
+
+				// Este set es para el ShortProcessor
+<span class="fc" id="L95">				image2.set(j, i, (int) value);</span>
+			}
+		}
+<span class="fc" id="L98">	}</span>
+
+	private void calcularEscalas(ImagePlus image, int N_sigma, int N, int M,
+			int[] sigma, int[][] sat, double[][][] J_off) {
+		int s;
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int scales = 0; scales &lt; N_sigma; scales++) {</span>
+<span class="fc" id="L104">			s = sigma[scales] + 1;</span>
+<span class="fc" id="L105">			double[][] subWindow = new double[N][M];</span>
+
+<span class="fc" id="L107">			calculaXYMaxMin(s, N, M, sat, subWindow);</span>
+
+<span class="fc" id="L109">			double[][] surround = new double[N][M];</span>
+<span class="fc" id="L110">			double[][] repmat = new double[N][M];</span>
+
+<span class="fc" id="L112">			calcularRepmat(s, N, M, repmat);</span>
+
+<span class="fc" id="L114">			calcularSurround(image, N, M, subWindow, surround, repmat);</span>
+
+			// establece los maximos para J_off
+<span class="fc" id="L117">			establecerMaxJOff(image, N, M, J_off, scales, surround);</span>
+		}
+<span class="fc" id="L119">	}</span>
+
+	private void establecerMaxJOff(ImagePlus image, int N, int M,
+			double[][][] J_off, int scales, double[][] surround) {
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (int j = 0; j &lt; M; j++) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			for (int i = 0; i &lt; N; i++) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">				if (surround[i][j] - image.getProcessor().getPixel(j, i) &lt; 0)</span>
+<span class="fc" id="L126">					J_off[i][j][scales] = 0;</span>
+				else
+<span class="fc" id="L128">					J_off[i][j][scales] = surround[i][j]</span>
+<span class="fc" id="L129">							- image.getProcessor().getPixel(j, i);</span>
+			}
+		}
+<span class="fc" id="L132">	}</span>
+
+	private void calcularSurround(ImagePlus image, int N, int M,
+			double[][] subWindow, double[][] surround, double[][] repmat) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int j = 0; j &lt; M; j++) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			for (int i = 0; i &lt; N; i++) {</span>
+<span class="fc" id="L138">				surround[i][j] = (subWindow[i][j] - image.getProcessor()</span>
+<span class="fc" id="L139">						.getPixel(j, i)) / repmat[i][j];</span>
+			}
+		}
+<span class="fc" id="L142">	}</span>
+
+	private void calcularRepmat(int s, int N, int M, double[][] repmat) {
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int j = 0; j &lt; M; j++) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			for (int i = 0; i &lt; N; i++) {</span>
+<span class="fc" id="L147">				repmat[i][j] = Math.pow((2 * s) + 1, 2) - 1;</span>
+			}
+		}
+<span class="fc" id="L150">	}</span>
+
+	private void calculaXYMaxMin(int s, int N, int M, int[][] sat,
+			double[][] subWindow) {
+		int x_min;
+		int x_max;
+		int y_min;
+		int y_max;
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (int x = 0; x &lt; N; x++) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			for (int y = 0; y &lt; M; y++) {</span>
+
+				// max
+<span class="fc bfc" id="L162" title="All 2 branches covered.">				if (1 &gt; x - s)</span>
+<span class="fc" id="L163">					x_min = 1;</span>
+				else
+<span class="fc" id="L165">					x_min = x - s;</span>
+
+				// min
+<span class="fc bfc" id="L168" title="All 2 branches covered.">				if (N - 1 &gt; x + s)</span>
+<span class="fc" id="L169">					x_max = x + s;</span>
+				else
+<span class="fc" id="L171">					x_max = N - 1;</span>
+
+				// max
+<span class="fc bfc" id="L174" title="All 2 branches covered.">				if (1 &gt; y - s)</span>
+<span class="fc" id="L175">					y_min = 1;</span>
+				else
+<span class="fc" id="L177">					y_min = y - s;</span>
+
+				// min
+<span class="fc bfc" id="L180" title="All 2 branches covered.">				if (M - 1 &gt; y + s)</span>
+<span class="fc" id="L181">					y_max = y + s;</span>
+				else
+<span class="fc" id="L183">					y_max = M - 1;</span>
+
+<span class="fc" id="L185">				subWindow[x][y] = sat[x_min - 1][y_min - 1]</span>
+<span class="fc" id="L186">						+ sat[x_max][y_max] - sat[x_min - 1][y_max]</span>
+<span class="fc" id="L187">						- sat[x_max][y_min - 1];</span>
+			}
+		}
+<span class="fc" id="L190">	}</span>
+
+	private void sumaColumnaAnterior(int N, int M, int[][] sat) {
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		for (int j = 0; j &lt; N; j++) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			for (int i = 0; i &lt; M; i++) {</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc" id="L196">					sat[j][i] = sat[j][i] + sat[j][i - 1];</span>
+			}
+		}
+<span class="fc" id="L199">	}</span>
+
+	private void rellenarMatrizPixeles(ImagePlus image, int N, int M, int[][] sat) {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (int i = 0; i &lt; M; i++) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			for (int j = 0; j &lt; N; j++) {</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">				if (j == 0)</span>
+<span class="fc" id="L205">					sat[j][i] = image.getProcessor().getPixel(i, j);</span>
+				else
+<span class="fc" id="L207">					sat[j][i] = image.getProcessor().getPixel(i, j)</span>
+<span class="fc" id="L208">							+ sat[j - 1][i];</span>
+			}
+		}
+<span class="fc" id="L211">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

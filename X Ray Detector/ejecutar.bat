@@ -1,0 +1,1 @@
+java -cp bin;.;.\lib\ij.jar;.\lib\commons-io-2.4.jar;.\lib\weka.jar;.\lib\jh.jar;.\lib\ejml-0.21.jar es.ubu.XRayDetector.interfaz.PanelPrincipal

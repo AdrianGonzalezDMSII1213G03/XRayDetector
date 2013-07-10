@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BarraMenu.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.interfaz</a> &gt; <span class="el_source">BarraMenu.java</span></div><h1>BarraMenu.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package es.ubu.XRayDetector.interfaz;</span>
+
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import es.ubu.XRayDetector.utils.MyLogHandler;
+import es.ubu.XRayDetector.utils.Propiedades;
+
+
+public class BarraMenu extends JMenuBar {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1064988928226623879L;
+	private PanelAplicacion pan;
+	private JMenu mnOpciones;
+	private JMenuItem mntmOpcionesAvanzadas;
+	private JMenu mnAyuda;
+	private JMenuItem mntmAyudaEnLnea;
+	private JMenuItem mntmAcercaDe;
+	private int tamVentanaOpciones;
+	private int tipoDeteccion;
+	private int tipoEntrenamiento;
+	private int tipoClasificacion;
+	private int heuristicaVentanaDefectuosa;
+	private int caracteristicas;
+	private double saltoOpciones;
+	private double porcentajePixelesMalos;
+	private static Propiedades prop;
+	
+<span class="nc" id="L56">	public BarraMenu(PanelAplicacion pan){</span>
+<span class="nc" id="L57">		this.pan = pan;</span>
+<span class="nc" id="L58">		prop = Propiedades.getInstance();</span>
+<span class="nc" id="L59">		initialize();</span>
+<span class="nc" id="L60">	}</span>
+
+	private void initialize() {
+<span class="nc" id="L63">		getMenu();</span>
+		
+		try {
+<span class="nc" id="L66">			File fichero = new File(&quot;./res/ayuda/ayuda.hs&quot;);</span>
+<span class="nc" id="L67">			URL hsURL = fichero.toURI().toURL();</span>
+<span class="nc" id="L68">			HelpSet hs =  new HelpSet(null, hsURL);</span>
+<span class="nc" id="L69">			HelpBroker hb = hs.createHelpBroker();</span>
+<span class="nc" id="L70">			hb.enableHelpOnButton(mntmAyudaEnLnea, &quot;ventanaentrenamientodeteccion&quot;, hs);</span>
+<span class="nc" id="L71">		}</span>
+<span class="nc" id="L72">		catch (MalformedURLException e) {</span>
+<span class="nc" id="L73">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L74">			e.printStackTrace();</span>
+		} 
+<span class="nc" id="L76">		catch (HelpSetException e) {</span>
+<span class="nc" id="L77">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L78">			e.printStackTrace();</span>
+		}
+
+<span class="nc" id="L81">		mntmAcercaDe = new JMenuItem(&quot;Acerca de&quot;);</span>
+<span class="nc" id="L82">		mntmAcercaDe.addActionListener(new ActionListener(){</span>
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L85">				AcercaDeDialog d = new AcercaDeDialog();</span>
+<span class="nc" id="L86">				d.setLocationRelativeTo(pan.getFrameXRayDetector());</span>
+<span class="nc" id="L87">				d.setVisible(true);</span>
+<span class="nc" id="L88">			}			</span>
+		});
+<span class="nc" id="L90">		mnAyuda.add(mntmAcercaDe);</span>
+		
+<span class="nc" id="L92">	}</span>
+
+	public void getMenu() {
+<span class="nc" id="L95">		JMenu mnArchivo = new JMenu(&quot;Archivo&quot;);</span>
+<span class="nc" id="L96">		this.add(mnArchivo);</span>
+		
+<span class="nc" id="L98">		JMenuItem mntmSalir = new JMenuItem(&quot;Salir&quot;);</span>
+<span class="nc" id="L99">		mntmSalir.addActionListener(new SalirListener());</span>
+<span class="nc" id="L100">		mnArchivo.add(mntmSalir);</span>
+<span class="nc" id="L101">		mnOpciones = new JMenu(&quot;Opciones&quot;);</span>
+<span class="nc" id="L102">		this.add(mnOpciones);</span>
+
+<span class="nc" id="L104">		mntmOpcionesAvanzadas = new JMenuItem(&quot;Opciones avanzadas&quot;);</span>
+<span class="nc" id="L105">		mntmOpcionesAvanzadas.addActionListener(new OpcionesAvanzadasListener(pan.getFrameXRayDetector()));</span>
+<span class="nc" id="L106">		mnOpciones.add(mntmOpcionesAvanzadas);</span>
+
+
+<span class="nc" id="L109">		mnAyuda = new JMenu(&quot;Ayuda&quot;);</span>
+<span class="nc" id="L110">		this.add(mnAyuda);</span>
+
+<span class="nc" id="L112">		mntmAyudaEnLnea = new JMenuItem(&quot;Ayuda en línea&quot;);</span>
+<span class="nc" id="L113">		mnAyuda.add(mntmAyudaEnLnea);</span>
+<span class="nc" id="L114">	}</span>
+	
+<span class="nc" id="L116">	private class SalirListener implements ActionListener{</span>
+	    public void actionPerformed (ActionEvent e){
+<span class="nc" id="L118">	    	pan.getFrameXRayDetector().dispose();</span>
+<span class="nc" id="L119">	    }</span>
+	}
+	
+	private class OpcionesAvanzadasListener implements ActionListener{
+		    
+			private Frame frame;
+			private JSlider sliderSalto;
+			private JComboBox&lt;String&gt; comboBoxVentana;
+			private JComboBox&lt;String&gt; comboBoxTipo;
+			private JComboBox&lt;String&gt; comboBoxEntrenamiento;
+			private JComboBox&lt;String&gt; comboBoxClasificacion;
+			private JComboBox &lt;String&gt; comboBoxTipoVentanaDefectuosa;
+			private JComboBox&lt;String&gt; comboBoxCaracteristicas;
+			private JSlider sliderPxDefectuosos;
+			
+<span class="nc" id="L134">			public OpcionesAvanzadasListener(Frame fr) {</span>
+<span class="nc" id="L135">				frame = fr;</span>
+<span class="nc" id="L136">			}</span>
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+<span class="nc" id="L141">				JDialog dialogo = new JDialog(frame, &quot;Opciones avanzadas&quot;, true);				</span>
+				
+<span class="nc" id="L143">				dialogo.setIconImage(new ImageIcon(&quot;./res/img/app/logoXRayDetector.png&quot;).getImage());</span>
+				
+<span class="nc" id="L145">				JInternalFrame frmOpcionesAvanzadas = getInternalFrame();				</span>
+				
+<span class="nc" id="L147">				getLabelVentana(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L149">				getLabelSalto(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L151">				getComboBoxVentana(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L153">				getSliderSalto(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L155">				getBtnAceptar(dialogo, frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L157">				getBtnCancelar(dialogo, frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L159">				getLabelTipo(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L161">				getComboBoxTipo(frmOpcionesAvanzadas);					</span>
+				
+<span class="nc" id="L163">				getLblEntrenamiento(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L165">				getComboBoxEntrenamiento(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L167">				getLabelClasificacion(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L169">				getComboBoxClasificacion(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L171">				getLabelHeuristica(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L173">				getComboBoxHeuristica(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L175">				getLabelPorcentajePixelesMal(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L177">				getSliderPorcentajePixelesMal(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L179">				getLabelCaracteristicas(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L181">				getComboBoxCaracteristicas(frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L183">				getDesktopPane(dialogo, frmOpcionesAvanzadas);</span>
+				
+<span class="nc" id="L185">			}</span>
+
+			public void getComboBoxCaracteristicas(
+					JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L189">				comboBoxCaracteristicas = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L190">				comboBoxCaracteristicas.setModel(new DefaultComboBoxModel&lt;String&gt;(new String[] {&quot;Todas&quot;, &quot;Mejores&quot;}));</span>
+<span class="nc" id="L191">				comboBoxCaracteristicas.setBounds(179, 267, 205, 20);</span>
+<span class="nc" id="L192">				comboBoxCaracteristicas.setSelectedIndex(prop.getTipoCaracteristicas());</span>
+<span class="nc" id="L193">				comboBoxCaracteristicas.addActionListener(new ComboBoxCaracteristicasListener());</span>
+<span class="nc" id="L194">				comboBoxCaracteristicas.setToolTipText(&quot;Selecciona si se van a calcular todas las características o sólo las mejores&quot;);</span>
+<span class="nc" id="L195">				frmOpcionesAvanzadas.getContentPane().add(comboBoxCaracteristicas);</span>
+<span class="nc" id="L196">			}</span>
+
+			public void getLabelCaracteristicas(
+					JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L200">				JLabel lblCaractersticas = new JLabel(&quot;Caracter\u00EDsticas&quot;);</span>
+<span class="nc" id="L201">				lblCaractersticas.setBounds(22, 270, 147, 14);</span>
+<span class="nc" id="L202">				frmOpcionesAvanzadas.getContentPane().add(lblCaractersticas);</span>
+<span class="nc" id="L203">			}</span>
+
+			public void getSliderPorcentajePixelesMal(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L206">				sliderPxDefectuosos = new JSlider();</span>
+<span class="nc" id="L207">				sliderPxDefectuosos.setPaintTicks(true);</span>
+<span class="nc" id="L208">				sliderPxDefectuosos.setPaintLabels(true);</span>
+<span class="nc" id="L209">				sliderPxDefectuosos.setMinorTickSpacing(1);</span>
+<span class="nc" id="L210">				sliderPxDefectuosos.setMinimum(10);</span>
+<span class="nc" id="L211">				sliderPxDefectuosos.setMajorTickSpacing(10);</span>
+<span class="nc" id="L212">				sliderPxDefectuosos.setBounds(169, 212, 213, 44);</span>
+<span class="nc" id="L213">				sliderPxDefectuosos.addChangeListener(new SliderPorcentajePixelesListener());				</span>
+<span class="nc" id="L214">				porcentajePixelesMalos = prop.getPorcentajePixeles();</span>
+<span class="nc" id="L215">				sliderPxDefectuosos.setValue((int)(porcentajePixelesMalos*100));</span>
+<span class="nc" id="L216">				sliderPxDefectuosos.setToolTipText(&quot;Establece el porcentaje de píxeles que van a ser considerados defectuosos&quot;);</span>
+<span class="nc" id="L217">				frmOpcionesAvanzadas.getContentPane().add(sliderPxDefectuosos);</span>
+<span class="nc" id="L218">			}</span>
+
+			public void getLabelPorcentajePixelesMal(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L221">				JLabel lblPorcentajePixelesDefectuosos = new JLabel(&quot;Porcentaje pxs defectuosos&quot;);</span>
+<span class="nc" id="L222">				lblPorcentajePixelesDefectuosos.setBounds(22, 220, 147, 14);</span>
+<span class="nc" id="L223">				frmOpcionesAvanzadas.getContentPane().add(lblPorcentajePixelesDefectuosos);</span>
+<span class="nc" id="L224">			}</span>
+
+			public void getComboBoxHeuristica(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L227">				comboBoxTipoVentanaDefectuosa = new JComboBox &lt;String&gt; ();</span>
+<span class="nc" id="L228">				comboBoxTipoVentanaDefectuosa.setModel(new DefaultComboBoxModel &lt;String&gt; (new String[] {&quot;Porcentaje pixeles malos en ventana&quot;, &quot;Porcentaje vecinos malos pixel central&quot;}));</span>
+<span class="nc" id="L229">				comboBoxTipoVentanaDefectuosa.setBounds(179, 184, 205, 20);</span>
+<span class="nc" id="L230">				comboBoxTipoVentanaDefectuosa.setSelectedIndex(prop.getTipoVentanaDefectuosa());</span>
+<span class="nc" id="L231">				comboBoxTipoVentanaDefectuosa.addActionListener(new ComboBoxHeuristicaVentanaListener());</span>
+<span class="nc" id="L232">				comboBoxTipoVentanaDefectuosa.setToolTipText(&quot;Establece el tipo de estrategia de etiquetado de los defectos&quot;);</span>
+<span class="nc" id="L233">				frmOpcionesAvanzadas.getContentPane().add(comboBoxTipoVentanaDefectuosa);</span>
+<span class="nc" id="L234">			}</span>
+
+			public void getLabelHeuristica(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L237">				JLabel lblHeursticaVentanaDefectuosa = new JLabel(&quot;Heur\u00EDstica ventana defectuosa&quot;);</span>
+<span class="nc" id="L238">				lblHeursticaVentanaDefectuosa.setBounds(22, 187, 147, 14);</span>
+<span class="nc" id="L239">				frmOpcionesAvanzadas.getContentPane().add(lblHeursticaVentanaDefectuosa);</span>
+<span class="nc" id="L240">			}</span>
+
+			public void getComboBoxClasificacion(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L243">				comboBoxClasificacion = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L244">				comboBoxClasificacion.setModel(new DefaultComboBoxModel&lt;String&gt;(new String[] {&quot;Clases Nominales&quot;, &quot;Regresi\u00F3n&quot;}));</span>
+<span class="nc" id="L245">				comboBoxClasificacion.setBounds(179, 153, 205, 20);</span>
+<span class="nc" id="L246">				comboBoxClasificacion.setSelectedIndex(prop.getTipoClasificacion());</span>
+<span class="nc" id="L247">				comboBoxClasificacion.addActionListener(new ComboBoxTipoClasificacionListener());</span>
+<span class="nc" id="L248">				comboBoxClasificacion.setToolTipText(&quot;Establece el tipo de clasificación&quot;);</span>
+<span class="nc" id="L249">				frmOpcionesAvanzadas.getContentPane().add(comboBoxClasificacion);</span>
+<span class="nc" id="L250">			}</span>
+
+			public void getLabelClasificacion(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L253">				JLabel lblTipoDeClasificacion = new JLabel(&quot;Tipo de clasificaci\u00F3n&quot;);</span>
+<span class="nc" id="L254">				lblTipoDeClasificacion.setBounds(22, 156, 147, 14);</span>
+<span class="nc" id="L255">				frmOpcionesAvanzadas.getContentPane().add(lblTipoDeClasificacion);</span>
+<span class="nc" id="L256">			}</span>
+
+			public void getComboBoxEntrenamiento(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L259">				comboBoxEntrenamiento = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L260">				comboBoxEntrenamiento.setModel(new DefaultComboBoxModel&lt;String&gt;(new String[] {&quot;Ventana aleatoria&quot;, &quot;Ventana deslizante&quot;}));</span>
+<span class="nc" id="L261">				comboBoxEntrenamiento.setBounds(179, 122, 205, 20);</span>
+<span class="nc" id="L262">				comboBoxEntrenamiento.setSelectedIndex(prop.getTipoEntrenamiento());</span>
+<span class="nc" id="L263">				comboBoxEntrenamiento.addActionListener(new ComboBoxTipoEntrenamientoListener());</span>
+<span class="nc" id="L264">				comboBoxEntrenamiento.setToolTipText(&quot;Establece el tipo de ventana que se usará en el entrenamiento&quot;);</span>
+<span class="nc" id="L265">				frmOpcionesAvanzadas.getContentPane().add(comboBoxEntrenamiento);</span>
+<span class="nc" id="L266">			}</span>
+
+			public void getLblEntrenamiento(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L269">				JLabel lblEntrenamiento = new JLabel(&quot;Ventana entrenamiento&quot;);</span>
+<span class="nc" id="L270">				lblEntrenamiento.setBounds(22, 125, 147, 14);</span>
+<span class="nc" id="L271">				frmOpcionesAvanzadas.getContentPane().add(lblEntrenamiento);</span>
+<span class="nc" id="L272">			}</span>
+
+			public void getLabelSalto(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L275">				JLabel lblTamaoDelSalto = new JLabel(&quot;Tama\u00F1o del salto (%)&quot;);</span>
+<span class="nc" id="L276">				lblTamaoDelSalto.setBounds(22, 45, 147, 20);</span>
+<span class="nc" id="L277">				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDelSalto);</span>
+<span class="nc" id="L278">			}</span>
+
+			public void getLabelVentana(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L281">				JLabel lblTamaoDeVentana = new JLabel(&quot;Tama\u00F1o de ventana&quot;);</span>
+<span class="nc" id="L282">				lblTamaoDeVentana.setBounds(22, 11, 147, 14);</span>
+<span class="nc" id="L283">				frmOpcionesAvanzadas.getContentPane().add(lblTamaoDeVentana);</span>
+<span class="nc" id="L284">			}</span>
+
+			public JInternalFrame getInternalFrame() {
+<span class="nc" id="L287">				JInternalFrame frmOpcionesAvanzadas = new JInternalFrame ();</span>
+<span class="nc" id="L288">				frmOpcionesAvanzadas.setTitle(&quot;Opciones avanzadas&quot;);</span>
+<span class="nc" id="L289">				frmOpcionesAvanzadas.setBounds(100, 100, 400, 380);</span>
+<span class="nc" id="L290">				frmOpcionesAvanzadas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L291">				frmOpcionesAvanzadas.getContentPane().setLayout(null);</span>
+<span class="nc" id="L292">				return frmOpcionesAvanzadas;</span>
+			}
+
+			public void getDesktopPane(JDialog dialogo,
+					JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L297">				JDesktopPane desktoppane = new JDesktopPane();</span>
+<span class="nc" id="L298">				desktoppane.add(frmOpcionesAvanzadas);</span>
+<span class="nc" id="L299">				dialogo.getContentPane().add(frmOpcionesAvanzadas.getContentPane());</span>
+<span class="nc" id="L300">				dialogo.setMinimumSize(new Dimension(400, 380));</span>
+<span class="nc" id="L301">				dialogo.setResizable(false);</span>
+<span class="nc" id="L302">				dialogo.pack();</span>
+<span class="nc" id="L303">				dialogo.setLocationRelativeTo(frame);</span>
+<span class="nc" id="L304">				dialogo.setVisible(true);</span>
+<span class="nc" id="L305">			}</span>
+
+			public void getBtnCancelar(JDialog dialogo,
+					JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L309">				JButton btnCancelar = new JButton(&quot;Cancelar&quot;);</span>
+<span class="nc" id="L310">				btnCancelar.setBounds(220, 318, 89, 23);</span>
+<span class="nc" id="L311">				btnCancelar.addActionListener(new CancelarListener(dialogo));</span>
+<span class="nc" id="L312">				btnCancelar.setToolTipText(&quot;Cancela los cambios&quot;);</span>
+<span class="nc" id="L313">				frmOpcionesAvanzadas.getContentPane().add(btnCancelar);</span>
+<span class="nc" id="L314">			}</span>
+
+			public void getBtnAceptar(JDialog dialogo,
+					JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L318">				JButton btnAceptar = new JButton(&quot;Aceptar&quot;);</span>
+<span class="nc" id="L319">				btnAceptar.setBounds(80, 318, 89, 23);</span>
+<span class="nc" id="L320">				btnAceptar.addActionListener(new AceptarOpcionesListener(dialogo));</span>
+<span class="nc" id="L321">				btnAceptar.setToolTipText(&quot;Guarda los cambios&quot;);</span>
+<span class="nc" id="L322">				frmOpcionesAvanzadas.getContentPane().add(btnAceptar);</span>
+<span class="nc" id="L323">			}</span>
+
+			public void getSliderSalto(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L326">				sliderSalto = new JSlider();</span>
+<span class="nc" id="L327">				sliderSalto.setMajorTickSpacing(10);</span>
+<span class="nc" id="L328">				sliderSalto.setMinorTickSpacing(1);</span>
+<span class="nc" id="L329">				sliderSalto.setMinimum(10);</span>
+<span class="nc" id="L330">				sliderSalto.setPaintLabels(true);</span>
+<span class="nc" id="L331">				sliderSalto.setPaintTicks(true);</span>
+<span class="nc" id="L332">				sliderSalto.setBounds(171, 36, 213, 44);</span>
+<span class="nc" id="L333">				sliderSalto.addChangeListener(new SliderSaltoListener());				</span>
+<span class="nc" id="L334">				saltoOpciones = prop.getSalto();</span>
+<span class="nc" id="L335">				sliderSalto.setValue((int)(saltoOpciones*100));</span>
+<span class="nc" id="L336">				sliderSalto.setToolTipText(&quot;Establece el tamaño del salto entre ventanas&quot;);</span>
+<span class="nc" id="L337">				frmOpcionesAvanzadas.getContentPane().add(sliderSalto);</span>
+<span class="nc" id="L338">			}</span>
+
+			public void getComboBoxVentana(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L341">				comboBoxVentana = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L342">				comboBoxVentana.setModel(new DefaultComboBoxModel&lt;String&gt;(new String[] {&quot;8&quot;, &quot;12&quot;, &quot;16&quot;, &quot;24&quot;, &quot;32&quot;, &quot;48&quot;}));</span>
+<span class="nc" id="L343">				comboBoxVentana.setSelectedItem(String.valueOf(prop.getTamVentana()));</span>
+<span class="nc" id="L344">				comboBoxVentana.setBounds(179, 8, 52, 20);</span>
+<span class="nc" id="L345">				comboBoxVentana.addActionListener(new ComboBoxTamVentanaListener());</span>
+<span class="nc" id="L346">				comboBoxVentana.setToolTipText(&quot;Establece el tamaño de la ventana&quot;);</span>
+<span class="nc" id="L347">				frmOpcionesAvanzadas.getContentPane().add(comboBoxVentana);</span>
+<span class="nc" id="L348">				tamVentanaOpciones = Integer.parseInt(comboBoxVentana.getSelectedItem().toString());</span>
+<span class="nc" id="L349">			}</span>
+			
+			public void getLabelTipo(JInternalFrame frmOpcionesAvanzadas) {
+<span class="nc" id="L352">				JLabel lblTipoDeDeteccion = new JLabel(&quot;Tipo de detecci\u00F3n&quot;);</span>
+<span class="nc" id="L353">				lblTipoDeDeteccion.setBounds(22, 94, 147, 14);</span>
+<span class="nc" id="L354">				frmOpcionesAvanzadas.getContentPane().add(lblTipoDeDeteccion);</span>
+<span class="nc" id="L355">			}</span>
+			
+			public void getComboBoxTipo(JInternalFrame frmOpcionesAvanzadas){
+<span class="nc" id="L358">				comboBoxTipo = new JComboBox&lt;String&gt;();</span>
+<span class="nc" id="L359">				comboBoxTipo.setModel(new DefaultComboBoxModel&lt;String&gt;(new String[] {&quot;Normal&quot;, &quot;Normal + umbrales locales&quot;, &quot;Blancos en umbrales locales&quot;}));</span>
+<span class="nc" id="L360">				comboBoxTipo.setSelectedIndex(prop.getTipoDeteccion());</span>
+<span class="nc" id="L361">				comboBoxTipo.addActionListener(new ComboBoxTipoDeteccionListener());</span>
+<span class="nc" id="L362">				comboBoxTipo.setBounds(179, 91, 205, 20);</span>
+<span class="nc" id="L363">				comboBoxTipo.setToolTipText(&quot;Establece la estrategia de detección de defectos&quot;);</span>
+<span class="nc" id="L364">				frmOpcionesAvanzadas.getContentPane().add(comboBoxTipo);</span>
+<span class="nc" id="L365">			}</span>
+			
+<span class="nc" id="L367">			private class SliderSaltoListener implements ChangeListener{</span>
+
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					
+<span class="nc bnc" id="L372" title="All 2 branches missed.">					if (!sliderSalto.getValueIsAdjusting()) {</span>
+<span class="nc" id="L373">						saltoOpciones = (double)sliderSalto.getValue()/100;</span>
+					}
+					
+<span class="nc" id="L376">				}		</span>
+			}
+			
+<span class="nc" id="L379">			private class SliderPorcentajePixelesListener implements ChangeListener{</span>
+
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					
+<span class="nc bnc" id="L384" title="All 2 branches missed.">					if (!sliderPxDefectuosos.getValueIsAdjusting()) {</span>
+<span class="nc" id="L385">						porcentajePixelesMalos = (double)sliderPxDefectuosos.getValue()/100;</span>
+					}
+					
+<span class="nc" id="L388">				}		</span>
+			}
+			
+<span class="nc" id="L391">			private class ComboBoxTamVentanaListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L395">					tamVentanaOpciones = Integer.parseInt(comboBoxVentana.getSelectedItem().toString());					</span>
+<span class="nc" id="L396">				}</span>
+			}
+			
+<span class="nc" id="L399">			private class ComboBoxTipoDeteccionListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L403">					tipoDeteccion = comboBoxTipo.getSelectedIndex();					</span>
+<span class="nc" id="L404">				}</span>
+			}
+			
+<span class="nc" id="L407">			private class ComboBoxTipoEntrenamientoListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L411">					tipoEntrenamiento = comboBoxEntrenamiento.getSelectedIndex();					</span>
+<span class="nc" id="L412">				}</span>
+			}
+			
+<span class="nc" id="L415">			private class ComboBoxTipoClasificacionListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L419">					tipoClasificacion = comboBoxClasificacion.getSelectedIndex();					</span>
+<span class="nc" id="L420">				}</span>
+			}
+			
+<span class="nc" id="L423">			private class ComboBoxHeuristicaVentanaListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L427">					heuristicaVentanaDefectuosa = comboBoxTipoVentanaDefectuosa.getSelectedIndex();					</span>
+<span class="nc" id="L428">				}</span>
+			}
+			
+<span class="nc" id="L431">			private class ComboBoxCaracteristicasListener implements ActionListener{</span>
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L435">					caracteristicas = comboBoxCaracteristicas.getSelectedIndex();					</span>
+<span class="nc" id="L436">				}</span>
+			}
+	}
+	
+	private class AceptarOpcionesListener implements ActionListener{
+		
+		private JDialog dialog;
+		
+<span class="nc" id="L444">		public AceptarOpcionesListener(JDialog dialog){</span>
+<span class="nc" id="L445">			this.dialog = dialog;</span>
+<span class="nc" id="L446">		}</span>
+		
+	    public void actionPerformed (ActionEvent e){
+<span class="nc" id="L449">	    	prop.setSalto(saltoOpciones);</span>
+<span class="nc" id="L450">	    	prop.setTamVentana(tamVentanaOpciones);</span>
+<span class="nc" id="L451">	    	prop.setTipoDeteccion(tipoDeteccion);</span>
+<span class="nc" id="L452">	    	prop.setTipoEntrenamiento(tipoEntrenamiento);</span>
+<span class="nc" id="L453">	    	prop.setTipoClasificacion(tipoClasificacion);</span>
+<span class="nc" id="L454">	    	prop.setTipoVentanaDefectuosa(heuristicaVentanaDefectuosa);</span>
+<span class="nc" id="L455">	    	prop.setPorcentajePixeles(porcentajePixelesMalos);</span>
+<span class="nc" id="L456">	    	prop.setTipoCaracteristicas(caracteristicas);</span>
+<span class="nc" id="L457">	    	dialog.dispose();</span>
+<span class="nc" id="L458">	    }</span>
+	}
+	
+	private class CancelarListener implements ActionListener{
+		
+		private JDialog dial;
+		
+<span class="nc" id="L465">	    public CancelarListener(JDialog dialogo) {</span>
+<span class="nc" id="L466">			dial = dialogo;</span>
+<span class="nc" id="L467">		}</span>
+
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L470">	    	dial.setVisible(false);</span>
+<span class="nc" id="L471">	    }</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

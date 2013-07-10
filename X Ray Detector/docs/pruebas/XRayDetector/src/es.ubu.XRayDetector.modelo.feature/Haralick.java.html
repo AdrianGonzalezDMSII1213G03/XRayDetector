@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Haralick.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.feature</a> &gt; <span class="el_source">Haralick.java</span></div><h1>Haralick.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.feature;
+
+import java.awt.Rectangle;
+import java.util.Arrays;
+
+import org.ejml.data.DenseMatrix64F;
+import org.ejml.factory.DecompositionFactory;
+import org.ejml.factory.EigenDecomposition;
+import org.ejml.ops.CommonOps;
+
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+//import weka.core.matrix.EigenvalueDecomposition;
+//import weka.core.matrix.Matrix;
+//import cern.colt.matrix.linalg.EigenvalueDecomposition;
+//import cern.colt.matrix.DoubleFactory2D;
+//import cern.colt.matrix.DoubleMatrix1D;
+//import cern.colt.matrix.DoubleMatrix2D;
+
+public class Haralick extends Feature {
+	
+<span class="pc" id="L25">	private int SIZE = 256;</span>
+<span class="pc" id="L26">	private int count = 0;</span>
+<span class="pc" id="L27">	private double[][] glcm = new double[SIZE][SIZE];</span>
+<span class="pc" id="L28">	private double[] px_y = new double[SIZE]; // Px-y(i)</span>
+<span class="pc" id="L29">	private double[] pxy = new double[2 * SIZE]; // Px+y(i)</span>
+<span class="pc" id="L30">	private double hx = 0; // HXY1 statistics</span>
+<span class="pc" id="L31">	private double hy = 0; // HXY2 statistics</span>
+<span class="pc" id="L32">	private double hxy1 = 0; // HXY1 statistics</span>
+<span class="pc" id="L33">	private double hxy2 = 0; // HXY2 statistics */</span>
+<span class="pc" id="L34">	private double[] p_x = new double[SIZE]; // p_x statistics</span>
+<span class="pc" id="L35">	private double[] p_y = new double[SIZE]; // p_y statistics</span>
+	private double[] haralickVector;
+	public Haralick() {
+<span class="nc" id="L38">		super();</span>
+<span class="nc" id="L39">	}</span>
+
+	/**
+	 * First constructor of Haralick.
+	 * 
+	 * @param image
+	 *            ROI to extract haralick features
+	 * @param selectedStep
+	 *            Selected step
+	 * @param step
+	 *            Step
+	 */
+	public Haralick(String selectedStep, int step) {
+<span class="fc" id="L52">		super(selectedStep, step);</span>
+		
+<span class="fc" id="L54">	}</span>
+
+
+	/**
+	 * Returns a vector with haralick features.
+	 * 
+	 * @return vector with haralick features
+	 */
+	public double[] getHaralickVector() {
+<span class="fc" id="L63">		return haralickVector;</span>
+	}
+
+	/**
+	 * Calculates a gray level co-occurrence matrix.
+	 */
+	public void glcm(Roi roi, ImagePlus image) {
+
+		// This part get all the pixel values into the pixel [ ] array via the
+		// Image Processor
+<span class="fc" id="L73">		IJ.run(image, &quot;8-bit&quot;, &quot;&quot;);</span>
+<span class="fc" id="L74">		byte[] pixels = (byte[]) (image.getProcessor().getPixels());</span>
+<span class="fc" id="L75">		int width = image.getWidth();</span>
+<span class="fc" id="L76">		Rectangle r = roi.getBounds();</span>
+
+		// The variable a holds the value of the pixel where the Image Processor
+		// is sitting its attention
+		// The variable b holds the value of the pixel which is the neighbor to
+		// the pixel where the Image Processor is sitting its attention
+
+		int a;
+		int b;
+
+<span class="fc" id="L86">		double pixelCounter = 0;</span>
+
+		// This part computes the Gray Level Correlation Matrix based in the
+		// step selected by the user
+
+		int offset, i;
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (getSelectedStep().equals(&quot;0 degrees&quot;)) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			for (int y = r.y; y &lt; (r.y + r.height); y++) {</span>
+<span class="fc" id="L95">				offset = y * width;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				for (int x = r.x; x &lt; (r.x + r.width); x++) {</span>
+<span class="fc" id="L97">					i = offset + x;</span>
+
+<span class="fc" id="L99">					a = 0xff &amp; pixels[i];</span>
+<span class="fc" id="L100">					b = 0xff &amp; (image.getProcessor().getPixel(x + getStep(), y));</span>
+
+<span class="fc" id="L102">					glcm[a][b] += 1;</span>
+<span class="fc" id="L103">					glcm[b][a] += 1;</span>
+<span class="fc" id="L104">					pixelCounter += 2;</span>
+				}
+			}
+		}
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (getSelectedStep().equals(&quot;90 degrees&quot;)) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			for (int y = r.y; y &lt; (r.y + r.height); y++) {</span>
+<span class="fc" id="L111">				offset = y * width;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">				for (int x = r.x; x &lt; (r.x + r.width); x++) {</span>
+<span class="fc" id="L113">					i = offset + x;</span>
+<span class="fc" id="L114">					a = 0xff &amp; pixels[i];</span>
+<span class="fc" id="L115">					b = 0xff &amp; (image.getProcessor().getPixel(x, y - getStep()));</span>
+<span class="fc" id="L116">					glcm[a][b] += 1;</span>
+<span class="fc" id="L117">					glcm[b][a] += 1;</span>
+<span class="fc" id="L118">					pixelCounter += 2;</span>
+				}
+			}
+		}
+
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (getSelectedStep().equals(&quot;180 degrees&quot;)) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			for (int y = r.y; y &lt; (r.y + r.height); y++) {</span>
+<span class="fc" id="L125">				offset = y * width;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				for (int x = r.x; x &lt; (r.x + r.width); x++) {</span>
+<span class="fc" id="L127">					i = offset + x;</span>
+<span class="fc" id="L128">					a = 0xff &amp; pixels[i];</span>
+<span class="fc" id="L129">					b = 0xff &amp; (image.getProcessor().getPixel(x - getStep(), y));</span>
+<span class="fc" id="L130">					glcm[a][b] += 1;</span>
+<span class="fc" id="L131">					glcm[b][a] += 1;</span>
+<span class="fc" id="L132">					pixelCounter += 2;</span>
+				}
+			}
+		}
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (getSelectedStep().equals(&quot;270 degrees&quot;)) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			for (int y = r.y; y &lt; (r.y + r.height); y++) {</span>
+<span class="fc" id="L139">				offset = y * width;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				for (int x = r.x; x &lt; (r.x + r.width); x++) {</span>
+<span class="fc" id="L141">					i = offset + x;</span>
+<span class="fc" id="L142">					a = 0xff &amp; pixels[i];</span>
+<span class="fc" id="L143">					b = 0xff &amp; (image.getProcessor().getPixel(x, y + getStep()));</span>
+<span class="fc" id="L144">					glcm[a][b] += 1;</span>
+<span class="fc" id="L145">					glcm[b][a] += 1;</span>
+<span class="fc" id="L146">					pixelCounter += 2;</span>
+				}
+			}
+		}
+
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L153">				glcm[a][b] = (glcm[a][b]) / (pixelCounter);</span>
+			}
+		}
+<span class="fc" id="L156">	}</span>
+
+	/**
+	 * This method calculates statistics.
+	 */
+	public void calculateStatistics() {
+
+<span class="fc" id="L163">		Arrays.fill(px_y, 0); // Px-y(i)</span>
+<span class="fc" id="L164">		Arrays.fill(pxy, 0); // Px+y(i)</span>
+
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (int y = 0; y &lt; SIZE; y++){</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			for (int x = 0; x &lt; SIZE; x++) {</span>
+<span class="fc" id="L168">				px_y[Math.abs(x - y)] += glcm[x][y];</span>
+<span class="fc" id="L169">				pxy[x + y] += glcm[x][y];</span>
+<span class="fc" id="L170">				p_x[x] += glcm[x][y];</span>
+<span class="fc" id="L171">				p_y[y] += glcm[x][y];</span>
+			}
+		}
+
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (int x = 0; x &lt; SIZE; x++) {</span>
+			// hx y hy
+			// Preguntamos esto porque si es 0 el logaritmo sale mal.
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			if (p_x[x] != 0)</span>
+<span class="fc" id="L179">				hx += p_x[x] * Math.log(p_x[x]);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (p_y[x] != 0)</span>
+<span class="fc" id="L181">				hy += p_y[x] * Math.log(p_y[x]);</span>
+
+			// hxy1 y hxy2
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			for (int y = 0; y &lt; SIZE; y++) {</span>
+<span class="fc bfc" id="L185" title="All 4 branches covered.">				if (p_x[x] != 0 &amp;&amp; p_y[y] != 0) {</span>
+<span class="fc" id="L186">					hxy1 += glcm[x][y] * Math.log((p_x[x] * p_y[y]));</span>
+<span class="fc" id="L187">					hxy2 += p_x[x] * p_y[y] * Math.log((p_x[x] * p_y[y]));</span>
+				}
+			}
+		}
+<span class="fc" id="L191">		hx *= -1;</span>
+<span class="fc" id="L192">		hy *= -1;</span>
+<span class="fc" id="L193">		hxy1 *= -1;</span>
+<span class="fc" id="L194">		hxy2 *= -1;</span>
+<span class="fc" id="L195">	}</span>
+
+	/**
+	 * Calculates angular second moment.
+	 * 
+	 * @return ancular second moment
+	 */
+	public double angularSecondMoment() {
+<span class="fc" id="L203">		double asm = 0.0;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L206">				asm = asm + (glcm[a][b] * glcm[a][b]);</span>
+			}
+		}
+<span class="fc" id="L209">		return asm;</span>
+	}
+
+	/**
+	 * Calculates contrast.
+	 * 
+	 * @return contrast
+	 */
+	public double contrast() {
+<span class="fc" id="L218">		double contrast = 0.0;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L221">				contrast = contrast + (a - b) * (a - b) * (glcm[a][b]);</span>
+			}
+		}
+		
+<span class="fc" id="L225">		return contrast;</span>
+	}
+
+	/**
+	 * Calculates the correlation.
+	 * 
+	 * @return correlation
+	 */
+	public double correlation() {
+		// First step in the calculations will be to calculate px [] and py []
+<span class="fc" id="L235">		double correlation = 0.0;</span>
+<span class="fc" id="L236">		double px = 0;</span>
+<span class="fc" id="L237">		double py = 0;</span>
+<span class="fc" id="L238">		double stdevx = 0.0;</span>
+<span class="fc" id="L239">		double stdevy = 0.0;</span>
+
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L243">				px = px + a * glcm[a][b];</span>
+<span class="fc" id="L244">				py = py + b * glcm[a][b];</span>
+			}
+		}
+
+		// Ahora calcula las desviaciones standard
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L251">				stdevx = stdevx + (a - px) * (a - px) * glcm[a][b];</span>
+<span class="fc" id="L252">				stdevy = stdevy + (b - py) * (b - py) * glcm[a][b];</span>
+			}
+		}
+
+		// Calcula el parametro de correlacion
+<span class="fc" id="L257">		correlation = calcularParametroCorrelacion(correlation, px, py, stdevx,	stdevy);</span>
+		
+<span class="fc" id="L259">		return correlation;</span>
+	}
+
+	private double calcularParametroCorrelacion(double correlation, double px,
+			double py, double stdevx, double stdevy) {
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L266">				correlation = correlation</span>
+<span class="fc" id="L267">						+ ((a - px) * (b - py) * glcm[a][b] / (stdevx * stdevy));</span>
+			}
+		}
+<span class="fc" id="L270">		return correlation;</span>
+	}
+
+	/**
+	 * Calculates the sum of squares.
+	 * 
+	 * @return sum of squares
+	 */
+	public double sumOfSquares() {
+<span class="fc" id="L279">		double mean = 0;</span>
+<span class="fc" id="L280">		double variance = 0;</span>
+
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		for (int b = 0; b &lt; SIZE; b++)</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">			for (int a = 0; a &lt; SIZE; a++)</span>
+<span class="fc" id="L284">				mean += glcm[a][b];</span>
+
+<span class="fc" id="L286">		mean /= SIZE * SIZE;</span>
+
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		for (int b = 0; b &lt; SIZE; b++)</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			for (int a = 0; a &lt; SIZE; a++)</span>
+<span class="fc" id="L290">				variance += (a - mean) * (a - mean) * glcm[a][b];</span>
+
+<span class="fc" id="L292">		return variance;</span>
+	}
+
+	/**
+	 * Calculates the inverse difference moment.
+	 * 
+	 * @return inverse difference moment
+	 */
+	public double inverseDifferenceMoment() {
+<span class="fc" id="L301">		double idm = 0.0;</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc" id="L304">				idm = idm + (glcm[a][b] / (1 + (a - b) * (a - b)));</span>
+			}
+		}
+		
+<span class="fc" id="L308">		return idm;</span>
+	}
+
+	/**
+	 * Calculates the sum average.
+	 * 
+	 * @return sum average
+	 */
+	public double sumAverage() {
+<span class="fc" id="L317">		double sumAvg = 0;</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		for (int k = 2; k &lt; 2 * SIZE - 1; k++)</span>
+<span class="fc" id="L319">			sumAvg += k * pxy[k];</span>
+
+<span class="fc" id="L321">		return sumAvg;</span>
+	}
+
+	/**
+	 * Calculates the sum entropy.
+	 * 
+	 * @return sum entropy
+	 */
+	public double sumEntropy() {
+<span class="fc" id="L330">		double entropysrc = 0;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		for (int k = 2; k &lt; 2 * SIZE - 1; k++) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">			if (pxy[k] == 0)</span>
+<span class="fc" id="L333">				continue;</span>
+<span class="fc" id="L334">			entropysrc += pxy[k] * Math.log(pxy[k]);</span>
+		}
+
+<span class="fc" id="L337">		entropysrc *= -1;</span>
+		
+<span class="fc" id="L339">		return entropysrc;</span>
+	}
+
+	/**
+	 * Calculates the sum variance.
+	 * 
+	 * @return sum variance
+	 */
+	public double sumVariance() {
+<span class="fc" id="L348">		double sumAvg = 0;</span>
+<span class="fc" id="L349">		int sumVar = 0;</span>
+
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		for (int k = 2; k &lt; 2 * SIZE - 1; k++)</span>
+<span class="fc" id="L352">			sumAvg += k * pxy[k];</span>
+
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		for (int k = 2; k &lt; 2 * SIZE - 1; k++)</span>
+<span class="fc" id="L355">			sumVar += (k - sumAvg) * (k - sumAvg) * pxy[k];</span>
+
+		
+<span class="fc" id="L358">		return sumVar;</span>
+
+	}
+
+	/**
+	 * Calculates the entropy.
+	 * 
+	 * @return entropy
+	 */
+	public double entropy() {
+<span class="fc" id="L368">		double entropy = 0.0;</span>
+
+<span class="fc bfc" id="L370" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">				if (glcm[a][b] != 0) {</span>
+<span class="fc" id="L373">					entropy = entropy + (glcm[a][b] * (Math.log(glcm[a][b])));</span>
+				}
+			}
+		}
+<span class="fc" id="L377">		entropy *= -1;</span>
+
+<span class="fc" id="L379">		return entropy;</span>
+
+	}
+
+	/**
+	 * Calculates the difference variance.
+	 * 
+	 * @return difference variance
+	 */
+	public double differenceVariance() {
+		int k;
+<span class="fc" id="L390">		double mean = 0;</span>
+<span class="fc" id="L391">		double difVar = 0;</span>
+
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		for (k = 0; k &lt; SIZE - 1; k++)</span>
+<span class="fc" id="L394">			mean += k * px_y[k];</span>
+
+<span class="fc bfc" id="L396" title="All 2 branches covered.">		for (k = 0; k &lt; SIZE - 1; k++)</span>
+<span class="fc" id="L397">			difVar += (k - mean) * (k - mean) * px_y[k];</span>
+
+<span class="fc" id="L399">		return difVar;</span>
+
+	}
+
+	/**
+	 * Calculates the difference entropy.
+	 * 
+	 * @return difference entropy
+	 */
+	public double differenceEntropy() {
+<span class="fc" id="L409">		double entropydiff = 0;</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		for (int k = 0; k &lt; SIZE - 1; k++) {</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">			if (px_y[k] == 0)</span>
+<span class="fc" id="L412">				continue;</span>
+<span class="fc" id="L413">			entropydiff += px_y[k] * Math.log(px_y[k]);</span>
+		}
+<span class="fc" id="L415">		entropydiff *= -1;</span>
+		
+<span class="fc" id="L417">		return entropydiff;</span>
+	}
+
+	/**
+	 * Calculates the information measure of correlation 1.
+	 * 
+	 * @return information measure of correlation 1
+	 */
+	public double imc_1() {
+<span class="fc" id="L426">		double entropy = 0.0;</span>
+
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L429" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">				if (glcm[a][b] != 0) {</span>
+<span class="fc" id="L431">					entropy = entropy + (glcm[a][b] * (Math.log(glcm[a][b])));</span>
+				}
+			}
+		}
+<span class="fc" id="L435">		entropy *= -1;</span>
+		
+<span class="fc" id="L437">		return (entropy - hxy1) / Math.max(hx, hy);</span>
+	}
+
+	/**
+	 * Calculates the information measure of correlation 2.
+	 * 
+	 * @return information measure of correlation 2
+	 */
+	public double imc_2() {
+<span class="fc" id="L446">		double entropy = 0.0;</span>
+
+<span class="fc bfc" id="L448" title="All 2 branches covered.">		for (int a = 0; a &lt; SIZE; a++) {</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">			for (int b = 0; b &lt; SIZE; b++) {</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">				if (glcm[a][b] != 0) {</span>
+<span class="fc" id="L451">					entropy = entropy + (glcm[a][b] * (Math.log(glcm[a][b])));</span>
+				}
+			}
+		}
+<span class="fc" id="L455">		entropy *= -1;</span>
+
+<span class="fc" id="L457">		return Math.sqrt(1 - Math.exp(-2 * (hxy2 - entropy)));</span>
+
+	}
+
+	/**
+	 * Calculates the maximal correlation coefficient.
+	 * 
+	 * @return maximal correlation coefficient
+	 */
+	public double maximalCorrelationCoefficient() {
+<span class="nc" id="L467">		double[][] Q = new double[SIZE][SIZE];</span>
+<span class="nc" id="L468">		double max = -2000, secondMax = -2001;</span>
+<span class="nc" id="L469">		double s, mcc = 0;</span>
+
+<span class="nc bnc" id="L471" title="All 2 branches missed.">		for (int x = 0; x &lt; SIZE; x++) {</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">			for (int y = 0; y &lt; SIZE; y++) {</span>
+<span class="nc" id="L473">				s = 0;</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">				for (int k = 0; k &lt; SIZE; k++) {</span>
+<span class="nc bnc" id="L475" title="All 4 branches missed.">					if (p_x[x] != 0 &amp;&amp; p_y[k] != 0)</span>
+<span class="nc" id="L476">						s = s + (glcm[x][k] * glcm[y][k]) / p_x[x] * p_y[k];</span>
+				}
+<span class="nc" id="L478">				Q[x][y] = s;</span>
+			}
+		}
+		
+		//WEKA
+//		Matrix matrix = new Matrix(Q);
+//		double[] values = new double[matrix.getColumnDimension()];
+//		
+//		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrix);
+//		values = eigenValues.getRealEigenvalues();
+		
+		//COLT
+		/*DoubleFactory2D f = DoubleFactory2D.dense;
+		
+		DoubleMatrix2D matrix = f.make(Q);
+		
+		EigenvalueDecomposition eigenValues = new EigenvalueDecomposition(matrix);
+		DoubleMatrix1D values = eigenValues.getRealEigenvalues();*/
+		
+<span class="nc" id="L497">		DenseMatrix64F matrix = new DenseMatrix64F(Q);</span>
+<span class="nc" id="L498">		double[] values = new double[matrix.numCols];</span>
+		
+<span class="nc bnc" id="L500" title="All 2 branches missed.">		if(CommonOps.det(matrix) == 0){</span>
+<span class="nc" id="L501">			DenseMatrix64F id = CommonOps.identity(matrix.numRows, matrix.numCols);</span>
+<span class="nc" id="L502">			CommonOps.scale(0.001, id);</span>
+<span class="nc" id="L503">			CommonOps.add(matrix, id, matrix);</span>
+		}
+		
+<span class="nc" id="L506">		EigenDecomposition&lt;DenseMatrix64F&gt; evd = DecompositionFactory.eig(matrix.numCols, false);</span>
+		
+		
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		if(!evd.decompose(matrix)){</span>
+<span class="nc" id="L510">			System.out.println(&quot;Det: &quot; + CommonOps.det(matrix));</span>
+<span class="nc" id="L511">			 throw new RuntimeException(&quot;Decomposition failed&quot;);</span>
+		}
+		
+<span class="nc bnc" id="L514" title="All 2 branches missed.">		for(int i = 0; i&lt;evd.getNumberOfEigenvalues(); i++){</span>
+<span class="nc" id="L515">			values[i] = evd.getEigenvalue(i).real;</span>
+		}
+		
+
+<span class="nc bnc" id="L519" title="All 2 branches missed.">		for (int i = 0; i &lt; matrix.numCols; i++) {</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">			if (values[i] &gt; max) {</span>
+<span class="nc" id="L521">				secondMax = max;</span>
+<span class="nc" id="L522">				max = values[i];</span>
+			}
+
+<span class="nc bnc" id="L525" title="All 4 branches missed.">			if (values[i] &gt; secondMax &amp;&amp; values[i] &lt; max)</span>
+<span class="nc" id="L526">				secondMax = values[i];</span>
+		}
+
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (secondMax == 0)</span>
+<span class="nc" id="L530">			mcc = 0;</span>
+		else
+<span class="nc" id="L532">			mcc = Math.sqrt(secondMax);</span>
+
+<span class="nc" id="L534">		return mcc;</span>
+	}
+
+	/**
+	 * Returns the gray level co-occurrence matrix.
+	 * 
+	 * @return gray level co-occurrence matrix
+	 */
+	public double[][] getGlcm(){
+<span class="fc" id="L543">		return glcm;</span>
+	}
+
+	@Override
+	public void calcular(Roi roi, ImagePlus image, ImagePlus imageFd, ImagePlus imageSd) {
+<span class="fc" id="L548">		haralickVector = new double[14]; // Cambiar si se descomenta la ultima</span>
+<span class="fc" id="L549">		headVector = new String[14]; // Cambiar si se descomenta la ultima</span>
+
+<span class="fc" id="L551">		glcm(roi, image);</span>
+<span class="fc" id="L552">		calculateStatistics();</span>
+<span class="fc" id="L553">		headVector[count] = &quot;angularSecondMoment&quot;;</span>
+<span class="fc" id="L554">		haralickVector[count++] = angularSecondMoment();</span>
+<span class="fc" id="L555">		headVector[count] = &quot;contrast&quot;;</span>
+<span class="fc" id="L556">		haralickVector[count++] = contrast();</span>
+<span class="fc" id="L557">		headVector[count] = &quot;correlation&quot;;</span>
+<span class="fc" id="L558">		haralickVector[count++] = correlation();</span>
+<span class="fc" id="L559">		headVector[count] = &quot;sumOfSquares&quot;;</span>
+<span class="fc" id="L560">		haralickVector[count++] = sumOfSquares();</span>
+<span class="fc" id="L561">		headVector[count] = &quot;inverseDifferenceMoment&quot;;</span>
+<span class="fc" id="L562">		haralickVector[count++] = inverseDifferenceMoment();</span>
+<span class="fc" id="L563">		headVector[count] = &quot;sumAverage&quot;;</span>
+<span class="fc" id="L564">		haralickVector[count++] = sumAverage();</span>
+<span class="fc" id="L565">		headVector[count] = &quot;sumEntropy&quot;;</span>
+<span class="fc" id="L566">		haralickVector[count++] = sumEntropy();</span>
+<span class="fc" id="L567">		headVector[count] = &quot;sumVariance&quot;;</span>
+<span class="fc" id="L568">		haralickVector[count++] = sumVariance();</span>
+<span class="fc" id="L569">		headVector[count] = &quot;entropy&quot;;</span>
+<span class="fc" id="L570">		haralickVector[count++] = entropy();</span>
+<span class="fc" id="L571">		headVector[count] = &quot;differenceVariance&quot;;</span>
+<span class="fc" id="L572">		haralickVector[count++] = differenceVariance();</span>
+<span class="fc" id="L573">		headVector[count] = &quot;differenceEntropy&quot;;</span>
+<span class="fc" id="L574">		haralickVector[count++] = differenceEntropy();</span>
+<span class="fc" id="L575">		headVector[count] = &quot;imc_1&quot;;</span>
+<span class="fc" id="L576">		haralickVector[count++] = imc_1();</span>
+<span class="fc" id="L577">		headVector[count] = &quot;imc_2&quot;;</span>
+<span class="fc" id="L578">		haralickVector[count++] = imc_2();</span>
+<span class="fc" id="L579">		headVector[count] = &quot;maximalCorrelationCoefficient&quot;;</span>
+		//haralickVector[count++] = maximalCorrelationCoefficient();
+<span class="fc" id="L581">		haralickVector[count++] = 0;</span>
+		
+<span class="fc" id="L583">		setVectorResultados(haralickVector);</span>
+<span class="fc" id="L584">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

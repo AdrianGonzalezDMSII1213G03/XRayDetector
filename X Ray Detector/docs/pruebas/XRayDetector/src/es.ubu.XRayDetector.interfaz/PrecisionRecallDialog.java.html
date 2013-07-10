@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PrecisionRecallDialog.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.interfaz</a> &gt; <span class="el_source">PrecisionRecallDialog.java</span></div><h1>PrecisionRecallDialog.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.interfaz;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Dimension;
+import java.text.DecimalFormat;
+
+public class PrecisionRecallDialog extends JDialog {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6418063855941950271L;
+	
+	private String precision;
+	private String recall;
+	private JTextField tfPrecision;
+	private JTextField tfRecall;
+
+
+	/**
+	 * Create the dialog.
+	 */
+<span class="nc" id="L30">	public PrecisionRecallDialog(double[] p) {</span>
+<span class="nc" id="L31">		setMinimumSize(new Dimension(200, 160));</span>
+<span class="nc" id="L32">		setResizable(false);</span>
+<span class="nc" id="L33">		setPreferredSize(new Dimension(200, 160));</span>
+		
+<span class="nc" id="L35">		setIconImage(new ImageIcon(&quot;./res/img/app/logoXRayDetector.png&quot;).getImage());</span>
+		
+<span class="nc" id="L37">		getPrecisionRecallValues(p);</span>
+		
+<span class="nc" id="L39">		initialize();</span>
+<span class="nc" id="L40">	}</span>
+
+	public void getPrecisionRecallValues(double[] p) {
+<span class="nc" id="L43">		DecimalFormat df = new DecimalFormat(&quot;#.######&quot;);</span>
+		
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if(Double.isNaN(p[0])){</span>
+<span class="nc" id="L46">			precision = &quot;NaN&quot;;</span>
+<span class="nc" id="L47">		}</span>
+		else{
+<span class="nc" id="L49">			precision = df.format(p[0]);</span>
+		}
+		
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if(Double.isNaN(p[1])){</span>
+<span class="nc" id="L53">			recall = &quot;NaN&quot;;</span>
+<span class="nc" id="L54">		}</span>
+		else{
+<span class="nc" id="L56">			recall = df.format(p[1]);</span>
+		}
+<span class="nc" id="L58">	}</span>
+	
+	public void initialize(){
+<span class="nc" id="L61">		setModalityType(ModalityType.APPLICATION_MODAL);</span>
+<span class="nc" id="L62">		setModal(true);</span>
+<span class="nc" id="L63">		setTitle(&quot;Precision &amp; Recall&quot;);</span>
+<span class="nc" id="L64">		getContentPane().setLayout(null);</span>
+		
+<span class="nc" id="L66">		JLabel lblPrecision = new JLabel(&quot;Precision:&quot;);</span>
+<span class="nc" id="L67">		lblPrecision.setBounds(10, 24, 57, 14);</span>
+<span class="nc" id="L68">		getContentPane().add(lblPrecision);</span>
+		
+		
+		
+<span class="nc" id="L72">		tfPrecision = new JTextField();</span>
+<span class="nc" id="L73">		tfPrecision.setBounds(77, 20, 100, 22);</span>
+<span class="nc" id="L74">		tfPrecision.setEditable(false);</span>
+<span class="nc" id="L75">		getContentPane().add(tfPrecision);</span>
+<span class="nc" id="L76">		tfPrecision.setText(precision);</span>
+		
+<span class="nc" id="L78">		JLabel lblRecall = new JLabel(&quot;Recall:&quot;);</span>
+<span class="nc" id="L79">		lblRecall.setBounds(10, 67, 46, 14);</span>
+<span class="nc" id="L80">		getContentPane().add(lblRecall);</span>
+		
+<span class="nc" id="L82">		tfRecall = new JTextField();</span>
+<span class="nc" id="L83">		tfRecall.setEditable(false);</span>
+<span class="nc" id="L84">		tfRecall.setBounds(77, 63, 100, 22);</span>
+<span class="nc" id="L85">		getContentPane().add(tfRecall);</span>
+<span class="nc" id="L86">		tfRecall.setText(recall);</span>
+		
+<span class="nc" id="L88">		JButton btnAceptar = new JButton(&quot;Aceptar&quot;);</span>
+<span class="nc" id="L89">		btnAceptar.setBounds(55, 100, 89, 23);</span>
+<span class="nc" id="L90">		btnAceptar.addActionListener(new AceptarListener(this));</span>
+<span class="nc" id="L91">		getContentPane().add(btnAceptar);</span>
+		
+<span class="nc" id="L93">	}</span>
+	
+	private class AceptarListener implements ActionListener{
+
+		private PrecisionRecallDialog dia;
+		
+<span class="nc" id="L99">		public AceptarListener(PrecisionRecallDialog precisionRecallDialog) {</span>
+<span class="nc" id="L100">			dia = precisionRecallDialog;</span>
+<span class="nc" id="L101">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L105">			dia.dispose();		</span>
+<span class="nc" id="L106">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

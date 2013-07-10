@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GestorArff.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.datos</a> &gt; <span class="el_source">GestorArff.java</span></div><h1>GestorArff.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.datos;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+
+import es.ubu.XRayDetector.utils.Propiedades;
+
+import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
+
+public class GestorArff {
+	
+	private static Propiedades prop;
+	
+<span class="fc" id="L20">	public GestorArff(){</span>
+<span class="fc" id="L21">		prop = Propiedades.getInstance();</span>
+<span class="fc" id="L22">	}</span>
+
+	public Instances leerArff (String url){
+<span class="fc" id="L25">		BufferedReader reader = null;		</span>
+		try {
+<span class="fc" id="L27">			reader = new BufferedReader(new FileReader(url));</span>
+<span class="pc" id="L28">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L29">			throw new RuntimeException(e);</span>
+		}		
+<span class="fc" id="L31">		ArffReader arff = null;		</span>
+		try {
+<span class="fc" id="L33">			arff = new ArffReader(reader);</span>
+<span class="fc" id="L34">		} catch (IOException e) {</span>
+<span class="fc" id="L35">			throw new RuntimeException(e);</span>
+		}		
+<span class="fc" id="L37">		Instances data = arff.getData();</span>
+<span class="fc" id="L38">		data.setClassIndex(data.numAttributes() - 1);</span>
+		
+<span class="fc" id="L40">		return data;</span>
+	}
+	
+	public void mergeArffFiles(int longitud) {
+<span class="fc" id="L44">		File[] ficheros = new File[longitud];</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int ithread = 0; ithread &lt; longitud; ++ithread){</span>
+<span class="fc" id="L46">			File file = new File(&quot;./res/arff/Arff_entrenamiento&quot; + ithread + &quot;.arff&quot;);</span>
+<span class="fc" id="L47">			ficheros[ithread] = file;</span>
+		}
+		// File to write
+		//File fileOutput = new File(&quot;./res/arff/Arff_entrenamiento.arff&quot;);	//de momento, a pelo
+<span class="fc" id="L51">		File fileOutput = new File(prop.getPathArff());</span>
+
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		for(int i=0; i&lt;ficheros.length; i++){</span>
+			// Read the file like string
+			try {
+<span class="fc" id="L56">				String file1Str = FileUtils.readFileToString(ficheros[i]);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				if(i==0){</span>
+<span class="fc" id="L58">					FileUtils.write(fileOutput, file1Str);</span>
+<span class="fc" id="L59">				}</span>
+				else{
+<span class="fc" id="L61">					FileUtils.write(fileOutput, file1Str, true);</span>
+				}
+<span class="fc" id="L63">				ficheros[i].delete();</span>
+<span class="pc" id="L64">			} catch (IOException e) {</span>
+<span class="nc" id="L65">				throw new RuntimeException(e);</span>
+			}
+		}		
+<span class="fc" id="L68">	}</span>
+	
+	public void crearArff(int numHilo, String featuresString, String header){
+
+		File outputFile;
+		FileWriter arffFile;
+
+<span class="fc" id="L75">		outputFile = new File(&quot;./res/arff/Arff_entrenamiento&quot; + numHilo + &quot;.arff&quot;);</span>
+		try {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (!outputFile.exists()) {</span>
+<span class="fc" id="L78">				outputFile.createNewFile();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">				if(numHilo == 0){</span>
+<span class="fc" id="L80">					arffFile = new FileWriter(outputFile);</span>
+<span class="fc" id="L81">					arffFile.write(header);</span>
+<span class="fc" id="L82">				}</span>
+				else{
+<span class="fc" id="L84">					arffFile = new FileWriter(outputFile);</span>
+				}
+<span class="fc" id="L86">			} else {</span>
+				// si ya esta creado se escribe a continuacion
+<span class="fc" id="L88">				arffFile = new FileWriter(outputFile, true);</span>
+			}
+<span class="fc" id="L90">			arffFile.write(featuresString + &quot;\n&quot;);</span>
+<span class="fc" id="L91">			arffFile.close();</span>
+<span class="pc" id="L92">		} catch (IOException e) {</span>
+<span class="nc" id="L93">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L95">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

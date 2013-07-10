@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Auto_Local_Threshold.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">Auto_Local_Threshold.java</span></div><h1>Auto_Local_Threshold.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.utils;
+import ij.*;
+import ij.process.*;
+import ij.gui.*;
+import ij.plugin.filter.*;
+import ij.plugin.*;
+
+// AutoLocalThreshold segmentation 
+// Following the guidelines at http://pacific.mpi-cbg.de/wiki/index.php/PlugIn_Design_Guidelines
+// ImageJ plugin by G. Landini at bham. ac. uk
+// 1.0  15/Apr/2009
+// 1.1  01/Jun/2009
+// 1.2  25/May/2010
+// 1.3  1/Nov/2011 added constant offset to Niblack's method (request)
+// 1.4  2/Nov/2011 Niblack's new constant should be subtracted to match mean, mode and midgrey methods. Midgrey method had the wrong constant sign.
+// 1.5	21/Mar/2013 Modificación del código para que funcione con XRayDetector
+
+@SuppressWarnings(&quot;unused&quot;)                
+<span class="fc" id="L19">public class Auto_Local_Threshold implements PlugIn {</span>
+	
+	//ADICIÓN PARA QUE FUNCIONE CON NUESTRO CÓDIGO
+	private ImagePlus imp;
+	private int radius;
+	
+	public void setImp(ImagePlus imp){
+<span class="fc" id="L26">		this.imp = imp;</span>
+<span class="fc" id="L27">	}</span>
+	
+	public ImagePlus getImp(){
+<span class="fc" id="L30">		return imp;</span>
+	}
+	
+	public void setRadius(int rad){
+<span class="fc" id="L34">		radius = rad;</span>
+<span class="fc" id="L35">	}</span>
+	
+	public int getRadius(){
+<span class="fc" id="L38">		return radius;</span>
+	}
+	///////////////////////////////////////////////
+	
+        /** Ask for parameters and then execute.*/
+        public void run(String arg) {	//arg va a ser el método a utilizar
+		// 1 - Obtain the currently active image:
+		//ImagePlus imp = IJ.getImage();
+
+		//if (null == imp){
+			//IJ.showMessage(&quot;There must be at least one image open&quot;);
+			//return;
+		//}
+
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (imp.getBitDepth()!=8) {</span>
+<span class="nc" id="L53">			IJ.showMessage(&quot;Error&quot;, &quot;Only 8-bit images are supported&quot;);</span>
+<span class="nc" id="L54">			return;</span>
+		}
+
+		 // 2 - Ask for parameters:
+//		GenericDialog gd = new GenericDialog(&quot;Auto Local Threshold&quot;);
+//		String [] methods={&quot;Try all&quot;, &quot;Bernsen&quot;,  &quot;Mean&quot;, &quot;Median&quot;, &quot;MidGrey&quot;, &quot;Niblack&quot;, &quot;Sauvola&quot;};
+//		gd.addMessage(&quot;Auto Local Threshold v1.4&quot;);
+//		gd.addChoice(&quot;Method&quot;, methods, methods[0]);
+//		gd.addNumericField (&quot;Radius&quot;,  15, 0);
+//		gd.addMessage (&quot;Special paramters (if different from default)&quot;);
+//		gd.addNumericField (&quot;Parameter_1&quot;,  0, 0);
+//		gd.addNumericField (&quot;Parameter_2&quot;,  0, 0);
+//		gd.addCheckbox(&quot;White objects on black background&quot;,true);
+//		if (imp.getStackSize()&gt;1) {
+//			gd.addCheckbox(&quot;Stack&quot;,false);
+//		}
+//		gd.addMessage(&quot;Thresholded result is always shown in white [255].&quot;);
+//		gd.showDialog();
+//		if (gd.wasCanceled()) return;
+ 
+		// 3 - Retrieve parameters from the dialog
+//		String myMethod= gd.getNextChoice ();
+//		int radius = (int) gd.getNextNumber();
+//		double par1 = (double) gd.getNextNumber();
+//		double par2 = (double) gd.getNextNumber();
+//		boolean doIwhite = gd.getNextBoolean ();
+//		boolean doIstack=false; 
+		
+<span class="fc" id="L82">		String myMethod = arg;</span>
+		//int radius = 15;
+<span class="fc" id="L84">		double par1 = 0;</span>
+<span class="fc" id="L85">		double par2 = 0;</span>
+<span class="fc" id="L86">		boolean doIwhite = true;</span>
+<span class="fc" id="L87">		boolean doIstack=false;</span>
+
+<span class="fc" id="L89">		int stackSize = imp.getStackSize();</span>
+//		if (stackSize&gt;1)
+//			doIstack = gd.getNextBoolean ();
+
+		// 4 - Execute!
+		//long start = System.currentTimeMillis();
+//		if(myMethod.equals(&quot;Try all&quot;)){
+//			ImageProcessor ip = imp.getProcessor();
+//			int xe = ip.getWidth();
+//			int ye = ip.getHeight();
+//			int ml = methods.length;
+//			ImagePlus imp2, imp3;
+//			ImageStack tstack=null, stackNew;
+//			if (stackSize&gt;1 &amp;&amp; doIstack){
+//				boolean doItAnyway = true;
+//				if (stackSize&gt;25) {
+//					YesNoCancelDialog d = new YesNoCancelDialog(IJ.getInstance(),&quot;Auto Local Threshold&quot;, &quot;You might run out of memory.\n \nDisplay &quot;+stackSize+&quot; slices?\n \n \'No\' will process without display and\noutput results to the log window.&quot;);
+//					if (!d.yesPressed()){
+////						doIlog=true; //will show in the log window
+//						doItAnyway=false;
+//					}
+//					if (d.cancelPressed())
+//						return;
+//				}
+//
+//				for (int j=1; j&lt;=stackSize; j++){
+//					imp.setSlice(j);
+//					ip = imp.getProcessor();
+//					tstack= new ImageStack(xe,ye);
+//					for (int k=1; k&lt;ml;k++)
+//						tstack.addSlice(methods[k], ip.duplicate());
+//					imp2 = new ImagePlus(&quot;Auto Threshold&quot;, tstack);
+//					imp2.updateAndDraw();
+//
+//					for (int k=1; k&lt;ml;k++){
+//						imp2.setSlice(k);
+//						Object[] result = exec(imp2, methods[k], radius, par1, par2, doIwhite );
+//					 }
+//					//if (doItAnyway){
+//					CanvasResizer cr= new CanvasResizer();
+//					stackNew = cr.expandStack(tstack, (xe+2), (ye+18), 1, 1);
+//					imp3 = new ImagePlus(&quot;Auto Threshold&quot;, stackNew);
+//					imp3.updateAndDraw();
+//					MontageMaker mm= new MontageMaker();
+//					mm.makeMontage( imp3, 3, 2, 1.0, 1, (ml-1), 1, 0, true); // 5 columns and 3 rows
+//				}
+//				imp.setSlice(1);
+//				//if (doItAnyway)
+//				IJ.run(&quot;Images to Stack&quot;, &quot;method=[Copy (center)] title=Montage&quot;);
+//				return;
+//			}
+//			else { //single image try all
+//				 tstack= new ImageStack(xe,ye);
+//				for (int k=1; k&lt;ml;k++)
+//					tstack.addSlice(methods[k], ip.duplicate());
+//				imp2 = new ImagePlus(&quot;Auto Threshold&quot;, tstack);
+//				imp2.updateAndDraw();
+//
+//				for (int k=1; k&lt;ml;k++){
+//					imp2.setSlice(k);
+//					//IJ.log(&quot;analyzing slice with &quot;+methods[k]);
+//					Object[] result = exec(imp2, methods[k], radius, par1, par2, doIwhite );
+//				}
+//				//imp2.setSlice(1);
+//				CanvasResizer cr= new CanvasResizer();
+//				stackNew = cr.expandStack(tstack, (xe+2), (ye+18), 1, 1);
+//				imp3 = new ImagePlus(&quot;Auto Threshold&quot;, stackNew);
+//				imp3.updateAndDraw();
+//				MontageMaker mm= new MontageMaker();
+//				mm.makeMontage( imp3, 3, 2, 1.0, 1, (ml-1), 1, 0, true);
+//				return;
+//			}
+//		}
+//		else { // selected a method
+<span class="pc bpc" id="L163" title="3 of 4 branches missed.">			if (stackSize&gt;1 &amp;&amp;  doIstack ) { //whole stack</span>
+//				if (doIstackHistogram) {// one global histogram
+//					Object[] result = exec(imp, myMethod, noWhite, noBlack, doIwhite, doIset, doIlog, doIstackHistogram );
+//				}
+//				else{ // slice by slice
+<span class="nc bnc" id="L168" title="All 2 branches missed.">					for (int k=1; k&lt;=stackSize; k++){</span>
+<span class="nc" id="L169">						imp.setSlice(k);</span>
+<span class="nc" id="L170">						Object[] result = exec(imp, myMethod, radius, par1, par2, doIwhite );</span>
+					}
+//				}
+<span class="nc" id="L173">				imp.setSlice(1);</span>
+<span class="nc" id="L174">			}</span>
+			else { //just one slice
+<span class="fc" id="L176">				Object[] result = exec(imp, myMethod, radius, par1, par2, doIwhite );</span>
+			}
+			// 5 - If all went well, show the image:
+			// not needed here as the source image is binarised 
+<span class="fc" id="L180">		}</span>
+	//}
+	//IJ.showStatus(IJ.d2s((System.currentTimeMillis()-start)/1000.0, 2)+&quot; seconds&quot;);
+
+
+	/** Execute the plugin functionality: duplicate and scale the given image.
+	* @return an Object[] array with the name and the scaled ImagePlus.
+	* Does NOT show the new, image; just returns it. */
+	 public Object[] exec(ImagePlus imp, String myMethod, int radius,  double par1, double par2, boolean doIwhite ) {
+
+		// 0 - Check validity of parameters
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (null == imp) return null;</span>
+<span class="fc" id="L192">		ImageProcessor ip = imp.getProcessor();</span>
+<span class="fc" id="L193">		int xe = ip.getWidth();</span>
+<span class="fc" id="L194">		int ye = ip.getHeight();</span>
+
+<span class="fc" id="L196">		int [] data = (ip.getHistogram());</span>
+
+<span class="fc" id="L198">		IJ.showStatus(&quot;Thresholding...&quot;);</span>
+
+		//1 Do it
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (imp.getStackSize()==1){</span>
+<span class="fc" id="L202">			    ip.snapshot();</span>
+<span class="fc" id="L203">			    Undo.setup(Undo.FILTER, imp);</span>
+		}
+		// Apply the selected algorithm
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if(myMethod.equals(&quot;Bernsen&quot;)){</span>
+<span class="nc" id="L207">			Bernsen(imp,  radius, par1, par2, doIwhite);</span>
+<span class="nc" id="L208">		}</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		else if(myMethod.equals(&quot;Mean&quot;)){</span>
+<span class="nc" id="L210">			Mean(imp, radius, par1, par2, doIwhite);</span>
+<span class="nc" id="L211">		}</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		else if(myMethod.equals(&quot;Median&quot;)){</span>
+<span class="nc" id="L213">			Median(imp, radius, par1, par2, doIwhite);</span>
+<span class="nc" id="L214">		}</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		else if(myMethod.equals(&quot;MidGrey&quot;)){</span>
+<span class="fc" id="L216">			MidGrey(imp, radius, par1, par2, doIwhite);</span>
+<span class="fc" id="L217">		}</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		else if(myMethod.equals(&quot;Niblack&quot;)){</span>
+<span class="nc" id="L219">			Niblack (imp, radius, par1, par2, doIwhite); </span>
+<span class="nc" id="L220">		}</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		else if(myMethod.equals(&quot;Sauvola&quot;)){</span>
+<span class="nc" id="L222">			Sauvola(imp, radius, par1, par2, doIwhite);</span>
+		}
+		//IJ.showProgress((double)(255-i)/255);
+		//imp.updateAndDraw();
+<span class="fc" id="L226">		imp.getProcessor().setThreshold(255, 255, ImageProcessor.NO_LUT_UPDATE);</span>
+		// 2 - Return the threshold and the image
+<span class="fc" id="L228">		return new Object[] {imp};</span>
+	}
+
+	void Bernsen(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite ) {
+		// Bernsen recommends WIN_SIZE = 31 and CONTRAST_THRESHOLD = 15.
+		//  1) Bernsen J. (1986) &quot;Dynamic Thresholding of Grey-Level Images&quot; 
+		//    Proc. of the 8th Int. Conf. on Pattern Recognition, pp. 1251-1255
+		//  2) Sezgin M. and Sankur B. (2004) &quot;Survey over Image Thresholding 
+		//   Techniques and Quantitative Performance Evaluation&quot; Journal of 
+		//   Electronic Imaging, 13(1): 146-165 
+		//  http://citeseer.ist.psu.edu/sezgin04survey.html
+		// Ported to ImageJ plugin from E Celebi's fourier_0.8 routines
+		// This version uses a circular local window, instead of a rectagular one
+		ImagePlus Maximp, Minimp;
+<span class="nc" id="L242">		ImageProcessor ip=imp.getProcessor(), ipMax, ipMin;</span>
+<span class="nc" id="L243">		int contrast_threshold=15;</span>
+		int local_contrast;
+		int mid_gray;
+		byte object;
+		byte backg;
+		int temp;
+
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (par1!=0) {</span>
+<span class="nc" id="L251">			IJ.log(&quot;Bernsen: changed contrast_threshold from :&quot;+ contrast_threshold + &quot;  to:&quot; + par1);</span>
+<span class="nc" id="L252">			contrast_threshold= (int) par1;</span>
+		}
+
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (doIwhite){</span>
+<span class="nc" id="L256">			object =  (byte) 0xff;</span>
+<span class="nc" id="L257">			backg =   (byte) 0;</span>
+<span class="nc" id="L258">		}</span>
+		else {
+<span class="nc" id="L260">			object =  (byte) 0;</span>
+<span class="nc" id="L261">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="nc" id="L264">		Maximp=duplicateImage(ip);</span>
+<span class="nc" id="L265">		ipMax=Maximp.getProcessor();</span>
+<span class="nc" id="L266">		RankFilters rf=new RankFilters();</span>
+<span class="nc" id="L267">		rf.rank(ipMax, radius, RankFilters.MAX);// Maximum</span>
+		//Maximp.show();
+<span class="nc" id="L269">		Minimp=duplicateImage(ip);</span>
+<span class="nc" id="L270">		ipMin=Minimp.getProcessor();</span>
+<span class="nc" id="L271">		rf.rank(ipMin, radius, RankFilters.MIN); //Minimum</span>
+		//Minimp.show();
+<span class="nc" id="L273">		byte[] pixels = (byte [])ip.getPixels();</span>
+<span class="nc" id="L274">		byte[] max = (byte [])ipMax.getPixels();</span>
+<span class="nc" id="L275">		byte[] min = (byte [])ipMin.getPixels();</span>
+
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		for (int i=0; i&lt;pixels.length; i++) {</span>
+<span class="nc" id="L278">			local_contrast = (int)((max[i]&amp;0xff) -(min[i]&amp;0xff));</span>
+<span class="nc" id="L279">			mid_gray =(int) ((min[i]&amp;0xff) + (max[i]&amp;0xff) )/ 2;</span>
+<span class="nc" id="L280">			temp=(int) (pixels[i] &amp; 0x0000ff);</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">			if ( local_contrast &lt; contrast_threshold )</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">				pixels[i] = ( mid_gray &gt;= 128 ) ? object :  backg;  //Low contrast region</span>
+			else
+<span class="nc bnc" id="L284" title="All 2 branches missed.">				pixels[i] = (temp &gt;= mid_gray ) ? object : backg;</span>
+		}    
+		//imp.updateAndDraw();
+<span class="nc" id="L287">		return;</span>
+	}
+
+	void Mean(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite ) {
+		// See: Image Processing Learning Resourches HIPR2
+		// http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm
+		ImagePlus Meanimp;
+<span class="nc" id="L294">		ImageProcessor ip=imp.getProcessor(), ipMean;</span>
+<span class="nc" id="L295">		int c_value = 0;</span>
+		byte object;
+		byte backg;
+
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (par1!=0) {</span>
+			//IJ.log(&quot;Mean: changed c_value from :&quot;+ c_value + &quot;  to:&quot; + par1);
+<span class="nc" id="L301">			c_value= (int)par1;</span>
+		}
+
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (doIwhite){</span>
+<span class="nc" id="L305">			object =  (byte) 0xff;</span>
+<span class="nc" id="L306">			backg =   (byte) 0;</span>
+<span class="nc" id="L307">		}</span>
+		else {
+<span class="nc" id="L309">			object =  (byte) 0;</span>
+<span class="nc" id="L310">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="nc" id="L313">		Meanimp=duplicateImage(ip);</span>
+<span class="nc" id="L314">		ImageConverter ic = new ImageConverter(Meanimp);</span>
+<span class="nc" id="L315">		ic.convertToGray32();</span>
+
+<span class="nc" id="L317">		ipMean=Meanimp.getProcessor();</span>
+<span class="nc" id="L318">		RankFilters rf=new RankFilters();</span>
+<span class="nc" id="L319">		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean</span>
+		//Meanimp.show();
+<span class="nc" id="L321">		byte[] pixels = (byte []) ip.getPixels();</span>
+<span class="nc" id="L322">		float[] mean = (float []) ipMean.getPixels();</span>
+
+<span class="nc bnc" id="L324" title="All 2 branches missed.">		for (int i=0; i&lt;pixels.length; i++) </span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">			pixels[i] = ( (int)(pixels[i] &amp;0xff) &gt; (int)( mean[i]  - c_value)) ? object : backg;</span>
+		//imp.updateAndDraw();
+<span class="nc" id="L327">		return;</span>
+	}
+
+	void Median(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite ) {
+		// See: Image Processing Learning Resourches HIPR2
+		// http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm
+		ImagePlus Medianimp;
+<span class="nc" id="L334">		ImageProcessor ip=imp.getProcessor(), ipMedian;</span>
+<span class="nc" id="L335">		int c_value = 0;</span>
+		byte object;
+		byte backg;
+
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (par1!=0) {</span>
+<span class="nc" id="L340">			IJ.log(&quot;Median: changed c_value from :&quot;+ c_value + &quot;  to:&quot; + par1);</span>
+<span class="nc" id="L341">			c_value= (int) par1;</span>
+		}
+
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (doIwhite){</span>
+<span class="nc" id="L345">			object =  (byte) 0xff;</span>
+<span class="nc" id="L346">			backg =   (byte) 0;</span>
+<span class="nc" id="L347">		}</span>
+		else {
+<span class="nc" id="L349">			object =  (byte) 0;</span>
+<span class="nc" id="L350">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="nc" id="L353">		Medianimp=duplicateImage(ip);</span>
+<span class="nc" id="L354">		ipMedian=Medianimp.getProcessor();</span>
+<span class="nc" id="L355">		RankFilters rf=new RankFilters();</span>
+<span class="nc" id="L356">		rf.rank(ipMedian, radius, RankFilters.MEDIAN);</span>
+		//Medianimp.show();
+<span class="nc" id="L358">		byte[] pixels = (byte []) ip.getPixels();</span>
+<span class="nc" id="L359">		byte[] median = (byte []) ipMedian.getPixels();</span>
+
+<span class="nc bnc" id="L361" title="All 2 branches missed.">		for (int i=0; i&lt;pixels.length; i++) </span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">			pixels[i] = ( (int)(pixels[i] &amp;0xff) &gt; (int)( (median[i]  &amp;0xff) - c_value)) ? object : backg;</span>
+		//imp.updateAndDraw();
+<span class="nc" id="L364">		return;</span>
+	}
+
+	void MidGrey(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite ) {
+		// See: Image Processing Learning Resourches HIPR2
+		// http://homepages.inf.ed.ac.uk/rbf/HIPR2/adpthrsh.htm
+		ImagePlus Maximp, Minimp;
+<span class="fc" id="L371">		ImageProcessor ip=imp.getProcessor(), ipMax, ipMin;</span>
+<span class="fc" id="L372">		int c_value =0;</span>
+		int mid_gray;
+		byte object;
+		byte backg;
+
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (par1!=0) {</span>
+<span class="nc" id="L378">			IJ.log(&quot;MidGrey: changed c_value from :&quot;+ c_value + &quot;  to:&quot; + par1);</span>
+<span class="nc" id="L379">			c_value= (int) par1;</span>
+		}
+
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">		if (doIwhite){</span>
+<span class="fc" id="L383">			object =  (byte) 0xff;</span>
+<span class="fc" id="L384">			backg =   (byte) 0;</span>
+<span class="fc" id="L385">		}</span>
+		else {
+<span class="nc" id="L387">			object =  (byte) 0;</span>
+<span class="nc" id="L388">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="fc" id="L391">		Maximp=duplicateImage(ip);</span>
+<span class="fc" id="L392">		ipMax=Maximp.getProcessor();</span>
+<span class="fc" id="L393">		RankFilters rf=new RankFilters();</span>
+<span class="fc" id="L394">		rf.rank(ipMax, radius, RankFilters.MAX);// Maximum</span>
+		//Maximp.show();
+<span class="fc" id="L396">		Minimp=duplicateImage(ip);</span>
+<span class="fc" id="L397">		ipMin=Minimp.getProcessor();</span>
+<span class="fc" id="L398">		rf.rank(ipMin, radius, RankFilters.MIN); //Minimum</span>
+		//Minimp.show();
+<span class="fc" id="L400">		byte[] pixels = (byte [])ip.getPixels();</span>
+<span class="fc" id="L401">		byte[] max = (byte [])ipMax.getPixels();</span>
+<span class="fc" id="L402">		byte[] min = (byte [])ipMin.getPixels();</span>
+
+<span class="fc bfc" id="L404" title="All 2 branches covered.">		for (int i=0; i&lt;pixels.length; i++) {</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">				pixels[i] = ( (int)(pixels[i] &amp;0xff) &gt; (int)(((max[i]&amp;0xff) +(min[i]&amp;0xff))/2) - c_value ) ? object : backg;</span>
+		}    
+		//imp.updateAndDraw();
+<span class="fc" id="L408">		return;</span>
+	}
+
+	void Niblack(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite  ) {
+		// Niblack recommends K_VALUE = -0.2 for images with black foreground 
+		// objects, and K_VALUE = +0.2 for images with white foreground objects.
+		//  Niblack W. (1986) &quot;An introduction to Digital Image Processing&quot; Prentice-Hall.
+		// Ported to ImageJ plugin from E Celebi's fourier_0.8 routines
+		// This version uses a circular local window, instead of a rectagular one
+
+		ImagePlus Meanimp, Varimp;
+<span class="nc" id="L419">		ImageProcessor ip=imp.getProcessor(), ipMean, ipVar;</span>
+		double k_value;
+<span class="nc" id="L421">		int c_value=0;</span>
+
+		byte object;
+		byte backg ;
+
+<span class="nc bnc" id="L426" title="All 2 branches missed.">		if (doIwhite){</span>
+<span class="nc" id="L427">			k_value=0.2;</span>
+<span class="nc" id="L428">			object =  (byte) 0xff;</span>
+<span class="nc" id="L429">			backg =   (byte) 0;</span>
+<span class="nc" id="L430">		}</span>
+		else {
+<span class="nc" id="L432">			k_value= -0.2;</span>
+<span class="nc" id="L433">			object =  (byte) 0;</span>
+<span class="nc" id="L434">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		if (par1!=0) {</span>
+<span class="nc" id="L438">			IJ.log(&quot;Niblack: changed k_value from :&quot;+ k_value + &quot;  to:&quot; + par1);</span>
+<span class="nc" id="L439">			k_value= par1;</span>
+		}
+
+<span class="nc bnc" id="L442" title="All 2 branches missed.">		if (par2!=0) {</span>
+<span class="nc" id="L443">			IJ.log(&quot;Niblack: changed c_value from :&quot;+ c_value + &quot;  to:&quot; + par2);// requested feature, not in original</span>
+<span class="nc" id="L444">			c_value=(int)par2;</span>
+		}
+
+<span class="nc" id="L447">		Meanimp=duplicateImage(ip);</span>
+<span class="nc" id="L448">		ImageConverter ic = new ImageConverter(Meanimp);</span>
+<span class="nc" id="L449">		ic.convertToGray32();</span>
+
+<span class="nc" id="L451">		ipMean=Meanimp.getProcessor();</span>
+<span class="nc" id="L452">		RankFilters rf=new RankFilters();</span>
+<span class="nc" id="L453">		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean</span>
+		//Meanimp.show();
+<span class="nc" id="L455">		Varimp=duplicateImage(ip);</span>
+<span class="nc" id="L456">		ic = new ImageConverter(Varimp);</span>
+<span class="nc" id="L457">		ic.convertToGray32();</span>
+<span class="nc" id="L458">		ipVar=Varimp.getProcessor();</span>
+<span class="nc" id="L459">		rf.rank(ipVar, radius, RankFilters.VARIANCE); //Variance</span>
+		//Varimp.show();
+<span class="nc" id="L461">		byte[] pixels = (byte []) ip.getPixels();</span>
+<span class="nc" id="L462">		float[] mean = (float []) ipMean.getPixels();</span>
+<span class="nc" id="L463">		float[] var = (float []) ipVar.getPixels();</span>
+
+<span class="nc bnc" id="L465" title="All 2 branches missed.">		for (int i=0; i&lt;pixels.length; i++) </span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">			pixels[i] = ( (int)(pixels[i] &amp;0xff) &gt; (int)( mean[i] + k_value * Math.sqrt ( var[i] ) - c_value)) ? object : backg;</span>
+		//imp.updateAndDraw();
+<span class="nc" id="L468">		return;</span>
+	}
+
+	void Sauvola(ImagePlus imp, int radius,  double par1, double par2, boolean doIwhite) {
+		// Sauvola recommends K_VALUE = 0.5 and R_VALUE = 128.
+		// This is a modification of Niblack's thresholding method.
+		// Sauvola J. and Pietaksinen M. (2000) &quot;Adaptive Document Image Binarization&quot;
+		// Pattern Recognition, 33(2): 225-236
+		// http://www.ee.oulu.fi/mvg/publications/show_pdf.php?ID=24
+		// Ported to ImageJ plugin from E Celebi's fourier_0.8 routines
+		// This version uses a circular local window, instead of a rectagular one
+
+		ImagePlus Meanimp, Varimp;
+<span class="nc" id="L481">		ImageProcessor ip=imp.getProcessor(), ipMean, ipVar;</span>
+<span class="nc" id="L482">		double k_value = 0.5;</span>
+<span class="nc" id="L483">		double r_value = 128;</span>
+		byte object;
+		byte backg;
+
+<span class="nc bnc" id="L487" title="All 2 branches missed.">		if (par1!=0) {</span>
+<span class="nc" id="L488">			IJ.log(&quot;Sauvola: changed k_value from :&quot;+ k_value + &quot;  to:&quot; + par1);</span>
+<span class="nc" id="L489">			k_value= par1;</span>
+		}
+
+<span class="nc bnc" id="L492" title="All 2 branches missed.">		if (par2!=0) {</span>
+<span class="nc" id="L493">			IJ.log(&quot;Sauvola: changed r_value from :&quot;+r_value + &quot;  to:&quot; + par2);</span>
+<span class="nc" id="L494">			r_value= par2;</span>
+		}
+
+<span class="nc bnc" id="L497" title="All 2 branches missed.">		if (doIwhite){</span>
+<span class="nc" id="L498">			object =  (byte) 0xff;</span>
+<span class="nc" id="L499">			backg =   (byte) 0;</span>
+<span class="nc" id="L500">		}</span>
+		else {
+<span class="nc" id="L502">			object =  (byte) 0;</span>
+<span class="nc" id="L503">			backg =  (byte) 0xff;</span>
+		}
+
+<span class="nc" id="L506">		Meanimp=duplicateImage(ip);</span>
+<span class="nc" id="L507">		ImageConverter ic = new ImageConverter(Meanimp);</span>
+<span class="nc" id="L508">		ic.convertToGray32();</span>
+
+<span class="nc" id="L510">		ipMean=Meanimp.getProcessor();</span>
+<span class="nc" id="L511">		RankFilters rf=new RankFilters();</span>
+<span class="nc" id="L512">		rf.rank(ipMean, radius, RankFilters.MEAN);// Mean</span>
+		//Meanimp.show();
+<span class="nc" id="L514">		Varimp=duplicateImage(ip);</span>
+<span class="nc" id="L515">		ic = new ImageConverter(Varimp);</span>
+<span class="nc" id="L516">		ic.convertToGray32();</span>
+<span class="nc" id="L517">		ipVar=Varimp.getProcessor();</span>
+<span class="nc" id="L518">		rf.rank(ipVar, radius, RankFilters.VARIANCE); //Variance</span>
+		//Varimp.show();
+<span class="nc" id="L520">		byte[] pixels = (byte []) ip.getPixels();</span>
+<span class="nc" id="L521">		float[] mean = (float []) ipMean.getPixels();</span>
+<span class="nc" id="L522">		float[] var = (float []) ipVar.getPixels();</span>
+
+<span class="nc bnc" id="L524" title="All 2 branches missed.">		for (int i=0; i&lt;pixels.length; i++) </span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">			pixels[i] = ( (int)(pixels[i] &amp;0xff) &gt; (int)( mean[i] * (1.0+ k_value *(( Math.sqrt ( var[i] )/r_value)-1.0)))) ? object : backg;</span>
+		//imp.updateAndDraw();
+<span class="nc" id="L527">		return;</span>
+	}
+
+	private ImagePlus duplicateImage(ImageProcessor iProcessor){
+<span class="fc" id="L531">		int w=iProcessor.getWidth();</span>
+<span class="fc" id="L532">		int h=iProcessor.getHeight();</span>
+<span class="fc" id="L533">		ImagePlus iPlus=NewImage.createByteImage(&quot;Image&quot;, w, h, 1, NewImage.FILL_BLACK);</span>
+<span class="fc" id="L534">		ImageProcessor imageProcessor=iPlus.getProcessor();</span>
+<span class="fc" id="L535">		imageProcessor.copyBits(iProcessor, 0,0, Blitter.COPY);</span>
+<span class="fc" id="L536">		return iPlus;</span>
+	} 
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

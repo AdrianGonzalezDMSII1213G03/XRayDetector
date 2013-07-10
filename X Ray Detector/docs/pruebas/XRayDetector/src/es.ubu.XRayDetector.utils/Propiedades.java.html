@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Propiedades.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">Propiedades.java</span></div><h1>Propiedades.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class Propiedades {
+	
+	private static Propiedades instance;
+	private Properties propiedades;
+	
+<span class="fc" id="L15">	private Propiedades(){</span>
+<span class="fc" id="L16">		cargarPropiedades();</span>
+<span class="fc" id="L17">	}</span>
+	
+
+
+	public static Propiedades getInstance(){
+<span class="fc bfc" id="L22" title="All 2 branches covered.">		if (instance == null){</span>
+<span class="fc" id="L23">			return instance = new Propiedades();</span>
+		}
+		else{
+<span class="fc" id="L26">			return instance;</span>
+		}
+	}
+	
+	private void cargarPropiedades() {
+<span class="fc" id="L31">		File f = new File(&quot;./res/config/config.properties&quot;);</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">		if(!f.exists()){</span>
+			try {
+<span class="nc" id="L34">				f.createNewFile();</span>
+<span class="nc" id="L35">			} catch (IOException e) {</span>
+<span class="nc" id="L36">				MyLogHandler.writeException(e);</span>
+<span class="nc" id="L37">				e.printStackTrace();</span>
+			}
+<span class="nc" id="L39">			cargarOpcionesPorDefecto();</span>
+<span class="nc" id="L40">		}</span>
+		else{
+<span class="fc" id="L42">			propiedades = new Properties();</span>
+			try {
+<span class="fc" id="L44">				propiedades.load(new FileInputStream(&quot;./res/config/config.properties&quot;));</span>
+<span class="pc" id="L45">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L46">				MyLogHandler.writeException(e);</span>
+<span class="nc" id="L47">				e.printStackTrace();</span>
+<span class="nc" id="L48">			} catch (IOException e) {</span>
+<span class="nc" id="L49">				MyLogHandler.writeException(e);</span>
+<span class="nc" id="L50">				e.printStackTrace();</span>
+			}
+		}
+<span class="fc" id="L53">	}</span>
+
+	private void cargarOpcionesPorDefecto() {
+<span class="nc" id="L56">		propiedades = new Properties();</span>
+		
+<span class="nc" id="L58">		propiedades.setProperty(&quot;tamVentana&quot;, &quot;24&quot;);</span>
+<span class="nc" id="L59">		propiedades.setProperty(&quot;salto&quot;, &quot;0.7&quot;);</span>
+<span class="nc" id="L60">		propiedades.setProperty(&quot;umbral&quot;, &quot;8&quot;);</span>
+<span class="nc" id="L61">		propiedades.setProperty(&quot;tipoDeteccion&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L62">		propiedades.setProperty(&quot;tipoEntrenamiento&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L63">		propiedades.setProperty(&quot;tipoClasificacion&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L64">		propiedades.setProperty(&quot;tipoVentanaDefectuosa&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L65">		propiedades.setProperty(&quot;tipoCaracteristicas&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L66">		propiedades.setProperty(&quot;porcentajePixeles&quot;, &quot;0.5&quot;);</span>
+<span class="nc" id="L67">		propiedades.setProperty(&quot;pathArff&quot;, &quot;./res/arff/Arff_entrenamiento.arff&quot;);</span>
+<span class="nc" id="L68">		propiedades.setProperty(&quot;pathModel&quot;, &quot;.res/model/todas_24.model&quot;);</span>
+		
+		try {
+<span class="nc" id="L71">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="nc" id="L72">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L73">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L74">			e.printStackTrace();</span>
+<span class="nc" id="L75">		} catch (IOException e) {</span>
+<span class="nc" id="L76">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L77">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L79">	}</span>
+	
+	public int getTamVentana(){		
+<span class="fc" id="L82">		return Integer.parseInt(propiedades.getProperty(&quot;tamVentana&quot;));</span>
+	}
+	
+	public double getSalto(){
+<span class="fc" id="L86">		return Float.parseFloat(propiedades.getProperty(&quot;salto&quot;));</span>
+	}
+	
+	public int getUmbral(){
+<span class="fc" id="L90">		return Integer.parseInt(propiedades.getProperty(&quot;umbral&quot;));</span>
+	}
+	
+	public int getTipoDeteccion(){
+<span class="fc" id="L94">		return Integer.parseInt(propiedades.getProperty(&quot;tipoDeteccion&quot;));</span>
+	}
+	
+	public int getTipoEntrenamiento(){		
+<span class="fc" id="L98">		return Integer.parseInt(propiedades.getProperty(&quot;tipoEntrenamiento&quot;));</span>
+	}
+	
+	public int getTipoClasificacion(){		
+<span class="fc" id="L102">		return Integer.parseInt(propiedades.getProperty(&quot;tipoClasificacion&quot;));</span>
+	}
+	
+	public int getTipoVentanaDefectuosa(){
+<span class="fc" id="L106">		return Integer.parseInt(propiedades.getProperty(&quot;tipoVentanaDefectuosa&quot;));</span>
+	}
+	
+	public double getPorcentajePixeles(){
+<span class="fc" id="L110">		return Float.parseFloat(propiedades.getProperty(&quot;porcentajePixeles&quot;));</span>
+	}
+	
+	public int getTipoCaracteristicas(){
+<span class="fc" id="L114">		return Integer.parseInt(propiedades.getProperty(&quot;tipoCaracteristicas&quot;));</span>
+	}
+	
+	public void setUmbral(int umbral){
+<span class="fc" id="L118">		propiedades.setProperty(&quot;umbral&quot;, String.valueOf(umbral));</span>
+		try {
+<span class="fc" id="L120">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L121">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L122">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L123">			e.printStackTrace();</span>
+<span class="nc" id="L124">		} catch (IOException e) {</span>
+<span class="nc" id="L125">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L126">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L128">	}</span>
+	
+	public void setTipoEntrenamiento(int tipo){
+<span class="fc" id="L131">		propiedades.setProperty(&quot;tipoEntrenamiento&quot;, String.valueOf(tipo));</span>
+		try {
+<span class="fc" id="L133">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L134">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L135">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L136">			e.printStackTrace();</span>
+<span class="nc" id="L137">		} catch (IOException e) {</span>
+<span class="nc" id="L138">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L139">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L141">	}</span>
+	
+	public void setTipoClasificacion(int tipo){
+<span class="nc" id="L144">		propiedades.setProperty(&quot;tipoClasificacion&quot;, String.valueOf(tipo));</span>
+		try {
+<span class="nc" id="L146">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="nc" id="L147">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L148">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L149">			e.printStackTrace();</span>
+<span class="nc" id="L150">		} catch (IOException e) {</span>
+<span class="nc" id="L151">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L152">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L154">	}</span>
+	
+	public void setTipoDeteccion(int tipo){
+<span class="fc" id="L157">		propiedades.setProperty(&quot;tipoDeteccion&quot;, String.valueOf(tipo));</span>
+		try {
+<span class="fc" id="L159">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L160">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L161">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L162">			e.printStackTrace();</span>
+<span class="nc" id="L163">		} catch (IOException e) {</span>
+<span class="nc" id="L164">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L165">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L167">	}</span>
+	
+	public void setSalto(double salto){
+<span class="fc" id="L170">		propiedades.setProperty(&quot;salto&quot;, String.valueOf(salto));</span>
+		try {
+<span class="fc" id="L172">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L173">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L174">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L175">			e.printStackTrace();</span>
+<span class="nc" id="L176">		} catch (IOException e) {</span>
+<span class="nc" id="L177">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L178">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L180">	}</span>
+	
+	public void setTamVentana(int tam){
+<span class="fc" id="L183">		propiedades.setProperty(&quot;tamVentana&quot;, String.valueOf(tam));</span>
+		try {
+<span class="fc" id="L185">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L186">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L187">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L188">			e.printStackTrace();</span>
+<span class="nc" id="L189">		} catch (IOException e) {</span>
+<span class="nc" id="L190">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L191">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L193">	}</span>
+	
+	public String getPathArff(){
+<span class="fc" id="L196">		return propiedades.getProperty(&quot;pathArff&quot;);</span>
+	}
+	
+	public String getPathModel(){
+<span class="fc" id="L200">		return propiedades.getProperty(&quot;pathModel&quot;);</span>
+	}
+	
+	public void setPathModel(String model){
+<span class="fc" id="L204">		propiedades.setProperty(&quot;pathModel&quot;, model);</span>
+		try {
+<span class="fc" id="L206">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L207">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L208">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L209">			e.printStackTrace();</span>
+<span class="nc" id="L210">		} catch (IOException e) {</span>
+<span class="nc" id="L211">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L212">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L214">	}</span>
+	
+	public void setTipoVentanaDefectuosa(int tipo){
+<span class="fc" id="L217">		propiedades.setProperty(&quot;tipoVentanaDefectuosa&quot;, String.valueOf(tipo));</span>
+		try {
+<span class="fc" id="L219">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L220">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L221">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L222">			e.printStackTrace();</span>
+<span class="nc" id="L223">		} catch (IOException e) {</span>
+<span class="nc" id="L224">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L225">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L227">	}</span>
+	
+	public void setPorcentajePixeles(double porcentaje){
+<span class="fc" id="L230">		propiedades.setProperty(&quot;porcentajePixeles&quot;, String.valueOf(porcentaje));</span>
+		try {
+<span class="fc" id="L232">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L233">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L234">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L235">			e.printStackTrace();</span>
+<span class="nc" id="L236">		} catch (IOException e) {</span>
+<span class="nc" id="L237">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L238">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L240">	}</span>
+	
+	public void setTipoCaracteristicas(int tipo){
+<span class="fc" id="L243">		propiedades.setProperty(&quot;tipoCaracteristicas&quot;, String.valueOf(tipo));</span>
+		try {
+<span class="fc" id="L245">			propiedades.store(new FileOutputStream(&quot;./res/config/config.properties&quot;), null);</span>
+<span class="pc" id="L246">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L247">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L248">			e.printStackTrace();</span>
+<span class="nc" id="L249">		} catch (IOException e) {</span>
+<span class="nc" id="L250">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L251">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L253">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

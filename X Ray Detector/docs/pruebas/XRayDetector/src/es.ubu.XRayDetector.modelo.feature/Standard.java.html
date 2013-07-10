@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Standard.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.feature</a> &gt; <span class="el_source">Standard.java</span></div><h1>Standard.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.feature;
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+import java.awt.Rectangle;
+
+
+public class Standard extends Feature {
+
+	private double[] standardVector;
+<span class="fc" id="L13">	private int count = 0;</span>
+	private int coordX;
+	private int coordY;
+	
+	//private List&lt;String&gt; features;
+	//private int numStandard;
+	
+	public Standard() {
+<span class="fc" id="L21">		super();		</span>
+<span class="fc" id="L22">	}</span>
+
+	@Override
+	public void calcular(Roi roi, ImagePlus image, ImagePlus imageFd, ImagePlus imageSd) {
+		//de momento, se calculan todos
+<span class="fc" id="L27">		standardVector = new double[4];</span>
+<span class="fc" id="L28">		headVector = new String[4];</span>
+<span class="fc" id="L29">		IJ.run(image, &quot;8-bit&quot;, &quot;&quot;);</span>
+		
+<span class="fc" id="L31">		headVector[count] = &quot;mean&quot;;</span>
+<span class="fc" id="L32">		standardVector[count++] = mean(roi, image);</span>
+<span class="fc" id="L33">		headVector[count] = &quot;standardDeviation&quot;;</span>
+<span class="fc" id="L34">		standardVector[count++] = standardDeviation(roi, image);</span>
+<span class="fc" id="L35">		headVector[count] = &quot;firstDerivative&quot;;</span>
+<span class="fc" id="L36">		standardVector[count++] = firstDerivative(roi, imageFd);</span>
+<span class="fc" id="L37">		headVector[count] = &quot;secondDerivative&quot;;</span>
+<span class="fc" id="L38">		standardVector[count++] = secondDerivative(roi, imageSd);</span>
+		
+<span class="fc" id="L40">		setVectorResultados(standardVector);</span>
+<span class="fc" id="L41">	}</span>
+
+	/**
+	 * Calculates the mean of all pixel values of the ROI.
+	 * 
+	 * @return mean
+	 */
+	public double mean(Roi roi, ImagePlus image) {
+<span class="fc" id="L49">		double sum = 0, total = 0;</span>
+		
+<span class="fc" id="L51">		Rectangle r = roi.getBounds();</span>
+		
+<span class="fc" id="L53">		coordX = r.x;</span>
+<span class="fc" id="L54">		coordY = r.y;</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (int y = coordY; y &lt; coordY + r.height; y++) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			for (int x = coordX; x &lt; coordX + r.width; x++) {</span>
+<span class="fc" id="L58">				sum = sum + image.getProcessor().getPixel(x, y);</span>
+<span class="fc" id="L59">				total++;</span>
+			}
+		}		
+
+<span class="fc" id="L63">		return sum / total;</span>
+	}
+
+	/**
+	 * Calculates the standard deviation.
+	 * 
+	 * @return Standard deviation
+	 */
+	public double standardDeviation(Roi roi, ImagePlus image) {
+<span class="fc" id="L72">		int total = 0;</span>
+<span class="fc" id="L73">		double sum = 0, power = 0, mean = 0;</span>
+		
+<span class="fc" id="L75">		Rectangle r = roi.getBounds();</span>
+		
+<span class="fc" id="L77">		coordX = r.x;</span>
+<span class="fc" id="L78">		coordY = r.y;</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (int y = coordY; y &lt; coordY + r.height; y++) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (int x = coordX; x &lt; coordX + r.width; x++) {</span>
+<span class="fc" id="L82">				sum = sum + image.getProcessor().getPixel(x, y);</span>
+<span class="fc" id="L83">				total++;</span>
+			}
+		}
+
+<span class="fc" id="L87">		mean = sum / total;</span>
+
+<span class="fc" id="L89">		total = 0;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (int y = coordY; y &lt; coordY + r.height; y++) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			for (int x = coordX; x &lt; coordX + r.width; x++) {</span>
+
+<span class="fc" id="L93">				power = power</span>
+<span class="fc" id="L94">						+ Math.pow(</span>
+<span class="fc" id="L95">								(image.getProcessor().getPixel(x, y) - mean), 2);</span>
+
+<span class="fc" id="L97">				total++;</span>
+			}
+		}
+
+		// Tambien puede ser total-1, sería es una mejora
+<span class="fc" id="L102">		return Math.sqrt(power / total);</span>
+	}
+
+	/**
+	 * Calculates the first derivative.
+	 * 
+	 * @return first derivative
+	 */
+	public double firstDerivative(Roi roi, ImagePlus imageFd) {
+<span class="fc" id="L111">		double sum = 0;</span>
+<span class="fc" id="L112">		int total = 0;</span>
+		
+<span class="fc" id="L114">		Rectangle r = roi.getBounds();</span>
+		
+<span class="fc" id="L116">		coordX = r.x;</span>
+<span class="fc" id="L117">		coordY = r.y;</span>
+		
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		for (int i = coordY; i &lt; coordY + r.height; i++) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			for (int j = coordX; j &lt; coordX + r.width; j++) {</span>
+<span class="fc" id="L121">				sum = sum + Math.abs(imageFd.getProcessor().getPixel(j-coordX, i-coordY));</span>
+<span class="fc" id="L122">				total++;</span>
+			}
+		}
+
+<span class="fc" id="L126">		return sum / total;</span>
+	}
+
+	/**
+	 * Calculates the second derivative.
+	 * 
+	 * @return Second derivative
+	 */
+	public double secondDerivative(Roi roi, ImagePlus imageSd) {
+<span class="fc" id="L135">		double sum = 0, total = 0;</span>
+		
+<span class="fc" id="L137">		Rectangle r = roi.getBounds();</span>
+		
+<span class="fc" id="L139">		coordX = r.x;</span>
+<span class="fc" id="L140">		coordY = r.y;</span>
+		
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int y = coordY; y &lt; coordY + r.height; y++) {</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			for (int x = coordX; x &lt; coordX + r.width; x++) {</span>
+<span class="fc" id="L144">				sum = sum + imageSd.getProcessor().getPixel(x-coordX, y-coordY);</span>
+<span class="fc" id="L145">				total++;</span>
+			}
+		}
+
+<span class="fc" id="L149">		return sum / total;</span>
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

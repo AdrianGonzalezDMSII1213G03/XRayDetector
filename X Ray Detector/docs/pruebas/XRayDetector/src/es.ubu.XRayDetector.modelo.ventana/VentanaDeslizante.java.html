@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VentanaDeslizante.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.ventana</a> &gt; <span class="el_source">VentanaDeslizante.java</span></div><h1>VentanaDeslizante.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.ventana;
+
+import ij.ImagePlus;
+import ij.process.ImageProcessor;
+
+import java.awt.Rectangle;
+
+import javax.swing.JProgressBar;
+
+import es.ubu.XRayDetector.utils.Graphic;
+
+
+
+public class VentanaDeslizante extends VentanaAbstracta{
+
+	private Graphic imgPanel;
+	private Rectangle selection;
+	private boolean entrenamiento; 
+	
+	public VentanaDeslizante(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo, Rectangle sel, Graphic imgPanel, JProgressBar progressBar, int[][] defectMatrix, boolean entr) {
+<span class="fc" id="L21">		super(img, saliency, convolucion, convolucionSaliency, numHilo);</span>
+<span class="fc" id="L22">		this.imgPanel = imgPanel;</span>
+<span class="fc" id="L23">		this.selection = sel;</span>
+<span class="fc" id="L24">		this.progressBar = progressBar;		</span>
+<span class="fc" id="L25">		this.defectMatrix = defectMatrix;</span>
+<span class="fc" id="L26">		entrenamiento = entr;</span>
+<span class="fc" id="L27">	}</span>
+
+	public void run(){
+<span class="fc" id="L30">		int salto = (int) (getAlturaVentana()*getPropiedades().getSalto());</span>
+<span class="fc" id="L31">		int coordenadaX = 0, coordenadaY = 0, altura = 0, anchura = 0;</span>
+<span class="fc" id="L32">		ImageProcessor ip = getImage().getProcessor();</span>
+		
+<span class="fc" id="L34">		altura = ip.getHeight();</span>
+<span class="fc" id="L35">		anchura = ip.getWidth();</span>
+		
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		for (coordenadaY = 0;coordenadaY &lt;= altura - getAlturaVentana(); coordenadaY += salto) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">			for (coordenadaX = 0; coordenadaX &lt;= anchura - getAnchuraVentana(); coordenadaX += salto) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">				if (entrenamiento){</span>
+<span class="fc" id="L40">					ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L41">					ejecutarCalculos(coordenadaX, coordenadaY, getImage());</span>
+<span class="fc" id="L42">					boolean defect = getDefecto(getImage().duplicate());</span>
+<span class="fc" id="L43">					generarArff(coordenadaX, coordenadaY, defect);</span>
+<span class="fc" id="L44">				}</span>
+				else{
+<span class="fc" id="L46">					pintarVentana(coordenadaX, coordenadaY);</span>
+<span class="fc" id="L47">					ip.setRoi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+					
+<span class="fc" id="L49">					ejecutarCalculos(coordenadaX, coordenadaY, getImage());</span>
+<span class="fc" id="L50">					double clase = clasificar();</span>
+<span class="fc" id="L51">					imprimeRes(coordenadaX, coordenadaY, clase);</span>
+<span class="fc" id="L52">					setPorcentajeBarra();</span>
+				}
+			}
+		}
+<span class="fc" id="L56">	}</span>
+
+	private synchronized void pintarVentana(int coordenadaX, int coordenadaY) {
+		
+<span class="fc" id="L60">		int y = coordenadaY + selection.y + getNumHilo()*getImage().getHeight();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){</span>
+<span class="fc" id="L62">			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección</span>
+		}
+
+<span class="fc" id="L65">		imgPanel.drawWindow(coordenadaX + selection.x, y, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L66">		imgPanel.repaint();</span>
+<span class="fc" id="L67">	}</span>
+	
+	private void imprimeRes(int coordX, int coordY, double prob) {
+		
+		//para la coordenada Y, hay que determinar en qué trozo de la imagen estamos analizando
+<span class="fc" id="L72">		int y = coordY + selection.y + getNumHilo()*getImage().getHeight();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if(getNumHilo() == Runtime.getRuntime().availableProcessors() - 1){</span>
+<span class="fc" id="L74">			y -= getPropiedades().getTamVentana();	//para contrarrestar el solapamiento y que las ventanas no se salgan de la selección</span>
+		}
+		
+<span class="fc" id="L77">		int opcion = getPropiedades().getTipoClasificacion();</span>
+		
+<span class="pc bpc" id="L79" title="2 of 3 branches missed.">		switch (opcion) {</span>
+			case 0:
+				//CLASIFICACIÓN CLASE NOMINAL
+<span class="fc bfc" id="L82" title="All 2 branches covered.">				if(prob == 0){</span>
+<span class="fc" id="L83">					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L84">					imgPanel.repaint();</span>
+<span class="fc" id="L85">					rellenarMatrizDefectos(coordX+ selection.x, y);</span>
+				}
+<span class="fc" id="L87">				break;</span>
+	
+			case 1:
+				//REGRESIÓN
+<span class="nc bnc" id="L91" title="All 2 branches missed.">				if(prob &gt;= 0.5){</span>
+<span class="nc" id="L92">					imgPanel.addRectangle(coordX + selection.x, y, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="nc" id="L93">					imgPanel.repaint();</span>
+<span class="nc" id="L94">					rellenarMatrizDefectos(coordX+ selection.x, y);</span>
+				}
+				break;
+		}
+<span class="fc" id="L98">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Graphic.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">Graphic.java</span></div><h1>Graphic.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package es.ubu.XRayDetector.utils;</span>
+
+import ij.ImagePlus;
+import ij.gui.Overlay;
+import ij.gui.Roi;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+
+/**
+ * This class draws the graphics on a panel and handles mouse listeners for the
+ * selection of regions of interest.
+ * 
+ * 
+ * @version 1.0
+ */
+@SuppressWarnings(&quot;serial&quot;)
+public class Graphic extends JPanel {
+
+<span class="fc" id="L38">	private Rectangle selection = new Rectangle(0, 0, 0, 0);</span>
+//	private Rectangle selection2 = new Rectangle(0, 0, 0, 0);
+<span class="fc" id="L40">	private boolean isSelectionMode = false, ended;</span>
+<span class="fc" id="L41">	private Point initialPoint = new Point(0, 0);</span>
+	int w, h;
+	private double coorX, coorY, width, height;
+	private Image image;
+	private ArrayList&lt;Rectangle2D.Double&gt; rectangleList;
+	private Rectangle2D window;
+<span class="fc" id="L47">	private boolean ctrlPresionado = false;</span>
+	private JTable tablaResultados;
+	private Roi[] arrayRois;
+	private Image copia;
+<span class="fc" id="L51">	private boolean trabajando = true;</span>
+
+	/**
+	 * Create the panel.
+	 * 
+	 * @param image
+	 *            image to be set
+	 */
+<span class="fc" id="L59">	public Graphic(Image image) {</span>
+<span class="fc" id="L60">		this.image = image;</span>
+<span class="fc" id="L61">		this.addMouseMotionListener(createMouseMotionListener());</span>
+<span class="fc" id="L62">		this.addMouseListener(createMouseListener());</span>
+<span class="fc" id="L63">		this.addKeyListener(createKeyListener());</span>
+
+<span class="fc" id="L65">		w = image.getWidth(null);</span>
+<span class="fc" id="L66">		h = image.getHeight(null);</span>
+<span class="fc" id="L67">		rectangleList = new ArrayList&lt;Rectangle2D.Double&gt;();</span>
+<span class="fc" id="L68">	}</span>
+
+	/**
+	 * Sets an image to be drawed.
+	 * 
+	 * @see #getImage
+	 * 
+	 * @param image
+	 *            Image to be set
+	 */
+	public void setImage(Image image) {
+<span class="fc" id="L79">		this.image = image;</span>
+<span class="fc" id="L80">		rectangleList = new ArrayList&lt;Rectangle2D.Double&gt;();</span>
+<span class="fc" id="L81">		w = image.getWidth(null);</span>
+<span class="fc" id="L82">		h = image.getHeight(null);</span>
+<span class="fc" id="L83">	}</span>
+	
+	public void setImageCopy(Image image) {
+<span class="nc" id="L86">		copia = image;</span>
+<span class="nc" id="L87">		setImage(copia);</span>
+<span class="nc" id="L88">	}</span>
+	
+	/**
+	 * Sets a Table Results.
+	 * 
+	 * @param tabla table to be set
+	 */
+	public void setTablaResultados(JTable tabla) {
+<span class="nc" id="L96">		tablaResultados = tabla;</span>
+<span class="nc" id="L97">	}</span>
+	
+	public void setArrayRois(Roi[] array){
+<span class="nc" id="L100">		arrayRois = array;</span>
+<span class="nc" id="L101">	}</span>
+	
+	public void setFlagTrabajando(boolean t){
+<span class="nc" id="L104">		trabajando = t;</span>
+<span class="nc" id="L105">	}</span>
+
+	/**
+	 * Creates a mouse listener to save the area of selection in the image.
+	 * 
+	 * @return adapter
+	 */
+	private MouseMotionListener createMouseMotionListener() {
+<span class="fc" id="L113">		MouseMotionListener adapter = new MouseMotionListener() {</span>
+			@Override
+			public void mouseDragged(MouseEvent e) {
+<span class="nc bnc" id="L116" title="All 4 branches missed.">				if (isSelectionMode &amp;&amp; !trabajando) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">					if (e.getPoint().x &gt; initialPoint.x)</span>
+<span class="nc" id="L118">						selection.width = e.getPoint().x - initialPoint.x;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">					if (e.getPoint().y &gt; initialPoint.y)</span>
+<span class="nc" id="L120">						selection.height = e.getPoint().y - initialPoint.y;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">					if (e.getPoint().x &lt; initialPoint.x) {</span>
+<span class="nc" id="L122">						selection.width = initialPoint.x - e.getPoint().x;</span>
+<span class="nc" id="L123">						selection.x = e.getPoint().x;</span>
+					}
+<span class="nc bnc" id="L125" title="All 2 branches missed.">					if (e.getPoint().y &lt; initialPoint.y) {</span>
+<span class="nc" id="L126">						selection.height = initialPoint.y - e.getPoint().y;</span>
+<span class="nc" id="L127">						selection.y = e.getPoint().y;</span>
+					}
+<span class="nc" id="L129">					repaint();</span>
+				}
+<span class="nc" id="L131">			}</span>
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+<span class="nc" id="L135">			}</span>
+		};
+<span class="fc" id="L137">		return adapter;</span>
+	}
+
+	/**
+	 * Creates a new dimension with the size of the open image.
+	 */
+	public Dimension getPreferredSize() {
+<span class="nc" id="L144">		return new Dimension(w, h);</span>
+	}
+
+	/**
+	 * Creates a new mouse listener to know if is a selection.
+	 * 
+	 * @return adapter
+	 */
+	private MouseListener createMouseListener() {
+<span class="fc" id="L153">		MouseAdapter adapter = new MouseAdapter() {</span>
+			public void mouseReleased(MouseEvent e) {
+<span class="nc" id="L155">				isSelectionMode = false;</span>
+<span class="nc" id="L156">			}</span>
+
+			public void mousePressed(MouseEvent e) {
+<span class="nc bnc" id="L159" title="All 4 branches missed.">				if(!trabajando &amp;&amp; !ctrlPresionado){</span>
+<span class="nc" id="L160">					isSelectionMode = true;</span>
+<span class="nc" id="L161">					selection.setLocation(e.getPoint());</span>
+<span class="nc" id="L162">					selection.setSize(0, 0);</span>
+<span class="nc" id="L163">					initialPoint = e.getPoint();</span>
+	
+<span class="nc" id="L165">					repaint();</span>
+				}
+<span class="nc" id="L167">			}</span>
+			
+			public void mouseClicked(MouseEvent e){
+<span class="nc bnc" id="L170" title="All 4 branches missed.">				if(ctrlPresionado &amp;&amp; !trabajando){</span>
+<span class="nc" id="L171">					Point coordenadas = e.getPoint();</span>
+<span class="nc" id="L172">					int index = getRoi(coordenadas);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">					if(index != -1){</span>
+<span class="nc" id="L174">						tablaResultados.setRowSelectionInterval(index, index);</span>
+						
+						//restaurar imagen original
+<span class="nc" id="L177">						setImage(copia);</span>
+<span class="nc" id="L178">						repaint();</span>
+						
+						//pintar la selección
+<span class="nc" id="L181">						Roi roi = arrayRois[index];</span>
+<span class="nc" id="L182">						int alpha = 63;</span>
+<span class="nc" id="L183">						Color c = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);</span>
+<span class="nc" id="L184">						roi.setFillColor(c);</span>
+<span class="nc" id="L185">						ImagePlus im = new ImagePlus(&quot;overlay&quot;, copia);</span>
+<span class="nc" id="L186">						im.setOverlay(new Overlay(roi));</span>
+<span class="nc" id="L187">						im = im.flatten();</span>
+<span class="nc" id="L188">						im.updateAndDraw();</span>
+<span class="nc" id="L189">						setImage(im.getImage());</span>
+<span class="nc" id="L190">						repaint();</span>
+					}
+				}
+<span class="nc" id="L193">			}</span>
+		};
+<span class="fc" id="L195">		return adapter;</span>
+	}
+	
+	public int getRoi(Point coordenadas) {
+		Roi roi;
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if(arrayRois != null){</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			for(int i=0; i&lt;arrayRois.length; i++){</span>
+<span class="nc" id="L202">				roi = arrayRois[i];</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">				if(roi.contains(coordenadas.x, coordenadas.y)){</span>
+<span class="nc" id="L204">					return i;</span>
+				}
+			}
+		}
+<span class="nc" id="L208">		return -1;</span>
+	}
+
+	private KeyListener createKeyListener(){
+<span class="fc" id="L212">		KeyAdapter adapter = new KeyAdapter(){</span>
+			public void keyPressed(KeyEvent e){
+<span class="nc bnc" id="L214" title="All 4 branches missed.">				if(e.isControlDown() &amp;&amp; !trabajando){</span>
+<span class="nc" id="L215">					ctrlPresionado = true;</span>
+<span class="nc" id="L216">					e.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));</span>
+				}
+<span class="nc" id="L218">			}</span>
+			
+			public void keyReleased(KeyEvent e){
+<span class="nc" id="L221">				ctrlPresionado = false;</span>
+<span class="nc" id="L222">				e.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L223">			}</span>
+		};
+<span class="fc" id="L225">		return adapter;</span>
+	}
+
+	/**
+	 * This method draws the image and repaint the selection square of the mouse
+	 * listener.
+	 */
+	public void paint(Graphics g) {
+<span class="nc" id="L233">		Graphics2D g2d = (Graphics2D) g;</span>
+		// Graphics2D g2d3 = (Graphics2D) g;
+<span class="nc" id="L235">		Rectangle2D rectangle = null;</span>
+
+<span class="nc" id="L237">		g.drawImage(image, 0, 0, null);</span>
+
+<span class="nc" id="L239">		w = image.getWidth(null);</span>
+<span class="nc" id="L240">		h = image.getHeight(null);</span>
+
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (selection.getX() &lt; 0) {</span>
+<span class="nc" id="L243">			coorX = 0;</span>
+<span class="nc" id="L244">			width = selection.getWidth() + selection.getX();</span>
+<span class="nc" id="L245">		} else {</span>
+<span class="nc" id="L246">			coorX = selection.getX();</span>
+<span class="nc" id="L247">			width = selection.getWidth();</span>
+		}
+
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		if ((selection.getX() + selection.getWidth()) &gt;= w) {</span>
+<span class="nc" id="L251">			coorX = selection.getX();</span>
+<span class="nc" id="L252">			width = w - selection.getX() - 1;</span>
+		}
+
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (selection.getY() &lt; 0) {</span>
+<span class="nc" id="L256">			coorY = 0;</span>
+
+<span class="nc" id="L258">			height = selection.getHeight() + selection.getY();</span>
+<span class="nc" id="L259">		} else {</span>
+<span class="nc" id="L260">			coorY = selection.getY();</span>
+<span class="nc" id="L261">			height = selection.getHeight();</span>
+		}
+
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if ((selection.getY() + selection.getHeight()) &gt;= h) {</span>
+<span class="nc" id="L265">			coorY = selection.getY();</span>
+<span class="nc" id="L266">			height = h - selection.getY() - 1;</span>
+		}
+
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (ended == false) {</span>
+
+<span class="nc" id="L271">			rectangle = new Rectangle2D.Double(coorX, coorY, width, height);</span>
+<span class="nc" id="L272">			g2d.setColor(Color.yellow);</span>
+
+<span class="nc" id="L274">			g2d.draw(rectangle);</span>
+
+<span class="nc bnc" id="L276" title="All 2 branches missed.">			if (window != null) {</span>
+<span class="nc" id="L277">				g2d.setColor(Color.yellow);</span>
+<span class="nc" id="L278">				g2d.draw(window);</span>
+			}
+
+			try {
+<span class="nc bnc" id="L282" title="All 2 branches missed.">				for (Rectangle2D.Double rect : rectangleList) {</span>
+<span class="nc" id="L283">					g2d.setColor(Color.green);</span>
+<span class="nc" id="L284">					g2d.draw(rect);</span>
+				}
+<span class="nc" id="L286">			} catch (ConcurrentModificationException e) {</span>
+<span class="nc" id="L287">				MyLogHandler.writeException(e);</span>
+<span class="nc" id="L288">				e.printStackTrace();</span>
+			}
+
+<span class="nc" id="L291">		} else {</span>
+<span class="nc" id="L292">			coorX = 0;</span>
+<span class="nc" id="L293">			coorY = 0;</span>
+<span class="nc" id="L294">			width = 0;</span>
+<span class="nc" id="L295">			height = 0;</span>
+<span class="nc" id="L296">			window = null;</span>
+<span class="nc" id="L297">			ended = false;</span>
+
+<span class="nc" id="L299">			selection.width = 0;</span>
+<span class="nc" id="L300">			selection.x = 0;</span>
+<span class="nc" id="L301">			selection.height = 0;</span>
+<span class="nc" id="L302">			selection.y = 0;</span>
+		}
+<span class="nc" id="L304">	}</span>
+
+	/**
+	 * Adds a rectangle that marks a defect to be painted.
+	 * 
+	 * @param coorX
+	 *            Coordinates X of the rectangle
+	 * @param coorY
+	 *            Coordinate Y of the rectangle
+	 * @param width
+	 *            Width of the rectangle
+	 * @param height
+	 *            Height of the rectangle
+	 */
+	public void addRectangle(int coorX, int coorY, int width, int height) {
+<span class="fc" id="L319">		rectangleList.add(new Rectangle2D.Double(coorX, coorY, width, height));</span>
+<span class="fc" id="L320">	}</span>
+
+	/**
+	 * Draws the sliding window into the graphics.
+	 * 
+	 * @param coorX
+	 *            Coordinates X of the window
+	 * @param coorY
+	 *            Coordinates Y of the window
+	 * @param width
+	 *            Width of the window
+	 * @param height
+	 *            Height of the window
+	 * @return window
+	 */
+	public Rectangle2D drawWindow(int coorX, int coorY, int width, int height) {
+<span class="fc" id="L336">		window = new Rectangle2D.Double(coorX, coorY, width, height);</span>
+
+<span class="fc" id="L338">		return window;</span>
+	}
+
+	/**
+	 * Returns the selection area, with the coordinates and size of the ROI.
+	 * 
+	 * @return selection area
+	 */
+	public Rectangle coordenates() {
+		//return selection2;
+<span class="fc" id="L348">		return selection;</span>
+	}
+
+	/**
+	 * Returns true if the detection is ended or false if not.
+	 * 
+	 * @param b
+	 *            true if the detection is ended or false if not
+	 */
+	public void isEnded(boolean b) {
+<span class="fc" id="L358">		ended = b;</span>
+<span class="fc" id="L359">	}</span>
+
+	/**
+	 * This method clear the rectangles in the graphics.
+	 */
+	public void clear() {
+<span class="nc" id="L365">		coorX = 0;</span>
+<span class="nc" id="L366">		coorY = 0;</span>
+<span class="nc" id="L367">		width = 0;</span>
+<span class="nc" id="L368">		height = 0;</span>
+<span class="nc" id="L369">		window = null;</span>
+<span class="nc" id="L370">		ended = false;</span>
+
+<span class="nc" id="L372">		selection.width = 0;</span>
+<span class="nc" id="L373">		selection.x = 0;</span>
+<span class="nc" id="L374">		selection.height = 0;</span>
+<span class="nc" id="L375">		selection.y = 0;</span>
+<span class="nc" id="L376">	}</span>
+
+	/**
+	 * This method returns the image draw in the visor.
+	 * 
+	 * @see #setImage
+	 * 
+	 * @return image of the visor
+	 */
+	public Image getImage() {
+<span class="nc" id="L386">		return image;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>StandardTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.test.modelo.feature</a> &gt; <span class="el_source">StandardTest.java</span></div><h1>StandardTest.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.test.modelo.feature;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import es.ubu.XRayDetector.modelo.feature.Standard;
+import es.ubu.XRayDetector.utils.Differentials_;
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+public class StandardTest{
+
+
+	private ImagePlus img;
+	private Roi roi;
+	private Standard ftStandard;
+	private Differentials_ diff;
+	
+<span class="fc" id="L21">	public StandardTest(){</span>
+		
+<span class="fc" id="L23">	}</span>
+	
+	@Before
+    public void setUp() throws Exception {
+<span class="fc" id="L27">        img = new ImagePlus(&quot;./res/test/img/ImgTESTFeature.BMP&quot;);</span>
+<span class="fc" id="L28">        roi = new Roi(0, 0, img.getWidth(), img.getHeight());</span>
+<span class="fc" id="L29">        ftStandard = new Standard();</span>
+<span class="fc" id="L30">        diff = new Differentials_();</span>
+<span class="fc" id="L31">    }</span>
+	
+	@Test
+	public void meanTest(){
+<span class="fc" id="L35">		assertEquals(ftStandard.mean(roi, img), 118.5989, 0);</span>
+<span class="fc" id="L36">	}</span>
+	
+	@Test
+	public void stdDeviationTest(){
+<span class="fc" id="L40">		assertEquals(ftStandard.standardDeviation(roi, img), 30.429449860127214, 0);</span>
+<span class="fc" id="L41">	}</span>
+	
+	@Test
+	public void firstDerivativeTest(){
+<span class="fc" id="L45">		diff.setImp(img.duplicate());</span>
+<span class="fc" id="L46">		Differentials_.setOperation(Differentials_.GRADIENT_MAGNITUDE);</span>
+<span class="fc" id="L47">		diff.run(&quot;&quot;);</span>
+<span class="fc" id="L48">		assertEquals(ftStandard.firstDerivative(roi, diff.getImp()), 1.0755781807221E9, 0);</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	public void secondDerivativeTest(){
+<span class="fc" id="L53">		diff.setImp(img.duplicate());</span>
+<span class="fc" id="L54">		Differentials_.setOperation(Differentials_.LAPLACIAN);</span>
+<span class="fc" id="L55">		diff.run(&quot;&quot;);</span>
+<span class="fc" id="L56">		assertEquals(ftStandard.secondDerivative(roi, diff.getImp()), 2.24500320928E7, 0);</span>
+<span class="fc" id="L57">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

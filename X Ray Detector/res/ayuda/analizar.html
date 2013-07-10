@@ -1,0 +1,52 @@
+<html>
+	<head>
+      <title>Analizar una imagen</title>
+   </head>
+   <body>
+   <h1>Introducción</h1>
+		<p>
+			XRayDetector permite analizar imágenes con clasificadores ya entrenados. En este documento se incluye la ayuda acerca de esta funcionalidad
+		</p>
+		
+	<h1>Selección de una región</h1>
+		<p>
+			Antes de comenzar el análisis, se puede seleccionar sólo una región de la imagen abierta para no tener que analizar toda la imagen. Para ello, simplemente ponga el cursor del ratón sobre la imagen, haga click con el botón izquierdo del ratón y, sin soltarlo, arrastre el cursor hasta conseguir la región deseada. <br><br>
+			Una vez seleccionada la región, simplemente pulse el botón <img src="./img/botonanalizar.png" alt="Botón analizar">.
+		</p>
+		<p>
+			Si no selecciona ninguna región, la aplicación le avisará de que el proceso de detección de defectos puede tardar mucho, dándole la opción de cancelar el proceso o seguir con él:<br>
+			<img src="./img/avisoanalizar.png" alt="Aviso analizar">
+		</p>
+		
+	<h1>Selección de un modelo</h1>
+		<p>
+			Antes de iniciar el proceso de detección, la aplicación le pedirá que especifique un modelo ya entrenado para realizar esa detección. Los modelos son archivos .model, de los cuales puede obtener más información en el <a href="./entrenamiento.html"> proceso de entrenamiento de un clasificador</a>.<br>
+			Se abrirá un cuadro de diálogo en el que puede navegar por su sistema, pudiendo así elegir el archivo que considere necesario.<br>
+		</p>
+		<p>
+			Una vez que ha encontrado el archivo que desea, pulse el botón <b>ACEPTAR</b>. La aplicación iniciará el proceso de detección de defectos.
+		</p>
+		
+	<h1>Analizando la imagen</h1>
+		<p>
+			Mientras el programa va analizando la imagen, usted verá una serie de cuadros amarillos que van corriendo sobre la imagen. Ésas son las ventanas que el programa usa para determinar si existen defectos. Si alguna contiene defectos, se colorearán en verde.<br>
+			<img src="./img/analizando.png" alt="Analizando"><br>
+			Mientras este proceso está en marcha, no podrá realizar otras acciones, como seleccionar regiones o entrenar un clasificador.
+		</p>
+
+	<h1>Deteniendo el proceso</h1>
+		<p>
+			En cualquier momento, puede parar el proceso de detección pulsando el botón <img src="./img/parar.png" alt="Parar"><br>. La aplicación volverá al estado inicial.
+		</p>
+
+	<h1>Resultados</h1>
+		<p>
+			Cuando el proceso acaba, se muestran los resultados de la detección. Para más información, consulte la <a href="./resultados.html">ayuda sobre los resultados</a>.
+		</p>
+		
+	<h1>Cambiando opciones</h1>
+		<p>
+			Se pueden cambiar algunas opciones de la detección de defectos, como el tamaño de la ventana y el salto de la misma, o qué estrategia se va a seguir para detectar defectos. Para más información, consulte la <a href="./opcionesavanzadas.html">ayuda sobre las opciones avanzadas</a>.
+		</p>	
+   </body>
+</html>

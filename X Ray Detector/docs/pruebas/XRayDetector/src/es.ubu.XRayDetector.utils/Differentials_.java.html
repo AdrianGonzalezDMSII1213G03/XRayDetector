@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Differentials_.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">Differentials_.java</span></div><h1>Differentials_.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.utils;
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.Undo;
+import ij.plugin.PlugIn;
+import ij.process.ImageConverter;
+import ij.process.ImageProcessor;
+import ij.process.StackConverter;
+
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+/*====================================================================
+|	class Differentials_
+\===================================================================*/
+/*------------------------------------------------------------------*/
+@SuppressWarnings(&quot;unused&quot;)
+<span class="fc" id="L32">public class Differentials_</span>
+	implements
+		PlugIn
+
+{ /* begin class Differentials_ */
+
+/*....................................................................
+	public variables
+....................................................................*/
+public final static int GRADIENT_DIRECTION = 2;
+public final static int GRADIENT_MAGNITUDE = 1;
+public final static int HESSIAN_ORIENTATION = 6;
+public final static int LAPLACIAN = 3;
+public final static int LARGEST_HESSIAN = 4;
+public final static int SMALLEST_HESSIAN = 5;
+
+/*....................................................................
+	private variables
+....................................................................*/
+<span class="fc" id="L51">private ImagePlus imp = null;</span>
+//private ProgressBar progressBar = IJ.getInstance().getProgressBar();
+<span class="fc" id="L53">private boolean cancel = false;</span>
+<span class="fc" id="L54">private int completed = 1;</span>
+<span class="fc" id="L55">private int processDuration = 1;</span>
+<span class="fc" id="L56">private int stackSize = 1;</span>
+<span class="fc" id="L57">private final double FLT_EPSILON =</span>
+<span class="fc" id="L58">	(double)Float.intBitsToFloat((int)0x33FFFFFF);</span>
+<span class="fc" id="L59">private long lastTime = System.currentTimeMillis();</span>
+<span class="fc" id="L60">private static int operation = LAPLACIAN;</span>
+
+/*....................................................................
+	PlugIn methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+public void run (
+	String arg
+) {
+//	ImagePlus imp = WindowManager.getCurrentImage();
+//	this.setImp(imp);
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">	if (imp == null) {</span>
+<span class="nc" id="L72">		IJ.noImage();</span>
+<span class="nc" id="L73">		return;</span>
+	}
+<span class="pc bpc" id="L75" title="3 of 4 branches missed.">	if ((1 &lt; imp.getStackSize()) &amp;&amp; (imp.getType() == ImagePlus.COLOR_256)) {</span>
+<span class="nc" id="L76">		IJ.error(&quot;Stack of color images not supported (use grayscale)&quot;);</span>
+<span class="nc" id="L77">		return;</span>
+	}
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">	if (1 &lt; imp.getStackSize()) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (imp.getStack().isRGB()) {</span>
+<span class="nc" id="L81">			IJ.error(&quot;RGB color images not supported (use grayscale)&quot;);</span>
+<span class="nc" id="L82">			return;</span>
+		}
+	}
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">	if (1 &lt; imp.getStackSize()) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (imp.getStack().isHSB()) {</span>
+<span class="nc" id="L87">			IJ.error(&quot;HSB color images not supported (use grayscale)&quot;);</span>
+<span class="nc" id="L88">			return;</span>
+		}
+	}
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">	if (imp.getType() == ImagePlus.COLOR_256) {</span>
+<span class="nc" id="L92">		IJ.error(&quot;Indexed color images not supported (use grayscale)&quot;);</span>
+<span class="nc" id="L93">		return;</span>
+	}
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">	if (imp.getType() == ImagePlus.COLOR_RGB) {</span>
+<span class="nc" id="L96">		IJ.error(&quot;Color images not supported (use grayscale)&quot;);</span>
+<span class="nc" id="L97">		return;</span>
+	}
+
+//	differentialsDialog dialog = new differentialsDialog(IJ.getInstance(),
+//		&quot;Differentials&quot;, true, getOperation());
+//	GUI.center(dialog);
+//	dialog.setVisible(true);
+//	cancel = dialog.getCancel();
+//	setOperation(dialog.getOperation());
+//	dialog.dispose();
+//	if (cancel) {
+//		return;
+//	}
+
+<span class="fc" id="L111">	imp.startTiming();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">	if (1 &lt; imp.getStackSize()) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (!(imp.getProcessor().getPixels() instanceof float[])) {</span>
+<span class="nc" id="L114">			new StackConverter(imp).convertToGray32();</span>
+		}
+<span class="nc" id="L116">	}</span>
+	else {
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (!(imp.getProcessor().getPixels() instanceof float[])) {</span>
+<span class="fc" id="L119">			new ImageConverter(imp).convertToGray32();</span>
+		}
+	}
+<span class="fc" id="L122">	ImageStack stack = imp.getStack();</span>
+<span class="fc" id="L123">	stackSize = stack.getSize();</span>
+<span class="fc" id="L124">	Undo.reset();</span>
+
+//	setupProgressBar();
+//	resetProgressBar();
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">	for (int i = 1; (i &lt;= stackSize); i++) {</span>
+<span class="fc" id="L130">		ImageProcessor ip = stack.getProcessor(i);</span>
+<span class="fc" id="L131">		doIt(ip);</span>
+<span class="fc" id="L132">		imp.getProcessor().resetMinAndMax();</span>
+<span class="fc" id="L133">		imp.setSlice(i);</span>
+<span class="fc" id="L134">		imp.updateAndRepaintWindow();</span>
+	}
+<span class="fc" id="L136">	imp.getProcessor().resetMinAndMax();</span>
+<span class="fc" id="L137">	imp.setSlice(1);</span>
+//	imp.updateAndRepaintWindow();
+//	cleanUpProgressBar();
+//	IJ.showTime(imp, imp.getStartTime(), &quot;Differentials: &quot;);
+//	ImageWindow win = imp.getWindow();
+//	if (win != null) {
+//		win.running = false;
+//	}
+<span class="fc" id="L145">} /* end run */</span>
+
+/*....................................................................
+	public methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+public void getCrossHessian (
+	ImageProcessor ip,
+	double tolerance
+) {
+<span class="nc" id="L155">	getHorizontalGradient(ip, tolerance);</span>
+<span class="nc" id="L156">	getVerticalGradient(ip, tolerance);</span>
+<span class="nc" id="L157">} /* end getCrossHessian */</span>
+
+/*------------------------------------------------------------------*/
+public void getHorizontalGradient (
+	ImageProcessor ip,
+	double tolerance
+) {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">	if (!(ip.getPixels() instanceof float[])) {</span>
+<span class="nc" id="L165">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+
+<span class="fc" id="L168">	int width = ip.getWidth();</span>
+<span class="fc" id="L169">	int height = ip.getHeight();</span>
+<span class="fc" id="L170">	double line[] = new double[width];</span>
+
+<span class="fc bfc" id="L172" title="All 2 branches covered.">	for (int y = 0; (y &lt; height); y++) {</span>
+<span class="fc" id="L173">		getRow(ip, y, line);</span>
+<span class="fc" id="L174">		getSplineInterpolationCoefficients(line, tolerance);</span>
+<span class="fc" id="L175">		getGradient(line);</span>
+<span class="fc" id="L176">		putRow(ip, y, line);</span>
+<span class="fc" id="L177">		stepProgressBar();</span>
+	}
+<span class="fc" id="L179">} /* end getHorizontalGradient */</span>
+
+/*------------------------------------------------------------------*/
+public void getHorizontalHessian (
+	ImageProcessor ip,
+	double tolerance
+) {
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">	if (!(ip.getPixels() instanceof float[])) {</span>
+<span class="nc" id="L187">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+
+<span class="fc" id="L190">	int width = ip.getWidth();</span>
+<span class="fc" id="L191">	int height = ip.getHeight();</span>
+<span class="fc" id="L192">	double line[] = new double[width];</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">	for (int y = 0; (y &lt; height); y++) {</span>
+<span class="fc" id="L195">		getRow(ip, y, line);</span>
+<span class="fc" id="L196">		getSplineInterpolationCoefficients(line, tolerance);</span>
+<span class="fc" id="L197">		getHessian(line);</span>
+<span class="fc" id="L198">		putRow(ip, y, line);</span>
+<span class="fc" id="L199">		stepProgressBar();</span>
+	}
+<span class="fc" id="L201">} /* end getHorizontalHessian */</span>
+
+/*------------------------------------------------------------------*/
+public void getVerticalGradient (
+	ImageProcessor ip,
+	double tolerance
+) {
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">	if (!(ip.getPixels() instanceof float[])) {</span>
+<span class="nc" id="L209">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+
+<span class="fc" id="L212">	int width = ip.getWidth();</span>
+<span class="fc" id="L213">	int height = ip.getHeight();</span>
+<span class="fc" id="L214">	double line[] = new double[height];</span>
+
+<span class="fc bfc" id="L216" title="All 2 branches covered.">	for (int x = 0; (x &lt; width); x++) {</span>
+<span class="fc" id="L217">		getColumn(ip, x, line);</span>
+<span class="fc" id="L218">		getSplineInterpolationCoefficients(line, tolerance);</span>
+<span class="fc" id="L219">		getGradient(line);</span>
+<span class="fc" id="L220">		putColumn(ip, x, line);</span>
+<span class="fc" id="L221">		stepProgressBar();</span>
+	}
+<span class="fc" id="L223">} /* end getVerticalGradient */</span>
+
+/*------------------------------------------------------------------*/
+public void getVerticalHessian (
+	ImageProcessor ip,
+	double tolerance
+) {
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">	if (!(ip.getPixels() instanceof float[])) {</span>
+<span class="nc" id="L231">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+
+<span class="fc" id="L234">	int width = ip.getWidth();</span>
+<span class="fc" id="L235">	int height = ip.getHeight();</span>
+<span class="fc" id="L236">	double line[] = new double[height];</span>
+
+<span class="fc bfc" id="L238" title="All 2 branches covered.">	for (int x = 0; (x &lt; width); x++) {</span>
+<span class="fc" id="L239">		getColumn(ip, x, line);</span>
+<span class="fc" id="L240">		getSplineInterpolationCoefficients(line, tolerance);</span>
+<span class="fc" id="L241">		getHessian(line);</span>
+<span class="fc" id="L242">		putColumn(ip, x, line);</span>
+<span class="fc" id="L243">		stepProgressBar();</span>
+	}
+<span class="fc" id="L245">} /* end getVerticalHessian */</span>
+
+/*....................................................................
+	private methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+private void antiSymmetricFirMirrorOnBounds (
+	double[] h,
+	double[] c,
+	double[] s
+) {
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">	if (h.length != 2) {</span>
+<span class="nc" id="L257">		throw new IndexOutOfBoundsException(</span>
+<span class="nc" id="L258">			&quot;The half-length filter size should be 2&quot;);</span>
+	}
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">	if (h[0] != 0.0) {</span>
+<span class="nc" id="L261">		throw new IllegalArgumentException(</span>
+<span class="nc" id="L262">			&quot;Antisymmetry violation (should have h[0]=0.0)&quot;);</span>
+	}
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">	if (c.length != s.length) {</span>
+<span class="nc" id="L265">		throw new IndexOutOfBoundsException(&quot;Incompatible size&quot;);</span>
+	}
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">	if (2 &lt;= c.length) {</span>
+<span class="fc" id="L268">		s[0] = 0.0;</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		for (int i = 1; (i &lt; (s.length - 1)); i++) {</span>
+<span class="fc" id="L270">			s[i] = h[1] * (c[i + 1] - c[i - 1]);</span>
+		}
+<span class="fc" id="L272">		s[s.length - 1] = 0.0;</span>
+<span class="fc" id="L273">	}</span>
+	else {
+<span class="nc bnc" id="L275" title="All 2 branches missed.">		if (c.length == 1) {</span>
+<span class="nc" id="L276">			s[0] = 0.0;</span>
+<span class="nc" id="L277">		}</span>
+		else {
+<span class="nc" id="L279">			throw new NegativeArraySizeException(&quot;Invalid length of data&quot;);</span>
+		}
+	}
+<span class="fc" id="L282">} /* end antiSymmetricFirMirrorOnBounds */</span>
+
+/*------------------------------------------------------------------*/
+private void cleanUpProgressBar (
+) {
+<span class="nc" id="L287">	completed = 0;</span>
+	//progressBar.show(2.0);
+<span class="nc" id="L289">} /* end cleanUpProgressBar */</span>
+
+/*------------------------------------------------------------------*/
+private void doIt (
+	ImageProcessor ip
+) {
+<span class="fc" id="L295">	int width = ip.getWidth();</span>
+<span class="fc" id="L296">	int height = ip.getHeight();</span>
+
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">	if (!(ip.getPixels() instanceof float[])) {</span>
+<span class="nc" id="L299">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+<span class="pc bpc" id="L301" title="5 of 7 branches missed.">	switch (getOperation()) {</span>
+		case GRADIENT_MAGNITUDE:
+			{
+<span class="fc" id="L304">				ImageProcessor h = ip.duplicate();</span>
+<span class="fc" id="L305">				ImageProcessor v = ip.duplicate();</span>
+<span class="fc" id="L306">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc" id="L307">				float[] floatPixelsH = (float[])h.getPixels();</span>
+<span class="fc" id="L308">				float[] floatPixelsV = (float[])v.getPixels();</span>
+
+<span class="fc" id="L310">				getHorizontalGradient(h, FLT_EPSILON);</span>
+<span class="fc" id="L311">				getVerticalGradient(v, FLT_EPSILON);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="fc" id="L314">						floatPixels[k] =</span>
+<span class="fc" id="L315">							(float)Math.sqrt(floatPixelsH[k] * floatPixelsH[k]</span>
+<span class="fc" id="L316">							+ floatPixelsV[k] * floatPixelsV[k]);</span>
+					}
+<span class="fc" id="L318">					stepProgressBar();</span>
+				}
+			}
+<span class="fc" id="L321">			break;</span>
+		case GRADIENT_DIRECTION:
+			{
+<span class="nc" id="L324">				ImageProcessor h = ip.duplicate();</span>
+<span class="nc" id="L325">				ImageProcessor v = ip.duplicate();</span>
+<span class="nc" id="L326">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="nc" id="L327">				float[] floatPixelsH = (float[])h.getPixels();</span>
+<span class="nc" id="L328">				float[] floatPixelsV = (float[])v.getPixels();</span>
+
+<span class="nc" id="L330">				getHorizontalGradient(h, FLT_EPSILON);</span>
+<span class="nc" id="L331">				getVerticalGradient(v, FLT_EPSILON);</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="nc" id="L334">						floatPixels[k] =</span>
+<span class="nc" id="L335">							(float)Math.atan2(floatPixelsH[k], floatPixelsV[k]);</span>
+					}
+<span class="nc" id="L337">					stepProgressBar();</span>
+				}
+			}
+<span class="nc" id="L340">			break;</span>
+		case LAPLACIAN:
+			{
+<span class="fc" id="L343">				ImageProcessor hh = ip.duplicate();</span>
+<span class="fc" id="L344">				ImageProcessor vv = ip.duplicate();</span>
+<span class="fc" id="L345">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc" id="L346">				float[] floatPixelsHH = (float[])hh.getPixels();</span>
+<span class="fc" id="L347">				float[] floatPixelsVV = (float[])vv.getPixels();</span>
+
+<span class="fc" id="L349">				getHorizontalHessian(hh, FLT_EPSILON);</span>
+<span class="fc" id="L350">				getVerticalHessian(vv, FLT_EPSILON);</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="fc" id="L353">						floatPixels[k] =</span>
+<span class="fc" id="L354">							(float)(floatPixelsHH[k] + floatPixelsVV[k]);</span>
+					}
+<span class="fc" id="L356">					stepProgressBar();</span>
+				}
+			}
+<span class="fc" id="L359">			break;</span>
+		case LARGEST_HESSIAN:
+			{
+<span class="nc" id="L362">				ImageProcessor hh = ip.duplicate();</span>
+<span class="nc" id="L363">				ImageProcessor vv = ip.duplicate();</span>
+<span class="nc" id="L364">				ImageProcessor hv = ip.duplicate();</span>
+<span class="nc" id="L365">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="nc" id="L366">				float[] floatPixelsHH = (float[])hh.getPixels();</span>
+<span class="nc" id="L367">				float[] floatPixelsVV = (float[])vv.getPixels();</span>
+<span class="nc" id="L368">				float[] floatPixelsHV = (float[])hv.getPixels();</span>
+
+<span class="nc" id="L370">				getHorizontalHessian(hh, FLT_EPSILON);</span>
+<span class="nc" id="L371">				getVerticalHessian(vv, FLT_EPSILON);</span>
+<span class="nc" id="L372">				getCrossHessian(hv, FLT_EPSILON);</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="nc" id="L375">						floatPixels[k] =</span>
+<span class="nc" id="L376">							(float)(0.5 * (floatPixelsHH[k] + floatPixelsVV[k]</span>
+<span class="nc" id="L377">							+ Math.sqrt(4.0 * floatPixelsHV[k]</span>
+<span class="nc" id="L378">							* floatPixelsHV[k]</span>
+<span class="nc" id="L379">							+ (floatPixelsHH[k] - floatPixelsVV[k])</span>
+<span class="nc" id="L380">							* (floatPixelsHH[k] - floatPixelsVV[k]))));</span>
+					}
+<span class="nc" id="L382">					stepProgressBar();</span>
+				}
+			}
+<span class="nc" id="L385">			break;</span>
+		case SMALLEST_HESSIAN:
+			{
+<span class="nc" id="L388">				ImageProcessor hh = ip.duplicate();</span>
+<span class="nc" id="L389">				ImageProcessor vv = ip.duplicate();</span>
+<span class="nc" id="L390">				ImageProcessor hv = ip.duplicate();</span>
+<span class="nc" id="L391">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="nc" id="L392">				float[] floatPixelsHH = (float[])hh.getPixels();</span>
+<span class="nc" id="L393">				float[] floatPixelsVV = (float[])vv.getPixels();</span>
+<span class="nc" id="L394">				float[] floatPixelsHV = (float[])hv.getPixels();</span>
+
+<span class="nc" id="L396">				getHorizontalHessian(hh, FLT_EPSILON);</span>
+<span class="nc" id="L397">				getVerticalHessian(vv, FLT_EPSILON);</span>
+<span class="nc" id="L398">				getCrossHessian(hv, FLT_EPSILON);</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="nc" id="L401">						floatPixels[k] =</span>
+<span class="nc" id="L402">							(float)(0.5 * (floatPixelsHH[k] + floatPixelsVV[k]</span>
+<span class="nc" id="L403">							- Math.sqrt(4.0 * floatPixelsHV[k]</span>
+<span class="nc" id="L404">							* floatPixelsHV[k]</span>
+<span class="nc" id="L405">							+ (floatPixelsHH[k] - floatPixelsVV[k])</span>
+<span class="nc" id="L406">							* (floatPixelsHH[k] - floatPixelsVV[k]))));</span>
+					}
+<span class="nc" id="L408">					stepProgressBar();</span>
+				}
+			}
+<span class="nc" id="L411">			break;</span>
+		case HESSIAN_ORIENTATION:
+			{
+<span class="nc" id="L414">				ImageProcessor hh = ip.duplicate();</span>
+<span class="nc" id="L415">				ImageProcessor vv = ip.duplicate();</span>
+<span class="nc" id="L416">				ImageProcessor hv = ip.duplicate();</span>
+<span class="nc" id="L417">				float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="nc" id="L418">				float[] floatPixelsHH = (float[])hh.getPixels();</span>
+<span class="nc" id="L419">				float[] floatPixelsVV = (float[])vv.getPixels();</span>
+<span class="nc" id="L420">				float[] floatPixelsHV = (float[])hv.getPixels();</span>
+
+<span class="nc" id="L422">				getHorizontalHessian(hh, FLT_EPSILON);</span>
+<span class="nc" id="L423">				getVerticalHessian(vv, FLT_EPSILON);</span>
+<span class="nc" id="L424">				getCrossHessian(hv, FLT_EPSILON);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">				for (int y = 0, k = 0; (y &lt; height); y++) {</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">					for (int x = 0; (x &lt; width); x++, k++) {</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">						if (floatPixelsHV[k] &lt; 0.0) {</span>
+<span class="nc" id="L428">							floatPixels[k] =</span>
+<span class="nc" id="L429">								(float)(-0.5 * Math.acos((floatPixelsHH[k]</span>
+<span class="nc" id="L430">								- floatPixelsVV[k])</span>
+<span class="nc" id="L431">								/ Math.sqrt(4.0 * floatPixelsHV[k]</span>
+<span class="nc" id="L432">								* floatPixelsHV[k]</span>
+<span class="nc" id="L433">								+ (floatPixelsHH[k] - floatPixelsVV[k])</span>
+<span class="nc" id="L434">								* (floatPixelsHH[k] - floatPixelsVV[k]))));</span>
+<span class="nc" id="L435">						}</span>
+						else {
+<span class="nc" id="L437">							floatPixels[k] =</span>
+<span class="nc" id="L438">								(float)(0.5 * Math.acos((floatPixelsHH[k]</span>
+<span class="nc" id="L439">								- floatPixelsVV[k])</span>
+<span class="nc" id="L440">								/ Math.sqrt(4.0 * floatPixelsHV[k]</span>
+<span class="nc" id="L441">								* floatPixelsHV[k]</span>
+<span class="nc" id="L442">								+ (floatPixelsHH[k] - floatPixelsVV[k])</span>
+<span class="nc" id="L443">								* (floatPixelsHH[k] - floatPixelsVV[k]))));</span>
+						}
+					}
+<span class="nc" id="L446">					stepProgressBar();</span>
+				}
+			}
+<span class="nc" id="L449">			break;</span>
+		default:
+<span class="nc" id="L451">			throw new IllegalArgumentException(&quot;Invalid operation&quot;);</span>
+	}
+<span class="fc" id="L453">	ip.resetMinAndMax();</span>
+<span class="fc" id="L454">	getImp().updateAndDraw();</span>
+<span class="fc" id="L455">} /* end doIt */</span>
+
+/*------------------------------------------------------------------*/
+private void getColumn (
+	ImageProcessor ip,
+	int x,
+	double[] column
+) {
+<span class="fc" id="L463">	int width = ip.getWidth();</span>
+
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">	if (ip.getHeight() != column.length) {</span>
+<span class="nc" id="L466">		throw new IndexOutOfBoundsException(&quot;Incoherent array sizes&quot;);</span>
+	}
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">	if (ip.getPixels() instanceof float[]) {</span>
+<span class="fc" id="L469">		float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">		for (int i = 0; (i &lt; column.length); i++) {</span>
+<span class="fc" id="L471">			column[i] = (double)floatPixels[x];</span>
+<span class="fc" id="L472">			x += width;</span>
+		}
+<span class="fc" id="L474">	}</span>
+	else {
+<span class="nc" id="L476">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+<span class="fc" id="L478">} /* end getColumn */</span>
+
+/*------------------------------------------------------------------*/
+private void getGradient (
+	double[] c
+) {
+<span class="fc" id="L484">	double h[] = {0.0, -1.0 / 2.0};</span>
+<span class="fc" id="L485">	double s[] = new double[c.length];</span>
+
+<span class="fc" id="L487">	antiSymmetricFirMirrorOnBounds(h, c, s);</span>
+<span class="fc" id="L488">	System.arraycopy(s, 0, c, 0, s.length);</span>
+<span class="fc" id="L489">} /* end getGradient */</span>
+
+/*------------------------------------------------------------------*/
+private void getHessian (
+	double[] c
+) {
+<span class="fc" id="L495">	double h[] = {-2.0, 1.0};</span>
+<span class="fc" id="L496">	double s[] = new double[c.length];</span>
+
+<span class="fc" id="L498">	symmetricFirMirrorOnBounds(h, c, s);</span>
+<span class="fc" id="L499">	System.arraycopy(s, 0, c, 0, s.length);</span>
+<span class="fc" id="L500">} /* end getHessian */</span>
+
+/*------------------------------------------------------------------*/
+private double getInitialAntiCausalCoefficientMirrorOnBounds (
+	double[] c,
+	double z,
+	double tolerance
+) {
+<span class="fc" id="L508">	return((z * c[c.length - 2] + c[c.length - 1]) * z / (z * z - 1.0));</span>
+} /* end getInitialAntiCausalCoefficientMirrorOnBounds */
+
+/*------------------------------------------------------------------*/
+double getInitialCausalCoefficientMirrorOnBounds (
+	double[] c,
+	double z,
+	double tolerance
+) {
+<span class="fc" id="L517">	double z1 = z, zn = Math.pow(z, c.length - 1);</span>
+<span class="fc" id="L518">	double sum = c[0] + zn * c[c.length - 1];</span>
+<span class="fc" id="L519">	int horizon = c.length;</span>
+
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">	if (0.0 &lt; tolerance) {</span>
+<span class="fc" id="L522">		horizon = 2 + (int)(Math.log(tolerance) / Math.log(Math.abs(z)));</span>
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">		horizon = (horizon &lt; c.length) ? (horizon) : (c.length);</span>
+	}
+<span class="fc" id="L525">	zn = zn * zn;</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">	for (int n = 1; (n &lt; (horizon - 1)); n++) {</span>
+<span class="fc" id="L527">		zn = zn / z;</span>
+<span class="fc" id="L528">		sum = sum + (z1 + zn) * c[n];</span>
+<span class="fc" id="L529">		z1 = z1 * z;</span>
+	}
+<span class="fc" id="L531">	return(sum / (1.0 - Math.pow(z, 2 * c.length - 2)));</span>
+} /* end getInitialCausalCoefficientMirrorOnBounds */
+
+/*------------------------------------------------------------------*/
+private void getRow (
+	ImageProcessor ip,
+	int y,
+	double[] row
+) {
+<span class="fc" id="L540">	int rowLength = ip.getWidth();</span>
+
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">	if (rowLength != row.length) {</span>
+<span class="nc" id="L543">		throw new IndexOutOfBoundsException(&quot;Incoherent array sizes&quot;);</span>
+	}
+<span class="fc" id="L545">	y *= rowLength;</span>
+<span class="pc bpc" id="L546" title="1 of 2 branches missed.">	if (ip.getPixels() instanceof float[]) {</span>
+<span class="fc" id="L547">		float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">		for (int i = 0; (i &lt; rowLength); i++) {</span>
+<span class="fc" id="L549">			row[i] = (double)floatPixels[y++];</span>
+		}
+<span class="fc" id="L551">	}</span>
+	else {
+<span class="nc" id="L553">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+<span class="fc" id="L555">} /* end getRow */</span>
+
+/*------------------------------------------------------------------*/
+private void getSplineInterpolationCoefficients (
+	double[] c,
+	double tolerance
+) {
+<span class="fc" id="L562">	double z[] = {Math.sqrt(3.0) - 2.0};</span>
+<span class="fc" id="L563">	double lambda = 1.0;</span>
+
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">	if (c.length == 1) {</span>
+<span class="nc" id="L566">		return;</span>
+	}
+<span class="fc bfc" id="L568" title="All 2 branches covered.">	for (int k = 0; (k &lt; z.length); k++) {</span>
+<span class="fc" id="L569">		lambda = lambda * (1.0 - z[k]) * (1.0 - 1.0 / z[k]);</span>
+	}
+<span class="fc bfc" id="L571" title="All 2 branches covered.">	for (int n = 0; (n &lt; c.length); n++) {</span>
+<span class="fc" id="L572">		c[n] = c[n] * lambda;</span>
+	}
+<span class="fc bfc" id="L574" title="All 2 branches covered.">	for (int k = 0; (k &lt; z.length); k++) {</span>
+<span class="fc" id="L575">		c[0] = getInitialCausalCoefficientMirrorOnBounds(c, z[k], tolerance);</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">		for (int n = 1; (n &lt; c.length); n++) {</span>
+<span class="fc" id="L577">			c[n] = c[n] + z[k] * c[n - 1];</span>
+		}
+<span class="fc" id="L579">		c[c.length - 1] = getInitialAntiCausalCoefficientMirrorOnBounds(c, z[k],</span>
+<span class="fc" id="L580">			tolerance);</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">		for (int n = c.length - 2; (0 &lt;= n); n--) {</span>
+<span class="fc" id="L582">			c[n] = z[k] * (c[n+1] - c[n]);</span>
+		}
+	}
+<span class="fc" id="L585">} /* end getSplineInterpolationCoefficients */</span>
+
+/*------------------------------------------------------------------*/
+private void putColumn (
+	ImageProcessor ip,
+	int x,
+	double[] column
+) {
+<span class="fc" id="L593">	int width = ip.getWidth();</span>
+
+<span class="pc bpc" id="L595" title="1 of 2 branches missed.">	if (ip.getHeight() != column.length) {</span>
+<span class="nc" id="L596">		throw new IndexOutOfBoundsException(&quot;Incoherent array sizes&quot;);</span>
+	}
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">	if (ip.getPixels() instanceof float[]) {</span>
+<span class="fc" id="L599">		float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc bfc" id="L600" title="All 2 branches covered.">		for (int i = 0; (i &lt; column.length); i++) {</span>
+<span class="fc" id="L601">			floatPixels[x] = (float)column[i];</span>
+<span class="fc" id="L602">			x += width;</span>
+		}
+<span class="fc" id="L604">	}</span>
+	else {
+<span class="nc" id="L606">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+<span class="fc" id="L608">} /* end putColumn */</span>
+
+/*------------------------------------------------------------------*/
+private void putRow (
+	ImageProcessor ip,
+	int y,
+	double[] row
+) {
+<span class="fc" id="L616">	int rowLength = ip.getWidth();</span>
+
+<span class="pc bpc" id="L618" title="1 of 2 branches missed.">	if (rowLength != row.length) {</span>
+<span class="nc" id="L619">		throw new IndexOutOfBoundsException(&quot;Incoherent array sizes&quot;);</span>
+	}
+<span class="fc" id="L621">	y *= rowLength;</span>
+<span class="pc bpc" id="L622" title="1 of 2 branches missed.">	if (ip.getPixels() instanceof float[]) {</span>
+<span class="fc" id="L623">		float[] floatPixels = (float[])ip.getPixels();</span>
+<span class="fc bfc" id="L624" title="All 2 branches covered.">		for (int i = 0; (i &lt; rowLength); i++) {</span>
+<span class="fc" id="L625">			floatPixels[y++] = (float)row[i];</span>
+		}
+<span class="fc" id="L627">	}</span>
+	else {
+<span class="nc" id="L629">		throw new IllegalArgumentException(&quot;Float image required&quot;);</span>
+	}
+<span class="fc" id="L631">} /* end putRow */</span>
+
+/*------------------------------------------------------------------*/
+private void resetProgressBar (
+) {
+<span class="nc" id="L636">	completed = 0;</span>
+<span class="nc" id="L637">	lastTime = System.currentTimeMillis();</span>
+	//progressBar.show(2.0);
+<span class="nc" id="L639">} /* end resetProgressBar */</span>
+
+/*------------------------------------------------------------------*/
+private void setupProgressBar (
+) {
+<span class="nc" id="L644">	int height = getImp().getHeight();</span>
+<span class="nc" id="L645">	int width = getImp().getWidth();</span>
+
+<span class="nc" id="L647">	completed = 0;</span>
+<span class="nc" id="L648">	lastTime = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L649" title="All 7 branches missed.">	switch (getOperation()) {</span>
+		case GRADIENT_MAGNITUDE:
+<span class="nc" id="L651">			processDuration = stackSize * (width + 2 * height);</span>
+<span class="nc" id="L652">			break;</span>
+		case GRADIENT_DIRECTION:
+<span class="nc" id="L654">			processDuration = stackSize * (width + 2 * height);</span>
+<span class="nc" id="L655">			break;</span>
+		case LAPLACIAN:
+<span class="nc" id="L657">			processDuration = stackSize * (width + 2 * height);</span>
+<span class="nc" id="L658">			break;</span>
+		case LARGEST_HESSIAN:
+<span class="nc" id="L660">			processDuration = stackSize * (2 * width + 3 * height);</span>
+<span class="nc" id="L661">			break;</span>
+		case SMALLEST_HESSIAN:
+<span class="nc" id="L663">			processDuration = stackSize * (2 * width + 3 * height);</span>
+<span class="nc" id="L664">			break;</span>
+		case HESSIAN_ORIENTATION:
+<span class="nc" id="L666">			processDuration = stackSize * (2 * width + 3 * height);</span>
+<span class="nc" id="L667">			break;</span>
+		default:
+<span class="nc" id="L669">			throw new IllegalArgumentException(&quot;Invalid operation&quot;);</span>
+	}
+<span class="nc" id="L671">} /* end setupProgressBar */</span>
+
+/*------------------------------------------------------------------*/
+private void stepProgressBar (
+) {
+<span class="fc" id="L676">	long timeStamp = System.currentTimeMillis();</span>
+
+<span class="fc" id="L678">	completed = completed + 1;</span>
+<span class="fc bfc" id="L679" title="All 2 branches covered.">	if (50L &lt; (timeStamp - lastTime)) {</span>
+<span class="fc" id="L680">		lastTime = timeStamp;</span>
+		//progressBar.show((double)completed / (double)processDuration);
+	}
+<span class="fc" id="L683">} /* end stepProgressBar */</span>
+
+/*------------------------------------------------------------------*/
+private void symmetricFirMirrorOnBounds (
+	double[] h,
+	double[] c,
+	double[] s
+) {
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">	if (h.length != 2) {</span>
+<span class="nc" id="L692">		throw new IndexOutOfBoundsException(</span>
+<span class="nc" id="L693">			&quot;The half-length filter size should be 2&quot;);</span>
+	}
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">	if (c.length != s.length) {</span>
+<span class="nc" id="L696">		throw new IndexOutOfBoundsException(&quot;Incompatible size&quot;);</span>
+	}
+<span class="pc bpc" id="L698" title="1 of 2 branches missed.">	if (2 &lt;= c.length) {</span>
+<span class="fc" id="L699">		s[0] = h[0] * c[0] + 2.0 * h[1] * c[1];</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">		for (int i = 1; (i &lt; (s.length - 1)); i++) {</span>
+<span class="fc" id="L701">			s[i] = h[0] * c[i] + h[1] * (c[i - 1] + c[i + 1]);</span>
+		}
+<span class="fc" id="L703">		s[s.length - 1] = h[0] * c[c.length - 1] + 2.0 * h[1] * c[c.length - 2];</span>
+<span class="fc" id="L704">	}</span>
+	else {
+<span class="nc bnc" id="L706" title="All 2 branches missed.">		switch (c.length) {</span>
+			case 1:
+<span class="nc" id="L708">				s[0] = (h[0] + 2.0 * h[1]) * c[0];</span>
+<span class="nc" id="L709">				break;</span>
+			default:
+<span class="nc" id="L711">				throw new NegativeArraySizeException(&quot;Invalid length of data&quot;);</span>
+		}
+	}
+<span class="fc" id="L714">} /* end symmetricFirMirrorOnBounds */</span>
+
+public ImagePlus getImp() {
+<span class="fc" id="L717">	return imp;</span>
+}
+
+public void setImp(ImagePlus imp) {
+<span class="fc" id="L721">	this.imp = imp;</span>
+<span class="fc" id="L722">}</span>
+
+public static int getOperation() {
+<span class="fc" id="L725">	return operation;</span>
+}
+
+public static void setOperation(int operation) {
+<span class="fc" id="L729">	Differentials_.operation = operation;</span>
+<span class="fc" id="L730">}</span>
+
+} /* end class Differentials_ */
+
+/*====================================================================
+|	class differentialsDialog
+\===================================================================*/
+/*------------------------------------------------------------------*/
+class differentialsDialog
+	extends
+		Dialog
+	implements
+		ActionListener,
+		ItemListener
+
+{ /* begin class differentialsDialog */
+
+/*....................................................................
+	private variables
+....................................................................*/
+<span class="nc" id="L750">private CheckboxGroup choice = new CheckboxGroup();</span>
+<span class="nc" id="L751">private boolean cancel = false;</span>
+<span class="nc" id="L752">private int operation = Differentials_.LAPLACIAN;</span>
+private static final long serialVersionUID = 1L;
+
+/*....................................................................
+	ActionListener methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+public void actionPerformed (
+	ActionEvent ae
+) {
+<span class="nc bnc" id="L762" title="All 2 branches missed.">	if (ae.getActionCommand().equals(&quot;Cancel&quot;)) {</span>
+<span class="nc" id="L763">		cancel = true;</span>
+<span class="nc" id="L764">	}</span>
+<span class="nc bnc" id="L765" title="All 2 branches missed.">	else if (ae.getActionCommand().equals(&quot;OK&quot;)) {</span>
+<span class="nc" id="L766">		cancel = false;</span>
+<span class="nc" id="L767">	}</span>
+	else {
+<span class="nc" id="L769">		cancel = true;</span>
+<span class="nc" id="L770">		IJ.error(&quot;Unexpected button ID&quot;);</span>
+	}
+<span class="nc" id="L772">	setVisible(false);</span>
+<span class="nc" id="L773">} /* end actionPerformed */</span>
+
+/*....................................................................
+	Container methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+public Insets getInsets (
+) {
+<span class="nc" id="L781">	return(new Insets(0, 20, 20, 20));</span>
+} /* end getInsets */
+
+/*....................................................................
+	ItemListener methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+public void itemStateChanged (
+	ItemEvent ie
+) {
+<span class="nc" id="L791">	if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L792" title="All 2 branches missed.">		&quot;Gradient Magnitude&quot;)) {</span>
+<span class="nc" id="L793">		operation = Differentials_.GRADIENT_MAGNITUDE;</span>
+<span class="nc" id="L794">	}</span>
+<span class="nc" id="L795">	else if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L796" title="All 2 branches missed.">		&quot;Gradient Direction&quot;)) {</span>
+<span class="nc" id="L797">		operation = Differentials_.GRADIENT_DIRECTION;</span>
+<span class="nc" id="L798">	}</span>
+<span class="nc" id="L799">	else if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L800" title="All 2 branches missed.">		&quot;Laplacian&quot;)) {</span>
+<span class="nc" id="L801">		operation = Differentials_.LAPLACIAN;</span>
+<span class="nc" id="L802">	}</span>
+<span class="nc" id="L803">	else if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L804" title="All 2 branches missed.">		&quot;Largest Hessian&quot;)) {</span>
+<span class="nc" id="L805">		operation = Differentials_.LARGEST_HESSIAN;</span>
+<span class="nc" id="L806">	}</span>
+<span class="nc" id="L807">	else if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L808" title="All 2 branches missed.">		&quot;Smallest Hessian&quot;)) {</span>
+<span class="nc" id="L809">		operation = Differentials_.SMALLEST_HESSIAN;</span>
+<span class="nc" id="L810">	}</span>
+<span class="nc" id="L811">	else if (choice.getSelectedCheckbox().getLabel().equals(</span>
+<span class="nc bnc" id="L812" title="All 2 branches missed.">		&quot;Hessian Orientation&quot;)) {</span>
+<span class="nc" id="L813">		operation = Differentials_.HESSIAN_ORIENTATION;</span>
+<span class="nc" id="L814">	}</span>
+	else {
+<span class="nc" id="L816">		cancel = true;</span>
+<span class="nc" id="L817">		operation = Differentials_.LAPLACIAN;</span>
+<span class="nc" id="L818">		IJ.error(&quot;Unexpected checkbox ID&quot;);</span>
+<span class="nc" id="L819">		this.setVisible(false);</span>
+	}
+<span class="nc" id="L821">	repaint();</span>
+<span class="nc" id="L822">} /* end itemStateChanged */</span>
+
+/*....................................................................
+	constructors
+....................................................................*/
+/*------------------------------------------------------------------*/
+differentialsDialog (
+	Frame parentWindow,
+	String title,
+	boolean isModal,
+	int operation
+) {
+<span class="nc" id="L834">	super(parentWindow, title, isModal);</span>
+<span class="nc" id="L835">	setLayout(new GridLayout(0, 1));</span>
+
+<span class="nc" id="L837">	Checkbox gradientMagnitude =</span>
+<span class="nc" id="L838">		new Checkbox(&quot;Gradient Magnitude&quot;, choice, false);</span>
+<span class="nc" id="L839">	Checkbox gradientDirection =</span>
+<span class="nc" id="L840">		new Checkbox(&quot;Gradient Direction&quot;, choice, false);</span>
+<span class="nc" id="L841">	Checkbox laplacian =</span>
+<span class="nc" id="L842">		new Checkbox(&quot;Laplacian&quot;, choice, false);</span>
+<span class="nc" id="L843">	Checkbox largestHessian =</span>
+<span class="nc" id="L844">		new Checkbox(&quot;Largest Hessian&quot;, choice, false);</span>
+<span class="nc" id="L845">	Checkbox smallestHessian =</span>
+<span class="nc" id="L846">		new Checkbox(&quot;Smallest Hessian&quot;, choice, false);</span>
+<span class="nc" id="L847">	Checkbox hessianOrientation =</span>
+<span class="nc" id="L848">		new Checkbox(&quot;Hessian Orientation&quot;, choice, false);</span>
+<span class="nc" id="L849">	this.operation = operation;</span>
+<span class="nc bnc" id="L850" title="All 7 branches missed.">	switch (operation) {</span>
+		case Differentials_.GRADIENT_MAGNITUDE:
+<span class="nc" id="L852">			choice.setSelectedCheckbox(gradientMagnitude);</span>
+<span class="nc" id="L853">			break;</span>
+		case Differentials_.GRADIENT_DIRECTION:
+<span class="nc" id="L855">			choice.setSelectedCheckbox(gradientDirection);</span>
+<span class="nc" id="L856">			break;</span>
+		case Differentials_.LAPLACIAN:
+<span class="nc" id="L858">			choice.setSelectedCheckbox(laplacian);</span>
+<span class="nc" id="L859">			break;</span>
+		case Differentials_.LARGEST_HESSIAN:
+<span class="nc" id="L861">			choice.setSelectedCheckbox(largestHessian);</span>
+<span class="nc" id="L862">			break;</span>
+		case Differentials_.SMALLEST_HESSIAN:
+<span class="nc" id="L864">			choice.setSelectedCheckbox(smallestHessian);</span>
+<span class="nc" id="L865">			break;</span>
+		case Differentials_.HESSIAN_ORIENTATION:
+<span class="nc" id="L867">			choice.setSelectedCheckbox(hessianOrientation);</span>
+<span class="nc" id="L868">			break;</span>
+		default:
+<span class="nc" id="L870">			cancel = true;</span>
+<span class="nc" id="L871">			IJ.error(&quot;Unexpected operation ID&quot;);</span>
+<span class="nc" id="L872">			setVisible(false);</span>
+	}
+
+<span class="nc" id="L875">	gradientMagnitude.addItemListener(this);</span>
+<span class="nc" id="L876">	gradientDirection.addItemListener(this);</span>
+<span class="nc" id="L877">	laplacian.addItemListener(this);</span>
+<span class="nc" id="L878">	largestHessian.addItemListener(this);</span>
+<span class="nc" id="L879">	smallestHessian.addItemListener(this);</span>
+<span class="nc" id="L880">	hessianOrientation.addItemListener(this);</span>
+
+<span class="nc" id="L882">	Label separation1 = new Label(&quot;&quot;);</span>
+<span class="nc" id="L883">	Label separation2 = new Label(&quot;&quot;);</span>
+<span class="nc" id="L884">	Label separation3 = new Label(&quot;&quot;);</span>
+<span class="nc" id="L885">	Label separation4 = new Label(&quot;&quot;);</span>
+
+<span class="nc" id="L887">	Panel buttonPanel = new Panel();</span>
+<span class="nc" id="L888">	buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));</span>
+<span class="nc" id="L889">	Button cancelButton = new Button(&quot;Cancel&quot;);</span>
+<span class="nc" id="L890">	Button okButton = new Button(&quot;OK&quot;);</span>
+<span class="nc" id="L891">	cancelButton.addActionListener(this);</span>
+<span class="nc" id="L892">	okButton.addActionListener(this);</span>
+<span class="nc" id="L893">	buttonPanel.add(cancelButton);</span>
+<span class="nc" id="L894">	buttonPanel.add(okButton);</span>
+
+<span class="nc" id="L896">	add(separation1);</span>
+<span class="nc" id="L897">	add(gradientMagnitude);</span>
+<span class="nc" id="L898">	add(gradientDirection);</span>
+<span class="nc" id="L899">	add(separation2);</span>
+<span class="nc" id="L900">	add(laplacian);</span>
+<span class="nc" id="L901">	add(separation3);</span>
+<span class="nc" id="L902">	add(largestHessian);</span>
+<span class="nc" id="L903">	add(smallestHessian);</span>
+<span class="nc" id="L904">	add(hessianOrientation);</span>
+<span class="nc" id="L905">	add(separation4);</span>
+<span class="nc" id="L906">	add(buttonPanel);</span>
+
+<span class="nc" id="L908">	pack();</span>
+<span class="nc" id="L909">} /* end differentialsDialog */</span>
+
+/*....................................................................
+	protected methods
+....................................................................*/
+/*------------------------------------------------------------------*/
+protected boolean getCancel (
+) {
+<span class="nc" id="L917">	return(cancel);</span>
+} /* end getCancel */
+
+/*------------------------------------------------------------------*/
+protected int getOperation (
+) {
+<span class="nc" id="L923">	return(operation);</span>
+} /* end getOperation */
+
+} /* end class differentialsDialog */
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

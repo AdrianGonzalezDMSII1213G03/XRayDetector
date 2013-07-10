@@ -1,0 +1,1898 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>RoiManager.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">ij.plugin.frame</a> &gt; <span class="el_source">RoiManager.java</span></div><h1>RoiManager.java</h1><pre class="source lang-java linenums">package ij.plugin.frame;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import java.awt.List;
+import java.util.zip.*;
+import ij.*;
+import ij.process.*;
+import ij.gui.*;
+import ij.io.*;
+import ij.plugin.filter.*;
+import ij.plugin.frame.PlugInFrame;
+import ij.plugin.frame.Recorder;
+import ij.plugin.Colors;
+import ij.util.*;
+import ij.macro.*;
+import ij.measure.*;
+
+/** This plugin implements the Analyze/Tools/ROI Manager command. */
+public class RoiManager extends PlugInFrame implements ActionListener, ItemListener, MouseListener, MouseWheelListener {
+    public static final String LOC_KEY = &quot;manager.loc&quot;;
+    private static final int BUTTONS = 11;
+    private static final int DRAW=0, FILL=1, LABEL=2;
+    private static final int SHOW_ALL=0, SHOW_NONE=1, LABELS=2, NO_LABELS=3;
+    private static final int MENU=0, COMMAND=1;
+<span class="fc" id="L28">    private static int rows = 15;</span>
+<span class="fc" id="L29">    private static int lastNonShiftClick = -1;</span>
+<span class="fc" id="L30">    private static boolean allowMultipleSelections = true; </span>
+<span class="fc" id="L31">    private static String moreButtonLabel = &quot;More &quot;+'\u00bb';</span>
+    private Panel panel;
+  //  private static Frame instance;
+<span class="fc" id="L34">    private static int colorIndex = 4;</span>
+    private java.awt.List list;
+<span class="pc" id="L36">    private Hashtable rois = new Hashtable();</span>
+    private boolean canceled;
+    private boolean macro;
+    private boolean ignoreInterrupts;
+    private PopupMenu pm;
+    private Button moreButton, colorButton;
+<span class="pc" id="L42">    private Checkbox showAllCheckbox = new Checkbox(&quot;Show All&quot;, false);</span>
+<span class="pc" id="L43">    private Checkbox labelsCheckbox = new Checkbox(&quot;Edit Mode&quot;, false);</span>
+
+<span class="fc" id="L45">    private static boolean measureAll = true;</span>
+<span class="fc" id="L46">    private static boolean onePerSlice = true;</span>
+<span class="fc" id="L47">    private static boolean restoreCentered;</span>
+    private int prevID;
+    private boolean noUpdateMode;
+<span class="pc" id="L50">    private int defaultLineWidth = 1;</span>
+    private Color defaultColor;
+<span class="pc" id="L52">    private boolean firstTime = true;</span>
+    private int[] selectedIndexes;
+    
+    public RoiManager() {
+<span class="nc" id="L56">        super(&quot;ROI Manager&quot;);</span>
+        /*
+        if (instance!=null) {
+            WindowManager.toFront(instance);
+            return;
+        }
+        instance = this;
+        */ //XXX
+<span class="nc" id="L64">        list = new List(rows, allowMultipleSelections);</span>
+     //   showWindow(); XXX JF
+<span class="nc" id="L66">    }</span>
+    
+    public RoiManager(boolean hideWindow) {
+<span class="fc" id="L69">        super(&quot;ROI Manager&quot;);</span>
+<span class="fc" id="L70">        list = new List(rows, allowMultipleSelections);</span>
+<span class="fc" id="L71">    }</span>
+
+    void showWindow() {
+<span class="nc" id="L74">        ImageJ ij = IJ.getInstance();</span>
+<span class="nc" id="L75">        addKeyListener(ij);</span>
+<span class="nc" id="L76">        addMouseListener(this);</span>
+<span class="nc" id="L77">        addMouseWheelListener(this);</span>
+<span class="nc" id="L78">        WindowManager.addWindow(this);</span>
+        //setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
+<span class="nc" id="L80">        setLayout(new BorderLayout());</span>
+<span class="nc" id="L81">        list.add(&quot;012345678901234&quot;);</span>
+<span class="nc" id="L82">        list.addItemListener(this);</span>
+<span class="nc" id="L83">        list.addKeyListener(ij);</span>
+<span class="nc" id="L84">        list.addMouseListener(this);</span>
+<span class="nc" id="L85">        list.addMouseWheelListener(this);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (IJ.isLinux()) list.setBackground(Color.white);</span>
+<span class="nc" id="L87">        add(&quot;Center&quot;, list);</span>
+<span class="nc" id="L88">        panel = new Panel();</span>
+<span class="nc" id="L89">        int nButtons = BUTTONS;</span>
+<span class="nc" id="L90">        panel.setLayout(new GridLayout(nButtons, 1, 5, 0));</span>
+<span class="nc" id="L91">        addButton(&quot;Add [t]&quot;);</span>
+<span class="nc" id="L92">        addButton(&quot;Update&quot;);</span>
+<span class="nc" id="L93">        addButton(&quot;Delete&quot;);</span>
+<span class="nc" id="L94">        addButton(&quot;Rename...&quot;);</span>
+<span class="nc" id="L95">        addButton(&quot;Measure&quot;);</span>
+<span class="nc" id="L96">        addButton(&quot;Deselect&quot;);</span>
+<span class="nc" id="L97">        addButton(&quot;Properties...&quot;);</span>
+<span class="nc" id="L98">        addButton(&quot;Flatten [F]&quot;);</span>
+<span class="nc" id="L99">        addButton(moreButtonLabel);</span>
+<span class="nc" id="L100">        showAllCheckbox.addItemListener(this);</span>
+<span class="nc" id="L101">        panel.add(showAllCheckbox);</span>
+<span class="nc" id="L102">        labelsCheckbox.addItemListener(this);</span>
+<span class="nc" id="L103">        panel.add(labelsCheckbox);</span>
+<span class="nc" id="L104">        add(&quot;East&quot;, panel);     </span>
+<span class="nc" id="L105">        addPopupMenu();</span>
+<span class="nc" id="L106">        pack();</span>
+<span class="nc" id="L107">        Dimension size = getSize();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (size.width&gt;270)</span>
+<span class="nc" id="L109">            setSize(size.width-40, size.height);</span>
+<span class="nc" id="L110">        list.remove(0);</span>
+<span class="nc" id="L111">        Point loc = Prefs.getLocation(LOC_KEY);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (loc!=null)</span>
+<span class="nc" id="L113">            setLocation(loc);</span>
+        else
+<span class="nc" id="L115">            GUI.center(this);</span>
+<span class="nc" id="L116">        show();</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">        if (IJ.isMacOSX() &amp;&amp; IJ.isJava16()) {</span>
+<span class="nc" id="L118">            list.setMultipleMode(false);</span>
+<span class="nc" id="L119">            list.setMultipleMode(true);</span>
+            //EventQueue.invokeLater(new Runnable() {
+            //  public void run() {
+            //      list.setMultipleMode(false);
+            //      list.setMultipleMode(true);
+            //  }
+            //});
+        }
+<span class="nc" id="L127">    }</span>
+
+    void addButton(String label) {
+<span class="nc" id="L130">        Button b = new Button(label);</span>
+<span class="nc" id="L131">        b.addActionListener(this);</span>
+<span class="nc" id="L132">        b.addKeyListener(IJ.getInstance());</span>
+<span class="nc" id="L133">        b.addMouseListener(this);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (label.equals(moreButtonLabel)) moreButton = b;</span>
+<span class="nc" id="L135">        panel.add(b);</span>
+<span class="nc" id="L136">    }</span>
+
+    void addPopupMenu() {
+<span class="nc" id="L139">        pm=new PopupMenu();</span>
+        //addPopupItem(&quot;Select All&quot;);
+<span class="nc" id="L141">        addPopupItem(&quot;Open...&quot;);</span>
+<span class="nc" id="L142">        addPopupItem(&quot;Save...&quot;);</span>
+<span class="nc" id="L143">        addPopupItem(&quot;Fill&quot;);</span>
+<span class="nc" id="L144">        addPopupItem(&quot;Draw&quot;);</span>
+<span class="nc" id="L145">        addPopupItem(&quot;AND&quot;);</span>
+<span class="nc" id="L146">        addPopupItem(&quot;OR (Combine)&quot;);</span>
+<span class="nc" id="L147">        addPopupItem(&quot;XOR&quot;);</span>
+<span class="nc" id="L148">        addPopupItem(&quot;Split&quot;);</span>
+<span class="nc" id="L149">        addPopupItem(&quot;Add Particles&quot;);</span>
+<span class="nc" id="L150">        addPopupItem(&quot;Multi Measure&quot;);</span>
+<span class="nc" id="L151">        addPopupItem(&quot;Multi Plot&quot;);</span>
+<span class="nc" id="L152">        addPopupItem(&quot;Sort&quot;);</span>
+<span class="nc" id="L153">        addPopupItem(&quot;Specify...&quot;);</span>
+<span class="nc" id="L154">        addPopupItem(&quot;Remove Slice Info&quot;);</span>
+<span class="nc" id="L155">        addPopupItem(&quot;Help&quot;);</span>
+<span class="nc" id="L156">        addPopupItem(&quot;Options...&quot;);</span>
+<span class="nc" id="L157">        add(pm);</span>
+<span class="nc" id="L158">    }</span>
+
+    void addPopupItem(String s) {
+<span class="nc" id="L161">        MenuItem mi=new MenuItem(s);</span>
+<span class="nc" id="L162">        mi.addActionListener(this);</span>
+<span class="nc" id="L163">        pm.add(mi);</span>
+<span class="nc" id="L164">    }</span>
+    
+    public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L167">        String label = e.getActionCommand();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (label==null)</span>
+<span class="nc" id="L169">            return;</span>
+<span class="nc" id="L170">        String command = label;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (command.equals(&quot;Add [t]&quot;))</span>
+<span class="nc" id="L172">            runCommand(&quot;add&quot;);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        else if (command.equals(&quot;Update&quot;))</span>
+<span class="nc" id="L174">            update(true);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        else if (command.equals(&quot;Delete&quot;))</span>
+<span class="nc" id="L176">            delete(false);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        else if (command.equals(&quot;Rename...&quot;))</span>
+<span class="nc" id="L178">            rename(null);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        else if (command.equals(&quot;Properties...&quot;))</span>
+<span class="nc" id="L180">            setProperties(null, -1, null);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        else if (command.equals(&quot;Flatten [F]&quot;))</span>
+<span class="nc" id="L182">            flatten();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        else if (command.equals(&quot;Measure&quot;))</span>
+<span class="nc" id="L184">            measure(MENU);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        else if (command.equals(&quot;Open...&quot;))</span>
+<span class="nc" id="L186">            open(null);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        else if (command.equals(&quot;Save...&quot;))</span>
+<span class="nc" id="L188">            save();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        else if (command.equals(&quot;Fill&quot;))</span>
+<span class="nc" id="L190">            drawOrFill(FILL);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        else if (command.equals(&quot;Draw&quot;))</span>
+<span class="nc" id="L192">            drawOrFill(DRAW);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">        else if (command.equals(&quot;Deselect&quot;))</span>
+<span class="nc" id="L194">            select(-1);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        else if (command.equals(moreButtonLabel)) {</span>
+<span class="nc" id="L196">            Point ploc = panel.getLocation();</span>
+<span class="nc" id="L197">            Point bloc = moreButton.getLocation();</span>
+<span class="nc" id="L198">            pm.show(this, ploc.x, bloc.y);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        } else if (command.equals(&quot;OR (Combine)&quot;))</span>
+<span class="nc" id="L200">            combine();</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        else if (command.equals(&quot;Split&quot;))</span>
+<span class="nc" id="L202">            split();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        else if (command.equals(&quot;AND&quot;))</span>
+<span class="nc" id="L204">            and();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        else if (command.equals(&quot;XOR&quot;))</span>
+<span class="nc" id="L206">            xor();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        else if (command.equals(&quot;Add Particles&quot;))</span>
+<span class="nc" id="L208">            addParticles();</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        else if (command.equals(&quot;Multi Measure&quot;))</span>
+<span class="nc" id="L210">            multiMeasure();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        else if (command.equals(&quot;Multi Plot&quot;))</span>
+<span class="nc" id="L212">            multiPlot();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        else if (command.equals(&quot;Sort&quot;))</span>
+<span class="nc" id="L214">            sort();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        else if (command.equals(&quot;Specify...&quot;))</span>
+<span class="nc" id="L216">            specify();</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        else if (command.equals(&quot;Remove Slice Info&quot;))</span>
+<span class="nc" id="L218">            removeSliceInfo();</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        else if (command.equals(&quot;Help&quot;))</span>
+<span class="nc" id="L220">            help();</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        else if (command.equals(&quot;Options...&quot;))</span>
+<span class="nc" id="L222">            options();</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        else if (command.equals(&quot;\&quot;Show All\&quot; Color...&quot;))</span>
+<span class="nc" id="L224">            setShowAllColor();</span>
+<span class="nc" id="L225">    }</span>
+
+    public void itemStateChanged(ItemEvent e) {
+<span class="nc" id="L228">        Object source = e.getSource();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (source==showAllCheckbox) {</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">            if (firstTime)</span>
+<span class="nc" id="L231">                labelsCheckbox.setState(true);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            showAll(showAllCheckbox.getState()?SHOW_ALL:SHOW_NONE);</span>
+<span class="nc" id="L233">            firstTime = false;</span>
+<span class="nc" id="L234">            return;</span>
+        }
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        if (source==labelsCheckbox) {</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">            if (firstTime)</span>
+<span class="nc" id="L238">                showAllCheckbox.setState(true);</span>
+<span class="nc" id="L239">            boolean editState = labelsCheckbox.getState();</span>
+<span class="nc" id="L240">            boolean showAllState = showAllCheckbox.getState();</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">            if (!showAllState &amp;&amp; !editState)</span>
+<span class="nc" id="L242">                showAll(SHOW_NONE);</span>
+            else {
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                showAll(editState?LABELS:NO_LABELS);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">                if (editState) showAllCheckbox.setState(true);</span>
+            }
+<span class="nc" id="L247">            firstTime = false;</span>
+<span class="nc" id="L248">            return;</span>
+        }
+<span class="nc bnc" id="L250" title="All 4 branches missed.">        if (e.getStateChange()==ItemEvent.SELECTED &amp;&amp; !ignoreInterrupts) {</span>
+<span class="nc" id="L251">            int index = 0;</span>
+            //IJ.log(&quot;item=&quot;+e.getItem()+&quot; shift=&quot;+IJ.shiftKeyDown()+&quot; ctrl=&quot;+IJ. controlKeyDown());
+<span class="nc" id="L253">            try {index = Integer.parseInt(e.getItem().toString());}</span>
+<span class="nc" id="L254">            catch (NumberFormatException ex) {}</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">            if (index&lt;0) index = 0;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">            if (!IJ.isMacintosh()) {      //handle shift-click, ctrl-click (on Mac, OS takes care of this)</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                if (!IJ.shiftKeyDown()) lastNonShiftClick = index;</span>
+<span class="nc bnc" id="L258" title="All 4 branches missed.">                if (!IJ.shiftKeyDown() &amp;&amp; !IJ.controlKeyDown()) {  //simple click, deselect everything else</span>
+<span class="nc" id="L259">                    int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">                    for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">                        if (indexes[i]!=index)</span>
+<span class="nc" id="L262">                            list.deselect(indexes[i]);</span>
+                    }
+<span class="nc bnc" id="L264" title="All 6 branches missed.">                } else if (IJ.shiftKeyDown() &amp;&amp; lastNonShiftClick&gt;=0 &amp;&amp; lastNonShiftClick&lt;list.getItemCount()) {</span>
+<span class="nc" id="L265">                    int firstIndex = Math.min(index, lastNonShiftClick);</span>
+<span class="nc" id="L266">                    int lastIndex = Math.max(index, lastNonShiftClick);</span>
+<span class="nc" id="L267">                    int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">                    for (int i=0; i&lt;indexes.length; i++)</span>
+<span class="nc bnc" id="L269" title="All 4 branches missed.">                        if (indexes[i]&lt;firstIndex || indexes[i]&gt;lastIndex)</span>
+<span class="nc" id="L270">                            list.deselect(indexes[i]);      //deselect everything else</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                    for (int i=firstIndex; i&lt;=lastIndex; i++)</span>
+<span class="nc" id="L272">                        list.select(i);                     //select range</span>
+                }
+            }
+<span class="nc bnc" id="L275" title="All 2 branches missed.">            if (WindowManager.getCurrentImage()!=null) {</span>
+<span class="nc" id="L276">                restore(getImage(), index, true);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                if (record()) {</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">                    if (Recorder.scriptMode())</span>
+<span class="nc" id="L279">                        Recorder.recordCall(&quot;rm.select(imp, &quot;+index+&quot;);&quot;);</span>
+                    else
+<span class="nc" id="L281">                        Recorder.record(&quot;roiManager&quot;, &quot;Select&quot;, index);</span>
+                }
+            }
+        }
+<span class="nc" id="L285">    }</span>
+    
+    void add(boolean shiftKeyDown, boolean altKeyDown) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">        if (shiftKeyDown)</span>
+<span class="nc" id="L289">            addAndDraw(altKeyDown);</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        else if (altKeyDown)</span>
+<span class="nc" id="L291">            addRoi(true);</span>
+        else
+<span class="nc" id="L293">            addRoi(false);</span>
+<span class="nc" id="L294">    }</span>
+    
+    /** Adds the specified ROI. */
+    public void addRoi(Roi roi) {
+<span class="nc" id="L298">        addRoi(roi, false, null, -1);</span>
+<span class="nc" id="L299">    }</span>
+    
+    boolean addRoi(boolean promptForName) {
+<span class="nc" id="L302">        return addRoi(null, promptForName, null, -1);</span>
+    }
+
+    boolean addRoi(Roi roi, boolean promptForName, Color color, int lineWidth) {
+<span class="nc bnc" id="L306" title="All 2 branches missed.">        ImagePlus imp = roi==null?getImage():WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        if (roi==null) {</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">            if (imp==null)</span>
+<span class="nc" id="L309">                return false;</span>
+<span class="nc" id="L310">            roi = imp.getRoi();</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">            if (roi==null) {</span>
+<span class="nc" id="L312">                error(&quot;The active image does not have a selection.&quot;);</span>
+<span class="nc" id="L313">                return false;</span>
+            }
+        }
+<span class="nc bnc" id="L316" title="All 4 branches missed.">        if (color==null &amp;&amp; roi.getStrokeColor()!=null)</span>
+<span class="nc" id="L317">            color = roi.getStrokeColor();</span>
+<span class="nc bnc" id="L318" title="All 4 branches missed.">        else if (color==null &amp;&amp; defaultColor!=null)</span>
+<span class="nc" id="L319">            color = defaultColor;</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">        if (lineWidth&lt;0) {</span>
+<span class="nc" id="L321">            int sw = (int)roi.getStrokeWidth();</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">            lineWidth = sw&gt;1?sw:defaultLineWidth;</span>
+        }
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        if (lineWidth&gt;100) lineWidth = 1;</span>
+<span class="nc" id="L325">        int n = list.getItemCount();</span>
+<span class="nc bnc" id="L326" title="All 6 branches missed.">        if (n&gt;0 &amp;&amp; !IJ.isMacro() &amp;&amp; imp!=null) {</span>
+            // check for duplicate
+<span class="nc" id="L328">            String label = list.getItem(n-1);</span>
+<span class="nc" id="L329">            Roi roi2 = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">            if (roi2!=null) {</span>
+<span class="nc" id="L331">                int slice2 = getSliceNumber(roi2, label);</span>
+<span class="nc bnc" id="L332" title="All 10 branches missed.">                if (roi.equals(roi2) &amp;&amp; (slice2==-1||slice2==imp.getCurrentSlice()) &amp;&amp; imp.getID()==prevID &amp;&amp; !Interpreter.isBatchMode())</span>
+<span class="nc" id="L333">                    return false;</span>
+            }
+        }
+<span class="nc bnc" id="L336" title="All 2 branches missed.">        prevID = imp!=null?imp.getID():0;</span>
+<span class="nc" id="L337">        String name = roi.getName();</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">        if (isStandardName(name))</span>
+<span class="nc" id="L339">            name = null;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">        String label = name!=null?name:getLabel(imp, roi, -1);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">        if (promptForName)</span>
+<span class="nc" id="L342">            label = promptForName(label);</span>
+        else
+<span class="nc" id="L344">            label = getUniqueName(label);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">        if (label==null) return false;</span>
+<span class="nc" id="L346">        list.add(label);</span>
+<span class="nc" id="L347">        roi.setName(label);</span>
+<span class="nc" id="L348">        Roi roiCopy = (Roi)roi.clone();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">        if (lineWidth&gt;1)</span>
+<span class="nc" id="L350">            roiCopy.setStrokeWidth(lineWidth);</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">        if (color!=null)</span>
+<span class="nc" id="L352">            roiCopy.setStrokeColor(color);</span>
+<span class="nc" id="L353">        rois.put(label, roiCopy);</span>
+<span class="nc" id="L354">        updateShowAll();</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        if (record())</span>
+<span class="nc" id="L356">            recordAdd(defaultColor, defaultLineWidth);</span>
+<span class="nc" id="L357">        return true;</span>
+    }
+    
+    void recordAdd(Color color, int lineWidth) {
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        if (Recorder.scriptMode())</span>
+<span class="nc" id="L362">            Recorder.recordCall(&quot;rm.addRoi(imp.getRoi());&quot;);</span>
+<span class="nc bnc" id="L363" title="All 4 branches missed.">        else if (color!=null &amp;&amp; lineWidth==1)</span>
+<span class="nc" id="L364">            Recorder.recordString(&quot;roiManager(\&quot;Add\&quot;, \&quot;&quot;+getHex(color)+&quot;\&quot;);\n&quot;);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">        else if (lineWidth&gt;1)</span>
+<span class="nc" id="L366">            Recorder.recordString(&quot;roiManager(\&quot;Add\&quot;, \&quot;&quot;+getHex(color)+&quot;\&quot;, &quot;+lineWidth+&quot;);\n&quot;);</span>
+        else
+<span class="nc" id="L368">            Recorder.record(&quot;roiManager&quot;, &quot;Add&quot;);</span>
+<span class="nc" id="L369">    }</span>
+    
+    String getHex(Color color) {
+<span class="nc bnc" id="L372" title="All 2 branches missed.">        if (color==null) color = ImageCanvas.getShowAllColor();</span>
+<span class="nc" id="L373">        String hex = Integer.toHexString(color.getRGB());</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">        if (hex.length()==8) hex = hex.substring(2);</span>
+<span class="nc" id="L375">        return hex;</span>
+    }
+    
+    /** Adds the specified ROI to the list. The third argument ('n') will 
+        be used to form the first part of the ROI label if it is &gt;= 0. */
+    public void add(ImagePlus imp, Roi roi, int n) {
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">        if (roi==null) return;</span>
+<span class="fc" id="L382">        String label = roi.getName();</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">        if (label==null)</span>
+<span class="fc" id="L384">            label = getLabel(imp, roi, n);</span>
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">        if (label==null) return;</span>
+<span class="fc" id="L386">        list.add(label);</span>
+<span class="fc" id="L387">        roi.setName(label);</span>
+<span class="fc" id="L388">        rois.put(label, (Roi)roi.clone());</span>
+<span class="fc" id="L389">    }</span>
+
+    boolean isStandardName(String name) {
+<span class="nc bnc" id="L392" title="All 2 branches missed.">        if (name==null) return false;</span>
+<span class="nc" id="L393">        boolean isStandard = false;</span>
+<span class="nc" id="L394">        int len = name.length();</span>
+<span class="nc bnc" id="L395" title="All 6 branches missed.">        if (len&gt;=14 &amp;&amp; name.charAt(4)=='-' &amp;&amp; name.charAt(9)=='-' )</span>
+<span class="nc" id="L396">            isStandard = true;</span>
+<span class="nc bnc" id="L397" title="All 6 branches missed.">        else if (len&gt;=17 &amp;&amp; name.charAt(5)=='-' &amp;&amp; name.charAt(11)=='-' )</span>
+<span class="nc" id="L398">            isStandard = true;</span>
+<span class="nc bnc" id="L399" title="All 4 branches missed.">        else if (len&gt;=9 &amp;&amp; name.charAt(4)=='-')</span>
+<span class="nc" id="L400">            isStandard = true;</span>
+<span class="nc bnc" id="L401" title="All 4 branches missed.">        else if (len&gt;=11 &amp;&amp; name.charAt(5)=='-')</span>
+<span class="nc" id="L402">            isStandard = true;</span>
+<span class="nc" id="L403">        return isStandard;</span>
+    }
+    
+    String getLabel(ImagePlus imp, Roi roi, int n) {
+<span class="fc" id="L407">        Rectangle r = roi.getBounds();</span>
+<span class="fc" id="L408">        int xc = r.x + r.width/2;</span>
+<span class="fc" id="L409">        int yc = r.y + r.height/2;</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">        if (n&gt;=0)</span>
+<span class="fc" id="L411">            {xc = yc; yc=n;}</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">        if (xc&lt;0) xc = 0;</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">        if (yc&lt;0) yc = 0;</span>
+<span class="fc" id="L414">        int digits = 4;</span>
+<span class="fc" id="L415">        String xs = &quot;&quot; + xc;</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">        if (xs.length()&gt;digits) digits = xs.length();</span>
+<span class="fc" id="L417">        String ys = &quot;&quot; + yc;</span>
+<span class="pc bpc" id="L418" title="1 of 2 branches missed.">        if (ys.length()&gt;digits) digits = ys.length();</span>
+<span class="pc bpc" id="L419" title="3 of 6 branches missed.">        if (digits==4 &amp;&amp; imp!=null &amp;&amp; imp.getStackSize()&gt;=10000) digits = 5;</span>
+<span class="fc" id="L420">        xs = &quot;000000&quot; + xc;</span>
+<span class="fc" id="L421">        ys = &quot;000000&quot; + yc;</span>
+<span class="fc" id="L422">        String label = ys.substring(ys.length()-digits) + &quot;-&quot; + xs.substring(xs.length()-digits);</span>
+<span class="pc bpc" id="L423" title="2 of 4 branches missed.">        if (imp!=null &amp;&amp; imp.getStackSize()&gt;1) {</span>
+<span class="nc" id="L424">            int slice = roi.getPosition();</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">            if (slice==0)</span>
+<span class="nc" id="L426">                slice = imp.getCurrentSlice();</span>
+<span class="nc" id="L427">            String zs = &quot;000000&quot; + slice;</span>
+<span class="nc" id="L428">            label = zs.substring(zs.length()-digits) + &quot;-&quot; + label;</span>
+<span class="nc" id="L429">            roi.setPosition(slice);</span>
+        }
+<span class="fc" id="L431">        return label;</span>
+    }
+
+    void addAndDraw(boolean altKeyDown) {
+<span class="nc bnc" id="L435" title="All 2 branches missed.">        if (altKeyDown) {</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">            if (!addRoi(true)) return;</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">        } else if (!addRoi(false))</span>
+<span class="nc" id="L438">            return;</span>
+<span class="nc" id="L439">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">        if (imp!=null) {</span>
+<span class="nc" id="L441">            Undo.setup(Undo.COMPOUND_FILTER, imp);</span>
+<span class="nc" id="L442">            IJ.run(imp, &quot;Draw&quot;, &quot;slice&quot;);</span>
+<span class="nc" id="L443">            Undo.setup(Undo.COMPOUND_FILTER_DONE, imp);</span>
+        }
+<span class="nc bnc" id="L445" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Add &amp; Draw&quot;);</span>
+<span class="nc" id="L446">    }</span>
+    
+    boolean delete(boolean replacing) {
+<span class="nc" id="L449">        int count = list.getItemCount();</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">        if (count==0)</span>
+<span class="nc" id="L451">            return error(&quot;The list is empty.&quot;);</span>
+<span class="nc" id="L452">        int index[] = getSelectedIndexes();</span>
+<span class="nc bnc" id="L453" title="All 6 branches missed.">        if (index.length==0 || (replacing&amp;&amp;count&gt;1)) {</span>
+<span class="nc" id="L454">            String msg = &quot;Delete all items on the list?&quot;;</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">            if (replacing)</span>
+<span class="nc" id="L456">                msg = &quot;Replace items on the list?&quot;;</span>
+<span class="nc" id="L457">            canceled = false;</span>
+<span class="nc bnc" id="L458" title="All 4 branches missed.">            if (!IJ.isMacro() &amp;&amp; !macro) {</span>
+<span class="nc" id="L459">                YesNoCancelDialog d = new YesNoCancelDialog(this, &quot;ROI Manager&quot;, msg);</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">                if (d.cancelPressed())</span>
+<span class="nc" id="L461">                    {canceled = true; return false;}</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">                if (!d.yesPressed()) return false;</span>
+            }
+<span class="nc" id="L464">            index = getAllIndexes();</span>
+        }
+<span class="nc bnc" id="L466" title="All 4 branches missed.">        if (count==index.length &amp;&amp; !replacing) {</span>
+<span class="nc" id="L467">            rois.clear();</span>
+<span class="nc" id="L468">            list.removeAll();</span>
+<span class="nc" id="L469">        } else {</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">            for (int i=count-1; i&gt;=0; i--) {</span>
+<span class="nc" id="L471">                boolean delete = false;</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">                for (int j=0; j&lt;index.length; j++) {</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">                    if (index[j]==i)</span>
+<span class="nc" id="L474">                        delete = true;</span>
+                }
+<span class="nc bnc" id="L476" title="All 2 branches missed.">                if (delete) {</span>
+<span class="nc" id="L477">                    rois.remove(list.getItem(i));</span>
+<span class="nc" id="L478">                    list.remove(i);</span>
+                }
+            }
+        }
+<span class="nc" id="L482">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L483" title="All 6 branches missed.">        if (count&gt;1 &amp;&amp; index.length==1 &amp;&amp; imp!=null)</span>
+<span class="nc" id="L484">            imp.deleteRoi();</span>
+<span class="nc" id="L485">        updateShowAll();</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Delete&quot;);</span>
+<span class="nc" id="L487">        return true;</span>
+    }
+    
+    boolean update(boolean clone) {
+<span class="nc" id="L491">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">        if (imp==null) return false;</span>
+<span class="nc" id="L493">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L494" title="All 4 branches missed.">        boolean showingAll = ic!=null &amp;&amp;  ic.getShowAllROIs();</span>
+<span class="nc" id="L495">        Roi roi = imp.getRoi();</span>
+<span class="nc bnc" id="L496" title="All 2 branches missed.">        if (roi==null) {</span>
+<span class="nc" id="L497">            error(&quot;The active image does not have a selection.&quot;);</span>
+<span class="nc" id="L498">            return false;</span>
+        }
+<span class="nc" id="L500">        int index = list.getSelectedIndex();</span>
+<span class="nc bnc" id="L501" title="All 4 branches missed.">        if (index&lt;0 &amp;&amp; !showingAll)</span>
+<span class="nc" id="L502">            return error(&quot;Exactly one item in the list must be selected.&quot;);</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">        if (index&gt;=0) {</span>
+<span class="nc" id="L504">            String name = list.getItem(index);</span>
+<span class="nc" id="L505">            rois.remove(name);</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">            if (clone) {</span>
+<span class="nc" id="L507">                Roi roi2 = (Roi)roi.clone();</span>
+<span class="nc" id="L508">                int position = roi.getPosition();</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">                if (imp.getStackSize()&gt;1)</span>
+<span class="nc" id="L510">                    roi2.setPosition(imp.getCurrentSlice());</span>
+<span class="nc" id="L511">                roi.setName(name);</span>
+<span class="nc" id="L512">                roi2.setName(name);</span>
+<span class="nc" id="L513">                rois.put(name, roi2);</span>
+<span class="nc" id="L514">            } else</span>
+<span class="nc" id="L515">                rois.put(name, roi);</span>
+        }
+<span class="nc bnc" id="L517" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Update&quot;);</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">        if (showingAll) imp.draw();</span>
+<span class="nc" id="L519">        return true;</span>
+    }
+
+    boolean rename(String name2) {
+<span class="nc" id="L523">        int index = list.getSelectedIndex();</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">        if (index&lt;0)</span>
+<span class="nc" id="L525">            return error(&quot;Exactly one item in the list must be selected.&quot;);</span>
+<span class="nc" id="L526">        String name = list.getItem(index);</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">        if (name2==null) name2 = promptForName(name);</span>
+<span class="nc bnc" id="L528" title="All 2 branches missed.">        if (name2==null) return false;</span>
+<span class="nc" id="L529">        Roi roi = (Roi)rois.get(name);</span>
+<span class="nc" id="L530">        rois.remove(name);</span>
+<span class="nc" id="L531">        roi.setName(name2);</span>
+<span class="nc" id="L532">        rois.put(name2, roi);</span>
+<span class="nc" id="L533">        list.replaceItem(name2, index);</span>
+<span class="nc" id="L534">        list.select(index);</span>
+<span class="nc bnc" id="L535" title="All 4 branches missed.">        if (Prefs.useNamesAsLabels &amp;&amp; labelsCheckbox.getState()) {</span>
+<span class="nc" id="L536">            ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">            if (imp!=null) imp.draw();</span>
+        }
+<span class="nc bnc" id="L539" title="All 2 branches missed.">        if (record())</span>
+<span class="nc" id="L540">            Recorder.record(&quot;roiManager&quot;, &quot;Rename&quot;, name2);</span>
+<span class="nc" id="L541">        return true;</span>
+    }
+    
+    String promptForName(String name) {
+<span class="nc" id="L545">        GenericDialog gd = new GenericDialog(&quot;ROI Manager&quot;);</span>
+<span class="nc" id="L546">        gd.addStringField(&quot;Rename As:&quot;, name, 20);</span>
+<span class="nc" id="L547">        gd.showDialog();</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">        if (gd.wasCanceled())</span>
+<span class="nc" id="L549">            return null;</span>
+<span class="nc" id="L550">        String name2 = gd.getNextString();</span>
+<span class="nc" id="L551">        name2 = getUniqueName(name2);</span>
+<span class="nc" id="L552">        return name2;</span>
+    }
+
+    boolean restore(ImagePlus imp, int index, boolean setSlice) {
+<span class="nc" id="L556">        String label = list.getItem(index);</span>
+<span class="nc" id="L557">        Roi roi = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L558" title="All 4 branches missed.">        if (imp==null || roi==null)</span>
+<span class="nc" id="L559">            return false;</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">        if (setSlice) {</span>
+<span class="nc" id="L561">            int n = getSliceNumber(roi, label);</span>
+<span class="nc bnc" id="L562" title="All 4 branches missed.">            if (n&gt;=1 &amp;&amp; n&lt;=imp.getStackSize()) {</span>
+<span class="nc bnc" id="L563" title="All 4 branches missed.">                if (imp.isHyperStack()||imp.isComposite())</span>
+<span class="nc" id="L564">                    imp.setPosition(n);</span>
+                else
+<span class="nc" id="L566">                    imp.setSlice(n);</span>
+            }
+        }
+<span class="nc" id="L569">        Roi roi2 = (Roi)roi.clone();</span>
+<span class="nc" id="L570">        Calibration cal = imp.getCalibration();</span>
+<span class="nc" id="L571">        Rectangle r = roi2.getBounds();</span>
+<span class="nc" id="L572">        int width= imp.getWidth(), height=imp.getHeight();</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">        if (restoreCentered) {</span>
+<span class="nc" id="L574">            ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">            if (ic!=null) {</span>
+<span class="nc" id="L576">                Rectangle r1 = ic.getSrcRect();</span>
+<span class="nc" id="L577">                Rectangle r2 = roi2.getBounds();</span>
+<span class="nc" id="L578">                roi2.setLocation(r1.x+r1.width/2-r2.width/2, r1.y+r1.height/2-r2.height/2);</span>
+            }
+        }
+<span class="nc bnc" id="L581" title="All 8 branches missed.">        if (r.x&gt;=width || r.y&gt;=height || (r.x+r.width)&lt;=0 || (r.y+r.height)&lt;=0)</span>
+<span class="nc" id="L582">            roi2.setLocation((width-r.width)/2, (height-r.height)/2);</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">        if (noUpdateMode) {</span>
+<span class="nc" id="L584">            imp.setRoi(roi2, false);</span>
+<span class="nc" id="L585">            noUpdateMode = false;</span>
+<span class="nc" id="L586">        } else</span>
+<span class="nc" id="L587">            imp.setRoi(roi2, true);</span>
+<span class="nc" id="L588">        return true;</span>
+    }
+    
+    boolean restoreWithoutUpdate(int index) {
+<span class="nc" id="L592">        noUpdateMode = true;</span>
+<span class="nc" id="L593">        return restore(getImage(), index, false);</span>
+    }
+    
+    /** Returns the slice number associated with the specified name,
+        or -1 if the name does not include a slice number. */
+    public int getSliceNumber(String label) {
+<span class="nc" id="L599">        int slice = -1;</span>
+<span class="nc bnc" id="L600" title="All 6 branches missed.">        if (label.length()&gt;=14 &amp;&amp; label.charAt(4)=='-' &amp;&amp; label.charAt(9)=='-')</span>
+<span class="nc" id="L601">            slice = (int)Tools.parseDouble(label.substring(0,4),-1);</span>
+<span class="nc bnc" id="L602" title="All 6 branches missed.">        else if (label.length()&gt;=17 &amp;&amp; label.charAt(5)=='-' &amp;&amp; label.charAt(11)=='-')</span>
+<span class="nc" id="L603">            slice = (int)Tools.parseDouble(label.substring(0,5),-1);</span>
+<span class="nc bnc" id="L604" title="All 6 branches missed.">        else if (label.length()&gt;=20 &amp;&amp; label.charAt(6)=='-' &amp;&amp; label.charAt(13)=='-')</span>
+<span class="nc" id="L605">            slice = (int)Tools.parseDouble(label.substring(0,6),-1);</span>
+<span class="nc" id="L606">        return slice;</span>
+    }
+    
+    /** Returns the slice number associated with the specified ROI or name,
+        or -1 if the ROI or name does not include a slice number. */
+    int getSliceNumber(Roi roi, String label) {
+<span class="nc bnc" id="L612" title="All 2 branches missed.">        int slice = roi!=null?roi.getPosition():-1;</span>
+<span class="nc bnc" id="L613" title="All 2 branches missed.">        if (slice==0)</span>
+<span class="nc" id="L614">            slice=-1;</span>
+<span class="nc bnc" id="L615" title="All 2 branches missed.">        if (slice==-1)</span>
+<span class="nc" id="L616">            slice = getSliceNumber(label);</span>
+<span class="nc" id="L617">        return slice;</span>
+    }
+
+    void open(String path) {
+<span class="nc" id="L621">        Macro.setOptions(null);</span>
+<span class="nc" id="L622">        String name = null;</span>
+<span class="nc bnc" id="L623" title="All 4 branches missed.">        if (path==null || path.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L624">            OpenDialog od = new OpenDialog(&quot;Open Selection(s)...&quot;, &quot;&quot;);</span>
+<span class="nc" id="L625">            String directory = od.getDirectory();</span>
+<span class="nc" id="L626">            name = od.getFileName();</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">            if (name==null)</span>
+<span class="nc" id="L628">                return;</span>
+<span class="nc" id="L629">            path = directory + name;</span>
+        }
+<span class="nc bnc" id="L631" title="All 4 branches missed.">        if (Recorder.record &amp;&amp; !Recorder.scriptMode())</span>
+<span class="nc" id="L632">            Recorder.record(&quot;roiManager&quot;, &quot;Open&quot;, path);</span>
+<span class="nc bnc" id="L633" title="All 2 branches missed.">        if (path.endsWith(&quot;.zip&quot;)) {</span>
+<span class="nc" id="L634">            openZip(path);</span>
+<span class="nc" id="L635">            return;</span>
+        }
+<span class="nc" id="L637">        Opener o = new Opener();</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">        if (name==null) name = o.getName(path);</span>
+<span class="nc" id="L639">        Roi roi = o.openRoi(path);</span>
+<span class="nc bnc" id="L640" title="All 2 branches missed.">        if (roi!=null) {</span>
+<span class="nc bnc" id="L641" title="All 2 branches missed.">            if (name.endsWith(&quot;.roi&quot;))</span>
+<span class="nc" id="L642">                name = name.substring(0, name.length()-4);</span>
+<span class="nc" id="L643">            name = getUniqueName(name);</span>
+<span class="nc" id="L644">            list.add(name);</span>
+<span class="nc" id="L645">            rois.put(name, roi);</span>
+        }       
+<span class="nc" id="L647">        updateShowAll();</span>
+<span class="nc" id="L648">    }</span>
+    
+    // Modified on 2005/11/15 by Ulrik Stervbo to only read .roi files and to not empty the current list
+    void openZip(String path) { 
+<span class="nc" id="L652">        ZipInputStream in = null; </span>
+        ByteArrayOutputStream out; 
+<span class="nc" id="L654">        int nRois = 0; </span>
+        try { 
+<span class="nc" id="L656">            in = new ZipInputStream(new FileInputStream(path)); </span>
+<span class="nc" id="L657">            byte[] buf = new byte[1024]; </span>
+            int len; 
+<span class="nc" id="L659">            ZipEntry entry = in.getNextEntry(); </span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">            while (entry!=null) { </span>
+<span class="nc" id="L661">                String name = entry.getName();</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">                if (name.endsWith(&quot;.roi&quot;)) { </span>
+<span class="nc" id="L663">                    out = new ByteArrayOutputStream(); </span>
+<span class="nc bnc" id="L664" title="All 2 branches missed.">                    while ((len = in.read(buf)) &gt; 0) </span>
+<span class="nc" id="L665">                        out.write(buf, 0, len); </span>
+<span class="nc" id="L666">                    out.close(); </span>
+<span class="nc" id="L667">                    byte[] bytes = out.toByteArray(); </span>
+<span class="nc" id="L668">                    RoiDecoder rd = new RoiDecoder(bytes, name); </span>
+<span class="nc" id="L669">                    Roi roi = rd.getRoi(); </span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">                    if (roi!=null) { </span>
+<span class="nc" id="L671">                        name = name.substring(0, name.length()-4); </span>
+<span class="nc" id="L672">                        name = getUniqueName(name); </span>
+<span class="nc" id="L673">                        list.add(name); </span>
+<span class="nc" id="L674">                        rois.put(name, roi); </span>
+<span class="nc" id="L675">                        nRois++;</span>
+                    } 
+                } 
+<span class="nc" id="L678">                entry = in.getNextEntry(); </span>
+            } 
+<span class="nc" id="L680">            in.close(); </span>
+<span class="nc" id="L681">        } catch (IOException e) {error(e.toString());} </span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">        if(nRois==0)</span>
+<span class="nc" id="L683">                error(&quot;This ZIP archive does not appear to contain \&quot;.roi\&quot; files&quot;);</span>
+<span class="nc" id="L684">        updateShowAll();</span>
+<span class="nc" id="L685">    } </span>
+
+
+    String getUniqueName(String name) {
+<span class="nc" id="L689">            String name2 = name;</span>
+<span class="nc" id="L690">            int n = 1;</span>
+<span class="nc" id="L691">            Roi roi2 = (Roi)rois.get(name2);</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">            while (roi2!=null) {</span>
+<span class="nc" id="L693">                roi2 = (Roi)rois.get(name2);</span>
+<span class="nc bnc" id="L694" title="All 2 branches missed.">                if (roi2!=null) {</span>
+<span class="nc" id="L695">                    int lastDash = name2.lastIndexOf(&quot;-&quot;);</span>
+<span class="nc bnc" id="L696" title="All 4 branches missed.">                    if (lastDash!=-1 &amp;&amp; name2.length()-lastDash&lt;5)</span>
+<span class="nc" id="L697">                        name2 = name2.substring(0, lastDash);</span>
+<span class="nc" id="L698">                    name2 = name2+&quot;-&quot;+n;</span>
+<span class="nc" id="L699">                    n++;</span>
+                }
+<span class="nc" id="L701">                roi2 = (Roi)rois.get(name2);</span>
+            }
+<span class="nc" id="L703">            return name2;</span>
+    }
+    
+    boolean save() {
+<span class="nc bnc" id="L707" title="All 2 branches missed.">        if (list.getItemCount()==0)</span>
+<span class="nc" id="L708">            return error(&quot;The selection list is empty.&quot;);</span>
+<span class="nc" id="L709">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L710" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L711">            indexes = getAllIndexes();</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">        if (indexes.length&gt;1)</span>
+<span class="nc" id="L713">            return saveMultiple(indexes, null);</span>
+<span class="nc" id="L714">        String name = list.getItem(indexes[0]);</span>
+<span class="nc" id="L715">        Macro.setOptions(null);</span>
+<span class="nc" id="L716">        SaveDialog sd = new SaveDialog(&quot;Save Selection...&quot;, name, &quot;.roi&quot;);</span>
+<span class="nc" id="L717">        String name2 = sd.getFileName();</span>
+<span class="nc bnc" id="L718" title="All 2 branches missed.">        if (name2 == null)</span>
+<span class="nc" id="L719">            return false;</span>
+<span class="nc" id="L720">        String dir = sd.getDirectory();</span>
+<span class="nc" id="L721">        Roi roi = (Roi)rois.get(name);</span>
+<span class="nc" id="L722">        rois.remove(name);</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">        if (!name2.endsWith(&quot;.roi&quot;)) name2 = name2+&quot;.roi&quot;;</span>
+<span class="nc" id="L724">        String newName = name2.substring(0, name2.length()-4);</span>
+<span class="nc" id="L725">        rois.put(newName, roi);</span>
+<span class="nc" id="L726">        roi.setName(newName);</span>
+<span class="nc" id="L727">        list.replaceItem(newName, indexes[0]);</span>
+<span class="nc" id="L728">        RoiEncoder re = new RoiEncoder(dir+name2);</span>
+        try {
+<span class="nc" id="L730">            re.write(roi);</span>
+<span class="nc" id="L731">        } catch (IOException e) {</span>
+<span class="nc" id="L732">            IJ.error(&quot;ROI Manager&quot;, e.getMessage());</span>
+        }
+<span class="nc" id="L734">        return true;</span>
+    }
+
+    boolean saveMultiple(int[] indexes, String path) {
+<span class="nc" id="L738">        Macro.setOptions(null);</span>
+<span class="nc bnc" id="L739" title="All 2 branches missed.">        if (path==null) {</span>
+<span class="nc" id="L740">            SaveDialog sd = new SaveDialog(&quot;Save ROIs...&quot;, &quot;RoiSet&quot;, &quot;.zip&quot;);</span>
+<span class="nc" id="L741">            String name = sd.getFileName();</span>
+<span class="nc bnc" id="L742" title="All 2 branches missed.">            if (name == null)</span>
+<span class="nc" id="L743">                return false;</span>
+<span class="nc bnc" id="L744" title="All 4 branches missed.">            if (!(name.endsWith(&quot;.zip&quot;) || name.endsWith(&quot;.ZIP&quot;)))</span>
+<span class="nc" id="L745">                name = name + &quot;.zip&quot;;</span>
+<span class="nc" id="L746">            String dir = sd.getDirectory();</span>
+<span class="nc" id="L747">            path = dir+name;</span>
+        }
+        try {
+<span class="nc" id="L750">            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(path));</span>
+<span class="nc" id="L751">            DataOutputStream out = new DataOutputStream(new BufferedOutputStream(zos));</span>
+<span class="nc" id="L752">            RoiEncoder re = new RoiEncoder(out);</span>
+<span class="nc bnc" id="L753" title="All 2 branches missed.">            for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L754">                String label = list.getItem(indexes[i]);</span>
+<span class="nc" id="L755">                Roi roi = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">                if (!label.endsWith(&quot;.roi&quot;)) label += &quot;.roi&quot;;</span>
+<span class="nc" id="L757">                zos.putNextEntry(new ZipEntry(label));</span>
+<span class="nc" id="L758">                re.write(roi);</span>
+<span class="nc" id="L759">                out.flush();</span>
+            }
+<span class="nc" id="L761">            out.close();</span>
+<span class="nc" id="L762">        }</span>
+<span class="nc" id="L763">        catch (IOException e) {</span>
+<span class="nc" id="L764">            error(&quot;&quot;+e);</span>
+<span class="nc" id="L765">            return false;</span>
+        }
+<span class="nc bnc" id="L767" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Save&quot;, path);</span>
+<span class="nc" id="L768">        return true;</span>
+    }
+        
+    boolean measure(int mode) {
+<span class="nc" id="L772">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">        if (imp==null)</span>
+<span class="nc" id="L774">            return false;</span>
+<span class="nc" id="L775">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L776" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L777">            indexes = getAllIndexes();</span>
+<span class="nc bnc" id="L778" title="All 2 branches missed.">        if (indexes.length==0) return false;</span>
+<span class="nc" id="L779">        boolean allSliceOne = true;</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L781">            String label = list.getItem(indexes[i]);</span>
+<span class="nc" id="L782">            Roi roi = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L783" title="All 2 branches missed.">            if (getSliceNumber(roi,label)&gt;1) allSliceOne = false;</span>
+        }
+<span class="nc" id="L785">        int measurements = Analyzer.getMeasurements();</span>
+<span class="nc bnc" id="L786" title="All 2 branches missed.">        if (imp.getStackSize()&gt;1)</span>
+<span class="nc" id="L787">            Analyzer.setMeasurements(measurements|Measurements.SLICE);</span>
+<span class="nc" id="L788">        int currentSlice = imp.getCurrentSlice();</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L790" title="All 4 branches missed.">            if (restore(getImage(), indexes[i], !allSliceOne))</span>
+<span class="nc" id="L791">                IJ.run(&quot;Measure&quot;);</span>
+            else
+                break;
+        }
+<span class="nc" id="L795">        imp.setSlice(currentSlice);</span>
+<span class="nc" id="L796">        Analyzer.setMeasurements(measurements);</span>
+<span class="nc bnc" id="L797" title="All 2 branches missed.">        if (indexes.length&gt;1)</span>
+<span class="nc" id="L798">            IJ.run(&quot;Select None&quot;);</span>
+<span class="nc bnc" id="L799" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Measure&quot;);</span>
+<span class="nc" id="L800">        return true;</span>
+    }   
+    
+    /*
+    void showIndexes(int[] indexes) {
+        for (int i=0; i&lt;indexes.length; i++) {
+            String label = list.getItem(indexes[i]);
+            Roi roi = (Roi)rois.get(label);
+            IJ.log(i+&quot; &quot;+roi.getName());
+        }
+    }
+    */
+
+    /* This method performs measurements for several ROI's in a stack
+        and arranges the results with one line per slice.  By constast, the 
+        measure() method produces several lines per slice.  The results 
+        from multiMeasure() may be easier to import into a spreadsheet 
+        program for plotting or additional analysis. Based on the multi() 
+        method in Bob Dougherty's Multi_Measure plugin
+        (http://www.optinav.com/Multi-Measure.htm).
+    */
+    boolean multiMeasure() {
+<span class="nc" id="L822">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L823" title="All 2 branches missed.">        if (imp==null) return false;</span>
+<span class="nc" id="L824">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L825" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L826">            indexes = getAllIndexes();</span>
+<span class="nc bnc" id="L827" title="All 2 branches missed.">        if (indexes.length==0) return false;</span>
+<span class="nc" id="L828">        int measurements = Analyzer.getMeasurements();</span>
+
+<span class="nc" id="L830">        int nSlices = imp.getStackSize();</span>
+<span class="nc bnc" id="L831" title="All 2 branches missed.">        if (IJ.isMacro()) {</span>
+<span class="nc bnc" id="L832" title="All 2 branches missed.">            if (nSlices&gt;1) measureAll = true;</span>
+<span class="nc" id="L833">            onePerSlice = true;</span>
+<span class="nc" id="L834">        } else {</span>
+<span class="nc" id="L835">            GenericDialog gd = new GenericDialog(&quot;Multi Measure&quot;);</span>
+<span class="nc bnc" id="L836" title="All 2 branches missed.">            if (nSlices&gt;1)</span>
+<span class="nc" id="L837">                gd.addCheckbox(&quot;Measure All &quot;+nSlices+&quot; Slices&quot;, measureAll);</span>
+<span class="nc" id="L838">            gd.addCheckbox(&quot;One Row Per Slice&quot;, onePerSlice);</span>
+<span class="nc" id="L839">            int columns = getColumnCount(imp, measurements)*indexes.length;</span>
+<span class="nc bnc" id="L840" title="All 2 branches missed.">            String str = nSlices==1?&quot;this option&quot;:&quot;both options&quot;;</span>
+<span class="nc" id="L841">            gd.setInsets(10, 25, 0);</span>
+<span class="nc" id="L842">            gd.addMessage(</span>
+<span class="nc" id="L843">                &quot;Enabling &quot;+str+&quot; will result\n&quot;+</span>
+<span class="nc" id="L844">                &quot;in a table with &quot;+columns+&quot; columns.&quot;</span>
+            );
+<span class="nc" id="L846">            gd.showDialog();</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">            if (gd.wasCanceled()) return false;</span>
+<span class="nc bnc" id="L848" title="All 2 branches missed.">            if (nSlices&gt;1)</span>
+<span class="nc" id="L849">                measureAll = gd.getNextBoolean();</span>
+<span class="nc" id="L850">            onePerSlice = gd.getNextBoolean();</span>
+        }
+<span class="nc bnc" id="L852" title="All 2 branches missed.">        if (!measureAll) nSlices = 1;</span>
+<span class="nc" id="L853">        int currentSlice = imp.getCurrentSlice();</span>
+        
+<span class="nc bnc" id="L855" title="All 2 branches missed.">        if (!onePerSlice) {</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">            int measurements2 = nSlices&gt;1?measurements|Measurements.SLICE:measurements;</span>
+<span class="nc" id="L857">            ResultsTable rt = new ResultsTable();</span>
+<span class="nc" id="L858">            Analyzer analyzer = new Analyzer(imp, measurements2, rt);</span>
+<span class="nc bnc" id="L859" title="All 2 branches missed.">            for (int slice=1; slice&lt;=nSlices; slice++) {</span>
+<span class="nc bnc" id="L860" title="All 2 branches missed.">                if (nSlices&gt;1) imp.setSliceWithoutUpdate(slice);</span>
+<span class="nc bnc" id="L861" title="All 2 branches missed.">                for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">                    if (restoreWithoutUpdate(indexes[i]))</span>
+<span class="nc" id="L863">                        analyzer.measure();</span>
+                    else
+                        break;
+                }
+            }
+<span class="nc" id="L868">            rt.show(&quot;Results&quot;);</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">            if (nSlices&gt;1) imp.setSlice(currentSlice);</span>
+<span class="nc" id="L870">            return true;</span>
+        }
+
+<span class="nc" id="L873">        Analyzer aSys = new Analyzer(imp); //System Analyzer</span>
+<span class="nc" id="L874">        ResultsTable rtSys = Analyzer.getResultsTable();</span>
+<span class="nc" id="L875">        ResultsTable rtMulti = new ResultsTable();</span>
+<span class="nc" id="L876">        Analyzer aMulti = new Analyzer(imp, measurements, rtMulti); //Private Analyzer</span>
+
+<span class="nc bnc" id="L878" title="All 2 branches missed.">        for (int slice=1; slice&lt;=nSlices; slice++) {</span>
+<span class="nc" id="L879">            int sliceUse = slice;</span>
+<span class="nc bnc" id="L880" title="All 2 branches missed.">            if(nSlices == 1)sliceUse = currentSlice;</span>
+<span class="nc" id="L881">            imp.setSliceWithoutUpdate(sliceUse);</span>
+<span class="nc" id="L882">            rtMulti.incrementCounter();</span>
+<span class="nc" id="L883">            int roiIndex = 0;</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">            for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L885" title="All 2 branches missed.">                if (restoreWithoutUpdate(indexes[i])) {</span>
+<span class="nc" id="L886">                    roiIndex++;</span>
+<span class="nc" id="L887">                    aSys.measure();</span>
+<span class="nc bnc" id="L888" title="All 2 branches missed.">                    for (int j=0; j&lt;=rtSys.getLastColumn(); j++){</span>
+<span class="nc" id="L889">                        float[] col = rtSys.getColumn(j);</span>
+<span class="nc" id="L890">                        String head = rtSys.getColumnHeading(j);</span>
+<span class="nc" id="L891">                        String suffix = &quot;&quot;+roiIndex;</span>
+<span class="nc" id="L892">                        Roi roi = imp.getRoi();</span>
+<span class="nc bnc" id="L893" title="All 2 branches missed.">                        if (roi!=null) {</span>
+<span class="nc" id="L894">                            String name = roi.getName();</span>
+<span class="nc bnc" id="L895" title="All 8 branches missed.">                            if (name!=null &amp;&amp; name.length()&gt;0 &amp;&amp; (name.length()&lt;9||!Character.isDigit(name.charAt(0))))</span>
+<span class="nc" id="L896">                                suffix = &quot;(&quot;+name+&quot;)&quot;;</span>
+                        }
+<span class="nc bnc" id="L898" title="All 6 branches missed.">                        if (head!=null &amp;&amp; col!=null &amp;&amp; !head.equals(&quot;Slice&quot;))</span>
+<span class="nc" id="L899">                            rtMulti.addValue(head+suffix,rtSys.getValue(j,rtSys.getCounter()-1));</span>
+                    }
+                } else
+                    break;
+            }
+            //aMulti.displayResults();
+            //aMulti.updateHeadings();
+        }
+<span class="nc" id="L907">        rtMulti.show(&quot;Results&quot;);</span>
+
+<span class="nc" id="L909">        imp.setSlice(currentSlice);</span>
+<span class="nc bnc" id="L910" title="All 2 branches missed.">        if (indexes.length&gt;1)</span>
+<span class="nc" id="L911">            IJ.run(&quot;Select None&quot;);</span>
+<span class="nc bnc" id="L912" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Multi Measure&quot;);</span>
+<span class="nc" id="L913">        return true;</span>
+    }
+    
+    int getColumnCount(ImagePlus imp, int measurements) {
+<span class="nc" id="L917">        ImageStatistics stats = imp.getStatistics(measurements);</span>
+<span class="nc" id="L918">        ResultsTable rt = new ResultsTable();</span>
+<span class="nc" id="L919">        Analyzer analyzer = new Analyzer(imp, measurements, rt);</span>
+<span class="nc" id="L920">        analyzer.saveResults(stats, null);</span>
+<span class="nc" id="L921">        int count = 0;</span>
+<span class="nc bnc" id="L922" title="All 2 branches missed.">        for (int i=0; i&lt;=rt.getLastColumn(); i++) {</span>
+<span class="nc" id="L923">            float[] col = rt.getColumn(i);</span>
+<span class="nc" id="L924">            String head = rt.getColumnHeading(i);</span>
+<span class="nc bnc" id="L925" title="All 4 branches missed.">            if (head!=null &amp;&amp; col!=null)</span>
+<span class="nc" id="L926">                count++;</span>
+        }
+<span class="nc" id="L928">        return count;</span>
+    }
+    
+    void multiPlot() {
+<span class="nc" id="L932">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L933" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L934">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L935" title="All 2 branches missed.">        if (indexes.length==0) indexes = getAllIndexes();</span>
+<span class="nc" id="L936">        int n = indexes.length;</span>
+<span class="nc bnc" id="L937" title="All 2 branches missed.">        if (n==0) return;</span>
+<span class="nc" id="L938">        Color[] colors = {Color.blue, Color.green, Color.magenta, Color.red, Color.cyan, Color.yellow};</span>
+<span class="nc bnc" id="L939" title="All 2 branches missed.">        if (n&gt;colors.length) {</span>
+<span class="nc" id="L940">            colors = new Color[n];</span>
+<span class="nc" id="L941">            double c = 0;</span>
+<span class="nc" id="L942">            double inc =150.0/n;</span>
+<span class="nc bnc" id="L943" title="All 2 branches missed.">            for (int i=0; i&lt;n; i++) {</span>
+<span class="nc" id="L944">                colors[i] = new Color((int)c, (int)c, (int)c);</span>
+<span class="nc" id="L945">                c += inc;</span>
+            }
+        }
+<span class="nc" id="L948">        int currentSlice = imp.getCurrentSlice();</span>
+<span class="nc" id="L949">        double[][] x = new double[n][];</span>
+<span class="nc" id="L950">        double[][] y = new double[n][];</span>
+<span class="nc" id="L951">        double minY = Double.MAX_VALUE;</span>
+<span class="nc" id="L952">        double maxY = -Double.MAX_VALUE;</span>
+<span class="nc" id="L953">        double fixedMin = ProfilePlot.getFixedMin();</span>
+<span class="nc" id="L954">        double fixedMax = ProfilePlot.getFixedMax();    </span>
+<span class="nc bnc" id="L955" title="All 4 branches missed.">        boolean freeYScale = fixedMin==0.0 &amp;&amp; fixedMax==0.0;</span>
+<span class="nc bnc" id="L956" title="All 2 branches missed.">        if (!freeYScale) {</span>
+<span class="nc" id="L957">            minY = fixedMin;</span>
+<span class="nc" id="L958">            maxY = fixedMax;</span>
+        }
+<span class="nc" id="L960">        int maxX = 0;</span>
+<span class="nc" id="L961">        Calibration cal = imp.getCalibration();</span>
+<span class="nc" id="L962">        double xinc = cal.pixelWidth;</span>
+<span class="nc bnc" id="L963" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L964" title="All 2 branches missed.">            if (!restore(getImage(), indexes[i], true)) break;</span>
+<span class="nc" id="L965">            Roi roi = imp.getRoi();</span>
+<span class="nc bnc" id="L966" title="All 2 branches missed.">            if (roi==null) break;</span>
+<span class="nc bnc" id="L967" title="All 4 branches missed.">            if (roi.isArea() &amp;&amp; roi.getType()!=Roi.RECTANGLE)</span>
+<span class="nc" id="L968">                IJ.run(imp, &quot;Area to Line&quot;, &quot;&quot;);</span>
+<span class="nc" id="L969">            ProfilePlot pp = new ProfilePlot(imp, IJ.altKeyDown());</span>
+<span class="nc" id="L970">            y[i] = pp.getProfile();</span>
+<span class="nc bnc" id="L971" title="All 2 branches missed.">            if (y[i]==null) break;</span>
+<span class="nc bnc" id="L972" title="All 2 branches missed.">            if (y[i].length&gt;maxX) maxX = y[i].length;</span>
+<span class="nc bnc" id="L973" title="All 2 branches missed.">            if (freeYScale) {</span>
+<span class="nc" id="L974">                double[] a = Tools.getMinMax(y[i]);</span>
+<span class="nc bnc" id="L975" title="All 2 branches missed.">                if (a[0]&lt;minY) minY=a[0];</span>
+<span class="nc bnc" id="L976" title="All 2 branches missed.">                if (a[1]&gt;maxY) maxY = a[1];</span>
+            }
+<span class="nc" id="L978">            double[] xx = new double[y[i].length];</span>
+<span class="nc bnc" id="L979" title="All 2 branches missed.">            for (int j=0; j&lt;xx.length; j++)</span>
+<span class="nc" id="L980">                xx[j] = j*xinc;</span>
+<span class="nc" id="L981">            x[i] = xx;</span>
+        }
+<span class="nc" id="L983">        String xlabel = &quot;Distance (&quot;+cal.getUnits()+&quot;)&quot;;</span>
+<span class="nc" id="L984">        Plot plot = new Plot(&quot;Profiles&quot;,xlabel, &quot;Value&quot;, x[0], y[0]);</span>
+<span class="nc" id="L985">        plot.setLimits(0, maxX*xinc, minY, maxY);</span>
+<span class="nc bnc" id="L986" title="All 2 branches missed.">        for (int i=1; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L987">            plot.setColor(colors[i]);</span>
+<span class="nc bnc" id="L988" title="All 2 branches missed.">            if (x[i]!=null)</span>
+<span class="nc" id="L989">                plot.addPoints(x[i], y[i], Plot.LINE);</span>
+        }
+<span class="nc" id="L991">        plot.setColor(colors[0]);</span>
+<span class="nc bnc" id="L992" title="All 2 branches missed.">        if (x[0]!=null)</span>
+<span class="nc" id="L993">            plot.show();</span>
+<span class="nc" id="L994">        imp.setSlice(currentSlice);</span>
+<span class="nc bnc" id="L995" title="All 2 branches missed.">        if (indexes.length&gt;1)</span>
+<span class="nc" id="L996">            IJ.run(&quot;Select None&quot;);</span>
+<span class="nc bnc" id="L997" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Multi Plot&quot;);</span>
+<span class="nc" id="L998">    }   </span>
+
+    boolean drawOrFill(int mode) {
+<span class="nc" id="L1001">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1002" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1003">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1004">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc" id="L1005">        imp.deleteRoi();</span>
+<span class="nc" id="L1006">        ImageProcessor ip = imp.getProcessor();</span>
+<span class="nc" id="L1007">        ip.setColor(Toolbar.getForegroundColor());</span>
+<span class="nc" id="L1008">        ip.snapshot();</span>
+<span class="nc" id="L1009">        Undo.setup(Undo.FILTER, imp);</span>
+<span class="nc bnc" id="L1010" title="All 2 branches missed.">        Filler filler = mode==LABEL?new Filler():null;</span>
+<span class="nc" id="L1011">        int slice = imp.getCurrentSlice();</span>
+<span class="nc bnc" id="L1012" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1013">            String name = list.getItem(indexes[i]);</span>
+<span class="nc" id="L1014">            Roi roi = (Roi)rois.get(name);</span>
+<span class="nc" id="L1015">            int type = roi.getType();</span>
+<span class="nc bnc" id="L1016" title="All 2 branches missed.">            if (roi==null) continue;</span>
+<span class="nc bnc" id="L1017" title="All 8 branches missed.">            if (mode==FILL&amp;&amp;(type==Roi.POLYLINE||type==Roi.FREELINE||type==Roi.ANGLE))</span>
+<span class="nc" id="L1018">                mode = DRAW;</span>
+<span class="nc" id="L1019">            int slice2 = getSliceNumber(roi, name);</span>
+<span class="nc bnc" id="L1020" title="All 4 branches missed.">            if (slice2&gt;=1 &amp;&amp; slice2&lt;=imp.getStackSize()) {</span>
+<span class="nc" id="L1021">                imp.setSlice(slice2);</span>
+<span class="nc" id="L1022">                ip = imp.getProcessor();</span>
+<span class="nc" id="L1023">                ip.setColor(Toolbar.getForegroundColor());</span>
+<span class="nc bnc" id="L1024" title="All 2 branches missed.">                if (slice2!=slice) Undo.reset();</span>
+            }
+<span class="nc bnc" id="L1026" title="All 4 branches missed.">            switch (mode) {</span>
+<span class="nc" id="L1027">                case DRAW: roi.drawPixels(ip); break;</span>
+<span class="nc" id="L1028">                case FILL: ip.fill(roi); break;</span>
+                case LABEL:
+<span class="nc" id="L1030">                    roi.drawPixels(ip);</span>
+<span class="nc" id="L1031">                    filler.drawLabel(imp, ip, i+1, roi.getBounds());</span>
+                    break;
+            }
+        }
+<span class="nc" id="L1035">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L1036" title="All 2 branches missed.">        if (ic!=null) ic.setShowAllROIs(false);</span>
+<span class="nc" id="L1037">        imp.updateAndDraw();</span>
+<span class="nc" id="L1038">        return true;</span>
+    }
+
+    void setProperties(Color color, int lineWidth, Color fillColor) {
+<span class="nc bnc" id="L1042" title="All 6 branches missed.">        boolean showDialog = color==null &amp;&amp; lineWidth==-1 &amp;&amp; fillColor==null;</span>
+<span class="nc" id="L1043">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1044" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1045">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1046">        int n = indexes.length;</span>
+<span class="nc bnc" id="L1047" title="All 2 branches missed.">        if (n==0) return;</span>
+<span class="nc" id="L1048">        Roi rpRoi = null;</span>
+<span class="nc" id="L1049">        String rpName = null;</span>
+<span class="nc" id="L1050">        Font font = null;</span>
+<span class="nc" id="L1051">        int justification = TextRoi.LEFT;</span>
+<span class="nc" id="L1052">        double opacity = -1;</span>
+<span class="nc bnc" id="L1053" title="All 2 branches missed.">        if (showDialog) {</span>
+<span class="nc" id="L1054">            String label = list.getItem(indexes[0]);</span>
+<span class="nc" id="L1055">            rpRoi = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L1056" title="All 2 branches missed.">            if (n==1) {</span>
+<span class="nc" id="L1057">                fillColor =  rpRoi.getFillColor();</span>
+<span class="nc" id="L1058">                rpName = rpRoi.getName();</span>
+            }
+<span class="nc bnc" id="L1060" title="All 2 branches missed.">            if (rpRoi.getStrokeColor()==null)</span>
+<span class="nc" id="L1061">                rpRoi.setStrokeColor(ImageCanvas.getShowAllColor());</span>
+<span class="nc" id="L1062">            rpRoi = (Roi) rpRoi.clone();</span>
+<span class="nc bnc" id="L1063" title="All 2 branches missed.">            if (n&gt;1)</span>
+<span class="nc" id="L1064">                rpRoi.setName(&quot;range: &quot;+(indexes[0]+1)+&quot;-&quot;+(indexes[n-1]+1));</span>
+<span class="nc" id="L1065">            rpRoi.setFillColor(fillColor);</span>
+<span class="nc" id="L1066">            RoiProperties rp = new RoiProperties(&quot;Properties&quot;, rpRoi);</span>
+<span class="nc bnc" id="L1067" title="All 2 branches missed.">            if (!rp.showDialog())</span>
+<span class="nc" id="L1068">                return;</span>
+<span class="nc" id="L1069">            lineWidth =  (int)rpRoi.getStrokeWidth();</span>
+<span class="nc" id="L1070">            defaultLineWidth = lineWidth;</span>
+<span class="nc" id="L1071">            color =  rpRoi.getStrokeColor();</span>
+<span class="nc" id="L1072">            fillColor =  rpRoi.getFillColor();</span>
+<span class="nc" id="L1073">            defaultColor = color;</span>
+<span class="nc bnc" id="L1074" title="All 2 branches missed.">            if (rpRoi instanceof TextRoi) {</span>
+<span class="nc" id="L1075">                font = ((TextRoi)rpRoi).getCurrentFont();</span>
+<span class="nc" id="L1076">                justification = ((TextRoi)rpRoi).getJustification();</span>
+            }
+<span class="nc bnc" id="L1078" title="All 2 branches missed.">            if (rpRoi instanceof ImageRoi)</span>
+<span class="nc" id="L1079">                opacity = ((ImageRoi)rpRoi).getOpacity();</span>
+        }
+<span class="nc" id="L1081">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1082" title="All 6 branches missed.">        if (n==list.getItemCount() &amp;&amp; n&gt;1 &amp;&amp; !IJ.isMacro()) {</span>
+<span class="nc" id="L1083">            GenericDialog gd = new GenericDialog(&quot;ROI Manager&quot;);</span>
+<span class="nc" id="L1084">            gd.addMessage(&quot;Apply changes to all &quot;+n+&quot; selections?&quot;);</span>
+<span class="nc" id="L1085">            gd.showDialog();</span>
+<span class="nc bnc" id="L1086" title="All 2 branches missed.">            if (gd.wasCanceled()) return;</span>
+        }
+<span class="nc bnc" id="L1088" title="All 2 branches missed.">        for (int i=0; i&lt;n; i++) {</span>
+<span class="nc" id="L1089">            String label = list.getItem(indexes[i]);</span>
+<span class="nc" id="L1090">            Roi roi = (Roi)rois.get(label);</span>
+            //IJ.log(&quot;set &quot;+color+&quot;  &quot;+lineWidth+&quot;  &quot;+fillColor);
+<span class="nc bnc" id="L1092" title="All 2 branches missed.">            if (color!=null) roi.setStrokeColor(color);</span>
+<span class="nc bnc" id="L1093" title="All 2 branches missed.">            if (lineWidth&gt;=0) roi.setStrokeWidth(lineWidth);</span>
+<span class="nc" id="L1094">            roi.setFillColor(fillColor);</span>
+<span class="nc bnc" id="L1095" title="All 4 branches missed.">            if (roi!=null &amp;&amp; (roi instanceof TextRoi)) {</span>
+<span class="nc" id="L1096">                roi.setImage(imp);</span>
+<span class="nc bnc" id="L1097" title="All 2 branches missed.">                if (font!=null)</span>
+<span class="nc" id="L1098">                    ((TextRoi)roi).setCurrentFont(font);</span>
+<span class="nc" id="L1099">                ((TextRoi)roi).setJustification(justification);</span>
+<span class="nc" id="L1100">                roi.setImage(null);</span>
+            }
+<span class="nc bnc" id="L1102" title="All 6 branches missed.">            if (roi!=null &amp;&amp; (roi instanceof ImageRoi) &amp;&amp; opacity!=-1)</span>
+<span class="nc" id="L1103">                ((ImageRoi)roi).setOpacity(opacity);</span>
+        }
+<span class="nc bnc" id="L1105" title="All 6 branches missed.">        if (rpRoi!=null &amp;&amp; rpName!=null &amp;&amp; !rpRoi.getName().equals(rpName))</span>
+<span class="nc" id="L1106">            rename(rpRoi.getName());</span>
+<span class="nc bnc" id="L1107" title="All 2 branches missed.">        ImageCanvas ic = imp!=null?imp.getCanvas():null;</span>
+<span class="nc bnc" id="L1108" title="All 2 branches missed.">        Roi roi = imp!=null?imp.getRoi():null;</span>
+<span class="nc bnc" id="L1109" title="All 4 branches missed.">        boolean showingAll = ic!=null &amp;&amp;  ic.getShowAllROIs();</span>
+<span class="nc bnc" id="L1110" title="All 6 branches missed.">        if (roi!=null &amp;&amp; (n==1||!showingAll)) {</span>
+<span class="nc bnc" id="L1111" title="All 2 branches missed.">            if (lineWidth&gt;=0) roi.setStrokeWidth(lineWidth);</span>
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">            if (color!=null) roi.setStrokeColor(color);</span>
+<span class="nc bnc" id="L1113" title="All 2 branches missed.">            if (fillColor!=null) roi.setFillColor(fillColor);</span>
+<span class="nc bnc" id="L1114" title="All 4 branches missed.">            if (roi!=null &amp;&amp; (roi instanceof TextRoi)) {</span>
+<span class="nc" id="L1115">                ((TextRoi)roi).setCurrentFont(font);</span>
+<span class="nc" id="L1116">                ((TextRoi)roi).setJustification(justification);</span>
+            }
+<span class="nc bnc" id="L1118" title="All 6 branches missed.">            if (roi!=null &amp;&amp; (roi instanceof ImageRoi) &amp;&amp; opacity!=-1)</span>
+<span class="nc" id="L1119">                ((ImageRoi)roi).setOpacity(opacity);</span>
+        }
+<span class="nc bnc" id="L1121" title="All 6 branches missed.">        if (lineWidth&gt;1 &amp;&amp; !showingAll &amp;&amp; roi==null) {</span>
+<span class="nc" id="L1122">            showAll(SHOW_ALL);</span>
+<span class="nc" id="L1123">            showingAll = true;</span>
+        }
+<span class="nc bnc" id="L1125" title="All 2 branches missed.">        if (imp!=null) imp.draw();</span>
+<span class="nc bnc" id="L1126" title="All 2 branches missed.">        if (record()) {</span>
+<span class="nc bnc" id="L1127" title="All 2 branches missed.">            if (fillColor!=null)</span>
+<span class="nc" id="L1128">                Recorder.record(&quot;roiManager&quot;, &quot;Set Fill Color&quot;, Colors.colorToString(fillColor));</span>
+            else {
+<span class="nc bnc" id="L1130" title="All 2 branches missed.">                Recorder.record(&quot;roiManager&quot;, &quot;Set Color&quot;, Colors.colorToString(color!=null?color:Color.red));</span>
+<span class="nc" id="L1131">                Recorder.record(&quot;roiManager&quot;, &quot;Set Line Width&quot;, lineWidth);</span>
+            }
+        }
+<span class="nc" id="L1134">    }</span>
+    
+    void flatten() {
+<span class="nc" id="L1137">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1138" title="All 2 branches missed.">        if (imp==null)</span>
+<span class="nc" id="L1139">            {IJ.noImage(); return;}</span>
+<span class="nc" id="L1140">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L1141" title="All 6 branches missed.">        if (!ic.getShowAllROIs() &amp;&amp; ic.getDisplayList()==null &amp;&amp; imp.getRoi()==null)</span>
+<span class="nc" id="L1142">            error(&quot;Image does not have an overlay or ROI&quot;);</span>
+        else
+<span class="nc" id="L1144">            IJ.doCommand(&quot;Flatten&quot;); // run Image&gt;Flatten in separate thread</span>
+<span class="nc" id="L1145">    }</span>
+            
+    public boolean getDrawLabels() {
+<span class="nc" id="L1148">        return labelsCheckbox.getState();</span>
+    }
+
+    void combine() {
+<span class="nc" id="L1152">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L1153" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1154">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1155" title="All 2 branches missed.">        if (indexes.length==1) {</span>
+<span class="nc" id="L1156">            error(&quot;More than one item must be selected, or none&quot;);</span>
+<span class="nc" id="L1157">            return;</span>
+        }
+<span class="nc bnc" id="L1159" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1160">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1161">        int nPointRois = 0;</span>
+<span class="nc bnc" id="L1162" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1163">            Roi roi = (Roi)rois.get(list.getItem(indexes[i]));</span>
+<span class="nc bnc" id="L1164" title="All 2 branches missed.">            if (roi.getType()==Roi.POINT)</span>
+<span class="nc" id="L1165">                nPointRois++;</span>
+            else
+                break;
+        }
+<span class="nc bnc" id="L1169" title="All 2 branches missed.">        if (nPointRois==indexes.length)</span>
+<span class="nc" id="L1170">            combinePoints(imp, indexes);</span>
+        else
+<span class="nc" id="L1172">            combineRois(imp, indexes);</span>
+<span class="nc bnc" id="L1173" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Combine&quot;);</span>
+<span class="nc" id="L1174">    }</span>
+    
+    void combineRois(ImagePlus imp, int[] indexes) {
+<span class="nc" id="L1177">        ShapeRoi s1=null, s2=null;</span>
+<span class="nc" id="L1178">        ImageProcessor ip = null;</span>
+<span class="nc bnc" id="L1179" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1180">            Roi roi = (Roi)rois.get(list.getItem(indexes[i]));</span>
+<span class="nc bnc" id="L1181" title="All 2 branches missed.">            if (!roi.isArea()) {</span>
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">                if (ip==null)</span>
+<span class="nc" id="L1183">                    ip = new ByteProcessor(imp.getWidth(), imp.getHeight());</span>
+<span class="nc" id="L1184">                roi = convertLineToPolygon(roi, ip);</span>
+            }
+<span class="nc bnc" id="L1186" title="All 2 branches missed.">            if (s1==null) {</span>
+<span class="nc bnc" id="L1187" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1188">                    s1 = (ShapeRoi)roi;</span>
+                else
+<span class="nc" id="L1190">                    s1 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1191" title="All 2 branches missed.">                if (s1==null) return;</span>
+            } else {
+<span class="nc bnc" id="L1193" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1194">                    s2 = (ShapeRoi)roi;</span>
+                else
+<span class="nc" id="L1196">                    s2 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">                if (s2==null) continue;</span>
+<span class="nc" id="L1198">                s1.or(s2);</span>
+            }
+        }
+<span class="nc bnc" id="L1201" title="All 2 branches missed.">        if (s1!=null)</span>
+<span class="nc" id="L1202">            imp.setRoi(s1);</span>
+<span class="nc" id="L1203">    }</span>
+    
+    Roi convertLineToPolygon(Roi roi, ImageProcessor ip) {
+<span class="nc bnc" id="L1206" title="All 2 branches missed.">        if (roi==null) return null;</span>
+<span class="nc" id="L1207">        ip.resetRoi();</span>
+<span class="nc" id="L1208">        ip.setColor(0);</span>
+<span class="nc" id="L1209">        ip.fill();</span>
+<span class="nc" id="L1210">        ip.setColor(255);</span>
+<span class="nc bnc" id="L1211" title="All 4 branches missed.">        if (roi.getType()==Roi.LINE &amp;&amp; roi.getStrokeWidth()&gt;1)</span>
+<span class="nc" id="L1212">            ip.fillPolygon(roi.getPolygon());</span>
+        else
+<span class="nc" id="L1214">            roi.drawPixels(ip);</span>
+        //new ImagePlus(&quot;ip&quot;, ip.duplicate()).show();
+<span class="nc" id="L1216">        ip.setThreshold(255, 255, ImageProcessor.NO_LUT_UPDATE);</span>
+<span class="nc" id="L1217">        ThresholdToSelection tts = new ThresholdToSelection();</span>
+<span class="nc" id="L1218">        return tts.convert(ip);</span>
+    }
+
+    void combinePoints(ImagePlus imp, int[] indexes) {
+<span class="nc" id="L1222">        int n = indexes.length;</span>
+<span class="nc" id="L1223">        Polygon[] p = new Polygon[n];</span>
+<span class="nc" id="L1224">        int points = 0;</span>
+<span class="nc bnc" id="L1225" title="All 2 branches missed.">        for (int i=0; i&lt;n; i++) {</span>
+<span class="nc" id="L1226">            Roi roi = (Roi)rois.get(list.getItem(indexes[i]));</span>
+<span class="nc" id="L1227">            p[i] = roi.getPolygon();</span>
+<span class="nc" id="L1228">            points += p[i].npoints;</span>
+        }
+<span class="nc bnc" id="L1230" title="All 2 branches missed.">        if (points==0) return;</span>
+<span class="nc" id="L1231">        int[] xpoints = new int[points];</span>
+<span class="nc" id="L1232">        int[] ypoints = new int[points];</span>
+<span class="nc" id="L1233">        int index = 0;</span>
+<span class="nc bnc" id="L1234" title="All 2 branches missed.">        for (int i=0; i&lt;p.length; i++) {</span>
+<span class="nc bnc" id="L1235" title="All 2 branches missed.">            for (int j=0; j&lt;p[i].npoints; j++) {</span>
+<span class="nc" id="L1236">                xpoints[index] = p[i].xpoints[j];</span>
+<span class="nc" id="L1237">                ypoints[index] = p[i].ypoints[j];</span>
+<span class="nc" id="L1238">                index++;</span>
+            }   
+        }
+<span class="nc" id="L1241">        imp.setRoi(new PointRoi(xpoints, ypoints, xpoints.length));</span>
+<span class="nc" id="L1242">    }</span>
+
+    void and() {
+<span class="nc" id="L1245">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L1246" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1247">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1248" title="All 2 branches missed.">        if (indexes.length==1) {</span>
+<span class="nc" id="L1249">            error(&quot;More than one item must be selected, or none&quot;);</span>
+<span class="nc" id="L1250">            return;</span>
+        }
+<span class="nc bnc" id="L1252" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1253">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1254">        ShapeRoi s1=null, s2=null;</span>
+<span class="nc bnc" id="L1255" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1256">            Roi roi = (Roi)rois.get(list.getItem(indexes[i]));</span>
+<span class="nc bnc" id="L1257" title="All 2 branches missed.">            if (!roi.isArea()) continue;</span>
+<span class="nc bnc" id="L1258" title="All 2 branches missed.">            if (s1==null) {</span>
+<span class="nc bnc" id="L1259" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1260">                    s1 = (ShapeRoi)roi.clone();</span>
+                else
+<span class="nc" id="L1262">                    s1 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1263" title="All 2 branches missed.">                if (s1==null) return;</span>
+            } else {
+<span class="nc bnc" id="L1265" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1266">                    s2 = (ShapeRoi)roi.clone();</span>
+                else
+<span class="nc" id="L1268">                    s2 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1269" title="All 2 branches missed.">                if (s2==null) continue;</span>
+<span class="nc" id="L1270">                s1.and(s2);</span>
+            }
+        }
+<span class="nc bnc" id="L1273" title="All 2 branches missed.">        if (s1!=null) imp.setRoi(s1);</span>
+<span class="nc bnc" id="L1274" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;AND&quot;);</span>
+<span class="nc" id="L1275">    }</span>
+
+    void xor() {
+<span class="nc" id="L1278">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L1279" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1280">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1281" title="All 2 branches missed.">        if (indexes.length==1) {</span>
+<span class="nc" id="L1282">            error(&quot;More than one item must be selected, or none&quot;);</span>
+<span class="nc" id="L1283">            return;</span>
+        }
+<span class="nc bnc" id="L1285" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1286">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1287">        ShapeRoi s1=null, s2=null;</span>
+<span class="nc bnc" id="L1288" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1289">            Roi roi = (Roi)rois.get(list.getItem(indexes[i]));</span>
+<span class="nc bnc" id="L1290" title="All 2 branches missed.">            if (!roi.isArea()) continue;</span>
+<span class="nc bnc" id="L1291" title="All 2 branches missed.">            if (s1==null) {</span>
+<span class="nc bnc" id="L1292" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1293">                    s1 = (ShapeRoi)roi.clone();</span>
+                else
+<span class="nc" id="L1295">                    s1 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1296" title="All 2 branches missed.">                if (s1==null) return;</span>
+            } else {
+<span class="nc bnc" id="L1298" title="All 2 branches missed.">                if (roi instanceof ShapeRoi)</span>
+<span class="nc" id="L1299">                    s2 = (ShapeRoi)roi.clone();</span>
+                else
+<span class="nc" id="L1301">                    s2 = new ShapeRoi(roi);</span>
+<span class="nc bnc" id="L1302" title="All 2 branches missed.">                if (s2==null) continue;</span>
+<span class="nc" id="L1303">                s1.xor(s2);</span>
+            }
+        }
+<span class="nc bnc" id="L1306" title="All 2 branches missed.">        if (s1!=null) imp.setRoi(s1);</span>
+<span class="nc bnc" id="L1307" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;XOR&quot;);</span>
+<span class="nc" id="L1308">    }</span>
+
+    void addParticles() {
+<span class="nc" id="L1311">        String err = IJ.runMacroFile(&quot;ij.jar:AddParticles&quot;, null);</span>
+<span class="nc bnc" id="L1312" title="All 4 branches missed.">        if (err!=null &amp;&amp; err.length()&gt;0)</span>
+<span class="nc" id="L1313">            error(err);</span>
+<span class="nc" id="L1314">    }</span>
+
+    void sort() {
+<span class="nc" id="L1317">        int n = rois.size();</span>
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">        if (n==0) return;</span>
+<span class="nc" id="L1319">        String[] labels = new String[n];</span>
+<span class="nc" id="L1320">        int index = 0;</span>
+<span class="nc bnc" id="L1321" title="All 2 branches missed.">        for (Enumeration en=rois.keys(); en.hasMoreElements();)</span>
+<span class="nc" id="L1322">            labels[index++] = (String)en.nextElement();</span>
+<span class="nc" id="L1323">        list.removeAll();</span>
+<span class="nc" id="L1324">        StringSorter.sort(labels);</span>
+<span class="nc bnc" id="L1325" title="All 2 branches missed.">        for (int i=0; i&lt;labels.length; i++)</span>
+<span class="nc" id="L1326">            list.add(labels[i]);</span>
+<span class="nc bnc" id="L1327" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Sort&quot;);</span>
+<span class="nc" id="L1328">    }</span>
+    
+    void specify() {
+<span class="nc" id="L1331">        try {IJ.run(&quot;Specify...&quot;);}</span>
+<span class="nc" id="L1332">        catch (Exception e) {return;}</span>
+<span class="nc" id="L1333">        runCommand(&quot;add&quot;);</span>
+<span class="nc" id="L1334">    }</span>
+    
+    void removeSliceInfo() {
+<span class="nc" id="L1337">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1338" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1339">            indexes = getAllIndexes();</span>
+<span class="nc bnc" id="L1340" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc" id="L1341">            int index = indexes[i];</span>
+<span class="nc" id="L1342">            String name = list.getItem(index);</span>
+<span class="nc" id="L1343">            int n = getSliceNumber(name);</span>
+<span class="nc bnc" id="L1344" title="All 2 branches missed.">            if (n==-1) continue;</span>
+<span class="nc" id="L1345">            String name2 = name.substring(5, name.length());</span>
+<span class="nc" id="L1346">            name2 = getUniqueName(name2);</span>
+<span class="nc" id="L1347">            Roi roi = (Roi)rois.get(name);</span>
+<span class="nc" id="L1348">            rois.remove(name);</span>
+<span class="nc" id="L1349">            roi.setName(name2);</span>
+<span class="nc" id="L1350">            roi.setPosition(0);</span>
+<span class="nc" id="L1351">            rois.put(name2, roi);</span>
+<span class="nc" id="L1352">            list.replaceItem(name2, index);</span>
+        }
+<span class="nc bnc" id="L1354" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Remove Slice Info&quot;);</span>
+<span class="nc" id="L1355">    }</span>
+
+    void help() {
+<span class="nc" id="L1358">        String macro = &quot;run('URL...', 'url=&quot;+IJ.URL+&quot;/docs/menus/analyze.html#manager');&quot;;</span>
+<span class="nc" id="L1359">        new MacroRunner(macro);</span>
+<span class="nc" id="L1360">    }</span>
+
+    void options() {
+<span class="nc" id="L1363">        Color c = ImageCanvas.getShowAllColor();</span>
+<span class="nc" id="L1364">        GenericDialog gd = new GenericDialog(&quot;Options&quot;);</span>
+<span class="nc" id="L1365">        gd.addPanel(makeButtonPanel(gd), GridBagConstraints.CENTER, new Insets(5, 0, 0, 0));</span>
+<span class="nc" id="L1366">        gd.addCheckbox(&quot;Associate \&quot;Show All\&quot; ROIs with slices&quot;, Prefs.showAllSliceOnly);</span>
+<span class="nc" id="L1367">        gd.addCheckbox(&quot;Restore ROIs centered&quot;, restoreCentered);</span>
+<span class="nc" id="L1368">        gd.addCheckbox(&quot;Use ROI names as labels&quot;, Prefs.useNamesAsLabels);</span>
+<span class="nc" id="L1369">        gd.showDialog();</span>
+<span class="nc bnc" id="L1370" title="All 2 branches missed.">        if (gd.wasCanceled()) {</span>
+<span class="nc bnc" id="L1371" title="All 2 branches missed.">            if (c!=ImageCanvas.getShowAllColor())</span>
+<span class="nc" id="L1372">                ImageCanvas.setShowAllColor(c);</span>
+<span class="nc" id="L1373">            return;</span>
+        }
+<span class="nc" id="L1375">        Prefs.showAllSliceOnly = gd.getNextBoolean();</span>
+<span class="nc" id="L1376">        restoreCentered = gd.getNextBoolean();</span>
+<span class="nc" id="L1377">        Prefs.useNamesAsLabels = gd.getNextBoolean();</span>
+<span class="nc" id="L1378">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1379" title="All 2 branches missed.">        if (imp!=null) imp.draw();</span>
+<span class="nc bnc" id="L1380" title="All 2 branches missed.">        if (record()) {</span>
+<span class="nc bnc" id="L1381" title="All 2 branches missed.">            Recorder.record(&quot;roiManager&quot;, &quot;Associate&quot;, Prefs.showAllSliceOnly?&quot;true&quot;:&quot;false&quot;);</span>
+<span class="nc bnc" id="L1382" title="All 2 branches missed.">            Recorder.record(&quot;roiManager&quot;, &quot;Centered&quot;, restoreCentered?&quot;true&quot;:&quot;false&quot;);</span>
+<span class="nc bnc" id="L1383" title="All 2 branches missed.">            Recorder.record(&quot;roiManager&quot;, &quot;UseNames&quot;, Prefs.useNamesAsLabels?&quot;true&quot;:&quot;false&quot;);</span>
+        }
+<span class="nc" id="L1385">    }</span>
+
+    Panel makeButtonPanel(GenericDialog gd) {
+<span class="nc" id="L1388">        Panel panel = new Panel();</span>
+        //buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+<span class="nc" id="L1390">        colorButton = new Button(&quot;\&quot;Show All\&quot; Color...&quot;);</span>
+<span class="nc" id="L1391">        colorButton.addActionListener(this);</span>
+<span class="nc" id="L1392">        panel.add(colorButton);</span>
+<span class="nc" id="L1393">        return panel;</span>
+    }
+    
+    void setShowAllColor() {
+<span class="nc" id="L1397">            ColorChooser cc = new ColorChooser(&quot;\&quot;Show All\&quot; Color&quot;, ImageCanvas.getShowAllColor(),  false);</span>
+<span class="nc" id="L1398">            ImageCanvas.setShowAllColor(cc.getColor());</span>
+<span class="nc" id="L1399">    }</span>
+
+    void split() {
+<span class="nc" id="L1402">        ImagePlus imp = getImage();</span>
+<span class="nc bnc" id="L1403" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1404">        Roi roi = imp.getRoi();</span>
+<span class="nc bnc" id="L1405" title="All 4 branches missed.">        if (roi==null || roi.getType()!=Roi.COMPOSITE) {</span>
+<span class="nc" id="L1406">            error(&quot;Image with composite selection required&quot;);</span>
+<span class="nc" id="L1407">            return;</span>
+        }
+<span class="nc" id="L1409">        boolean record = Recorder.record;</span>
+<span class="nc" id="L1410">        Recorder.record = false;</span>
+<span class="nc" id="L1411">        Roi[] rois = ((ShapeRoi)roi).getRois();</span>
+<span class="nc bnc" id="L1412" title="All 2 branches missed.">        for (int i=0; i&lt;rois.length; i++) {</span>
+<span class="nc" id="L1413">            imp.setRoi(rois[i]);</span>
+<span class="nc" id="L1414">            addRoi(false);</span>
+        }
+<span class="nc" id="L1416">        Recorder.record = record;</span>
+<span class="nc bnc" id="L1417" title="All 2 branches missed.">        if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Split&quot;);</span>
+<span class="nc" id="L1418">    }</span>
+    
+    void showAll(int mode) {
+<span class="nc" id="L1421">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1422" title="All 2 branches missed.">        if (imp==null)</span>
+<span class="nc" id="L1423">            {error(&quot;There are no images open.&quot;); return;}</span>
+<span class="nc" id="L1424">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L1425" title="All 2 branches missed.">        if (ic==null) return;</span>
+<span class="nc bnc" id="L1426" title="All 2 branches missed.">        boolean showAll = mode==SHOW_ALL;</span>
+<span class="nc bnc" id="L1427" title="All 2 branches missed.">        if (mode==LABELS) {</span>
+<span class="nc" id="L1428">            showAll = true;</span>
+<span class="nc bnc" id="L1429" title="All 2 branches missed.">            if (record())</span>
+<span class="nc" id="L1430">                Recorder.record(&quot;roiManager&quot;, &quot;Show All with labels&quot;);</span>
+<span class="nc bnc" id="L1431" title="All 2 branches missed.">        } else if (mode==NO_LABELS) {</span>
+<span class="nc" id="L1432">            showAll = true;</span>
+<span class="nc bnc" id="L1433" title="All 2 branches missed.">            if (record())</span>
+<span class="nc" id="L1434">                Recorder.record(&quot;roiManager&quot;, &quot;Show All without labels&quot;);</span>
+        }
+<span class="nc bnc" id="L1436" title="All 2 branches missed.">        if (showAll) imp.deleteRoi();</span>
+<span class="nc" id="L1437">        ic.setShowAllROIs(showAll);</span>
+<span class="nc bnc" id="L1438" title="All 2 branches missed.">        if (record())</span>
+<span class="nc bnc" id="L1439" title="All 2 branches missed.">            Recorder.record(&quot;roiManager&quot;, showAll?&quot;Show All&quot;:&quot;Show None&quot;);</span>
+<span class="nc" id="L1440">        imp.draw();</span>
+<span class="nc" id="L1441">    }</span>
+
+    void updateShowAll() {
+<span class="nc" id="L1444">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1445" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1446">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L1447" title="All 4 branches missed.">        if (ic!=null &amp;&amp; ic.getShowAllROIs())</span>
+<span class="nc" id="L1448">            imp.draw();</span>
+<span class="nc" id="L1449">    }</span>
+
+    int[] getAllIndexes() {
+<span class="nc" id="L1452">        int count = list.getItemCount();</span>
+<span class="nc" id="L1453">        int[] indexes = new int[count];</span>
+<span class="nc bnc" id="L1454" title="All 2 branches missed.">        for (int i=0; i&lt;count; i++)</span>
+<span class="nc" id="L1455">            indexes[i] = i;</span>
+<span class="nc" id="L1456">        return indexes;</span>
+    }
+        
+    ImagePlus getImage() {
+<span class="nc" id="L1460">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1461" title="All 2 branches missed.">        if (imp==null) {</span>
+<span class="nc" id="L1462">            error(&quot;There are no images open.&quot;);</span>
+<span class="nc" id="L1463">            return null;</span>
+        } else
+<span class="nc" id="L1465">            return imp;</span>
+    }
+
+    boolean error(String msg) {
+<span class="nc" id="L1469">        new MessageDialog(this, &quot;ROI Manager&quot;, msg);</span>
+<span class="nc" id="L1470">        Macro.abort();</span>
+<span class="nc" id="L1471">        return false;</span>
+    }
+    
+    
+    
+    
+    
+   
+
+
+
+    /** Returns the ROI Hashtable.
+        @see getCount
+        @see getRoisAsArray
+    */
+    public Hashtable getROIs() {
+<span class="nc" id="L1487">        return rois;</span>
+    }
+
+    /** Returns the selection list.
+        @see getCount
+        @see getRoisAsArray
+    */
+    public List getList() {
+<span class="nc" id="L1495">        return list;</span>
+    }
+    
+    /** Returns the ROI count. */
+    public int getCount() {
+<span class="nc" id="L1500">        return list.getItemCount();</span>
+    }
+
+    /** Returns the ROIs as an array. */
+    public Roi[] getRoisAsArray() {
+<span class="fc" id="L1505">        int n = list.getItemCount();</span>
+<span class="fc" id="L1506">        Roi[] array = new Roi[n];</span>
+<span class="fc bfc" id="L1507" title="All 2 branches covered.">        for (int i=0; i&lt;n; i++) {</span>
+<span class="fc" id="L1508">            String label = list.getItem(i);</span>
+<span class="fc" id="L1509">            array[i] = (Roi)rois.get(label);</span>
+        }
+<span class="fc" id="L1511">        return array;</span>
+    }
+    
+    /** Returns the selected ROIs as an array, or
+        all the ROIs if none are selected. */
+    public Roi[] getSelectedRoisAsArray() {
+<span class="nc" id="L1517">        int[] indexes = getSelectedIndexes();</span>
+<span class="nc bnc" id="L1518" title="All 2 branches missed.">        if (indexes.length==0)</span>
+<span class="nc" id="L1519">            indexes = getAllIndexes();</span>
+<span class="nc" id="L1520">        int n = indexes.length;</span>
+<span class="nc" id="L1521">        Roi[] array = new Roi[n];</span>
+<span class="nc bnc" id="L1522" title="All 2 branches missed.">        for (int i=0; i&lt;n; i++) {</span>
+<span class="nc" id="L1523">            String label = list.getItem(indexes[i]);</span>
+<span class="nc" id="L1524">            array[i] = (Roi)rois.get(label);</span>
+        }
+<span class="nc" id="L1526">        return array;</span>
+    }
+            
+    /** Returns the name of the ROI with the specified index,
+        or null if the index is out of range. */
+    public String getName(int index) {
+<span class="nc bnc" id="L1532" title="All 4 branches missed.">        if (index&gt;=0 &amp;&amp; index&lt;list.getItemCount())</span>
+<span class="nc" id="L1533">            return  list.getItem(index);</span>
+        else
+<span class="nc" id="L1535">            return null;</span>
+    }
+
+    
+
+    /** Executes the ROI Manager &quot;Add&quot;, &quot;Add &amp; Draw&quot;, &quot;Update&quot;, &quot;Delete&quot;, &quot;Measure&quot;, &quot;Draw&quot;,
+        &quot;Show All&quot;, Show None&quot;, &quot;Fill&quot;, &quot;Deselect&quot;, &quot;Select All&quot;, &quot;Combine&quot;, &quot;AND&quot;, &quot;XOR&quot;, &quot;Split&quot;,
+        &quot;Sort&quot; or &quot;Multi Measure&quot; command.  Returns false if &lt;code&gt;cmd&lt;/code&gt;
+        is not one of these strings. */
+    public boolean runCommand(String cmd) {
+<span class="nc" id="L1545">        cmd = cmd.toLowerCase();</span>
+<span class="nc" id="L1546">        macro = true;</span>
+<span class="nc" id="L1547">        boolean ok = true;</span>
+<span class="nc bnc" id="L1548" title="All 2 branches missed.">        if (cmd.equals(&quot;add&quot;)) {</span>
+<span class="nc" id="L1549">            boolean shift = IJ.shiftKeyDown();</span>
+<span class="nc" id="L1550">            boolean alt = IJ.altKeyDown();</span>
+<span class="nc bnc" id="L1551" title="All 2 branches missed.">            if (Interpreter.isBatchMode()) {</span>
+<span class="nc" id="L1552">                shift = false;</span>
+<span class="nc" id="L1553">                alt = false;</span>
+            }
+<span class="nc" id="L1555">            ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1556" title="All 2 branches missed.">            Roi roi = imp!=null?imp.getRoi():null;</span>
+<span class="nc bnc" id="L1557" title="All 2 branches missed.">            if (roi!=null) roi.setPosition(0);</span>
+<span class="nc" id="L1558">            add(shift, alt);</span>
+<span class="nc bnc" id="L1559" title="All 2 branches missed.">        } else if (cmd.equals(&quot;add &amp; draw&quot;))</span>
+<span class="nc" id="L1560">            addAndDraw(false);</span>
+<span class="nc bnc" id="L1561" title="All 2 branches missed.">        else if (cmd.equals(&quot;update&quot;))</span>
+<span class="nc" id="L1562">            update(true);</span>
+<span class="nc bnc" id="L1563" title="All 2 branches missed.">        else if (cmd.equals(&quot;update2&quot;))</span>
+<span class="nc" id="L1564">            update(false);</span>
+<span class="nc bnc" id="L1565" title="All 2 branches missed.">        else if (cmd.equals(&quot;delete&quot;))</span>
+<span class="nc" id="L1566">            delete(false);</span>
+<span class="nc bnc" id="L1567" title="All 2 branches missed.">        else if (cmd.equals(&quot;measure&quot;))</span>
+<span class="nc" id="L1568">            measure(COMMAND);</span>
+<span class="nc bnc" id="L1569" title="All 2 branches missed.">        else if (cmd.equals(&quot;draw&quot;))</span>
+<span class="nc" id="L1570">            drawOrFill(DRAW);</span>
+<span class="nc bnc" id="L1571" title="All 2 branches missed.">        else if (cmd.equals(&quot;fill&quot;))</span>
+<span class="nc" id="L1572">            drawOrFill(FILL);</span>
+<span class="nc bnc" id="L1573" title="All 2 branches missed.">        else if (cmd.equals(&quot;label&quot;))</span>
+<span class="nc" id="L1574">            drawOrFill(LABEL);</span>
+<span class="nc bnc" id="L1575" title="All 2 branches missed.">        else if (cmd.equals(&quot;and&quot;))</span>
+<span class="nc" id="L1576">            and();</span>
+<span class="nc bnc" id="L1577" title="All 4 branches missed.">        else if (cmd.equals(&quot;or&quot;) || cmd.equals(&quot;combine&quot;))</span>
+<span class="nc" id="L1578">            combine();</span>
+<span class="nc bnc" id="L1579" title="All 2 branches missed.">        else if (cmd.equals(&quot;xor&quot;))</span>
+<span class="nc" id="L1580">            xor();</span>
+<span class="nc bnc" id="L1581" title="All 2 branches missed.">        else if (cmd.equals(&quot;split&quot;))</span>
+<span class="nc" id="L1582">            split();</span>
+<span class="nc bnc" id="L1583" title="All 2 branches missed.">        else if (cmd.equals(&quot;sort&quot;))</span>
+<span class="nc" id="L1584">            sort();</span>
+<span class="nc bnc" id="L1585" title="All 2 branches missed.">        else if (cmd.equals(&quot;multi measure&quot;))</span>
+<span class="nc" id="L1586">            multiMeasure();</span>
+<span class="nc bnc" id="L1587" title="All 2 branches missed.">        else if (cmd.equals(&quot;multi plot&quot;))</span>
+<span class="nc" id="L1588">            multiPlot();</span>
+<span class="nc bnc" id="L1589" title="All 2 branches missed.">        else if (cmd.equals(&quot;show all&quot;)) {</span>
+<span class="nc bnc" id="L1590" title="All 2 branches missed.">            if (WindowManager.getCurrentImage()!=null) {</span>
+<span class="nc" id="L1591">                showAll(SHOW_ALL);</span>
+<span class="nc" id="L1592">                showAllCheckbox.setState(true);</span>
+            }
+<span class="nc bnc" id="L1594" title="All 2 branches missed.">        } else if (cmd.equals(&quot;show none&quot;)) {</span>
+<span class="nc bnc" id="L1595" title="All 2 branches missed.">            if (WindowManager.getCurrentImage()!=null) {</span>
+<span class="nc" id="L1596">                showAll(SHOW_NONE);</span>
+<span class="nc" id="L1597">                showAllCheckbox.setState(false);</span>
+            }
+<span class="nc bnc" id="L1599" title="All 2 branches missed.">        } else if (cmd.equals(&quot;show all with labels&quot;)) {</span>
+<span class="nc" id="L1600">            labelsCheckbox.setState(true);</span>
+<span class="nc" id="L1601">            showAll(LABELS);</span>
+<span class="nc bnc" id="L1602" title="All 2 branches missed.">            if (Interpreter.isBatchMode()) IJ.wait(250);</span>
+<span class="nc bnc" id="L1603" title="All 2 branches missed.">        } else if (cmd.equals(&quot;show all without labels&quot;)) {</span>
+<span class="nc" id="L1604">            labelsCheckbox.setState(false);</span>
+<span class="nc" id="L1605">            showAll(NO_LABELS);</span>
+<span class="nc bnc" id="L1606" title="All 2 branches missed.">            if (Interpreter.isBatchMode()) IJ.wait(250);</span>
+<span class="nc bnc" id="L1607" title="All 4 branches missed.">        } else if (cmd.equals(&quot;deselect&quot;)||cmd.indexOf(&quot;all&quot;)!=-1) {</span>
+<span class="nc bnc" id="L1608" title="All 2 branches missed.">            if (IJ.isMacOSX()) ignoreInterrupts = true;</span>
+<span class="nc" id="L1609">            select(-1);</span>
+<span class="nc" id="L1610">            IJ.wait(50);</span>
+<span class="nc bnc" id="L1611" title="All 2 branches missed.">        } else if (cmd.equals(&quot;reset&quot;)) {</span>
+<span class="nc bnc" id="L1612" title="All 4 branches missed.">            if (IJ.isMacOSX() &amp;&amp; IJ.isMacro())</span>
+<span class="nc" id="L1613">                ignoreInterrupts = true;</span>
+<span class="nc" id="L1614">            list.removeAll();</span>
+<span class="nc" id="L1615">            rois.clear();</span>
+<span class="nc" id="L1616">            updateShowAll();</span>
+<span class="nc bnc" id="L1617" title="All 2 branches missed.">        } else if (cmd.equals(&quot;debug&quot;)) {</span>
+            //IJ.log(&quot;Debug: &quot;+debugCount);
+            //for (int i=0; i&lt;debugCount; i++)
+            //  IJ.log(debug[i]);
+<span class="nc bnc" id="L1621" title="All 2 branches missed.">        } else if (cmd.equals(&quot;enable interrupts&quot;)) {</span>
+<span class="nc" id="L1622">            ignoreInterrupts = false;</span>
+<span class="nc bnc" id="L1623" title="All 2 branches missed.">        } else if (cmd.equals(&quot;remove slice info&quot;)) {</span>
+<span class="nc" id="L1624">            removeSliceInfo();</span>
+<span class="nc" id="L1625">        } else</span>
+<span class="nc" id="L1626">            ok = false;</span>
+<span class="nc" id="L1627">        macro = false;</span>
+<span class="nc" id="L1628">        return ok;</span>
+    }
+
+    /** Executes the ROI Manager &quot;Open&quot;, &quot;Save&quot; or &quot;Rename&quot; command. Returns false if 
+    &lt;code&gt;cmd&lt;/code&gt; is not &quot;Open&quot;, &quot;Save&quot; or &quot;Rename&quot;, or if an error occurs. */
+    public boolean runCommand(String cmd, String name) {
+<span class="nc" id="L1634">        cmd = cmd.toLowerCase();</span>
+<span class="nc" id="L1635">        macro = true;</span>
+<span class="nc bnc" id="L1636" title="All 2 branches missed.">        if (cmd.equals(&quot;open&quot;)) {</span>
+<span class="nc" id="L1637">            open(name);</span>
+<span class="nc" id="L1638">            macro = false;</span>
+<span class="nc" id="L1639">            return true;</span>
+<span class="nc bnc" id="L1640" title="All 2 branches missed.">        } else if (cmd.equals(&quot;save&quot;)) {</span>
+<span class="nc bnc" id="L1641" title="All 4 branches missed.">            if (!name.endsWith(&quot;.zip&quot;) &amp;&amp; !name.equals(&quot;&quot;))</span>
+<span class="nc" id="L1642">                return error(&quot;Name must end with '.zip'&quot;);</span>
+<span class="nc bnc" id="L1643" title="All 2 branches missed.">            if (list.getItemCount()==0)</span>
+<span class="nc" id="L1644">                return error(&quot;The selection list is empty.&quot;);</span>
+<span class="nc" id="L1645">            int[] indexes = getAllIndexes();</span>
+<span class="nc" id="L1646">            boolean ok = false;</span>
+<span class="nc bnc" id="L1647" title="All 2 branches missed.">            if (name.equals(&quot;&quot;))</span>
+<span class="nc" id="L1648">                ok = saveMultiple(indexes, null);</span>
+            else
+<span class="nc" id="L1650">                ok = saveMultiple(indexes, name);</span>
+<span class="nc" id="L1651">            macro = false;</span>
+<span class="nc" id="L1652">            return ok;</span>
+<span class="nc bnc" id="L1653" title="All 2 branches missed.">        } else if (cmd.equals(&quot;rename&quot;)) {</span>
+<span class="nc" id="L1654">            rename(name);</span>
+<span class="nc" id="L1655">            macro = false;</span>
+<span class="nc" id="L1656">            return true;</span>
+<span class="nc bnc" id="L1657" title="All 2 branches missed.">        } else if (cmd.equals(&quot;set color&quot;)) {</span>
+<span class="nc" id="L1658">            Color color = Colors.decode(name, Color.cyan);</span>
+<span class="nc" id="L1659">            setProperties(color, -1, null);</span>
+<span class="nc" id="L1660">            macro = false;</span>
+<span class="nc" id="L1661">            return true;</span>
+<span class="nc bnc" id="L1662" title="All 2 branches missed.">        } else if (cmd.equals(&quot;set fill color&quot;)) {</span>
+<span class="nc" id="L1663">            Color fillColor = Colors.decode(name, Color.cyan);</span>
+<span class="nc" id="L1664">            setProperties(null, -1, fillColor);</span>
+<span class="nc" id="L1665">            macro = false;</span>
+<span class="nc" id="L1666">            return true;</span>
+<span class="nc bnc" id="L1667" title="All 2 branches missed.">        } else if (cmd.equals(&quot;set line width&quot;)) {</span>
+<span class="nc" id="L1668">            int lineWidth = (int)Tools.parseDouble(name, 0);</span>
+<span class="nc bnc" id="L1669" title="All 2 branches missed.">            if (lineWidth&gt;=0)</span>
+<span class="nc" id="L1670">                setProperties(null, lineWidth, null);</span>
+<span class="nc" id="L1671">            macro = false;</span>
+<span class="nc" id="L1672">            return true;</span>
+<span class="nc bnc" id="L1673" title="All 2 branches missed.">        } else if (cmd.equals(&quot;associate&quot;)) {</span>
+<span class="nc bnc" id="L1674" title="All 2 branches missed.">            Prefs.showAllSliceOnly = name.equals(&quot;true&quot;)?true:false;</span>
+<span class="nc" id="L1675">            macro = false;</span>
+<span class="nc" id="L1676">            return true;</span>
+<span class="nc bnc" id="L1677" title="All 2 branches missed.">        } else if (cmd.equals(&quot;centered&quot;)) {</span>
+<span class="nc bnc" id="L1678" title="All 2 branches missed.">            restoreCentered = name.equals(&quot;true&quot;)?true:false;</span>
+<span class="nc" id="L1679">            macro = false;</span>
+<span class="nc" id="L1680">            return true;</span>
+<span class="nc bnc" id="L1681" title="All 2 branches missed.">        } else if (cmd.equals(&quot;usenames&quot;)) {</span>
+<span class="nc bnc" id="L1682" title="All 2 branches missed.">            Prefs.useNamesAsLabels = name.equals(&quot;true&quot;)?true:false;</span>
+<span class="nc" id="L1683">            macro = false;</span>
+<span class="nc bnc" id="L1684" title="All 2 branches missed.">            if (labelsCheckbox.getState()) {</span>
+<span class="nc" id="L1685">                ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1686" title="All 2 branches missed.">                if (imp!=null) imp.draw();</span>
+            }
+<span class="nc" id="L1688">            return true;</span>
+        }
+<span class="nc" id="L1690">        return false;</span>
+    }
+    
+    /** Adds the current selection to the ROI Manager, using the
+        specified color (a 6 digit hex string) and line width. */
+    public boolean runCommand(String cmd, String hexColor, double lineWidth) {
+<span class="nc" id="L1696">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1697" title="All 2 branches missed.">        Roi roi = imp!=null?imp.getRoi():null;</span>
+<span class="nc bnc" id="L1698" title="All 2 branches missed.">        if (roi!=null) roi.setPosition(0);</span>
+<span class="nc bnc" id="L1699" title="All 8 branches missed.">        if (hexColor==null &amp;&amp; lineWidth==1.0 &amp;&amp; (IJ.altKeyDown()&amp;&amp;!Interpreter.isBatchMode()))</span>
+<span class="nc" id="L1700">            addRoi(true);</span>
+        else {
+<span class="nc bnc" id="L1702" title="All 2 branches missed.">            Color color = hexColor!=null?Colors.decode(hexColor, Color.cyan):null;</span>
+<span class="nc" id="L1703">            addRoi(null, false, color, (int)Math.round(lineWidth));</span>
+        }
+<span class="nc" id="L1705">        return true;    </span>
+    }
+    
+    /** Assigns the ROI at the specified index to the current image. */
+    public void select(int index) {
+<span class="nc" id="L1710">        select(null, index);</span>
+<span class="nc" id="L1711">    }</span>
+    
+    /** Assigns the ROI at the specified index to 'imp'. */
+    public void select(ImagePlus imp, int index) {
+<span class="nc" id="L1715">        selectedIndexes = null;</span>
+<span class="nc" id="L1716">        int n = list.getItemCount();</span>
+<span class="nc bnc" id="L1717" title="All 2 branches missed.">        if (index&lt;0) {</span>
+<span class="nc bnc" id="L1718" title="All 2 branches missed.">            for (int i=0; i&lt;n; i++)</span>
+<span class="nc" id="L1719">                list.deselect(i);</span>
+<span class="nc bnc" id="L1720" title="All 2 branches missed.">            if (record()) Recorder.record(&quot;roiManager&quot;, &quot;Deselect&quot;);</span>
+<span class="nc" id="L1721">            return;</span>
+        }
+<span class="nc bnc" id="L1723" title="All 2 branches missed.">        if (index&gt;=n) return;</span>
+<span class="nc" id="L1724">        boolean mm = list.isMultipleMode();</span>
+<span class="nc bnc" id="L1725" title="All 2 branches missed.">        if (mm) list.setMultipleMode(false);</span>
+<span class="nc" id="L1726">        int delay = 1;</span>
+<span class="nc" id="L1727">        long start = System.currentTimeMillis();</span>
+<span class="nc" id="L1728">        while (true) {</span>
+<span class="nc" id="L1729">            list.select(index);</span>
+<span class="nc bnc" id="L1730" title="All 2 branches missed.">            if (delay&gt;1) IJ.wait(delay);</span>
+<span class="nc bnc" id="L1731" title="All 2 branches missed.">            if (list.isIndexSelected(index))</span>
+<span class="nc" id="L1732">                break;</span>
+<span class="nc bnc" id="L1733" title="All 2 branches missed.">            for (int i=0; i&lt;n; i++)</span>
+<span class="nc bnc" id="L1734" title="All 2 branches missed.">                if (list.isSelected(i)) list.deselect(i);</span>
+<span class="nc" id="L1735">            IJ.wait(delay);</span>
+<span class="nc bnc" id="L1736" title="All 2 branches missed.">            delay *= 2; if (delay&gt;32) delay=32;</span>
+<span class="nc bnc" id="L1737" title="All 2 branches missed.">            if ((System.currentTimeMillis()-start)&gt;1000L)</span>
+<span class="nc" id="L1738">                error(&quot;Failed to select ROI &quot;+index);</span>
+        }
+<span class="nc bnc" id="L1740" title="All 2 branches missed.">        if (imp==null) imp=getImage();</span>
+<span class="nc" id="L1741">        restore(imp, index, true);  </span>
+<span class="nc bnc" id="L1742" title="All 2 branches missed.">        if (mm) list.setMultipleMode(true);</span>
+<span class="nc" id="L1743">    }</span>
+    
+    public void select(int index, boolean shiftKeyDown, boolean altKeyDown) {
+<span class="nc bnc" id="L1746" title="All 4 branches missed.">        if (!(shiftKeyDown||altKeyDown))</span>
+<span class="nc" id="L1747">            select(index);</span>
+<span class="nc" id="L1748">        ImagePlus imp = IJ.getImage();</span>
+<span class="nc bnc" id="L1749" title="All 2 branches missed.">        if (imp==null) return;</span>
+<span class="nc" id="L1750">        Roi previousRoi = imp.getRoi();</span>
+<span class="nc bnc" id="L1751" title="All 2 branches missed.">        if (previousRoi==null)</span>
+<span class="nc" id="L1752">            {select(index); return;}</span>
+<span class="nc" id="L1753">        Roi.previousRoi = (Roi)previousRoi.clone();</span>
+<span class="nc" id="L1754">        String label = list.getItem(index);</span>
+<span class="nc" id="L1755">        Roi roi = (Roi)rois.get(label);</span>
+<span class="nc bnc" id="L1756" title="All 2 branches missed.">        if (roi!=null) {</span>
+<span class="nc" id="L1757">            roi.setImage(imp);</span>
+<span class="nc" id="L1758">            roi.update(shiftKeyDown, altKeyDown);</span>
+        }
+<span class="nc" id="L1760">    }</span>
+    
+    public void setEditMode(ImagePlus imp, boolean editMode) {
+<span class="fc" id="L1763">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="fc" id="L1764">        boolean showAll = false;</span>
+<span class="pc bpc" id="L1765" title="1 of 2 branches missed.">        if (ic!=null) {</span>
+<span class="nc" id="L1766">            showAll = ic.getShowAllROIs() | editMode;</span>
+<span class="nc" id="L1767">            ic.setShowAllROIs(showAll);</span>
+<span class="nc" id="L1768">            imp.draw();</span>
+        }
+<span class="fc" id="L1770">        showAllCheckbox.setState(showAll);</span>
+<span class="fc" id="L1771">        labelsCheckbox.setState(editMode);</span>
+<span class="fc" id="L1772">    }</span>
+    
+    /*
+    void selectAll() {
+        boolean allSelected = true;
+        int count = list.getItemCount();
+        for (int i=0; i&lt;count; i++) {
+            if (!list.isIndexSelected(i))
+                allSelected = false;
+        }
+        if (allSelected)
+            select(-1);
+        else {
+            for (int i=0; i&lt;count; i++)
+                if (!list.isSelected(i)) list.select(i);
+        }
+    }
+    */
+
+    /** Overrides PlugInFrame.close(). */
+    public void close() {
+<span class="nc" id="L1793">        super.close();</span>
+     //   instance = null;
+<span class="nc" id="L1795">        Prefs.saveLocation(LOC_KEY, getLocation());</span>
+<span class="nc bnc" id="L1796" title="All 4 branches missed.">        if (!showAllCheckbox.getState() || IJ.macroRunning())</span>
+<span class="nc" id="L1797">            return;</span>
+<span class="nc" id="L1798">        int n = list.getItemCount();</span>
+<span class="nc" id="L1799">        ImagePlus imp = WindowManager.getCurrentImage();</span>
+<span class="nc bnc" id="L1800" title="All 2 branches missed.">        if (imp==null)</span>
+<span class="nc" id="L1801">            return;</span>
+<span class="nc bnc" id="L1802" title="All 2 branches missed.">        if (n&gt;0) {</span>
+<span class="nc" id="L1803">            GenericDialog gd = new GenericDialog(&quot;ROI Manager&quot;);</span>
+<span class="nc" id="L1804">            gd.addMessage(&quot;Move the &quot;+n+&quot; displayed ROIs to an overlay?&quot;);</span>
+<span class="nc" id="L1805">            gd.setOKLabel(&quot;Discard&quot;);</span>
+<span class="nc" id="L1806">            gd.setCancelLabel(&quot;Move to Overlay&quot;);</span>
+<span class="nc" id="L1807">            gd.showDialog();</span>
+<span class="nc bnc" id="L1808" title="All 2 branches missed.">            if (gd.wasCanceled())</span>
+<span class="nc" id="L1809">                moveRoisToOverlay(imp);</span>
+            else
+<span class="nc" id="L1811">                imp.draw();</span>
+<span class="nc" id="L1812">        } else</span>
+<span class="nc" id="L1813">            imp.draw();</span>
+<span class="nc" id="L1814">    }</span>
+    
+    /** Moves all the ROIs to the specified image's overlay. */
+    public void moveRoisToOverlay(ImagePlus imp) {
+<span class="nc" id="L1818">        Roi[] rois = getRoisAsArray();</span>
+<span class="nc" id="L1819">        int n = rois.length;</span>
+<span class="nc" id="L1820">        Overlay overlay = new Overlay();</span>
+<span class="nc" id="L1821">        ImageCanvas ic = imp.getCanvas();</span>
+<span class="nc bnc" id="L1822" title="All 2 branches missed.">        Color color = ic!=null?ic.getShowAllColor():null;</span>
+<span class="nc bnc" id="L1823" title="All 2 branches missed.">        for (int i=0; i&lt;n; i++) {</span>
+<span class="nc" id="L1824">            Roi roi = (Roi)rois[i].clone();</span>
+<span class="nc bnc" id="L1825" title="All 2 branches missed.">            if (!Prefs.showAllSliceOnly)</span>
+<span class="nc" id="L1826">                roi.setPosition(0);</span>
+<span class="nc bnc" id="L1827" title="All 4 branches missed.">            if (color!=null &amp;&amp; roi.getStrokeColor()==null)</span>
+<span class="nc" id="L1828">                roi.setStrokeColor(color);</span>
+<span class="nc bnc" id="L1829" title="All 2 branches missed.">            if (roi.getStrokeWidth()==1)</span>
+<span class="nc" id="L1830">                roi.setStrokeWidth(0);</span>
+<span class="nc" id="L1831">            overlay.add(roi);</span>
+        }
+<span class="nc bnc" id="L1833" title="All 2 branches missed.">        if (labelsCheckbox.getState()) {</span>
+<span class="nc" id="L1834">            overlay.drawLabels(true);</span>
+<span class="nc" id="L1835">            overlay.drawBackgrounds(true);</span>
+<span class="nc" id="L1836">            overlay.setLabelColor(Color.white);</span>
+        }
+<span class="nc" id="L1838">        imp.setOverlay(overlay);</span>
+<span class="nc" id="L1839">    }</span>
+    
+    public void mousePressed (MouseEvent e) {
+<span class="nc" id="L1842">        int x=e.getX(), y=e.getY();</span>
+<span class="nc bnc" id="L1843" title="All 4 branches missed.">        if (e.isPopupTrigger() || e.isMetaDown())</span>
+<span class="nc" id="L1844">            pm.show(e.getComponent(),x,y);</span>
+<span class="nc" id="L1845">    }</span>
+
+    public void mouseWheelMoved(MouseWheelEvent event) {
+<span class="nc" id="L1848">        synchronized(this) {</span>
+<span class="nc" id="L1849">            int index = list.getSelectedIndex();</span>
+<span class="nc" id="L1850">            int rot = event.getWheelRotation();</span>
+<span class="nc bnc" id="L1851" title="All 2 branches missed.">            if (rot&lt;-1) rot = -1;</span>
+<span class="nc bnc" id="L1852" title="All 2 branches missed.">            if (rot&gt;1) rot = 1;</span>
+<span class="nc" id="L1853">            index += rot;</span>
+<span class="nc bnc" id="L1854" title="All 2 branches missed.">            if (index&lt;0) index = 0;</span>
+<span class="nc bnc" id="L1855" title="All 2 branches missed.">            if (index&gt;=list.getItemCount()) index = list.getItemCount();</span>
+            //IJ.log(index+&quot;  &quot;+rot);
+<span class="nc" id="L1857">            select(index);</span>
+<span class="nc bnc" id="L1858" title="All 2 branches missed.">            if (IJ.isWindows())</span>
+<span class="nc" id="L1859">                list.requestFocusInWindow();</span>
+        }
+<span class="nc" id="L1861">    }</span>
+    
+    /** Temporarily selects multiple ROIs, where 'indexes' is an array of integers, 
+        each greater than or equal to 0 and less than the value returned by getCount().
+        The selected ROIs are not highlighted in the ROI Manager list and are no 
+        longer selected after the next ROI Manager command is executed.
+    */
+    public void setSelectedIndexes(int[] indexes) {
+<span class="nc" id="L1869">        int count = getCount();</span>
+<span class="nc bnc" id="L1870" title="All 2 branches missed.">        if (count==0) return;</span>
+<span class="nc bnc" id="L1871" title="All 2 branches missed.">        for (int i=0; i&lt;indexes.length; i++) {</span>
+<span class="nc bnc" id="L1872" title="All 2 branches missed.">            if (indexes[i]&lt;0) indexes[i]=0;</span>
+<span class="nc bnc" id="L1873" title="All 2 branches missed.">            if (indexes[i]&gt;=count) indexes[i]=count-1;</span>
+        }
+<span class="nc" id="L1875">        selectedIndexes = indexes;</span>
+<span class="nc" id="L1876">    }</span>
+    
+    private int[] getSelectedIndexes() {
+<span class="nc bnc" id="L1879" title="All 2 branches missed.">        if (selectedIndexes!=null) {</span>
+<span class="nc" id="L1880">            int[] indexes = selectedIndexes;</span>
+<span class="nc" id="L1881">            selectedIndexes = null;</span>
+<span class="nc" id="L1882">            return indexes;</span>
+        } else
+<span class="nc" id="L1884">            return list.getSelectedIndexes();</span>
+    }
+
+    private boolean record() {
+<span class="nc bnc" id="L1888" title="All 4 branches missed.">        return Recorder.record &amp;&amp; !IJ.isMacro();</span>
+    }
+
+<span class="nc" id="L1891">    public void mouseReleased (MouseEvent e) {}</span>
+<span class="nc" id="L1892">    public void mouseClicked (MouseEvent e) {}</span>
+<span class="nc" id="L1893">    public void mouseEntered (MouseEvent e) {}</span>
+<span class="nc" id="L1894">    public void mouseExited (MouseEvent e) {}</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

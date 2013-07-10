@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>HaralickTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.test.modelo.feature</a> &gt; <span class="el_source">HaralickTest.java</span></div><h1>HaralickTest.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.test.modelo.feature;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import es.ubu.XRayDetector.modelo.feature.Haralick;
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+public class HaralickTest {
+	
+	private static ImagePlus img;
+	private static Roi roi;
+	private static Haralick har;
+	private static double[] haralickVector;
+	private static double[][] glcm;
+	
+<span class="fc" id="L20">	public HaralickTest(){</span>
+		
+<span class="fc" id="L22">	}</span>
+	
+	@BeforeClass
+	public static void setUpClass(){
+<span class="fc" id="L26">		img = new ImagePlus(&quot;./res/test/img/ImgTESTFeature.BMP&quot;);</span>
+<span class="fc" id="L27">        roi = new Roi(0, 0, img.getWidth(), img.getHeight());</span>
+<span class="fc" id="L28">		har = new Haralick(&quot;0 degrees&quot;, 1);</span>
+<span class="fc" id="L29">		har.calcular(roi, img, null, null);</span>
+<span class="fc" id="L30">		haralickVector = har.getHaralickVector();</span>
+<span class="fc" id="L31">		glcm = har.getGlcm();</span>
+<span class="fc" id="L32">	}</span>
+	
+	@Test
+	public void glcmTest(){
+<span class="fc" id="L36">		assertEquals(Math.round(glcm[0][0] * 100.0) / 100.0, 0.0, 0);</span>
+<span class="fc" id="L37">		assertEquals(Math.round(glcm[48][81] * 100.0) / 100.0, 0.0, 0);</span>
+<span class="fc" id="L38">		assertEquals(Math.round(glcm[90][35] * 100.0) / 100.0, 0.0, 0);</span>
+<span class="fc" id="L39">		assertEquals(Math.round(glcm[2][2] * 100.0) / 100.0, 0.0, 0);</span>
+<span class="fc" id="L40">	}</span>
+	
+	@Test
+	public void angularSecondMomentTest(){
+<span class="fc" id="L44">		assertEquals(haralickVector[0], 0.00184057499999999, 0);</span>
+<span class="fc" id="L45">	}</span>
+	
+	@Test
+	public void contrastTest(){
+<span class="fc" id="L49">		assertEquals(haralickVector[1], 120.50009999999986, 0);</span>
+<span class="fc" id="L50">	}</span>
+	
+	@Test
+	public void correlationTest(){
+<span class="fc" id="L54">		assertEquals(haralickVector[2], 9.537341796286855E-4, 0);</span>
+<span class="fc" id="L55">	}</span>
+	
+	@Test
+	public void sumOfSquaresTest(){
+<span class="fc" id="L59">		assertEquals(haralickVector[3], 14860.284755143975, 0);</span>
+<span class="fc" id="L60">	}</span>
+	
+	@Test
+	public void inverseDifferenceMomentTest(){
+<span class="fc" id="L64">		assertEquals(haralickVector[4], 0.39926055856274306, 0);</span>
+<span class="fc" id="L65">	}</span>
+	
+	@Test
+	public void sumAverageTest(){
+<span class="fc" id="L69">		assertEquals(haralickVector[5], 235.59250000000014, 0);</span>
+<span class="fc" id="L70">	}</span>
+	
+	@Test
+	public void sumEntropyTest(){
+<span class="fc" id="L74">		assertEquals(haralickVector[6], 5.1992795882229235, 0);</span>
+<span class="fc" id="L75">	}</span>
+	
+	@Test
+	public void sumVarianceTest(){
+<span class="fc" id="L79">		assertEquals(haralickVector[7], 3687.0, 0);</span>
+<span class="fc" id="L80">	}</span>
+	
+	@Test
+	public void entropyTest(){
+<span class="fc" id="L84">		assertEquals(haralickVector[8], 6.707892008607002, 0);</span>
+<span class="fc" id="L85">	}</span>
+	
+	@Test
+	public void differenceVarianceTest(){
+<span class="fc" id="L89">		assertEquals(haralickVector[9], 111.56777231000001, 0);</span>
+<span class="fc" id="L90">	}</span>
+	
+	@Test
+	public void differenceEntropyTest(){
+<span class="fc" id="L94">		assertEquals(haralickVector[10], 1.85172243005125, 0);</span>
+<span class="fc" id="L95">	}</span>
+	
+	@Test
+	public void imc_1Test(){
+<span class="fc" id="L99">		assertEquals(haralickVector[11], -0.5167849235884179, 0);</span>
+<span class="fc" id="L100">	}</span>
+	
+	@Test
+	public void imc_2Test(){
+<span class="fc" id="L104">		assertEquals(haralickVector[12], 0.9953232966930922, 0);</span>
+<span class="fc" id="L105">	}</span>
+	
+	@Test
+	public void maximalCorrelationCoefficientTest(){
+		//si está activado EJML
+		//assertEquals(haralickVector[13], 0.035605798241495436, 0);
+		
+		//si no está activado EJML
+<span class="fc" id="L113">		assertEquals(haralickVector[13], 0, 0);</span>
+<span class="fc" id="L114">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

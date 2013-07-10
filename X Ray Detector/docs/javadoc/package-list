@@ -1,0 +1,12 @@
+es.ubu.XRayDetector.datos
+es.ubu.XRayDetector.interfaz
+es.ubu.XRayDetector.modelo
+es.ubu.XRayDetector.modelo.feature
+es.ubu.XRayDetector.modelo.preprocesamiento
+es.ubu.XRayDetector.modelo.ventana
+es.ubu.XRayDetector.test
+es.ubu.XRayDetector.test.modelo
+es.ubu.XRayDetector.test.modelo.feature
+es.ubu.XRayDetector.test.modelo.preprocesamiento
+es.ubu.XRayDetector.test.utils
+es.ubu.XRayDetector.utils

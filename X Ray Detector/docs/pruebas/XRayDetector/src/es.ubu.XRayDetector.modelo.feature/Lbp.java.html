@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Lbp.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.feature</a> &gt; <span class="el_source">Lbp.java</span></div><h1>Lbp.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.feature;
+
+import java.awt.Rectangle;
+
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+public class Lbp extends Feature {
+	
+	public Lbp() {
+<span class="fc" id="L11">		super();</span>
+<span class="fc" id="L12">	}</span>
+
+
+	@Override
+	public void calcular(Roi roi, ImagePlus image, ImagePlus imageFd, ImagePlus imageSd) {
+<span class="fc" id="L17">		double[] hist = getHistogram(roi, image);</span>
+<span class="fc" id="L18">		headVector = new String[]{&quot;LBP&quot;};</span>
+		
+<span class="fc" id="L20">		setVectorResultados(hist);</span>
+<span class="fc" id="L21">	}</span>
+
+	/**
+	 * Calculates the local binary patterns features.
+	 * 
+	 * @return vector with 59 lbp values
+	 */
+	public double[] getHistogram(Roi roi, ImagePlus image) {
+<span class="fc" id="L29">		int[] patternVector = { 0, 1, 2, 3, 4, 6, 7, 8, 12, 14, 15, 16, 24, 28,</span>
+<span class="fc" id="L30">				30, 31, 32, 48, 56, 60, 62, 63, 64, 96, 112, 120, 124, 126,</span>
+<span class="fc" id="L31">				127, 128, 129, 131, 136, 142, 159, 191, 192, 193, 195, 199,</span>
+<span class="fc" id="L32">				207, 223, 224, 225, 227, 231, 239, 240, 241, 243, 247, 248,</span>
+<span class="fc" id="L33">				249, 251, 252, 253, 254, 255 };</span>
+<span class="fc" id="L34">		double[] lbpVector = new double[59];</span>
+<span class="fc" id="L35">		double[] pattern = new double[8];</span>
+		int count;
+		double decimal;
+		boolean found;
+		
+<span class="fc" id="L40">		Rectangle r = roi.getBounds();</span>
+		
+<span class="fc" id="L42">		int coordX = r.x;</span>
+<span class="fc" id="L43">		int coordY = r.y;</span>
+		
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int y = coordY + 1; y &lt; coordY + r.height - 1; y++) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">			for (int x = coordX + 1; x &lt; coordX + r.width -1; x++) {</span>
+				
+				// Vector con las posiciones vecinas
+<span class="fc" id="L49">				int[] positions = { x, y - 1, x + 1, y - 1, x + 1, y, x + 1,</span>
+<span class="fc" id="L50">						y + 1, x, y + 1, x - 1, y + 1, x - 1, y, x - 1, y - 1 };</span>
+<span class="fc" id="L51">				count = 0;</span>
+<span class="fc" id="L52">				decimal = 0;</span>
+<span class="fc" id="L53">				found = false;</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">				for (int i = 0; i &lt; positions.length; i = i + 2) {</span>
+<span class="fc" id="L56">					if (image.getProcessor().getPixel(positions[i],</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">							positions[i + 1]) &gt;= image.getProcessor().getPixel(</span>
+<span class="fc" id="L58">							x, y)) {</span>
+<span class="fc" id="L59">						pattern[count] = 1;</span>
+<span class="fc" id="L60">					} else</span>
+<span class="fc" id="L61">						pattern[count] = 0;</span>
+
+<span class="fc" id="L63">					decimal = decimal + pattern[count] * (Math.pow(2, count));</span>
+<span class="fc" id="L64">					count++;</span>
+				}
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">				for (int j = 0; j &lt; patternVector.length; j++) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">					if (decimal == patternVector[j]) {</span>
+<span class="fc" id="L69">						lbpVector[j] = lbpVector[j] + 1;</span>
+<span class="fc" id="L70">						found = true;</span>
+					}
+				}
+<span class="fc bfc" id="L73" title="All 2 branches covered.">				if (found == false)</span>
+<span class="fc" id="L74">					lbpVector[58] = lbpVector[58] + 1;</span>
+			}
+		}
+
+<span class="fc" id="L78">		return lbpVector;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

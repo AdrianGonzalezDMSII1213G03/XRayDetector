@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VentanaAbstracta.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo.ventana</a> &gt; <span class="el_source">VentanaAbstracta.java</span></div><h1>VentanaAbstracta.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.modelo.ventana;
+
+import ij.ImagePlus;
+import ij.gui.Roi;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JProgressBar;
+
+import es.ubu.XRayDetector.datos.GestorArff;
+import es.ubu.XRayDetector.modelo.feature.Feature;
+import es.ubu.XRayDetector.modelo.feature.Haralick;
+import es.ubu.XRayDetector.modelo.feature.Lbp;
+import es.ubu.XRayDetector.modelo.feature.Standard;
+import es.ubu.XRayDetector.utils.Differentials_;
+import es.ubu.XRayDetector.utils.Propiedades;
+
+import weka.classifiers.AbstractClassifier;
+import weka.classifiers.Classifier;
+import weka.core.Attribute;
+import weka.core.DenseInstance;
+import weka.core.Instance;
+import weka.core.Instances;
+
+public abstract class VentanaAbstracta extends Thread{
+	private int altura;
+	private int anchura;
+	private int getNumHilo;
+	private ImagePlus img;
+	private ImagePlus saliency;
+	private ImagePlus imgCompleta;
+	private ImagePlus imgConvolucion;
+	private ImagePlus imgConvolucionSaliency;
+<span class="fc" id="L40">	protected String grades[] = { &quot;0 degrees&quot;, &quot;90 degrees&quot;, &quot;180 degrees&quot;,</span>
+<span class="fc" id="L41">		&quot;270 degrees&quot; };</span>
+	protected double[] meanVector;
+	protected double[] rangeVector;
+	protected double[] meanVectorSaliency;
+	protected double[] rangeVectorSaliency;
+	protected Feature ftStandard;
+	protected Feature ftHaralick;
+	protected Feature ftLbp;
+	protected Feature ftStandardSaliency;
+	protected Feature ftHaralickSaliency;
+	protected Feature ftLbpSaliency;
+	protected double[] lbp;
+	protected double[] lbpSaliency;
+	protected double means[];
+	protected double ranges[];
+	protected double meansSaliency[];
+	protected double rangesSaliency[];
+<span class="fc" id="L58">	protected double vector0[] = null;</span>
+<span class="fc" id="L59">	protected double vector90[] = null;</span>
+<span class="fc" id="L60">	protected double vector180[] = null;</span>
+<span class="fc" id="L61">	protected double vector270[] = null;</span>
+<span class="fc" id="L62">	protected double vector0sal[] = null;</span>
+<span class="fc" id="L63">	protected double vector90sal[] = null;</span>
+<span class="fc" id="L64">	protected double vector180sal[] = null;</span>
+<span class="fc" id="L65">	protected double vector270sal[] = null;</span>
+<span class="fc" id="L66">	protected boolean initializedNormal = false;</span>
+	protected JProgressBar progressBar;
+	protected int[][] defectMatrix;
+	private static Propiedades prop;
+	
+<span class="fc" id="L71">	public VentanaAbstracta(ImagePlus img, ImagePlus saliency, ImagePlus convolucion, ImagePlus convolucionSaliency, int numHilo) {</span>
+<span class="fc" id="L72">		this.img = img;</span>
+<span class="fc" id="L73">		this.getNumHilo = numHilo;</span>
+<span class="fc" id="L74">		this.saliency = saliency;</span>
+<span class="fc" id="L75">		this.imgConvolucion = convolucion;</span>
+<span class="fc" id="L76">		this.imgConvolucionSaliency = convolucionSaliency;</span>
+<span class="fc" id="L77">		prop = Propiedades.getInstance();</span>
+<span class="fc" id="L78">		altura = anchura = prop.getTamVentana();</span>
+<span class="fc" id="L79">	}</span>
+	
+	public abstract void run();
+	
+	public int getAlturaVentana(){
+<span class="fc" id="L84">		return altura;</span>
+	}
+	
+	public int getAnchuraVentana(){
+<span class="fc" id="L88">		return anchura;</span>
+	}
+	
+	public int getNumHilo(){
+<span class="fc" id="L92">		return getNumHilo;</span>
+	}
+	
+	public void setAltura(int alt){
+<span class="nc" id="L96">		altura = alt;</span>
+<span class="nc" id="L97">	}</span>
+	
+	public void setAnchura(int anch){
+<span class="nc" id="L100">		anchura = anch;</span>
+<span class="nc" id="L101">	}</span>
+	
+	public void setNumHilo(int n){
+<span class="nc" id="L104">		getNumHilo = n;</span>
+<span class="nc" id="L105">	}</span>
+	
+	public ImagePlus getImage(){
+<span class="fc" id="L108">		return img;</span>
+	}
+	
+	public void setImage(ImagePlus im){
+<span class="nc" id="L112">		img = im;</span>
+<span class="nc" id="L113">	}</span>
+	
+	public void setImagenCompleta(ImagePlus im){
+<span class="fc" id="L116">		imgCompleta = im;</span>
+<span class="fc" id="L117">	}</span>
+	
+	public ImagePlus getImagenCompleta(){
+<span class="fc" id="L120">		return imgCompleta;</span>
+	}
+	
+	public void setSaliency(ImagePlus im){
+<span class="nc" id="L124">		saliency = im;</span>
+<span class="nc" id="L125">	}</span>
+	
+	public ImagePlus getSaliency(){
+<span class="fc" id="L128">		return saliency;</span>
+	}
+	
+	public void setConvolucion(ImagePlus im){
+<span class="nc" id="L132">		imgConvolucion = im;</span>
+<span class="nc" id="L133">	}</span>
+	
+	public ImagePlus getConvolucion(){
+<span class="fc" id="L136">		return imgConvolucion;</span>
+	}
+	
+	public void setConvolucionSaliency(ImagePlus im){
+<span class="nc" id="L140">		imgConvolucionSaliency = im;</span>
+<span class="nc" id="L141">	}</span>
+	
+	public ImagePlus getConvolucionSaliency(){
+<span class="fc" id="L144">		return imgConvolucionSaliency;</span>
+	}
+	
+	public Propiedades getPropiedades(){
+<span class="fc" id="L148">		return prop;</span>
+	}
+
+	public void calcularHaralickSaliency(int coordenadaX, int coordenadaY,
+			int step, int w) {
+<span class="fc" id="L153">		ftHaralickSaliency = new Haralick(grades[w], step);</span>
+<span class="fc" id="L154">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L155">		ftHaralickSaliency.calcular(roi, getSaliency(), null, null);</span>
+<span class="fc" id="L156">	}</span>
+
+	public void calcularHaralick(int coordenadaX, int coordenadaY, int step, int w, ImagePlus imagen) {
+<span class="fc" id="L159">		ftHaralick = new Haralick(grades[w], step);</span>
+<span class="fc" id="L160">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L161">		ftHaralick.calcular(roi, imagen, null, null);</span>
+<span class="fc" id="L162">	}</span>
+
+	public void calcularLbpSaliency(int coordenadaX, int coordenadaY) {
+<span class="fc" id="L165">		ftLbpSaliency = new Lbp();</span>
+<span class="fc" id="L166">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L167">		ftLbpSaliency.calcular(roi, getSaliency(), null, null);</span>
+<span class="fc" id="L168">		lbpSaliency = ftLbpSaliency.getVectorResultados();</span>
+<span class="fc" id="L169">	}</span>
+
+	public void calcularLbp(int coordenadaX, int coordenadaY, ImagePlus imagen) {
+<span class="fc" id="L172">		ftLbp = new Lbp();</span>
+<span class="fc" id="L173">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L174">		ftLbp.calcular(roi, imagen, null, null);</span>
+<span class="fc" id="L175">		lbp = ftLbp.getVectorResultados();</span>
+<span class="fc" id="L176">	}</span>
+
+	public void calcularStandardSaliency(int coordenadaX, int coordenadaY) {
+<span class="fc" id="L179">		ImagePlus copiaStandardSaliency = getConvolucionSaliency().duplicate();</span>
+<span class="fc" id="L180">		ftStandardSaliency = new Standard();</span>
+<span class="fc" id="L181">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L182">		ftStandardSaliency.calcular(roi, getSaliency(), getImageFd(copiaStandardSaliency), getImageSd(copiaStandardSaliency));</span>
+<span class="fc" id="L183">	}</span>
+
+	public void calcularStandard(int coordenadaX, int coordenadaY, ImagePlus imagen) {
+<span class="fc" id="L186">		ImagePlus copiaStandard = getConvolucion().duplicate();</span>
+<span class="fc" id="L187">		ftStandard = new Standard();</span>
+<span class="fc" id="L188">		Roi roi = new Roi(coordenadaX, coordenadaY, getAnchuraVentana(), getAlturaVentana());</span>
+<span class="fc" id="L189">		ftStandard.calcular(roi, imagen, getImageFd(copiaStandard), getImageSd(copiaStandard));</span>
+<span class="fc" id="L190">	}</span>
+	
+	public ImagePlus getImageFd(ImagePlus image){
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+<span class="fc" id="L194">		Differentials_ diff = new Differentials_();</span>
+<span class="fc" id="L195">        diff.setImp(image.duplicate());</span>
+<span class="fc" id="L196">        Differentials_.setOperation(Differentials_.GRADIENT_MAGNITUDE);</span>
+<span class="fc" id="L197">        diff.run(&quot;&quot;);</span>
+<span class="fc" id="L198">        return diff.getImp();</span>
+	}
+	
+	public ImagePlus getImageSd(ImagePlus image){
+		//NUEVA VERSIÓN: USANDO DIFFERENTIALS_
+<span class="fc" id="L203">		Differentials_ diff = new Differentials_();</span>
+<span class="fc" id="L204">        diff.setImp(image.duplicate());</span>
+<span class="fc" id="L205">        Differentials_.setOperation(Differentials_.LAPLACIAN);</span>
+<span class="fc" id="L206">        diff.run(&quot;&quot;);</span>
+<span class="fc" id="L207">        return diff.getImp();</span>
+	}
+
+	/**
+	 * This method calculates the mean of each box from four vectors.
+	 * 
+	 * @param vector0
+	 *            Vector with the features for the 0 grades
+	 * @param vector90
+	 *            Vector with the features for the 90 grades
+	 * @param vector180
+	 *            Vector with the features for the 180 grades
+	 * @param vector270
+	 *            Vector with the features for the 027 grades
+	 * @return vector with the mean
+	 */
+	public double[] calculateMean(double[] vector0, double[] vector90, double[] vector180,
+			double[] vector270) {
+<span class="fc" id="L225">		double[] mean = new double[vector0.length];</span>
+	
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		for (int i = 0; i &lt; vector0.length; i++) {</span>
+<span class="fc" id="L228">			mean[i] = (vector0[i] + vector90[i] + vector180[i] + vector270[i]) / 4;</span>
+		}
+	
+<span class="fc" id="L231">		return mean;</span>
+	}
+
+	/**
+	 * Calculates the range.
+	 * 
+	 * @param vector0
+	 *            Vector with the features for the 0 grades
+	 * @param vector90
+	 *            Vector with the features for the 90 grades
+	 * @param vector180
+	 *            Vector with the features for the 180 grades
+	 * @param vector270
+	 *            Vector with the features for the 027 grades
+	 * @return vector with the range
+	 */
+	public double[] calculateRange(double[] vector0, double[] vector90, double[] vector180,
+			double[] vector270) {
+<span class="fc" id="L249">		double[] range = new double[vector0.length];</span>
+<span class="fc" id="L250">		double[] compareVector = new double[4];</span>
+		double max;
+	
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		for (int i = 0; i &lt; vector0.length; i++) {</span>
+<span class="fc" id="L254">			compareVector[0] = Math.abs(vector0[i]);</span>
+<span class="fc" id="L255">			compareVector[1] = Math.abs(vector90[i]);</span>
+<span class="fc" id="L256">			compareVector[2] = Math.abs(vector180[i]);</span>
+<span class="fc" id="L257">			compareVector[3] = Math.abs(vector270[i]);</span>
+<span class="fc" id="L258">			max = -2000;</span>
+	
+<span class="fc bfc" id="L260" title="All 2 branches covered.">			for (int j = 0; j &lt; compareVector.length; j++) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">				if (compareVector[j] &gt; max) {</span>
+<span class="fc" id="L262">					max = compareVector[j];</span>
+				}
+			}
+<span class="fc" id="L265">			range[i] = max;</span>
+		}
+<span class="fc" id="L267">		return range;</span>
+	}
+
+	protected Classifier abrirModelo() {
+<span class="fc" id="L271">		URL url = null;</span>
+<span class="fc" id="L272">		File model = new File(getPropiedades().getPathModel());</span>
+		try {
+<span class="fc" id="L274">			url = model.toURI().toURL();</span>
+<span class="pc" id="L275">		} catch (MalformedURLException e) {</span>
+<span class="nc" id="L276">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L278">		ObjectInputStream file = null;</span>
+		try {
+<span class="fc" id="L280">			file = new ObjectInputStream(url.openStream());</span>
+<span class="pc" id="L281">		} catch (IOException e) {</span>
+<span class="nc" id="L282">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L284">		Classifier classifier = null;</span>
+		try {
+<span class="fc" id="L286">			classifier = (AbstractClassifier) file.readObject();</span>
+<span class="pc" id="L287">		} catch (IOException e) {</span>
+<span class="nc" id="L288">			throw new RuntimeException(e);</span>
+<span class="nc" id="L289">		} catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L290">			throw new RuntimeException(e);</span>
+		}
+		try {
+<span class="fc" id="L293">			file.close();</span>
+<span class="pc" id="L294">		} catch (IOException e) {</span>
+<span class="nc" id="L295">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L297">		return classifier;</span>
+	}
+
+	protected Instance crearInstancia() {
+<span class="fc" id="L301">		double newVals[] = new double[407];</span>
+<span class="fc" id="L302">		int count = 0;</span>
+		
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (ftStandard != null) {</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandard.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L306">				newVals[count] = ftStandard.getVectorResultados()[i];</span>
+<span class="fc" id="L307">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		if (ftStandardSaliency != null) {</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandardSaliency.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L313">				newVals[count] = ftStandardSaliency.getVectorResultados()[i];</span>
+<span class="fc" id="L314">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (meanVector != null) {</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">			for (int i = 0; i &lt; meanVector.length; i++) {</span>
+<span class="fc" id="L320">				newVals[count] = meanVector[i];</span>
+<span class="fc" id="L321">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (rangeVector != null) {</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">			for (int i = 0; i &lt; rangeVector.length; i++) {</span>
+<span class="fc" id="L327">				newVals[count] = rangeVector[i];</span>
+<span class="fc" id="L328">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (meanVectorSaliency != null) {</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">			for (int i = 0; i &lt; meanVectorSaliency.length; i++) {</span>
+<span class="fc" id="L334">				newVals[count] = meanVectorSaliency[i];</span>
+<span class="fc" id="L335">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">		if (rangeVectorSaliency != null) {</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">			for (int i = 0; i &lt; rangeVectorSaliency.length; i++) {</span>
+<span class="fc" id="L341">				newVals[count] = rangeVectorSaliency[i];</span>
+<span class="fc" id="L342">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">		if (ftLbp != null) {</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">			for (int i = 0; i &lt; ftLbp.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L348">				newVals[count] = ftLbp.getVectorResultados()[i];</span>
+<span class="fc" id="L349">				count++;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (ftLbpSaliency != null) {</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">			for (int i = 0; i &lt; ftLbpSaliency.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L355">				newVals[count] = ftLbpSaliency.getVectorResultados()[i];</span>
+<span class="fc" id="L356">				count++;</span>
+			}
+		}
+		// newVals es el vector de doubles donde tienes los datos de las medias etc.
+<span class="fc" id="L360">		Instance instance = new DenseInstance(1, newVals);</span>
+		List&lt;String&gt; feat;
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if(prop.getTipoCaracteristicas() == 0){ //todas</span>
+<span class="fc" id="L363">			feat = null;</span>
+<span class="fc" id="L364">		}</span>
+		else{	//mejores
+<span class="nc" id="L366">			feat = obtainFeatures();</span>
+		}
+<span class="fc" id="L368">		instance.setDataset(getHeader(feat));</span>
+<span class="fc" id="L369">		return instance;</span>
+	}
+
+	/**
+	 * This method gets the header of the features.
+	 * @return header with features features header
+	 */
+	public Instances getHeader(List&lt;String&gt; features) {
+<span class="fc" id="L377">		int capacity = 100000;</span>
+	
+<span class="fc" id="L379">		List&lt;String&gt; featuresCopy = null;</span>
+<span class="fc" id="L380">		ArrayList&lt;Attribute&gt; atts = new ArrayList&lt;Attribute&gt;();</span>
+<span class="fc" id="L381">		ArrayList&lt;String&gt; defect = new ArrayList&lt;String&gt;();</span>
+	
+<span class="fc" id="L383">		defect.add(&quot;true&quot;);</span>
+<span class="fc" id="L384">		defect.add(&quot;false&quot;);</span>
+	
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (features != null) {</span>
+<span class="nc" id="L387">			featuresCopy = new ArrayList&lt;String&gt;(features);</span>
+	
+<span class="nc bnc" id="L389" title="All 2 branches missed.">			for (int i = 0; i &lt; featuresCopy.size(); i++) {</span>
+<span class="nc" id="L390">				String rest = featuresCopy.get(i).substring(1);</span>
+<span class="nc" id="L391">				char first = featuresCopy.get(i).charAt(0);</span>
+<span class="nc" id="L392">				first = Character.toLowerCase(first);</span>
+<span class="nc" id="L393">				featuresCopy.set(i, (first + rest).replaceAll(&quot; &quot;, &quot;&quot;));</span>
+			}
+		}
+	
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		for (int j = 0; j &lt; ftStandard.getHead().length; j++) {</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">			if (features == null</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">					|| featuresCopy.contains(ftStandard.getHead()[j]))</span>
+<span class="fc" id="L400">				atts.add(new Attribute(ftStandard.getHead()[j]));</span>
+		}
+	
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		for (int j = 0; j &lt; ftStandardSaliency.getHead().length; j++) {</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">			if (features == null</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">					|| featuresCopy.contains(ftStandard.getHead()[j] + &quot;(S)&quot;))</span>
+<span class="fc" id="L406">				atts.add(new Attribute(ftStandardSaliency.getHead()[j] + &quot;(S)&quot;));</span>
+		}
+	
+<span class="fc bfc" id="L409" title="All 2 branches covered.">		for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">			for (int i = 0; i &lt; ftHaralick.getHead().length; i++) {</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">				if (features == null</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">						|| featuresCopy.contains(ftHaralick.getHead()[i]))</span>
+<span class="fc" id="L413">					atts.add(new Attribute(ftHaralick.getHead()[i] + &quot;_mean&quot; + j));</span>
+			}
+		}
+	
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">			for (int i = 0; i &lt; ftHaralick.getHead().length; i++) {</span>
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">				if (features == null</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">						|| featuresCopy.contains(ftHaralick.getHead()[i]))</span>
+<span class="fc" id="L421">					atts.add(new Attribute(ftHaralick.getHead()[i] + &quot;_range&quot; + j));</span>
+			}
+		}
+	
+<span class="fc bfc" id="L425" title="All 2 branches covered.">		for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">			for (int i = 0; i &lt; ftHaralickSaliency.getHead().length; i++) {</span>
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">				if (features == null</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">						|| featuresCopy.contains(ftHaralick.getHead()[i] + &quot;(S)&quot;))</span>
+<span class="fc" id="L429">					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + &quot;_mean&quot; + j</span>
+<span class="fc" id="L430">							+ &quot;(S)&quot;));</span>
+			}
+		}
+	
+<span class="fc bfc" id="L434" title="All 2 branches covered.">		for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">			for (int i = 0; i &lt; ftHaralickSaliency.getHead().length; i++) {</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">				if (features == null</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">						|| featuresCopy.contains(ftHaralick.getHead()[i] + &quot;(S)&quot;))</span>
+<span class="fc" id="L438">					atts.add(new Attribute(ftHaralickSaliency.getHead()[i] + &quot;_range&quot; + j</span>
+<span class="fc" id="L439">							+ &quot;(S)&quot;));</span>
+			}
+		}
+	
+<span class="fc bfc" id="L443" title="All 2 branches covered.">		for (int j = 1; j &lt; 60; j++) {</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">			if (features == null</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">					|| featuresCopy.contains(ftLbp.getHead() + &quot;_&quot; + j))</span>
+<span class="fc" id="L446">				atts.add(new Attribute(ftLbp.getHead() + &quot;(&quot; + j + &quot;)&quot;));</span>
+		}
+	
+<span class="fc bfc" id="L449" title="All 2 branches covered.">		for (int j = 1; j &lt; 60; j++) {</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">			if (features == null</span>
+<span class="nc bnc" id="L451" title="All 2 branches missed.">					|| featuresCopy.contains(ftLbpSaliency.getHead() + &quot;_&quot; + j + &quot;(S)&quot;))</span>
+<span class="fc" id="L452">				atts.add(new Attribute(ftLbpSaliency.getHead() + &quot;(&quot; + j + &quot;)(S)&quot;));</span>
+		}
+	
+<span class="fc" id="L455">		atts.add(new Attribute(&quot;Defecto&quot;, defect));</span>
+	
+		// Capacidad es el nÃºmero de instancias.
+<span class="fc" id="L458">		Instances header = new Instances(&quot;NuevaInstancia&quot;, atts, capacity);</span>
+		// Establecer la clase
+<span class="fc" id="L460">		header.setClassIndex(header.numAttributes() - 1);</span>
+	
+<span class="fc" id="L462">		return header;</span>
+	}
+	
+	/**
+	 * Creates a list of best features.
+	 * 
+	 * @return list with the features
+	 */
+	public List&lt;String&gt; obtainFeatures() {
+<span class="nc" id="L471">		List&lt;String&gt; features = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L472">		String[] bestFeatures = null;</span>
+		
+<span class="nc" id="L474">		int tam = prop.getTamVentana();</span>
+<span class="nc bnc" id="L475" title="All 5 branches missed.">		switch(tam){</span>
+		case 12:
+<span class="nc bnc" id="L477" title="All 2 branches missed.">			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana</span>
+<span class="nc" id="L478">				bestFeatures = new String[]{&quot;mean&quot;, &quot;firstDerivative&quot;, &quot;secondDerivative(S)&quot;, &quot;differenceVariance_mean1&quot;,</span>
+<span class="nc" id="L479">						&quot;imc_1_mean1&quot;, &quot;correlation_mean2&quot;, &quot;differenceVariance_mean2&quot;, &quot;imc_1_mean4&quot;,</span>
+<span class="nc" id="L480">						&quot;correlation_mean5&quot;, &quot;correlation_range1&quot;, &quot;inverseDifferenceMoment_range1&quot;,</span>
+<span class="nc" id="L481">						&quot;sumVariance_range1&quot;, &quot;contrast_range2&quot;, &quot;inverseDifferenceMoment_range2&quot;,</span>
+<span class="nc" id="L482">						&quot;inverseDifferenceMoment_range3&quot;, &quot;inverseDifferenceMoment_range4&quot;, &quot;imc_1_range4&quot;,</span>
+<span class="nc" id="L483">						&quot;contrast_range5&quot;, &quot;sumOfSquares_range5&quot;, &quot;inverseDifferenceMoment_range5&quot;,</span>
+<span class="nc" id="L484">						&quot;differenceEntropy_mean1(S)&quot;, &quot;sumEntropy_mean2(S)&quot;, &quot;differenceEntropy_mean2(S)&quot;,</span>
+<span class="nc" id="L485">						&quot;differenceEntropy_mean3(S)&quot;, &quot;LBP(7)&quot;, &quot;LBP(30)&quot;, &quot;LBP(32)&quot;, &quot;LBP(38)&quot;, &quot;LBP(31)(S)&quot;, &quot;LBP(41)(S)&quot;};</span>
+<span class="nc" id="L486">			}</span>
+			else{	//vecinos
+<span class="nc" id="L488">				bestFeatures = new String[]{&quot;standardDeviation&quot;, &quot;differenceVariance_mean1&quot;, &quot;correlation_mean2&quot;, &quot;sumEntropy_mean2&quot;,</span>
+<span class="nc" id="L489">						&quot;correlation_mean4&quot;, &quot;inverseDifferenceMoment_mean4&quot;, &quot;correlation_mean5&quot;, &quot;sumOfSquares_mean5&quot;, &quot;correlation_range1&quot;,</span>
+<span class="nc" id="L490">						&quot;inverseDifferenceMoment_range2&quot;, &quot;inverseDifferenceMoment_range3&quot;, &quot;angularSecondMoment_range4&quot;, &quot;sumOfSquares_range4&quot;,</span>
+<span class="nc" id="L491">						&quot;differenceVariance_range4&quot;, &quot;sumOfSquares_range5&quot;, &quot;inverseDifferenceMoment_range5&quot;, &quot;differenceEntropy_range5&quot;,</span>
+<span class="nc" id="L492">						&quot;imc_2_range5&quot;, &quot;correlation_mean2(S)&quot;, &quot;differenceEntropy_mean2(S)&quot;, &quot;inverseDifferenceMoment_mean5(S)&quot;,</span>
+<span class="nc" id="L493">						&quot;LBP(37)&quot;, &quot;LBP(26)(S)&quot;, &quot;LBP(27)(S)&quot;, &quot;LBP(40)(S)&quot;, &quot;LBP(44)(S)&quot;, &quot;LBP(47)(S)&quot;, &quot;LBP(52)(S)&quot;, &quot;LBP(55)(S)&quot;};</span>
+			}
+<span class="nc" id="L495">			break;</span>
+			
+		case 16:
+<span class="nc bnc" id="L498" title="All 2 branches missed.">			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana</span>
+<span class="nc" id="L499">				bestFeatures = new String[]{&quot;firstDerivative&quot;, &quot;secondDerivative&quot;, &quot;differenceVariance_mean1&quot;, &quot;imc_1_mean1&quot;, &quot;correlation_mean2&quot;,</span>
+<span class="nc" id="L500">						&quot;differenceEntropy_mean2&quot;, &quot;imc_1_mean2&quot;, &quot;sumAverage_mean5&quot;, &quot;inverseDifferenceMoment_range1&quot;, &quot;inverseDifferenceMoment_range2&quot;,</span>
+<span class="nc" id="L501">						&quot;inverseDifferenceMoment_range4&quot;, &quot;sumVariance_range4&quot;, &quot;differenceEntropy_mean1(S)&quot;, &quot;inverseDifferenceMoment_mean5(S)&quot;,</span>
+<span class="nc" id="L502">						&quot;differenceEntropy_range1(S)&quot;, &quot;differenceEntropy_range4(S)&quot;, &quot;LBP(4)&quot;, &quot;LBP(6)&quot;, &quot;LBP(19)&quot;, &quot;LBP(30)&quot;, &quot;LBP(32)&quot;,</span>
+<span class="nc" id="L503">						&quot;LBP(44)&quot;, &quot;LBP(15)(S)&quot;, &quot;LBP(34)(S)&quot;};</span>
+<span class="nc" id="L504">			}</span>
+			else{	//vecinos
+<span class="nc" id="L506">				bestFeatures = new String[]{&quot;standardDeviation&quot;, &quot;imc_1_mean1&quot;, &quot;sumAverage_mean2&quot;, &quot;imc_2_mean3&quot;, &quot;differenceVariance_mean4&quot;, &quot;imc_2_mean4&quot;,</span>
+<span class="nc" id="L507">						&quot;angularSecondMoment_range1&quot;, &quot;correlation_range1&quot;, &quot;inverseDifferenceMoment_range1&quot;, &quot;inverseDifferenceMoment_range2&quot;, &quot;inverseDifferenceMoment_range3&quot;,</span>
+<span class="nc" id="L508">						&quot;sumAverage_range3&quot;, &quot;sumOfSquares_range4&quot;, &quot;inverseDifferenceMoment_range4&quot;, &quot;differenceVariance_range4&quot;, &quot;sumOfSquares_range5&quot;, &quot;inverseDifferenceMoment_range5&quot;,</span>
+<span class="nc" id="L509">						&quot;differenceVariance_range5&quot;, &quot;correlation_mean2(S)&quot;, &quot;differenceEntropy_mean3(S)&quot;, &quot;differenceEntropy_mean4(S)&quot;, &quot;angularSecondMoment_mean5(S)&quot;,</span>
+<span class="nc" id="L510">						&quot;inverseDifferenceMoment_range4(S)&quot;, &quot;LBP(7)&quot;, &quot;LBP(48)&quot;, &quot;LBP(20)(S)&quot;, &quot;LBP(26)(S)&quot;, &quot;LBP(27)(S)&quot;, &quot;LBP(40)(S)&quot;, &quot;LBP(47)(S)&quot;, &quot;LBP(52)(S)&quot;};</span>
+			}
+<span class="nc" id="L512">			break;</span>
+			
+		case 24:
+<span class="nc bnc" id="L515" title="All 2 branches missed.">			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana</span>
+<span class="nc" id="L516">				bestFeatures = new String[]{&quot;firstDerivative&quot;, &quot;secondDerivative&quot;, &quot;firstDerivative(S)&quot;, &quot;secondDerivative(S)&quot;, &quot;sumOfSquares_mean1&quot;, &quot;differenceVariance_mean1&quot;,</span>
+<span class="nc" id="L517">						&quot;inverseDifferenceMoment_mean3&quot;, &quot;sumAverage_mean3&quot;, &quot;inverseDifferenceMoment_mean4&quot;, &quot;contrast_range1&quot;, &quot;inverseDifferenceMoment_range1&quot;, &quot;inverseDifferenceMoment_range2&quot;,</span>
+<span class="nc" id="L518">						&quot;inverseDifferenceMoment_range3&quot;, &quot;imc_1_range4&quot;, &quot;inverseDifferenceMoment_range5&quot;, &quot;sumVariance_range5&quot;, &quot;angularSecondMoment_mean5(S)&quot;, &quot;differenceEntropy_range1(S)&quot;,</span>
+<span class="nc" id="L519">						&quot;LBP(4)&quot;, &quot;LBP(7)&quot;, &quot;LBP(14)&quot;, &quot;LBP(17)&quot;, &quot;LBP(18)&quot;, &quot;LBP(18)&quot;, &quot;LBP(19)&quot;, &quot;LBP(20)&quot;, &quot;LBP(21)&quot;, &quot;LBP(26)&quot;, &quot;LBP(32)&quot;, &quot;LBP(38)&quot;, &quot;LBP(39)&quot;, &quot;LBP(44)&quot;, &quot;LBP(6)(S)&quot;, &quot;LBP(14)(S)&quot;,</span>
+<span class="nc" id="L520">						&quot;LBP(17)(S)&quot;, &quot;LBP(23)(S)&quot;, &quot;LBP(39)(S)&quot;, &quot;LBP(40)(S)&quot;};</span>
+<span class="nc" id="L521">			}</span>
+			else{	//vecinos
+<span class="nc" id="L523">				bestFeatures = new String[]{&quot;firstDerivative&quot;, &quot;correlation_mean1&quot;, &quot;imc_1_mean3&quot;, &quot;differenceVariance_mean4&quot;, &quot;imc_1_mean4&quot;, &quot;sumOfSquares_mean5&quot;, &quot;inverseDifferenceMoment_range1&quot;,</span>
+<span class="nc" id="L524">						&quot;differenceVariance_range1&quot;, &quot;inverseDifferenceMoment_range2&quot;, &quot;inverseDifferenceMoment_range3&quot;, &quot;sumOfSquares_range4&quot;, &quot;inverseDifferenceMoment_range4&quot;, &quot;angularSecondMoment_range5&quot;,</span>
+<span class="nc" id="L525">						&quot;inverseDifferenceMoment_range5&quot;, &quot;sumAverage_range5&quot;, &quot;differenceEntropy_mean2(S)&quot;, &quot;differenceEntropy_mean3(S)&quot;, &quot;angularSecondMoment_mean4(S)&quot;, &quot;angularSecondMoment_range5(S)&quot;,</span>
+<span class="nc" id="L526">						&quot;LBP(7)&quot;, &quot;LBP(10)&quot;, &quot;LBP(38)&quot;, &quot;LBP(43)&quot;, &quot;LBP(20)(S)&quot;, &quot;LBP(21)(S)&quot;, &quot;LBP(27)(S)&quot;, &quot;LBP(29)(S)&quot;, &quot;LBP(40)(S)&quot;, &quot;LBP(52)(S)&quot;, &quot;LBP(59)(S)&quot;};</span>
+			}
+<span class="nc" id="L528">			break;</span>
+			
+		case 32:
+<span class="nc bnc" id="L531" title="All 2 branches missed.">			if(prop.getTipoVentanaDefectuosa() == 0){	//ventana</span>
+<span class="nc" id="L532">				bestFeatures = new String[]{&quot;firstDerivative&quot;, &quot;secondDerivative&quot;, &quot;firstDerivative(S)&quot;, &quot;secondDerivative(S)&quot;, &quot;inverseDifferenceMoment_mean1&quot;, &quot;inverseDifferenceMoment_range1&quot;,</span>
+<span class="nc" id="L533">						&quot;inverseDifferenceMoment_range4&quot;, &quot;imc_1_range4&quot;, &quot;sumOfSquares_range5&quot;, &quot;LBP(17)&quot;, &quot;LBP(18)&quot;, &quot;LBP(20)&quot;, &quot;LBP(30)&quot;, &quot;LBP(34)&quot;, &quot;LBP(38)&quot;, &quot;LBP(39)&quot;, &quot;LBP(8)(S)&quot;,</span>
+<span class="nc" id="L534">						&quot;LBP(17)(S)&quot;, &quot;LBP(40)(S)&quot;};</span>
+<span class="nc" id="L535">			}</span>
+			else{	//vecinos
+<span class="nc" id="L537">				bestFeatures = new String[]{&quot;secondDerivative&quot;, &quot;secondDerivative(S)&quot;, &quot;sumOfSquares_mean1&quot;, &quot;inverseDifferenceMoment_mean1&quot;, &quot;differenceVariance_mean1&quot;, &quot;correlation_mean2&quot;,</span>
+<span class="nc" id="L538">						&quot;differenceVariance_mean2&quot;, &quot;differenceVariance_mean4&quot;, &quot;inverseDifferenceMoment_range1&quot;, &quot;sumAverage_range1&quot;, &quot;imc_1_range1&quot;, &quot;inverseDifferenceMoment_range2&quot;,</span>
+<span class="nc" id="L539">						&quot;inverseDifferenceMoment_range3&quot;, &quot;inverseDifferenceMoment_range4&quot;, &quot;imc_1_range4&quot;, &quot;inverseDifferenceMoment_range5&quot;, &quot;entropy_mean1(S)&quot;, &quot;differenceEntropy_mean1(S)&quot;,</span>
+<span class="nc" id="L540">						&quot;correlation_mean4(S)&quot;, &quot;inverseDifferenceMoment_mean5(S)&quot;, &quot;angularSecondMoment_range1(S)&quot;, &quot;angularSecondMoment_range2(S)&quot;, &quot;angularSecondMoment_range5(S)&quot;,</span>
+<span class="nc" id="L541">						&quot;inverseDifferenceMoment_range5(S)&quot;, &quot;LBP(7)&quot;, &quot;LBP(14)&quot;, &quot;LBP(15)&quot;, &quot;LBP(38)&quot;, &quot;LBP(6)(S)&quot;, &quot;LBP(13)(S)&quot;, &quot;LBP(14)(S)&quot;, &quot;LBP(20)(S)&quot;, &quot;LBP(21)(S)&quot;, &quot;LBP(34)(S)&quot;,</span>
+<span class="nc" id="L542">						&quot;LBP(39)(S)&quot;, &quot;LBP(40)(S)&quot;, &quot;LBP(52)(S)&quot;, &quot;LBP(55)(S)&quot;};</span>
+			}
+			break;
+		}
+
+<span class="nc" id="L547">		features = new ArrayList&lt;String&gt;();</span>
+
+<span class="nc bnc" id="L549" title="All 2 branches missed.">		for (int i = 0; i &lt; bestFeatures.length; i++) {</span>
+<span class="nc" id="L550">			features.add(bestFeatures[i]);</span>
+		}
+<span class="nc" id="L552">		return features;</span>
+	}
+
+	protected synchronized void setPorcentajeBarra() {		
+<span class="fc" id="L556">		progressBar.setValue(progressBar.getValue() + 1);</span>
+<span class="fc" id="L557">		progressBar.repaint();		</span>
+<span class="fc" id="L558">	}</span>
+
+	public synchronized void rellenarMatrizDefectos(int coordX, int coordY) {
+<span class="fc bfc" id="L561" title="All 2 branches covered.">		for (int i = coordY; i &lt; coordY + getAlturaVentana(); i++) {</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">			for (int j = coordX; j &lt; coordX + getAnchuraVentana(); j++) {</span>
+<span class="fc" id="L563">				defectMatrix[j][i]++;</span>
+			}
+		}
+<span class="fc" id="L566">	}</span>
+
+	public void ejecutarCalculos(int coordenadaX, int coordenadaY, ImagePlus imagen) {		
+<span class="fc" id="L569">		calcularStandard(coordenadaX, coordenadaY, imagen);				</span>
+<span class="fc" id="L570">		calcularStandardSaliency(coordenadaX, coordenadaY);				</span>
+<span class="fc" id="L571">		calcularLbp(coordenadaX, coordenadaY, imagen);				</span>
+<span class="fc" id="L572">		calcularLbpSaliency(coordenadaX, coordenadaY);</span>
+					
+<span class="fc" id="L574">		int total = 0;</span>
+<span class="fc bfc" id="L575" title="All 2 branches covered.">		for (int step = 1; step &lt; 6; step++) {</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">			for (int w = 0; w &lt; 4; w++) {</span>
+			
+<span class="fc" id="L578">				calcularHaralick(coordenadaX, coordenadaY, step, w, imagen);						</span>
+<span class="fc" id="L579">				calcularHaralickSaliency(coordenadaX, coordenadaY, step, w);</span>
+				
+<span class="pc bpc" id="L581" title="1 of 5 branches missed.">				switch (w) {</span>
+				case 0:
+<span class="fc" id="L583">					vector0 = ftHaralick.getVectorResultados();</span>
+<span class="fc" id="L584">					vector0sal = ftHaralickSaliency.getVectorResultados();</span>
+<span class="fc" id="L585">					break;</span>
+				case 1:
+<span class="fc" id="L587">					vector90 = ftHaralick.getVectorResultados();</span>
+<span class="fc" id="L588">					vector90sal = ftHaralickSaliency.getVectorResultados();</span>
+<span class="fc" id="L589">					break;</span>
+				case 2:
+<span class="fc" id="L591">					vector180 = ftHaralick.getVectorResultados();</span>
+<span class="fc" id="L592">					vector180sal = ftHaralickSaliency.getVectorResultados();</span>
+<span class="fc" id="L593">					break;</span>
+				case 3:
+<span class="fc" id="L595">					vector270 = ftHaralick.getVectorResultados();</span>
+<span class="fc" id="L596">					vector270sal = ftHaralickSaliency.getVectorResultados();</span>
+					break;
+				}
+	
+			}
+	
+<span class="fc" id="L602">			means = calculateMean(vector0, vector90, vector180, vector270);</span>
+<span class="fc" id="L603">			ranges = calculateRange(vector0, vector90, vector180, vector270);</span>
+			
+<span class="fc" id="L605">			meansSaliency = calculateMean(vector0sal, vector90sal, vector180sal, vector270sal);</span>
+<span class="fc" id="L606">			rangesSaliency = calculateRange(vector0sal, vector90sal, vector180sal, vector270sal);</span>
+	
+<span class="fc bfc" id="L608" title="All 2 branches covered.">			if (initializedNormal == false) {</span>
+<span class="fc" id="L609">				meanVector = new double[ftHaralick.getVectorResultados().length * 5];</span>
+<span class="fc" id="L610">				rangeVector = new double[ftHaralick.getVectorResultados().length * 5];</span>
+<span class="fc" id="L611">				meanVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];</span>
+<span class="fc" id="L612">				rangeVectorSaliency = new double[ftHaralickSaliency.getVectorResultados().length * 5];</span>
+<span class="fc" id="L613">				initializedNormal = true;</span>
+			}
+<span class="fc bfc" id="L615" title="All 2 branches covered.">			for (int k = 0; k &lt; means.length; k++) {</span>
+				// Sale un vector que contiene los 5 steps de medias
+<span class="fc" id="L617">				meanVector[total] = means[k];</span>
+<span class="fc" id="L618">				rangeVector[total] = ranges[k];</span>
+<span class="fc" id="L619">				meanVectorSaliency[total] = meansSaliency[k];</span>
+<span class="fc" id="L620">				rangeVectorSaliency[total] = rangesSaliency[k];</span>
+<span class="fc" id="L621">				total++;</span>
+			}
+		}
+<span class="fc" id="L624">	}</span>
+
+	public double clasificar() {
+<span class="fc" id="L627">		Instance instancia = crearInstancia();</span>
+<span class="fc" id="L628">		Classifier clas = abrirModelo();</span>
+<span class="fc" id="L629">		double clase = 0;</span>
+		try {
+<span class="fc" id="L631">			clase = clas.classifyInstance(instancia);</span>
+<span class="pc" id="L632">		} catch (Exception e) {</span>
+<span class="nc" id="L633">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L635">		return clase;</span>
+	}
+
+	public void generarArff(int coordenadaX, int coordenadaY, boolean defect) {
+<span class="fc" id="L639">		String featuresString = generateFeatures(null, defect);</span>
+<span class="fc" id="L640">		String headerFile = null;</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">		if(getNumHilo() == 0){</span>
+<span class="fc" id="L642">			headerFile = getHeader(false);</span>
+		}
+<span class="fc" id="L644">		GestorArff garff = new GestorArff();</span>
+<span class="fc" id="L645">		garff.crearArff(getNumHilo(), featuresString, headerFile);</span>
+<span class="fc" id="L646">	}</span>
+
+	/**
+	 * Method that generates a string of features.
+	 * 
+	 * @return string of features
+	 */
+	public String generateFeatures(int[] coordenates, boolean defect) {
+<span class="fc" id="L654">		String features = new String();</span>
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">		if (coordenates != null) {</span>
+<span class="nc" id="L656">			features += coordenates[0];</span>
+<span class="nc" id="L657">			features += &quot;, &quot;;</span>
+<span class="nc" id="L658">			features += coordenates[1];</span>
+<span class="nc" id="L659">			features += &quot;, &quot;;</span>
+		}
+	
+<span class="pc bpc" id="L662" title="1 of 2 branches missed.">		if (ftStandard != null) {</span>
+<span class="fc bfc" id="L663" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandard.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L664">				features += ftStandard.getVectorResultados()[i];</span>
+<span class="fc" id="L665">				features += &quot;, &quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L669" title="1 of 2 branches missed.">		if (ftStandardSaliency != null) {</span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandardSaliency.getVectorResultados().length; i++) {</span>
+<span class="fc" id="L671">				features += ftStandardSaliency.getVectorResultados()[i];</span>
+<span class="fc" id="L672">				features += &quot;, &quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L676" title="1 of 2 branches missed.">		if (ftHaralick != null) {</span>
+<span class="fc bfc" id="L677" title="All 2 branches covered.">			for (int i = 0; i &lt; meanVector.length; i++) {</span>
+<span class="fc" id="L678">				features += meanVector[i];</span>
+<span class="fc" id="L679">				features += &quot;, &quot;;</span>
+			}
+	
+<span class="fc bfc" id="L682" title="All 2 branches covered.">			for (int i = 0; i &lt; rangeVector.length; i++) {</span>
+<span class="fc" id="L683">				features += rangeVector[i];</span>
+<span class="fc" id="L684">				features += &quot;, &quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L688" title="1 of 2 branches missed.">		if (ftHaralickSaliency != null) {</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">			for (int i = 0; i &lt; meanVectorSaliency.length; i++) {</span>
+<span class="fc" id="L690">				features += meanVectorSaliency[i];</span>
+<span class="fc" id="L691">				features += &quot;, &quot;;</span>
+			}
+	
+<span class="fc bfc" id="L694" title="All 2 branches covered.">			for (int i = 0; i &lt; rangeVectorSaliency.length; i++) {</span>
+<span class="fc" id="L695">				features += rangeVectorSaliency[i];</span>
+<span class="fc" id="L696">				features += &quot;, &quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L700" title="1 of 2 branches missed.">		if (ftLbp != null) {</span>
+<span class="fc bfc" id="L701" title="All 2 branches covered.">			for (int i = 0; i &lt; lbp.length; i++) {</span>
+<span class="fc" id="L702">				features += lbp[i];</span>
+<span class="fc" id="L703">				features += &quot;, &quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L707" title="1 of 2 branches missed.">		if (ftLbpSaliency != null) {</span>
+<span class="fc bfc" id="L708" title="All 2 branches covered.">			for (int i = 0; i &lt; lbpSaliency.length; i++) {</span>
+<span class="fc" id="L709">				features += lbpSaliency[i];</span>
+<span class="fc" id="L710">				features += &quot;, &quot;;</span>
+			}
+		}
+		
+<span class="fc" id="L714">		int opcionClasificacion = prop.getTipoClasificacion();</span>
+		
+<span class="pc bpc" id="L716" title="2 of 3 branches missed.">		switch(opcionClasificacion){</span>
+			case 0:
+				//CLASIFICACIÓN CLASE NOMINAL (TRUE, FALSE)
+<span class="fc" id="L719">				features += defect;</span>
+<span class="fc" id="L720">				break;</span>
+			case 1:
+				//REGRESIÓN (CLASE 1,0)
+<span class="nc bnc" id="L723" title="All 2 branches missed.">				if(defect){</span>
+<span class="nc" id="L724">					features += &quot;1&quot;;</span>
+<span class="nc" id="L725">				}</span>
+				else{
+<span class="nc" id="L727">					features += &quot;0&quot;;</span>
+				}
+				break;
+		}
+<span class="fc" id="L731">		return features;</span>
+	}
+
+	/**
+	 * Method that generates a header for the file that will store the
+	 * characteristics.
+	 * 
+	 * @return string with the header
+	 */
+	public String getHeader(boolean coordenadas) {
+<span class="fc" id="L741">		String header = new String();</span>
+<span class="fc" id="L742">		header += &quot;% 1. Titulo: Deteccion de defectos en piezas metalicas \n%\n&quot;;</span>
+<span class="fc" id="L743">		header += &quot;% 2. Fuentes:\n&quot;;</span>
+<span class="fc" id="L744">		header += &quot;%       (a) Creador: Adrian Gonzalez Duarte\n&quot;;</span>
+<span class="fc" id="L745">		header += &quot;%       (b) Creador: Joaquin Bravo Panadero\n&quot;;</span>
+<span class="fc" id="L746">		header += &quot;@relation deteccionDefectos \n&quot;;</span>
+<span class="pc bpc" id="L747" title="1 of 2 branches missed.">		if (coordenadas) {</span>
+<span class="nc" id="L748">			header += &quot;@attribute coordenadasX INTEGER\n&quot;;</span>
+<span class="nc" id="L749">			header += &quot;@attribute coordenadasY INTEGER\n&quot;;</span>
+		}
+<span class="fc" id="L751">		header += getStandardAttributes();</span>
+<span class="fc" id="L752">		header += getHaralickAttributes();</span>
+<span class="fc" id="L753">		header += getLbpAttributes();</span>
+		
+<span class="fc" id="L755">		int opcionClasificacion = prop.getTipoClasificacion();</span>
+		
+<span class="pc bpc" id="L757" title="2 of 3 branches missed.">		switch(opcionClasificacion){</span>
+			case 0:
+				//CLASIFICACIÓN CON CLASE NOMINAL
+<span class="fc" id="L760">				header += &quot;@ATTRIBUTE class {true, false}\n&quot;;</span>
+<span class="fc" id="L761">				break;</span>
+			case 1:
+				//REGRESIÓN (CLASE 1,0)
+<span class="nc" id="L764">				header += &quot;@ATTRIBUTE class numeric\n&quot;;</span>
+				break;
+<span class="fc" id="L766">		}</span>
+<span class="fc" id="L767">		header += &quot;@data\n&quot;;</span>
+<span class="fc" id="L768">		return header;</span>
+	}
+
+	/**
+	 * Method that generates a string with the name and type of each standard
+	 * attribute. In Weka arff format.
+	 * 
+	 * @return string with the information of all attributes
+	 */
+	private String getStandardAttributes() {
+<span class="fc" id="L778">		String attributesString = new String();</span>
+<span class="pc bpc" id="L779" title="1 of 2 branches missed.">		if (ftStandard != null) {</span>
+<span class="fc bfc" id="L780" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandard.getHead().length; i++) {</span>
+<span class="fc" id="L781">				attributesString += &quot;@attribute &quot; + ftStandard.getHead()[i]</span>
+<span class="fc" id="L782">						+ &quot; REAL\n&quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L786" title="1 of 2 branches missed.">		if (ftStandardSaliency != null) {</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">			for (int i = 0; i &lt; ftStandardSaliency.getHead().length; i++) {</span>
+<span class="fc" id="L788">				attributesString += &quot;@attribute &quot;</span>
+<span class="fc" id="L789">						+ ftStandardSaliency.getHead()[i] + &quot;(S)&quot; + &quot; REAL\n&quot;;</span>
+			}
+		}
+<span class="fc" id="L792">		return attributesString;</span>
+	}
+
+	/**
+	 * Method that generates a string with the name and type of each haralick
+	 * attribute. In Weka arff format.
+	 * 
+	 * @return string with the information of all attributes
+	 */
+	private String getHaralickAttributes() {
+<span class="fc" id="L802">		String attributesString = new String();</span>
+	
+<span class="pc bpc" id="L804" title="1 of 2 branches missed.">		if (ftHaralick != null) {</span>
+<span class="fc bfc" id="L805" title="All 2 branches covered.">			for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">				for (int i = 0; i &lt; ftHaralick.getHead().length; i++) {</span>
+<span class="fc" id="L807">					attributesString += &quot;@attribute &quot; + ftHaralick.getHead()[i]</span>
+<span class="fc" id="L808">							+ &quot;_mean&quot; + j + &quot; REAL\n&quot;;</span>
+				}
+			}
+	
+<span class="fc bfc" id="L812" title="All 2 branches covered.">			for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L813" title="All 2 branches covered.">				for (int i = 0; i &lt; ftHaralick.getHead().length; i++) {</span>
+<span class="fc" id="L814">					attributesString += &quot;@attribute &quot; + ftHaralick.getHead()[i]</span>
+<span class="fc" id="L815">							+ &quot;_range&quot; + j + &quot; REAL\n&quot;;</span>
+				}
+			}
+		}
+	
+<span class="pc bpc" id="L820" title="1 of 2 branches missed.">		if (ftHaralickSaliency != null) {</span>
+<span class="fc bfc" id="L821" title="All 2 branches covered.">			for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L822" title="All 2 branches covered.">				for (int i = 0; i &lt; ftHaralickSaliency.getHead().length; i++) {</span>
+<span class="fc" id="L823">					attributesString += &quot;@attribute &quot;</span>
+<span class="fc" id="L824">							+ ftHaralickSaliency.getHead()[i] + &quot;_mean&quot; + j</span>
+<span class="fc" id="L825">							+ &quot;(S)&quot; + &quot; REAL\n&quot;;</span>
+				}
+			}
+	
+<span class="fc bfc" id="L829" title="All 2 branches covered.">			for (int j = 1; j &lt; 6; j++) {</span>
+<span class="fc bfc" id="L830" title="All 2 branches covered.">				for (int i = 0; i &lt; ftHaralickSaliency.getHead().length; i++) {</span>
+<span class="fc" id="L831">					attributesString += &quot;@attribute &quot;</span>
+<span class="fc" id="L832">							+ ftHaralickSaliency.getHead()[i] + &quot;_range&quot; + j</span>
+<span class="fc" id="L833">							+ &quot;(S)&quot; + &quot; REAL\n&quot;;</span>
+				}
+			}
+		}
+	
+<span class="fc" id="L838">		return attributesString;</span>
+	}
+
+	/**
+	 * Method that generates a string with the name and type of each lbp
+	 * attribute. In Weka arff format.
+	 * 
+	 * @return string with the information of all attributes
+	 */
+	private String getLbpAttributes() {
+<span class="fc" id="L848">		String attributesString = new String();</span>
+<span class="fc" id="L849">		int[] lbpHead = new int[59];</span>
+		
+<span class="fc bfc" id="L851" title="All 2 branches covered.">		for (int x = 0; x &lt; 59; x++) {</span>
+<span class="fc" id="L852">			lbpHead[x] = x + 1;</span>
+		}
+	
+<span class="pc bpc" id="L855" title="1 of 2 branches missed.">		if (lbp != null) {</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">			for (int i = 0; i &lt; lbpHead.length; i++) {</span>
+<span class="fc" id="L857">				attributesString += &quot;@attribute &quot; + ftLbp.getHead()[0] + &quot;(&quot;</span>
+<span class="fc" id="L858">						+ lbpHead[i] + &quot;) REAL\n&quot;;</span>
+			}
+		}
+	
+<span class="pc bpc" id="L862" title="1 of 2 branches missed.">		if (lbpSaliency != null) {</span>
+<span class="fc bfc" id="L863" title="All 2 branches covered.">			for (int i = 0; i &lt; lbpHead.length; i++) {</span>
+<span class="fc" id="L864">				attributesString += &quot;@attribute &quot; + ftLbpSaliency.getHead()[0] + &quot;(&quot;</span>
+<span class="fc" id="L865">						+ lbpHead[i] + &quot;)(S) REAL\n&quot;;</span>
+			}
+		}
+	
+<span class="fc" id="L869">		return attributesString;</span>
+	}
+
+	/**
+	 * This method checks in the mask if the region of interest analyzed has a
+	 * colored defect. It returns true if the region has defects. If there is no
+	 * defects, it returns false.
+	 * 
+	 * @param img
+	 *            mask with colored defects
+	 * @return true if it has defects, false if not
+	 */
+	protected boolean getDefecto(ImagePlus img) {
+	
+<span class="fc" id="L883">		int heuristica = prop.getTipoVentanaDefectuosa();</span>
+
+<span class="pc bpc" id="L885" title="1 of 3 branches missed.">		switch (heuristica) {</span>
+			case 0:
+<span class="fc" id="L887">				return porcentajeVentanaMal(img);</span>
+			case 1:
+<span class="fc" id="L889">				return porcentajeVecinosMal(img);</span>
+		}
+		
+<span class="nc" id="L892">		return false;</span>
+	}
+
+	public boolean porcentajeVecinosMal(ImagePlus img) {
+		int[] defectVector;
+		//Pixel Central + Vecinos Malo
+<span class="fc" id="L898">		int x = (int) img.getProcessor().getRoi().getCenterX();</span>
+<span class="fc" id="L899">		int y = (int) img.getProcessor().getRoi().getCenterY();</span>
+<span class="fc" id="L900">		int pixelDef = 0;</span>
+		//región de vecinos de 3x3
+<span class="fc bfc" id="L902" title="All 2 branches covered.">		for (int i=-1; i&lt;2;  i++){</span>
+<span class="fc bfc" id="L903" title="All 2 branches covered.">			for (int j=-1; j&lt;2;  j++){</span>
+<span class="fc" id="L904">				defectVector = img.getPixel(x+j, y+i);</span>
+<span class="pc bpc" id="L905" title="2 of 4 branches missed.">				if ((defectVector[1] != 255 &amp;&amp; defectVector[1] != 0)</span>
+<span class="pc bpc" id="L906" title="2 of 4 branches missed.">						|| (defectVector[2] != 255 &amp;&amp; defectVector[2] != 0)) {</span>
+<span class="nc" id="L907">					pixelDef++;</span>
+<span class="nc bnc" id="L908" title="All 2 branches missed.">					if(pixelDef &gt; (prop.getPorcentajePixeles()*9)){	//porcentaje de la región del centro de la ventana</span>
+<span class="nc" id="L909">						return true;</span>
+					}				
+				}
+			}
+		}
+<span class="fc" id="L914">		return false;</span>
+	}
+
+	public boolean porcentajeVentanaMal(ImagePlus img) {
+		int[] defectVector;
+		// Porcentaje de Pixel mal
+<span class="fc" id="L920">		int numPixVentana = getAlturaVentana() * getAnchuraVentana();</span>
+<span class="fc" id="L921">		int pixelDef = 0;</span>
+<span class="fc bfc" id="L922" title="All 2 branches covered.">		for (int y = 0; y &lt; img.getHeight(); y++) {</span>
+<span class="fc bfc" id="L923" title="All 2 branches covered.">			for (int x = 0; x &lt; img.getWidth(); x++) {</span>
+<span class="fc" id="L924">				defectVector = img.getPixel(x, y);</span>
+				// El valor 0 del vector, guarda el valor en escala de grises.
+				// Por eso no nos interesa.
+<span class="fc bfc" id="L927" title="All 4 branches covered.">				if ((defectVector[1] != 255 &amp;&amp; defectVector[1] != 0)</span>
+<span class="pc bpc" id="L928" title="1 of 4 branches missed.">						|| (defectVector[2] != 255 &amp;&amp; defectVector[2] != 0)) {</span>
+<span class="fc" id="L929">					pixelDef++;</span>
+<span class="pc bpc" id="L930" title="1 of 2 branches missed.">					if(pixelDef&gt;(prop.getPorcentajePixeles()*numPixVentana)){</span>
+<span class="nc" id="L931">						return true;</span>
+					}					
+				}
+			}
+		}
+<span class="fc" id="L936">		return false;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

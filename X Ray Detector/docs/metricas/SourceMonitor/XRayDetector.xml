@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<sourcemonitor_metrics>
+  <project version="3.4">
+    <project_name>XRayDetector</project_name>
+    <project_directory>C:\Users\Adrián\Desktop\XRayDetector\XRayDetector\src</project_directory>
+    <project_language>Java</project_language>
+    <ignore_headers_footers>true</ignore_headers_footers>
+    <export_raw_numbers>false</export_raw_numbers>
+    <metric_names name_count="15">
+      <metric_name id="M0" type="number">Lines</metric_name>
+      <metric_name id="M1" type="number">Statements</metric_name>
+      <metric_name id="M2" type="percent" divisor="M1">Percent Branch Statements</metric_name>
+      <metric_name id="M3" type="number">Method Call Statements</metric_name>
+      <metric_name id="M4" type="percent" divisor="M0">Percent Lines with Comments</metric_name>
+      <metric_name id="M5" type="number">Classes and Interfaces</metric_name>
+      <metric_name id="M6" type="ratio" divisor="M5">Methods per Class</metric_name>
+      <metric_name id="M7" type="ratio" divisor="M6">Average Statements per Method</metric_name>
+      <metric_name id="M8" type="string">Line Number of Most Complex Method</metric_name>
+      <metric_name id="M9" type="string">Name of Most Complex Method</metric_name>
+      <metric_name id="M10" type="maximum">Maximum Complexity</metric_name>
+      <metric_name id="M11" type="string">Line Number of Deepest Block</metric_name>
+      <metric_name id="M12" type="maximum">Maximum Block Depth</metric_name>
+      <metric_name id="M13" type="average" values="block_depths">Average Block Depth</metric_name>
+      <metric_name id="M14" type="average">Average Complexity</metric_name>
+    </metric_names>
+    <checkpoints checkpoint_count="1">
+      <checkpoint checkpoint_name="Baseline" checkpoint_date="2013-06-08" ignore_blank_lines="true" modified_complexity="false" checkpoint_files="26">
+        <metrics metric_count="15">
+          <metric id="M0">9817</metric>
+          <metric id="M1">6571</metric>
+          <metric id="M2">12,1</metric>
+          <metric id="M3">5098</metric>
+          <metric id="M4">11,5</metric>
+          <metric id="M5">52</metric>
+          <metric id="M6">6,67</metric>
+          <metric id="M7">14,62</metric>
+          <metric id="M8"></metric>
+          <metric id="M9">Thresholder.applyThreshold()</metric>
+          <metric id="M10">37</metric>
+          <metric id="M11"></metric>
+          <metric id="M12">8</metric>
+          <metric id="M13">2,19</metric>
+          <metric id="M14">3,52</metric>
+        </metrics>
+        <block_depths depth_count="10">
+          <block_depth level="0">661</block_depth>
+          <block_depth level="1">909</block_depth>
+          <block_depth level="2">2680</block_depth>
+          <block_depth level="3">1526</block_depth>
+          <block_depth level="4">541</block_depth>
+          <block_depth level="5">222</block_depth>
+          <block_depth level="6">42</block_depth>
+          <block_depth level="7">7</block_depth>
+          <block_depth level="8">2</block_depth>
+          <block_depth level="9+">0</block_depth>
+        </block_depths>
+      </checkpoint>
+    </checkpoints>
+  </project>
+</sourcemonitor_metrics>

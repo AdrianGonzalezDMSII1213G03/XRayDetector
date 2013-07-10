@@ -1,0 +1,1363 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PanelAplicacion.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.interfaz</a> &gt; <span class="el_source">PanelAplicacion.java</span></div><h1>PanelAplicacion.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package es.ubu.XRayDetector.interfaz;</span>
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.Overlay;
+import ij.gui.Roi;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Enumeration;
+
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+
+
+import org.apache.commons.io.FileUtils;
+
+import es.ubu.XRayDetector.modelo.Fachada;
+import es.ubu.XRayDetector.utils.Graphic;
+import es.ubu.XRayDetector.utils.MyLogHandler;
+import es.ubu.XRayDetector.utils.Propiedades;
+
+import javax.swing.SwingConstants;
+
+public class PanelAplicacion{
+
+	private JFrame frmXraydetector;
+	private JPanel panelProgreso_1;
+	private Graphic imgPanel;
+	private JTextPane txtLog;
+	private JButton btnAnalizar;
+	private static Fachada fachada;
+	private Thread thread;
+	private Rectangle selection;
+	private Rectangle selectionCopy;
+	private File model;
+	private File arff;
+	private JProgressBar progressBar;
+	private File maskDirectory;
+	private File originalDirectory;
+<span class="nc" id="L83">	private boolean sameFiles = false;</span>
+	private JButton btnEntrenarClasificador;
+	private JButton btnAbrirImagen;
+	private boolean imagenAbierta;
+	private JButton btnStop;
+	private ImagePlus img;
+<span class="nc" id="L89">	private boolean parado = false;</span>
+	private static Propiedades prop;
+	private JSlider slider;
+	private HTMLEditorKit kit;
+    private HTMLDocument doc;
+    private JPanel panelLog_1;
+    private JButton btnLimpiarLog;
+    private JButton btnExportarLog;
+    private JButton btnGuardarImagenAnalizada;
+    private JButton btnGuardarImagenBinarizada;
+    private JButton btnPrecisionRecall;
+    private JTable tablaResultados;
+    private JPanel panelTabla_1;
+    private ImagePlus copiaEdges;
+    
+
+	/**
+	 * Create the application.
+	 */
+<span class="nc" id="L108">	public PanelAplicacion() {</span>
+<span class="nc" id="L109">		initialize();</span>
+<span class="nc" id="L110">		prop = Propiedades.getInstance();</span>
+<span class="nc" id="L111">		fachada = Fachada.getInstance();		</span>
+<span class="nc" id="L112">	}</span>
+	
+	public JFrame getFrameXRayDetector(){
+<span class="nc" id="L115">		return frmXraydetector;</span>
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		try {
+<span class="nc" id="L124">			UIManager.setLookAndFeel(&quot;com.sun.java.swing.plaf.windows.WindowsLookAndFeel&quot;);</span>
+<span class="nc" id="L125">		} catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L126">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L127">			e.printStackTrace();</span>
+<span class="nc" id="L128">		} catch (InstantiationException e) {</span>
+<span class="nc" id="L129">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L130">			e.printStackTrace();</span>
+<span class="nc" id="L131">		} catch (IllegalAccessException e) {</span>
+<span class="nc" id="L132">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L133">			e.printStackTrace();</span>
+<span class="nc" id="L134">		} catch (UnsupportedLookAndFeelException e) {</span>
+<span class="nc" id="L135">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L136">			e.printStackTrace();</span>
+		}
+		
+<span class="nc" id="L139">		getJFramePrincipal();</span>
+		
+<span class="nc" id="L141">		JPanel panelControl = getPanelControl();</span>
+		
+<span class="nc" id="L143">		getBtnAbrirImagen(panelControl);</span>
+		
+<span class="nc" id="L145">		getBtnEntrenar(panelControl);</span>
+		
+<span class="nc" id="L147">		getBtnAnalizar(panelControl);</span>
+		
+<span class="nc" id="L149">		JPanel panelProgreso = getPanelProgreso();</span>
+		
+<span class="nc" id="L151">		getProgressBar(panelProgreso);</span>
+		
+<span class="nc" id="L153">		getBtnStop(panelProgreso);</span>
+		
+<span class="nc" id="L155">		JPanel panelImagen = getPanelImagen();</span>
+		
+<span class="nc" id="L157">		getImgPanel(panelImagen);</span>
+		
+		
+<span class="nc" id="L160">		JPanel panelLog = getPanelLog();</span>
+			
+<span class="nc" id="L162">		txtLog = getTxtLog(panelLog);</span>
+		
+<span class="nc" id="L164">		getBotonExportarLog();</span>
+<span class="nc" id="L165">		getBotonLimpiarLog();</span>
+		
+<span class="nc" id="L167">		JPanel panelSlider = getPanelSlider();</span>
+		
+<span class="nc" id="L169">		getSlider(panelSlider);</span>
+		
+<span class="nc" id="L171">		getPanelTabla();</span>
+		
+<span class="nc" id="L173">		getTablaResultados(panelTabla_1);</span>
+<span class="nc" id="L174">		imgPanel.setFocusable(true);</span>
+		
+<span class="nc" id="L176">		JPanel panelAnalizarResultados = getPanelAnalizarResultados();</span>
+		
+<span class="nc" id="L178">		getButtonGuardarImagenAnalizada(panelAnalizarResultados);</span>
+					
+<span class="nc" id="L180">		getButtonGuardarImagenBinarizada(panelAnalizarResultados);</span>
+		
+<span class="nc" id="L182">		getButtonPrecisionRecall(panelAnalizarResultados);</span>
+		
+<span class="nc" id="L184">		selectionCopy = new Rectangle();</span>
+		
+		try {
+<span class="nc" id="L187">			File fichero = new File(&quot;./res/ayuda/ayuda.hs&quot;);</span>
+<span class="nc" id="L188">			URL hsURL = fichero.toURI().toURL();</span>
+<span class="nc" id="L189">			HelpSet hs =  new HelpSet(null, hsURL);</span>
+<span class="nc" id="L190">			HelpBroker hb = hs.createHelpBroker();</span>
+<span class="nc" id="L191">			hb.enableHelpKey(frmXraydetector.getContentPane(), &quot;ventanaentrenamientodeteccion&quot;, hs);</span>
+<span class="nc" id="L192">		}</span>
+<span class="nc" id="L193">		catch (MalformedURLException e) {</span>
+<span class="nc" id="L194">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L195">			e.printStackTrace();</span>
+		} 
+<span class="nc" id="L197">		catch (HelpSetException e) {</span>
+<span class="nc" id="L198">			MyLogHandler.writeException(e);</span>
+<span class="nc" id="L199">			e.printStackTrace();</span>
+		}
+	
+<span class="nc" id="L202">	}</span>
+
+	public void getButtonPrecisionRecall(JPanel panelAnalizarResultados) {
+<span class="nc" id="L205">		btnPrecisionRecall = new JButton(&quot;&lt;html&gt;&lt;CENTER&gt;Precision &amp; Recall&lt;/CENTER&gt;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L206">		btnPrecisionRecall.setToolTipText(&quot;Calcula las medidas de precision &amp; recall&quot;);</span>
+<span class="nc" id="L207">		btnPrecisionRecall.setPreferredSize(new Dimension(230, 36));</span>
+<span class="nc" id="L208">		btnPrecisionRecall.setMinimumSize(new Dimension(80, 30));		</span>
+<span class="nc" id="L209">		btnPrecisionRecall.addActionListener(new PrecisionRecallListener());</span>
+<span class="nc" id="L210">		btnPrecisionRecall.setEnabled(false);</span>
+<span class="nc" id="L211">		panelAnalizarResultados.add(btnPrecisionRecall);</span>
+<span class="nc" id="L212">	}</span>
+
+	public void getButtonGuardarImagenBinarizada(JPanel panelAnalizarResultados) {
+<span class="nc" id="L215">		btnGuardarImagenBinarizada = new JButton(&quot;&lt;html&gt;&lt;CENTER&gt;Guardar defectos&lt;br&gt;binarizados&lt;/CENTER&gt;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L216">		btnGuardarImagenBinarizada.setToolTipText(&quot;Guarda una imagen de los defectos detectados binarizados&quot;);</span>
+<span class="nc" id="L217">		btnGuardarImagenBinarizada.addActionListener(new GuardarImagenBinarizadaListener());</span>
+<span class="nc" id="L218">		btnGuardarImagenBinarizada.setEnabled(false);</span>
+<span class="nc" id="L219">		panelAnalizarResultados.add(btnGuardarImagenBinarizada);</span>
+<span class="nc" id="L220">	}</span>
+
+	public void getButtonGuardarImagenAnalizada(JPanel panelAnalizarResultados) {
+<span class="nc" id="L223">		btnGuardarImagenAnalizada = new JButton(&quot;&lt;html&gt;&lt;CENTER&gt;Guardar imagen&lt;br&gt;analizada&lt;/CENTER&gt;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L224">		btnGuardarImagenAnalizada.setToolTipText(&quot;Guarda la imagen del visor&quot;);</span>
+<span class="nc" id="L225">		btnGuardarImagenAnalizada.addActionListener(new GuardarImagenAnalizadaListener());</span>
+<span class="nc" id="L226">		btnGuardarImagenAnalizada.setEnabled(false);</span>
+<span class="nc" id="L227">		panelAnalizarResultados.add(btnGuardarImagenAnalizada);</span>
+<span class="nc" id="L228">	}</span>
+
+	public JPanel getPanelAnalizarResultados() {
+<span class="nc" id="L231">		JPanel panelAnalizarResultados = new JPanel();</span>
+<span class="nc" id="L232">		panelAnalizarResultados.setBorder(new TitledBorder(null, &quot;Analizar resultados&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L233">		panelAnalizarResultados.setBounds(10, 302, 262, 112);</span>
+<span class="nc" id="L234">		panelAnalizarResultados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));</span>
+<span class="nc" id="L235">		frmXraydetector.getContentPane().add(panelAnalizarResultados);</span>
+<span class="nc" id="L236">		return panelAnalizarResultados;</span>
+	}
+
+	public void getPanelTabla() {
+<span class="nc" id="L240">		panelTabla_1 = new JPanel();</span>
+<span class="nc" id="L241">		panelTabla_1.setBorder(new TitledBorder(null, &quot;Tabla de resultados&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L242">		panelTabla_1.setBounds(282, 572, 750, 173);</span>
+<span class="nc" id="L243">		frmXraydetector.getContentPane().add(panelTabla_1);</span>
+<span class="nc" id="L244">	}</span>
+
+	public void getTablaResultados(JPanel panelTabla) {
+<span class="nc" id="L247">		tablaResultados = new JTable();</span>
+<span class="nc" id="L248">		tablaResultados.setModel(new DefaultTableModel(</span>
+<span class="nc" id="L249">			new Object[][] {</span>
+			},
+<span class="nc" id="L251">			new String[] {</span>
+<span class="nc" id="L252">				&quot;Regi\u00F3n&quot;, &quot;\u00C1rea&quot;, &quot;Per\u00EDmetro&quot;, &quot;Circularidad&quot;, &quot;Redondez&quot;, &quot;Semieje Mayor&quot;, &quot;Semieje Menor&quot;, &quot;\u00C1ngulo&quot;, &quot;Distancia Feret&quot;</span>
+			}
+		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="nc" id="L260">			Class[] columnTypes = new Class[] {</span>
+<span class="nc" id="L261">				Integer.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class</span>
+			};
+			@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+			public Class getColumnClass(int columnIndex) {
+<span class="nc" id="L265">				return columnTypes[columnIndex];</span>
+			}
+			
+			@Override
+			public boolean isCellEditable(int row, int column) {
+<span class="nc" id="L270">				return false;</span>
+			}
+		});
+<span class="nc" id="L273">		resizeColumnas();</span>
+<span class="nc" id="L274">		tablaResultados.setEnabled(false);</span>
+<span class="nc" id="L275">		tablaResultados.setRowSelectionAllowed(true);</span>
+<span class="nc" id="L276">		tablaResultados.addMouseListener(new TableMouseListener());</span>
+<span class="nc" id="L277">		panelTabla_1.setLayout(null);</span>
+<span class="nc" id="L278">		JScrollPane scrlPane = new JScrollPane(tablaResultados);</span>
+<span class="nc" id="L279">		scrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);</span>
+<span class="nc" id="L280">		scrlPane.setBounds(10, 21, 730, 141);</span>
+<span class="nc" id="L281">		panelTabla.add(scrlPane);</span>
+<span class="nc" id="L282">		imgPanel.setTablaResultados(tablaResultados);</span>
+<span class="nc" id="L283">	}</span>
+
+	public void resizeColumnas() {
+<span class="nc" id="L286">		tablaResultados.getColumnModel().getColumn(0).setPreferredWidth(60);</span>
+<span class="nc" id="L287">		tablaResultados.getColumnModel().getColumn(1).setPreferredWidth(100);</span>
+<span class="nc" id="L288">		tablaResultados.getColumnModel().getColumn(2).setPreferredWidth(100);</span>
+<span class="nc" id="L289">		tablaResultados.getColumnModel().getColumn(3).setPreferredWidth(100);</span>
+<span class="nc" id="L290">		tablaResultados.getColumnModel().getColumn(4).setPreferredWidth(100);</span>
+<span class="nc" id="L291">		tablaResultados.getColumnModel().getColumn(5).setPreferredWidth(100);</span>
+<span class="nc" id="L292">		tablaResultados.getColumnModel().getColumn(6).setPreferredWidth(100);</span>
+<span class="nc" id="L293">		tablaResultados.getColumnModel().getColumn(7).setPreferredWidth(60);</span>
+<span class="nc" id="L294">		tablaResultados.getColumnModel().getColumn(8).setPreferredWidth(100);</span>
+<span class="nc" id="L295">	}</span>
+
+	public void getBotonLimpiarLog() {
+<span class="nc" id="L298">		btnLimpiarLog = new JButton(&quot;Limpiar Log&quot;);</span>
+<span class="nc" id="L299">		btnLimpiarLog.setToolTipText(&quot;Limpia el \u00E1rea de texto del log&quot;);</span>
+<span class="nc" id="L300">		btnLimpiarLog.setMaximumSize(new Dimension(95, 30));</span>
+<span class="nc" id="L301">		btnLimpiarLog.setMinimumSize(new Dimension(95, 30));</span>
+<span class="nc" id="L302">		btnLimpiarLog.setPreferredSize(new Dimension(95, 30));</span>
+<span class="nc" id="L303">		btnLimpiarLog.setBounds(10, 281, 116, 30);</span>
+<span class="nc" id="L304">		btnLimpiarLog.addActionListener(new LimpiarLogListener());</span>
+<span class="nc" id="L305">		btnLimpiarLog.setIcon(new ImageIcon(&quot;./res/img/app/trash.png&quot;));</span>
+<span class="nc" id="L306">		btnLimpiarLog.setHorizontalTextPosition(SwingConstants.LEFT);</span>
+<span class="nc" id="L307">		btnLimpiarLog.setIconTextGap(5);</span>
+<span class="nc" id="L308">		panelLog_1.add(btnLimpiarLog);</span>
+<span class="nc" id="L309">	}</span>
+
+	public void getBotonExportarLog() {
+<span class="nc" id="L312">		btnExportarLog = new JButton(&quot;Exportar&quot;);</span>
+<span class="nc" id="L313">		btnExportarLog.setToolTipText(&quot;Permite exportar el log a un HTML&quot;);</span>
+<span class="nc" id="L314">		btnExportarLog.setBounds(136, 281, 116, 30);</span>
+<span class="nc" id="L315">		btnExportarLog.addActionListener(new ExportarLogListener());</span>
+<span class="nc" id="L316">		btnExportarLog.setIcon(new ImageIcon(&quot;./res/img/app/exporthtml.png&quot;));</span>
+<span class="nc" id="L317">		btnExportarLog.setHorizontalTextPosition(SwingConstants.LEFT);</span>
+<span class="nc" id="L318">		btnExportarLog.setIconTextGap(5);</span>
+<span class="nc" id="L319">		panelLog_1.add(btnExportarLog);</span>
+<span class="nc" id="L320">	}</span>
+
+	public void getSlider(JPanel panelSlider) {
+<span class="nc" id="L323">		slider = new JSlider();</span>
+<span class="nc" id="L324">		slider.setEnabled(false);</span>
+<span class="nc" id="L325">		slider.setMinorTickSpacing(1);</span>
+<span class="nc" id="L326">		slider.setMajorTickSpacing(4);</span>
+<span class="nc" id="L327">		slider.setPaintLabels(true);</span>
+<span class="nc" id="L328">		slider.setPaintTicks(true);</span>
+<span class="nc" id="L329">		slider.setToolTipText(&quot;Rango de toleracia de ajuste al defecto&quot;);</span>
+<span class="nc" id="L330">		slider.setValue(14);</span>
+<span class="nc" id="L331">		slider.setMinimum(4);</span>
+<span class="nc" id="L332">		slider.setMaximum(24);</span>
+<span class="nc" id="L333">		slider.addChangeListener(new SliderListener());</span>
+<span class="nc" id="L334">		panelSlider.add(slider);</span>
+<span class="nc" id="L335">	}</span>
+
+	public JPanel getPanelSlider() {
+<span class="nc" id="L338">		JPanel panelSlider = new JPanel();</span>
+<span class="nc" id="L339">		panelSlider.setBorder(new TitledBorder(null, &quot;Nivel de tolerancia&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L340">		panelSlider.setBounds(10, 218, 262, 73);</span>
+<span class="nc" id="L341">		frmXraydetector.getContentPane().add(panelSlider);</span>
+<span class="nc" id="L342">		panelSlider.setLayout(new GridLayout(1, 1, 0, 0));</span>
+<span class="nc" id="L343">		return panelSlider;</span>
+	}
+
+	private void getImgPanel(JPanel panelImagen) {
+<span class="nc" id="L347">		ImagePlus imagAux = new ImagePlus(&quot;./res/img/app/logoGris.png&quot;);</span>
+<span class="nc" id="L348">		Image imag = imagAux.getImage();</span>
+		
+<span class="nc" id="L350">		imgPanel = new Graphic(imag);</span>
+<span class="nc" id="L351">		panelImagen.add(imgPanel);</span>
+<span class="nc" id="L352">	}</span>
+
+	private JTextPane getTxtLog(JPanel panelLog) {
+<span class="nc" id="L355">		JTextPane textPaneLog = new JTextPane();</span>
+<span class="nc" id="L356">		textPaneLog.setBounds(4, 4, 209, 195);</span>
+<span class="nc" id="L357">		textPaneLog.setEditable(false);</span>
+<span class="nc" id="L358">		panelLog.add(textPaneLog);</span>
+<span class="nc" id="L359">		textPaneLog.setContentType(&quot;text/html&quot;);</span>
+<span class="nc" id="L360">		kit = new HTMLEditorKit();</span>
+<span class="nc" id="L361">	    doc = new HTMLDocument();</span>
+<span class="nc" id="L362">	    panelLog_1.setLayout(null);</span>
+<span class="nc" id="L363">	    textPaneLog.setEditorKit(kit);</span>
+<span class="nc" id="L364">	    textPaneLog.setDocument(doc);</span>
+	    
+<span class="nc" id="L366">		textPaneLog.setText(&quot;&lt;!DOCTYPE html&gt;&quot; +</span>
+							&quot;&lt;html&gt;&quot;+
+							&quot;&lt;head&gt;&quot;+
+							&quot;&lt;style&gt;&quot;+
+							&quot;p.normal {font-weight:normal;}&quot;+
+							&quot;p.error {font-weight:bold; color:red}&quot;+
+							&quot;p.exito {font-weight:bold; color:green}&quot;+
+							&quot;p.stop {font-weight:bold; color:blue}&quot;+
+							&quot;&lt;/style&gt;&quot;+
+							&quot;&lt;/head&gt;&quot;+
+							&quot;&lt;body&gt;&quot;);
+<span class="nc" id="L377">		JScrollPane scroll = new JScrollPane(textPaneLog);</span>
+<span class="nc" id="L378">		scroll.setBounds(10, 16, 242, 254);</span>
+<span class="nc" id="L379">		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);</span>
+<span class="nc" id="L380">		panelLog.add(scroll);</span>
+<span class="nc" id="L381">		return textPaneLog;</span>
+	}
+
+	private JPanel getPanelLog() {
+<span class="nc" id="L385">		panelLog_1 = new JPanel();</span>
+<span class="nc" id="L386">		panelLog_1.setBorder(new TitledBorder(null, &quot;Log&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L387">		panelLog_1.setBounds(10, 425, 262, 320);</span>
+<span class="nc" id="L388">		frmXraydetector.getContentPane().add(panelLog_1);</span>
+<span class="nc" id="L389">		return panelLog_1;</span>
+	}
+
+	private JPanel getPanelImagen() {
+<span class="nc" id="L393">		JPanel panelImagen = new JPanel();</span>
+<span class="nc" id="L394">		panelImagen.setBorder(new TitledBorder(null, &quot;Visor&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L395">		panelImagen.setBounds(282, 11, 750, 550);</span>
+<span class="nc" id="L396">		frmXraydetector.getContentPane().add(panelImagen);</span>
+<span class="nc" id="L397">		panelImagen.setLayout(new GridLayout(1, 0, 0, 0));</span>
+<span class="nc" id="L398">		return panelImagen;</span>
+	}
+
+	private void getBtnStop(JPanel panelProgreso) {
+<span class="nc" id="L402">		btnStop = new JButton();</span>
+<span class="nc" id="L403">		btnStop.setToolTipText(&quot;Detiene el proceso en ejecuci\u00F3n&quot;);</span>
+<span class="nc" id="L404">		btnStop.setPreferredSize(new Dimension(60, 30));</span>
+<span class="nc" id="L405">		btnStop.setMinimumSize(new Dimension(60, 30));</span>
+<span class="nc" id="L406">		btnStop.setMaximumSize(new Dimension(60, 30));</span>
+<span class="nc" id="L407">		btnStop.addActionListener(new StopListener());</span>
+<span class="nc" id="L408">		btnStop.setEnabled(false);</span>
+<span class="nc" id="L409">		btnStop.setIcon(new ImageIcon(&quot;./res/img/app/stop.png&quot;));</span>
+<span class="nc" id="L410">		panelProgreso.add(btnStop);</span>
+<span class="nc" id="L411">	}</span>
+
+	private void getProgressBar(JPanel panelProgreso) {
+<span class="nc" id="L414">		panelProgreso_1.setLayout(new FlowLayout(FlowLayout.CENTER, 16, 5));</span>
+<span class="nc" id="L415">		progressBar = new JProgressBar();</span>
+<span class="nc" id="L416">		progressBar.setPreferredSize(new Dimension(150, 16));</span>
+<span class="nc" id="L417">		panelProgreso.add(progressBar);</span>
+<span class="nc" id="L418">	}</span>
+
+	private JPanel getPanelProgreso() {
+<span class="nc" id="L421">		panelProgreso_1 = new JPanel();</span>
+<span class="nc" id="L422">		panelProgreso_1.setBorder(new TitledBorder(null, &quot;Progreso&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L423">		panelProgreso_1.setBounds(10, 147, 262, 60);</span>
+<span class="nc" id="L424">		frmXraydetector.getContentPane().add(panelProgreso_1);</span>
+<span class="nc" id="L425">		return panelProgreso_1;</span>
+	}
+
+	private void getBtnAnalizar(JPanel panelControl) {
+<span class="nc" id="L429">		btnAnalizar = new JButton(&quot;Analizar imagen&quot;);</span>
+<span class="nc" id="L430">		btnAnalizar.setToolTipText(&quot;Inicia el proceso de an\u00E1lisis sobre la imagen&quot;);</span>
+<span class="nc" id="L431">		btnAnalizar.setEnabled(false);</span>
+<span class="nc" id="L432">		btnAnalizar.addActionListener(new AnalizarImagenListener());</span>
+<span class="nc" id="L433">		btnAnalizar.setIcon(new ImageIcon(&quot;./res/img/app/play.png&quot;));</span>
+<span class="nc" id="L434">		btnAnalizar.setHorizontalTextPosition(SwingConstants.LEFT);</span>
+<span class="nc" id="L435">		btnAnalizar.setIconTextGap(10);</span>
+<span class="nc" id="L436">		panelControl.add(btnAnalizar);</span>
+<span class="nc" id="L437">	}</span>
+
+	private void getBtnEntrenar(JPanel panelControl) {
+<span class="nc" id="L440">		btnEntrenarClasificador = new JButton(&quot;Entrenar clasificador&quot;);</span>
+<span class="nc" id="L441">		btnEntrenarClasificador.setToolTipText(&quot;Permite entrenar un clasificador&quot;);</span>
+<span class="nc" id="L442">		btnEntrenarClasificador.addActionListener(new EntrenarListener(frmXraydetector));</span>
+<span class="nc" id="L443">		btnEntrenarClasificador.setIcon(new ImageIcon(&quot;./res/img/app/weka.png&quot;));</span>
+<span class="nc" id="L444">		btnEntrenarClasificador.setHorizontalTextPosition(SwingConstants.LEFT);</span>
+<span class="nc" id="L445">		btnEntrenarClasificador.setIconTextGap(10);</span>
+<span class="nc" id="L446">		panelControl.add(btnEntrenarClasificador);</span>
+<span class="nc" id="L447">	}</span>
+
+	private void getBtnAbrirImagen(JPanel panelControl) {
+<span class="nc" id="L450">		btnAbrirImagen = new JButton(&quot;Abrir imagen&quot;);</span>
+<span class="nc" id="L451">		btnAbrirImagen.setIconTextGap(10);</span>
+<span class="nc" id="L452">		btnAbrirImagen.setIcon(new ImageIcon(&quot;./res/img/app/folderopen.png&quot;));</span>
+<span class="nc" id="L453">		btnAbrirImagen.setToolTipText(&quot;Permite seleccionar una imagen para analizar&quot;);</span>
+<span class="nc" id="L454">		btnAbrirImagen.addActionListener(new CargarImagenListener());</span>
+<span class="nc" id="L455">		btnAbrirImagen.setHorizontalTextPosition(SwingConstants.LEFT);</span>
+<span class="nc" id="L456">		panelControl.add(btnAbrirImagen);</span>
+<span class="nc" id="L457">	}</span>
+
+	private JPanel getPanelControl() {
+<span class="nc" id="L460">		JPanel panelControl = new JPanel();</span>
+<span class="nc" id="L461">		panelControl.setBorder(new TitledBorder(null, &quot;Control&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="nc" id="L462">		panelControl.setBounds(10, 11, 262, 125);</span>
+<span class="nc" id="L463">		frmXraydetector.getContentPane().add(panelControl);</span>
+<span class="nc" id="L464">		panelControl.setLayout(new GridLayout(0, 1, 0, 4));</span>
+<span class="nc" id="L465">		return panelControl;</span>
+	}
+
+	public void getJFramePrincipal() {
+<span class="nc" id="L469">		frmXraydetector = new JFrame();</span>
+<span class="nc" id="L470">		frmXraydetector.setTitle(&quot;XRayDetector&quot;);</span>
+<span class="nc" id="L471">		frmXraydetector.setBounds(100, 100, 1048, 800);</span>
+<span class="nc" id="L472">		frmXraydetector.setResizable(false);</span>
+<span class="nc" id="L473">		frmXraydetector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L474">		frmXraydetector.getContentPane().setLayout(null);</span>
+<span class="nc" id="L475">		frmXraydetector.setLocationRelativeTo(null);</span>
+<span class="nc" id="L476">		frmXraydetector.setIconImage(new ImageIcon(&quot;./res/img/app/logoXRayDetector.png&quot;).getImage());</span>
+<span class="nc" id="L477">	}</span>
+	
+<span class="nc" id="L479">	private class CargarImagenListener implements ActionListener{</span>
+	    
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L482">	    	File image = null;</span>
+	    	
+<span class="nc" id="L484">	    	JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L485">	    	chooser.setDialogTitle(&quot;Escoja la imagen deseada&quot;);</span>
+<span class="nc" id="L486">	    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;Imágenes BMP, JPG, JPEG, PNG&quot;, &quot;bmp&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;);</span>
+<span class="nc" id="L487">	    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L488">	    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L489">	    	int answer = chooser.showOpenDialog(null);</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">			if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L491">				image = chooser.getSelectedFile();</span>
+			}
+<span class="nc bnc" id="L493" title="All 2 branches missed.">			if(image != null){</span>
+<span class="nc" id="L494">				imagenAbierta = true;</span>
+<span class="nc" id="L495">				fachada.cargaImagen(image.getAbsolutePath());</span>
+<span class="nc" id="L496">				img = new ImagePlus(image.getAbsolutePath());</span>
+<span class="nc" id="L497">				imgPanel.setImage(img.getImage());</span>
+<span class="nc" id="L498">				imgPanel.repaint();</span>
+<span class="nc" id="L499">				imgPanel.setFlagTrabajando(false);</span>
+<span class="nc" id="L500">				selection = imgPanel.coordenates();</span>
+<span class="nc" id="L501">				btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L502">				slider.setEnabled(false);</span>
+				
+				try {
+<span class="nc" id="L505">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Imagen abierta correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L506">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L507">				} catch (BadLocationException e1) {</span>
+<span class="nc" id="L508">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L509">					e1.printStackTrace();</span>
+<span class="nc" id="L510">				} catch (IOException e1) {</span>
+<span class="nc" id="L511">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L512">					e1.printStackTrace();</span>
+				}
+			}
+<span class="nc" id="L515">	    }</span>
+	}
+	
+<span class="nc" id="L518">	private class SliderListener implements ChangeListener{</span>
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			
+<span class="nc bnc" id="L523" title="All 2 branches missed.">			if (!slider.getValueIsAdjusting()) {</span>
+<span class="nc" id="L524">				prop.setUmbral(slider.getValue());</span>
+				
+<span class="nc" id="L526">				int opcion = prop.getTipoDeteccion();</span>
+				
+<span class="nc bnc" id="L528" title="All 4 branches missed.">				switch(opcion){</span>
+					case 0:
+<span class="nc" id="L530">						fachada.drawEdge(imgPanel);	//normal</span>
+<span class="nc" id="L531">						break;</span>
+					case 1:
+<span class="nc" id="L533">						fachada.drawEdge(imgPanel);	//normal + umbrales locales</span>
+<span class="nc" id="L534">						break;</span>
+					case 2:
+<span class="nc" id="L536">						fachada.drawEdgeRegiones(imgPanel);	//blancos en umbrales locales</span>
+						break;
+				}
+<span class="nc" id="L539">				tablaResultados.setModel(fachada.getTableModel());</span>
+<span class="nc" id="L540">				resizeColumnas();</span>
+<span class="nc" id="L541">				copiaEdges = new ImagePlus(&quot;copiaEdges&quot;, imgPanel.getImage());</span>
+<span class="nc" id="L542">				imgPanel.setImageCopy(copiaEdges.getImage());</span>
+<span class="nc" id="L543">				imgPanel.grabFocus();</span>
+<span class="nc" id="L544">				imgPanel.setArrayRois(fachada.getArrayRoisCompleto());</span>
+			}
+			
+<span class="nc" id="L547">		}		</span>
+	}
+	
+<span class="nc" id="L550">	private class AnalizarImagenListener implements ActionListener{</span>
+	    public void actionPerformed (ActionEvent e){
+	    	int opcion;
+	    	
+	    	//si no se ha seleccionado una región, mostramos un aviso
+<span class="nc bnc" id="L555" title="All 4 branches missed.">	    	if(selection.height == 0 &amp;&amp; selection.width == 0){</span>
+<span class="nc" id="L556">		    	opcion = JOptionPane.showOptionDialog(</span>
+<span class="nc" id="L557">		    			   null,</span>
+<span class="nc" id="L558">		    			   &quot;Aviso: no ha elegido ninguna región.\n&quot; +</span>
+		    			   &quot;El proceso puede tardar mucho. ¿Desea continuar de todos modos?&quot;, 
+<span class="nc" id="L560">		    			   &quot;Aviso&quot;,</span>
+<span class="nc" id="L561">		    			   JOptionPane.YES_NO_CANCEL_OPTION,</span>
+<span class="nc" id="L562">		    			   JOptionPane.WARNING_MESSAGE,</span>
+<span class="nc" id="L563">		    			   null,    // null para icono por defecto.</span>
+<span class="nc" id="L564">		    			   new Object[] { &quot;Continuar&quot;, &quot;Cancelar&quot;},&quot;Cancelar&quot;);</span>
+<span class="nc" id="L565">	    	}</span>
+	    	else{
+<span class="nc" id="L567">	    		opcion = 0;</span>
+	    	}
+<span class="nc bnc" id="L569" title="All 2 branches missed.">	    	if(opcion == 0){</span>
+<span class="nc" id="L570">		    	JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L571">		    	chooser.setDialogTitle(&quot;Escoja el modelo para clasificar&quot;);</span>
+<span class="nc" id="L572">		    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;Model&quot;, &quot;model&quot;);</span>
+<span class="nc" id="L573">		    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L574">		    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L575">		    	int answer = chooser.showOpenDialog(null);</span>
+<span class="nc bnc" id="L576" title="All 2 branches missed.">				if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L577">					model = chooser.getSelectedFile();</span>
+<span class="nc" id="L578">				}</span>
+				else{
+<span class="nc" id="L580">					model = null;</span>
+				}
+<span class="nc bnc" id="L582" title="All 2 branches missed.">				if(model != null){					</span>
+<span class="nc" id="L583">					prop.setPathModel(model.getAbsolutePath());</span>
+
+					try {
+<span class="nc" id="L586">						kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Modelo cargado correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L587">						txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L588">					} catch (BadLocationException e1) {</span>
+<span class="nc" id="L589">						MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L590">						e1.printStackTrace();</span>
+<span class="nc" id="L591">					} catch (IOException e1) {</span>
+<span class="nc" id="L592">						MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L593">						e1.printStackTrace();</span>
+					}
+					
+<span class="nc" id="L596">					slider.setEnabled(false);</span>
+<span class="nc" id="L597">					btnEntrenarClasificador.setEnabled(false);</span>
+<span class="nc" id="L598">					btnAbrirImagen.setEnabled(false);</span>
+<span class="nc" id="L599">					btnAnalizar.setEnabled(false);</span>
+<span class="nc" id="L600">					btnStop.setEnabled(true);</span>
+<span class="nc" id="L601">					btnExportarLog.setEnabled(false);</span>
+<span class="nc" id="L602">					btnLimpiarLog.setEnabled(false);</span>
+<span class="nc" id="L603">					tablaResultados.setEnabled(false);</span>
+<span class="nc" id="L604">					btnGuardarImagenAnalizada.setEnabled(false);</span>
+<span class="nc" id="L605">					btnGuardarImagenBinarizada.setEnabled(false);</span>
+<span class="nc" id="L606">					btnPrecisionRecall.setEnabled(false);</span>
+<span class="nc" id="L607">					imgPanel.setImage(img.getImage());</span>
+<span class="nc" id="L608">					imgPanel.repaint();</span>
+<span class="nc" id="L609">					imgPanel.setFlagTrabajando(true);</span>
+<span class="nc" id="L610">					selectionCopy.height = selection.height;</span>
+<span class="nc" id="L611">					selectionCopy.width = selection.width;</span>
+<span class="nc" id="L612">					selectionCopy.x = selection.x;</span>
+<span class="nc" id="L613">					selectionCopy.y = selection.y;</span>
+<span class="nc" id="L614">					((DefaultTableModel) (tablaResultados.getModel())).getDataVector().clear();</span>
+<span class="nc" id="L615">					((DefaultTableModel) (tablaResultados.getModel())).fireTableDataChanged();</span>
+<span class="nc" id="L616">					ThreadAnalizar threadAnalizar = new ThreadAnalizar();</span>
+<span class="nc" id="L617">			    	thread = new Thread(threadAnalizar);</span>
+<span class="nc" id="L618">			    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+    		    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc bnc" id="L620" title="All 2 branches missed.">    		    	    	if(!ex.getClass().toString().contains(&quot;ThreadDeath&quot;)){</span>
+<span class="nc" id="L621">	    		    	    	JOptionPane.showMessageDialog(</span>
+<span class="nc" id="L622">	    		    	    			   null,</span>
+<span class="nc" id="L623">	    		    	    			   &quot;Se ha producido un error: &quot;+ ex.getMessage(),</span>
+<span class="nc" id="L624">	    		    	    			   &quot;Error&quot;,</span>
+<span class="nc" id="L625">	    		    	    			   JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L626">	    		    	    	parado = false;</span>
+<span class="nc" id="L627">	    		    			btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L628">	    		    			btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L629">	    		    			btnStop.setEnabled(false);</span>
+<span class="nc" id="L630">	    		    			btnExportarLog.setEnabled(true);</span>
+<span class="nc" id="L631">	    		    			btnLimpiarLog.setEnabled(true);</span>
+<span class="nc" id="L632">	    		    			tablaResultados.setEnabled(true);</span>
+<span class="nc" id="L633">	    		    			imgPanel.setFlagTrabajando(false);</span>
+	    		    			
+<span class="nc bnc" id="L635" title="All 2 branches missed.">	    		    			if(imagenAbierta){</span>
+<span class="nc" id="L636">	    		    				btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L637">	    		    			}</span>
+	    		    			else{
+<span class="nc" id="L639">	    		    				btnAnalizar.setEnabled(false);</span>
+	    		    			}
+	    						try {
+<span class="nc" id="L642">									kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Error&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L643">									txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L644">								} catch (BadLocationException e) {</span>
+<span class="nc" id="L645">									MyLogHandler.writeException(e);</span>
+<span class="nc" id="L646">									e.printStackTrace();</span>
+<span class="nc" id="L647">								} catch (IOException e) {</span>
+<span class="nc" id="L648">									MyLogHandler.writeException(e);</span>
+<span class="nc" id="L649">									e.printStackTrace();</span>
+								}
+    		    	    	}
+<span class="nc" id="L652">    		    	    }</span>
+    		    	};
+<span class="nc" id="L654">    		    	thread.setUncaughtExceptionHandler(h);</span>
+<span class="nc" id="L655">			    	thread.start();</span>
+				}
+	    	}
+<span class="nc" id="L658">	    }</span>
+	}
+	
+<span class="nc" id="L661">	private class ThreadAnalizar implements Runnable{</span>
+
+		@Override
+		public void run() {
+			
+			try {
+<span class="nc" id="L667">				kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;normal\&quot;&gt; Iniciando proceso de análisis&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L668">				txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L669">			} catch (BadLocationException e1) {</span>
+<span class="nc" id="L670">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L671">				e1.printStackTrace();</span>
+<span class="nc" id="L672">			} catch (IOException e1) {</span>
+<span class="nc" id="L673">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L674">				e1.printStackTrace();</span>
+			}
+			
+<span class="nc" id="L677">			int opcion = prop.getTipoDeteccion();</span>
+			
+<span class="nc bnc" id="L679" title="All 4 branches missed.">			switch(opcion){</span>
+				case 0:
+<span class="nc" id="L681">					fachada.ejecutaVentana(selection, imgPanel, progressBar); //normal</span>
+<span class="nc" id="L682">					break;</span>
+				case 1:
+<span class="nc" id="L684">					fachada.ejecutaVentana(selection, imgPanel, progressBar); //normal + umbrales locales -&gt; la llamada es igual</span>
+<span class="nc" id="L685">					break;</span>
+				case 2:
+<span class="nc" id="L687">					fachada.ejecutaVentanaOpcionRegiones(selection, imgPanel, progressBar);	//segunda opción</span>
+					break;
+			}
+			
+<span class="nc bnc" id="L691" title="All 2 branches missed.">			if(fachada.getExcepcion() != null){	//se han producido excepciones</span>
+<span class="nc" id="L692">    	    	System.out.println(&quot;2 &quot; + fachada.getExcepcion().getClass().toString());</span>
+<span class="nc" id="L693">				RuntimeException e = fachada.getExcepcion();</span>
+<span class="nc" id="L694">				fachada.setExcepcion(null);</span>
+<span class="nc" id="L695">				throw e;				</span>
+			}
+			else{
+				
+<span class="nc bnc" id="L699" title="All 2 branches missed.">				if(!parado){</span>
+<span class="nc" id="L700">					tablaResultados.setModel(fachada.getTableModel());</span>
+<span class="nc" id="L701">					resizeColumnas();</span>
+<span class="nc" id="L702">					copiaEdges = new ImagePlus(&quot;copiaEdges&quot;, imgPanel.getImage());</span>
+<span class="nc" id="L703">					imgPanel.setImageCopy(copiaEdges.getImage());</span>
+<span class="nc" id="L704">					imgPanel.grabFocus();</span>
+<span class="nc" id="L705">					imgPanel.setArrayRois(fachada.getArrayRoisCompleto());</span>
+					try {
+<span class="nc" id="L707">						kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Proceso de análisis finalizado correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L708">						txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L709">					} catch (BadLocationException e1) {</span>
+<span class="nc" id="L710">						MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L711">						e1.printStackTrace();</span>
+<span class="nc" id="L712">					} catch (IOException e1) {</span>
+<span class="nc" id="L713">						MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L714">						e1.printStackTrace();</span>
+					}
+				}
+			}
+				
+<span class="nc" id="L719">			parado = false;</span>
+<span class="nc" id="L720">			btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L721">			btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L722">			btnStop.setEnabled(false);</span>
+<span class="nc" id="L723">			slider.setValue(prop.getUmbral());</span>
+<span class="nc" id="L724">			slider.setEnabled(true);</span>
+<span class="nc" id="L725">			btnExportarLog.setEnabled(true);</span>
+<span class="nc" id="L726">			btnLimpiarLog.setEnabled(true);</span>
+<span class="nc" id="L727">			tablaResultados.setEnabled(true);</span>
+<span class="nc" id="L728">			btnGuardarImagenAnalizada.setEnabled(true);</span>
+<span class="nc" id="L729">			btnGuardarImagenBinarizada.setEnabled(true);</span>
+<span class="nc" id="L730">			btnPrecisionRecall.setEnabled(true);</span>
+<span class="nc" id="L731">			imgPanel.setFlagTrabajando(false);</span>
+<span class="nc bnc" id="L732" title="All 2 branches missed.">			if(imagenAbierta){</span>
+<span class="nc" id="L733">				btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L734">			}</span>
+			else{
+<span class="nc" id="L736">				btnAnalizar.setEnabled(false);</span>
+			}
+<span class="nc" id="L738">		}		</span>
+	}
+	
+<span class="nc" id="L741">	private class StopListener implements ActionListener{</span>
+	    @SuppressWarnings(&quot;deprecation&quot;)
+		public void actionPerformed (ActionEvent e){
+<span class="nc bnc" id="L744" title="All 2 branches missed.">	    	if (thread != null){</span>
+<span class="nc" id="L745">	    		parado = true;</span>
+<span class="nc bnc" id="L746" title="All 2 branches missed.">	    		if(fachada.getNumThreads() &gt; 0){</span>
+<span class="nc" id="L747">	    			fachada.stop();</span>
+	    		}
+<span class="nc" id="L749">	    		slider.setEnabled(false);</span>
+<span class="nc" id="L750">	    		btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L751">				btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L752">				btnStop.setEnabled(false);</span>
+<span class="nc" id="L753">				btnExportarLog.setEnabled(true);</span>
+<span class="nc" id="L754">				btnLimpiarLog.setEnabled(true);</span>
+<span class="nc" id="L755">				tablaResultados.setEnabled(false);</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">				if(imagenAbierta){</span>
+<span class="nc" id="L757">					btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L758">				}</span>
+				else{
+<span class="nc" id="L760">					btnAnalizar.setEnabled(false);</span>
+				}
+<span class="nc bnc" id="L762" title="All 2 branches missed.">				if(img != null){</span>
+<span class="nc" id="L763">					imgPanel.setImage(img.getImage());</span>
+<span class="nc" id="L764">					imgPanel.repaint();</span>
+				}
+<span class="nc" id="L766">				progressBar.setValue(0);</span>
+				
+				try {
+<span class="nc" id="L769">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;stop\&quot;&gt; Proceso detenido&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L770">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L771">				} catch (BadLocationException e1) {</span>
+<span class="nc" id="L772">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L773">					e1.printStackTrace();</span>
+<span class="nc" id="L774">				} catch (IOException e1) {</span>
+<span class="nc" id="L775">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L776">					e1.printStackTrace();</span>
+				}
+				
+<span class="nc" id="L779">				thread.stop();</span>
+	    	}
+<span class="nc" id="L781">	    }</span>
+	}
+	
+	private class EntrenarListener implements ActionListener{
+	    
+		private Frame frame;
+		
+<span class="nc" id="L788">		public EntrenarListener(Frame fr) {</span>
+<span class="nc" id="L789">			frame = fr;</span>
+<span class="nc" id="L790">		}</span>
+
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L793">			JDialog dialogo = new JDialog(frame, &quot;Escoja opción&quot;, true);</span>
+<span class="nc" id="L794">			dialogo.getContentPane().setLayout(new BorderLayout());</span>
+			
+<span class="nc" id="L796">			JPanel panelRadio = new JPanel();</span>
+<span class="nc" id="L797">			panelRadio.setLayout(new GridLayout(2,1));</span>
+<span class="nc" id="L798">			dialogo.getContentPane().add(panelRadio, BorderLayout.CENTER);</span>
+			
+<span class="nc" id="L800">			JRadioButton btnNuevoArff = new JRadioButton(&quot;Crear nuevo ARFF&quot;);</span>
+<span class="nc" id="L801">			panelRadio.add(btnNuevoArff);</span>
+<span class="nc" id="L802">			JRadioButton btnUsarArff = new JRadioButton(&quot;Usar ARFF existente&quot;);</span>
+<span class="nc" id="L803">			panelRadio.add(btnUsarArff);</span>
+			
+<span class="nc" id="L805">			ButtonGroup grupoBotonesOpcion = new ButtonGroup();</span>
+<span class="nc" id="L806">			grupoBotonesOpcion.add(btnNuevoArff);</span>
+<span class="nc" id="L807">			grupoBotonesOpcion.add(btnUsarArff);</span>
+<span class="nc" id="L808">			grupoBotonesOpcion.setSelected(btnNuevoArff.getModel(), true);</span>
+			
+<span class="nc" id="L810">			JPanel panelBotones = new JPanel();</span>
+<span class="nc" id="L811">			panelBotones.setLayout(new GridLayout(1,2,8,8));</span>
+<span class="nc" id="L812">			JButton btnAceptar = new JButton(&quot;Aceptar&quot;);</span>
+			
+<span class="nc" id="L814">			Enumeration&lt;AbstractButton&gt; list = grupoBotonesOpcion.getElements();</span>
+			
+<span class="nc" id="L816">			btnAceptar.addActionListener(new AceptarListener(dialogo, list));</span>
+<span class="nc" id="L817">			panelBotones.add(btnAceptar);</span>
+<span class="nc" id="L818">			JButton btnCancelar = new JButton(&quot;Cancelar&quot;);</span>
+<span class="nc" id="L819">			btnCancelar.addActionListener(new CancelarListener(dialogo));</span>
+<span class="nc" id="L820">			panelBotones.add(btnCancelar);</span>
+<span class="nc" id="L821">			dialogo.getContentPane().add(panelBotones, BorderLayout.SOUTH);</span>
+			
+<span class="nc" id="L823">			dialogo.pack();</span>
+<span class="nc" id="L824">			dialogo.setLocationRelativeTo(frame);</span>
+<span class="nc" id="L825">			dialogo.setVisible(true);</span>
+<span class="nc" id="L826">		}</span>
+	}
+	
+	private class CancelarListener implements ActionListener{
+		
+		private JDialog dial;
+		
+<span class="nc" id="L833">	    public CancelarListener(JDialog dialogo) {</span>
+<span class="nc" id="L834">			dial = dialogo;</span>
+<span class="nc" id="L835">		}</span>
+
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L838">	    	dial.setVisible(false);</span>
+<span class="nc" id="L839">	    }</span>
+	}
+	
+	private class AceptarListener implements ActionListener{
+		
+		private JDialog dial;
+		private Enumeration&lt;AbstractButton&gt; listaBtn;
+		
+<span class="nc" id="L847">	    public AceptarListener(JDialog dialogo, Enumeration&lt;AbstractButton&gt; list) {</span>
+<span class="nc" id="L848">			dial = dialogo;</span>
+<span class="nc" id="L849">			listaBtn = list;</span>
+<span class="nc" id="L850">		}</span>
+
+		public void actionPerformed (ActionEvent e){
+			
+<span class="nc bnc" id="L854" title="All 2 branches missed.">			while(listaBtn.hasMoreElements()) {</span>
+<span class="nc" id="L855">	            AbstractButton button = listaBtn.nextElement();</span>
+
+<span class="nc bnc" id="L857" title="All 2 branches missed.">	            if (button.isSelected()) {</span>
+<span class="nc bnc" id="L858" title="All 2 branches missed.">	            	if (button.getText().equals(&quot;Crear nuevo ARFF&quot;)){</span>
+<span class="nc" id="L859">	            		originalDirectory = null;</span>
+<span class="nc" id="L860">	            		JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+	            		// Para que solo se puedan abrir directorios
+<span class="nc" id="L862">	            		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);</span>
+<span class="nc" id="L863">	            		chooser.setDialogTitle(&quot;Selecciona una carpeta de imagenes originales&quot;);</span>
+<span class="nc" id="L864">	            		int answer = chooser.showOpenDialog(null);</span>
+<span class="nc bnc" id="L865" title="All 2 branches missed.">	            		if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L866">	            			originalDirectory = chooser.getSelectedFile().getAbsoluteFile();</span>
+	            			
+	            			// Comprobamos que el directorio acabe en Entrenar/Originales ya
+	        				// que ahí van a estar las imagenes para entrenar
+<span class="nc bnc" id="L870" title="All 2 branches missed.">	        				if (originalDirectory == null</span>
+<span class="nc bnc" id="L871" title="All 2 branches missed.">	        						|| !originalDirectory.getPath().contains(&quot;Originales&quot;)) {</span>
+	        					JOptionPane
+<span class="nc" id="L873">	        							.showMessageDialog(</span>
+<span class="nc" id="L874">	        									null,</span>
+<span class="nc" id="L875">	        									&quot;No has seleccionado una carpeta correcta para entrenar.&quot;,</span>
+<span class="nc" id="L876">	        									&quot;Error&quot;, 1);</span>
+<span class="nc" id="L877">	        					sameFiles = false;</span>
+	        					
+	        					try {
+<span class="nc" id="L880">									kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Directorio incorrecto&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L881">									txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L882">								} catch (BadLocationException e1) {</span>
+<span class="nc" id="L883">									MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L884">									e1.printStackTrace();</span>
+<span class="nc" id="L885">								} catch (IOException e1) {</span>
+<span class="nc" id="L886">									MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L887">									e1.printStackTrace();</span>
+								}
+
+<span class="nc" id="L890">	        				}</span>
+	        				else {
+	        					// Se reemplaza Originales por Mascaras ya que el directorio
+	        					// de las mascaras es igual, solo cambia eso
+<span class="nc" id="L894">	        					maskDirectory = new File(originalDirectory.getAbsolutePath()</span>
+<span class="nc" id="L895">	        							.replace(&quot;Originales&quot;, &quot;Mascaras&quot;));</span>
+	        					
+<span class="nc" id="L897">	        					ThreadEntrenar threadEntrenar = new ThreadEntrenar(false);</span>
+<span class="nc" id="L898">	        					slider.setEnabled(false);</span>
+<span class="nc" id="L899">		        		    	thread = new Thread(threadEntrenar);</span>
+<span class="nc" id="L900">		        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+		        		    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc bnc" id="L902" title="All 2 branches missed.">		        		    	    	if(!ex.getClass().toString().contains(&quot;ThreadDeath&quot;)){</span>
+<span class="nc" id="L903">			        		    	    	JOptionPane.showMessageDialog(</span>
+<span class="nc" id="L904">			        		    	    			   null,</span>
+<span class="nc" id="L905">			        		    	    			   &quot;Se ha producido un error: &quot;+ ex.getMessage(),</span>
+<span class="nc" id="L906">			        		    	    			   &quot;Error&quot;,</span>
+<span class="nc" id="L907">			        		    	    			   JOptionPane.ERROR_MESSAGE);</span>
+			        						try {
+<span class="nc" id="L909">												kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Error&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L910">												txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L911">											} catch (BadLocationException e) {</span>
+<span class="nc" id="L912">												MyLogHandler.writeException(e);</span>
+<span class="nc" id="L913">												e.printStackTrace();</span>
+<span class="nc" id="L914">											} catch (IOException e) {</span>
+<span class="nc" id="L915">												MyLogHandler.writeException(e);</span>
+<span class="nc" id="L916">												e.printStackTrace();</span>
+											}
+		        		    	    	}
+<span class="nc" id="L919">		        		    	    }</span>
+		        		    	};
+<span class="nc" id="L921">		        		    	thread.setUncaughtExceptionHandler(h);</span>
+<span class="nc" id="L922">		        		    	thread.start();</span>
+	        				}
+	            		}
+<span class="nc" id="L925">	            	}</span>
+<span class="nc bnc" id="L926" title="All 2 branches missed.">	            	else if (button.getText().equals(&quot;Usar ARFF existente&quot;)){</span>
+<span class="nc" id="L927">	            		JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L928">	        	    	chooser.setDialogTitle(&quot;Escoja el ARFF para entrenar&quot;);</span>
+<span class="nc" id="L929">	        	    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;ARFF&quot;, &quot;arff&quot;);</span>
+<span class="nc" id="L930">	        	    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L931">	        	    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L932">	        	    	int answer = chooser.showOpenDialog(null);</span>
+<span class="nc bnc" id="L933" title="All 2 branches missed.">	        			if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L934">	        				arff = chooser.getSelectedFile();</span>
+<span class="nc" id="L935">	        			}</span>
+	        			else{
+<span class="nc" id="L937">	        				arff=null;</span>
+<span class="nc" id="L938">	        				btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L939">		    				btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L940">		    				btnStop.setEnabled(false);</span>
+<span class="nc bnc" id="L941" title="All 2 branches missed.">		    				if(imagenAbierta){</span>
+<span class="nc" id="L942">		    					btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L943">		    				}</span>
+		    				else{
+<span class="nc" id="L945">		    					btnAnalizar.setEnabled(false);</span>
+		    				}
+	        			}
+	        			
+<span class="nc bnc" id="L949" title="All 2 branches missed.">	        			if(arff != null){</span>
+        				
+	        				try {
+<span class="nc" id="L952">								kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; ARFF abierto correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L953">								txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L954">							} catch (BadLocationException e1) {</span>
+<span class="nc" id="L955">								MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L956">								e1.printStackTrace();</span>
+<span class="nc" id="L957">							} catch (IOException e1) {</span>
+<span class="nc" id="L958">								MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L959">								e1.printStackTrace();</span>
+							}
+
+<span class="nc" id="L962">	        				ThreadEntrenar threadEntrenar = new ThreadEntrenar(true);</span>
+<span class="nc" id="L963">	        		    	thread = new Thread(threadEntrenar);</span>
+<span class="nc" id="L964">	        				btnEntrenarClasificador.setEnabled(false);</span>
+<span class="nc" id="L965">	        				btnAbrirImagen.setEnabled(false);</span>
+<span class="nc" id="L966">	        				btnAnalizar.setEnabled(false);</span>
+<span class="nc" id="L967">	        				btnStop.setEnabled(true);</span>
+<span class="nc" id="L968">	        				slider.setEnabled(false);</span>
+<span class="nc" id="L969">	        				btnExportarLog.setEnabled(false);</span>
+<span class="nc" id="L970">	    					btnLimpiarLog.setEnabled(false);</span>
+<span class="nc" id="L971">	    					tablaResultados.setEnabled(false);</span>
+<span class="nc" id="L972">	        		    	Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+	        		    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc" id="L974">	        		    	    	JOptionPane.showMessageDialog(</span>
+<span class="nc" id="L975">	        		    	    			   null,</span>
+<span class="nc" id="L976">	        		    	    			   &quot;Se ha producido un error: &quot;+ ex.getMessage(),</span>
+<span class="nc" id="L977">	        		    	    			   &quot;Error&quot;,</span>
+<span class="nc" id="L978">	        		    	    			   JOptionPane.ERROR_MESSAGE);</span>
+	        		    	    	try {
+<span class="nc" id="L980">										kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Error&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L981">										txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L982">									} catch (BadLocationException e) {</span>
+<span class="nc" id="L983">										MyLogHandler.writeException(e);</span>
+<span class="nc" id="L984">										e.printStackTrace();</span>
+<span class="nc" id="L985">									} catch (IOException e) {</span>
+<span class="nc" id="L986">										MyLogHandler.writeException(e);</span>
+<span class="nc" id="L987">										e.printStackTrace();</span>
+									}
+<span class="nc" id="L989">	        		    	    }</span>
+	        		    	};
+<span class="nc" id="L991">	        		    	thread.setUncaughtExceptionHandler(h);</span>
+<span class="nc" id="L992">	        		    	thread.start();</span>
+	        			}
+	        			
+	            	}
+	            }
+	        }
+<span class="nc" id="L998">			dial.setVisible(false);</span>
+			
+<span class="nc" id="L1000">	    }</span>
+	}
+	
+<span class="nc" id="L1003">	private class LimpiarLogListener implements ActionListener{</span>
+	    public void actionPerformed (ActionEvent e){
+<span class="nc" id="L1005">	    	txtLog.setText(&quot;&lt;!DOCTYPE html&gt;&quot; +</span>
+					&quot;&lt;html&gt;&quot;+
+					&quot;&lt;head&gt;&quot;+
+					&quot;&lt;style&gt;&quot;+
+					&quot;p.normal {font-weight:normal;}&quot;+
+					&quot;p.error {font-weight:bold; color:red}&quot;+
+					&quot;p.exito {font-weight:bold; color:green}&quot;+
+					&quot;p.stop {font-weight:bold; color:blue}&quot;+
+					&quot;&lt;/style&gt;&quot;+
+					&quot;&lt;/head&gt;&quot;+
+					&quot;&lt;body&gt;&quot;);
+<span class="nc" id="L1016">	    }</span>
+	}
+	
+<span class="nc" id="L1019">	private class ExportarLogListener implements ActionListener{</span>
+	    public void actionPerformed (ActionEvent e){
+<span class="nc" id="L1021">	    	String s = txtLog.getText();</span>
+<span class="nc" id="L1022">	    	s += &quot;&lt;/body&gt;&lt;/html&gt;&quot;;</span>
+	    	try {
+<span class="nc" id="L1024">				FileUtils.writeStringToFile(new File(&quot;./res/log/html/log.html&quot;), s);</span>
+<span class="nc" id="L1025">				kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Log exportado con éxito&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1026">				txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1027">			} catch (IOException e1) {</span>
+<span class="nc" id="L1028">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1029">				e1.printStackTrace();</span>
+				try {
+<span class="nc" id="L1031">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Fallo al exportar el log&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1032">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1033">				} catch (BadLocationException e2) {</span>
+<span class="nc" id="L1034">					MyLogHandler.writeException(e2);</span>
+<span class="nc" id="L1035">					e2.printStackTrace();</span>
+<span class="nc" id="L1036">				} catch (IOException e2) {</span>
+<span class="nc" id="L1037">					MyLogHandler.writeException(e2);</span>
+<span class="nc" id="L1038">					e2.printStackTrace();</span>
+				}				
+<span class="nc" id="L1040">			} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1041">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1042">				e1.printStackTrace();</span>
+			}
+<span class="nc" id="L1044">	    }</span>
+    }
+	
+<span class="nc" id="L1047">	private class GuardarImagenAnalizadaListener implements ActionListener{</span>
+		
+		public void actionPerformed (ActionEvent e){
+	    	
+<span class="nc" id="L1051">	    	JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L1052">	    	chooser.setDialogTitle(&quot;Escoja la ubicación para guardar la imagen analizada&quot;);</span>
+<span class="nc" id="L1053">	    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;Imágenes JPG&quot;, &quot;jpg&quot;);</span>
+<span class="nc" id="L1054">	    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L1055">	    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L1056">	    	int answer = chooser.showSaveDialog(null);</span>
+<span class="nc bnc" id="L1057" title="All 2 branches missed.">			if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L1058">				File JFC = chooser.getSelectedFile();</span>
+<span class="nc" id="L1059">                String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar</span>
+<span class="nc" id="L1060">                ImagePlus i = new ImagePlus(&quot;img&quot;, imgPanel.getImage());                </span>
+<span class="nc" id="L1061">                IJ.saveAs(i, &quot;JPG&quot;, PATH);</span>
+                try {
+<span class="nc" id="L1063">    				kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Imagen exportada correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1064">    				txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1065">    			} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1066">    				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1067">    				e1.printStackTrace();</span>
+<span class="nc" id="L1068">    			} catch (IOException e1) {</span>
+<span class="nc" id="L1069">    				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1070">    				e1.printStackTrace();</span>
+    			}
+			}
+<span class="nc" id="L1073">	    }</span>
+	}
+
+<span class="nc" id="L1076">	private class GuardarImagenBinarizadaListener implements ActionListener{</span>
+		
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L1079">			JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L1080">	    	chooser.setDialogTitle(&quot;Escoja la ubicación para guardar la imagen binarizada&quot;);</span>
+<span class="nc" id="L1081">	    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;Imágenes JPG&quot;, &quot;jpg&quot;);</span>
+<span class="nc" id="L1082">	    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L1083">	    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L1084">	    	int answer = chooser.showSaveDialog(null);</span>
+<span class="nc bnc" id="L1085" title="All 2 branches missed.">			if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L1086">				File JFC = chooser.getSelectedFile();</span>
+<span class="nc" id="L1087">                String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar                </span>
+<span class="nc" id="L1088">                IJ.saveAs(fachada.getImageBinarizada(), &quot;JPG&quot;, PATH);</span>
+                try {
+<span class="nc" id="L1090">    				kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Imagen exportada correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1091">    				txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1092">    			} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1093">    				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1094">    				e1.printStackTrace();</span>
+<span class="nc" id="L1095">    			} catch (IOException e1) {</span>
+<span class="nc" id="L1096">    				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1097">    				e1.printStackTrace();</span>
+    			}
+			}
+<span class="nc" id="L1100">	    }</span>
+	}
+	
+<span class="nc" id="L1103">	private class PrecisionRecallListener implements ActionListener{</span>
+		
+		public void actionPerformed (ActionEvent e){
+<span class="nc" id="L1106">			JFileChooser chooser = new JFileChooser(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L1107">	    	chooser.setDialogTitle(&quot;Escoja la máscara correspondiente a la imagen&quot;);</span>
+<span class="nc" id="L1108">	    	FileNameExtensionFilter filter = new FileNameExtensionFilter(&quot;Imágenes JPG&quot;, &quot;jpg&quot;);</span>
+<span class="nc" id="L1109">	    	chooser.setFileFilter(filter);</span>
+<span class="nc" id="L1110">	    	chooser.setAcceptAllFileFilterUsed(false);</span>
+<span class="nc" id="L1111">	    	int answer = chooser.showOpenDialog(null);</span>
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">			if (answer == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L1113">				File JFC = chooser.getSelectedFile();</span>
+<span class="nc" id="L1114">                String PATH = JFC.getAbsolutePath();</span>
+<span class="nc" id="L1115">                PrecisionRecallDialog diag = new PrecisionRecallDialog(fachada.getPrecisionRecall(PATH, selectionCopy));</span>
+<span class="nc" id="L1116">                diag.setLocationRelativeTo(frmXraydetector);</span>
+<span class="nc" id="L1117">                diag.setVisible(true);                </span>
+			}
+<span class="nc" id="L1119">	    }</span>
+	}
+
+
+	
+	private class ThreadEntrenar implements Runnable{
+		
+		private boolean entrenarConArff;
+
+<span class="nc" id="L1128">		public ThreadEntrenar(boolean b) {</span>
+<span class="nc" id="L1129">			super();</span>
+<span class="nc" id="L1130">			entrenarConArff = b;</span>
+<span class="nc" id="L1131">		}</span>
+
+		@Override
+		public void run() {
+<span class="nc" id="L1135">			btnStop.setEnabled(true);</span>
+<span class="nc bnc" id="L1136" title="All 2 branches missed.">			if(entrenarConArff){	//si queremos entrenar con un fichero existente</span>
+				
+				try {
+<span class="nc" id="L1139">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;normal\&quot;&gt; Inicio del proceso de entrenamiento&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1140">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1141">				} catch (BadLocationException e) {</span>
+<span class="nc" id="L1142">					throw new RuntimeException(e);</span>
+<span class="nc" id="L1143">				} catch (IOException e) {</span>
+<span class="nc" id="L1144">					throw new RuntimeException(e);</span>
+				}
+				
+<span class="nc" id="L1147">				fachada.ejecutaEntrenamiento(arff, null);</span>
+				
+<span class="nc bnc" id="L1149" title="All 2 branches missed.">				if(fachada.getExcepcion() != null){	//se han producido excepciones</span>
+<span class="nc" id="L1150">					RuntimeException e = fachada.getExcepcion();</span>
+<span class="nc" id="L1151">					fachada.setExcepcion(null);</span>
+<span class="nc" id="L1152">					throw e;				</span>
+				}
+				else{
+					
+<span class="nc bnc" id="L1156" title="All 2 branches missed.">					if(!parado){</span>
+						
+						try {
+<span class="nc" id="L1159">							kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Modelo entrenado correctamente&quot; +</span>
+<span class="nc" id="L1160">									&quot; con el ARFF especificado&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1161">							txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1162">						} catch (BadLocationException e) {</span>
+<span class="nc" id="L1163">							throw new RuntimeException(e);</span>
+<span class="nc" id="L1164">						} catch (IOException e) {</span>
+<span class="nc" id="L1165">							throw new RuntimeException(e);</span>
+						}
+					}
+<span class="nc" id="L1168">					btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L1169">					btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L1170">					btnStop.setEnabled(false);</span>
+<span class="nc" id="L1171">					btnExportarLog.setEnabled(true);</span>
+<span class="nc" id="L1172">					btnLimpiarLog.setEnabled(true);</span>
+<span class="nc" id="L1173">					tablaResultados.setEnabled(false);</span>
+<span class="nc bnc" id="L1174" title="All 2 branches missed.">					if(imagenAbierta){</span>
+<span class="nc" id="L1175">						btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L1176">					}</span>
+					else{
+<span class="nc" id="L1178">						btnAnalizar.setEnabled(false);</span>
+					}
+				}
+<span class="nc" id="L1181">			}</span>
+			else{	//entrenar con imágenes
+				// Listado de archivos del directorio de originales
+							
+<span class="nc" id="L1185">				String originalList[] = originalDirectory.list();</span>
+<span class="nc" id="L1186">				Arrays.sort(originalList);</span>
+				
+				// Listado de archivos del directorio de mascaras
+<span class="nc" id="L1189">				String maskList[] = maskDirectory.list();</span>
+<span class="nc" id="L1190">				Arrays.sort(maskList);</span>
+				
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">				if (originalList.length != maskList.length) {</span>
+<span class="nc" id="L1193">					mostrarErrorNumImagenes(originalList, maskList);</span>
+<span class="nc" id="L1194">				} else {</span>
+<span class="nc" id="L1195">					sameFiles = true;</span>
+<span class="nc bnc" id="L1196" title="All 2 branches missed.">					for (int i = 0; i &lt; originalList.length</span>
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">							&amp;&amp; sameFiles == true; i++) {</span>
+						// Quitar extension jpg
+<span class="nc" id="L1199">						String originalName = originalList[i].substring(0,</span>
+<span class="nc" id="L1200">								originalList[i].lastIndexOf(&quot;.&quot;));</span>
+						// Quitar extension bmp
+<span class="nc" id="L1202">						String maskName = maskList[i].substring(0,</span>
+<span class="nc" id="L1203">								maskList[i].lastIndexOf(&quot;.&quot;));</span>
+
+						// Se comprueba que cada original y su mascara
+						// correspondiente tienen el mismo nombre
+<span class="nc bnc" id="L1207" title="All 2 branches missed.">						if (!originalName.equals(maskName))</span>
+<span class="nc" id="L1208">							sameFiles = false;</span>
+					}
+<span class="nc bnc" id="L1210" title="All 2 branches missed.">					if (sameFiles == false){</span>
+<span class="nc" id="L1211">						mostrarErrorNombresFicheros();</span>
+<span class="nc" id="L1212">					}</span>
+					else {						
+						try {
+<span class="nc" id="L1215">							kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Directorio abierto correctamente&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1216">							txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1217">						} catch (BadLocationException e) {</span>
+<span class="nc" id="L1218">							throw new RuntimeException(e);</span>
+<span class="nc" id="L1219">						} catch (IOException e) {</span>
+<span class="nc" id="L1220">							throw new RuntimeException(e);</span>
+						}
+						
+<span class="nc" id="L1223">						File[] originalFiles = originalDirectory.listFiles();</span>
+<span class="nc" id="L1224">						File[] maskFiles = maskDirectory.listFiles();</span>
+<span class="nc" id="L1225">						originalList = new String[originalFiles.length];</span>
+<span class="nc" id="L1226">						maskList = new String[maskFiles.length];</span>
+						
+<span class="nc bnc" id="L1228" title="All 2 branches missed.">						for(int i=0; i&lt;originalFiles.length; i++){</span>
+<span class="nc" id="L1229">							originalList[i] = originalFiles[i].getAbsolutePath();</span>
+<span class="nc" id="L1230">							maskList[i] = maskFiles[i].getAbsolutePath();</span>
+						}
+						
+						try {
+<span class="nc" id="L1234">							kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;normal\&quot;&gt; Iniciando proceso de entrenamiento&quot; +</span>
+<span class="nc" id="L1235">									&quot; con el nuevo ARFF especificado&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1236">							txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1237">						} catch (BadLocationException e) {</span>
+<span class="nc" id="L1238">							throw new RuntimeException(e);</span>
+<span class="nc" id="L1239">						} catch (IOException e) {</span>
+<span class="nc" id="L1240">							throw new RuntimeException(e);</span>
+						}
+						
+<span class="nc" id="L1243">						fachada.ejecutarEntrenamientoDirectorio(originalList, maskList, progressBar, txtLog, kit, doc);</span>
+						
+<span class="nc bnc" id="L1245" title="All 2 branches missed.">						if(fachada.getExcepcion() != null){	//se han producido excepciones</span>
+<span class="nc" id="L1246">							RuntimeException e = fachada.getExcepcion();</span>
+<span class="nc" id="L1247">							fachada.setExcepcion(null);</span>
+<span class="nc" id="L1248">							throw e;				</span>
+						}
+						else{						
+<span class="nc bnc" id="L1251" title="All 2 branches missed.">							if(!parado){															</span>
+								try {
+<span class="nc" id="L1253">									kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;exito\&quot;&gt; Proceso de entrenamiento finalizado con éxito &lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1254">									txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1255">								} catch (BadLocationException e) {</span>
+<span class="nc" id="L1256">									throw new RuntimeException(e);</span>
+<span class="nc" id="L1257">								} catch (IOException e) {</span>
+<span class="nc" id="L1258">									throw new RuntimeException(e);</span>
+								}								
+							}
+						}
+					}
+				}
+<span class="nc" id="L1264">				parado = false;</span>
+<span class="nc" id="L1265">				btnEntrenarClasificador.setEnabled(true);</span>
+<span class="nc" id="L1266">				btnAbrirImagen.setEnabled(true);</span>
+<span class="nc" id="L1267">				btnStop.setEnabled(false);</span>
+<span class="nc" id="L1268">				btnExportarLog.setEnabled(true);</span>
+<span class="nc" id="L1269">				btnLimpiarLog.setEnabled(true);</span>
+<span class="nc" id="L1270">				tablaResultados.setEnabled(false);</span>
+<span class="nc bnc" id="L1271" title="All 2 branches missed.">				if(imagenAbierta){</span>
+<span class="nc" id="L1272">					btnAnalizar.setEnabled(true);</span>
+<span class="nc" id="L1273">				}</span>
+				else{
+<span class="nc" id="L1275">					btnAnalizar.setEnabled(false);</span>
+				}
+			}
+<span class="nc" id="L1278">		}</span>
+
+		private void mostrarErrorNombresFicheros() {
+			JOptionPane
+<span class="nc" id="L1282">					.showMessageDialog(</span>
+<span class="nc" id="L1283">							null,</span>
+<span class="nc" id="L1284">							&quot;Los nombres de las imágenes originales no coinciden con los de las máscaras.&quot;,</span>
+<span class="nc" id="L1285">							&quot;Error&quot;, 1);</span>
+			try {
+<span class="nc" id="L1287">				kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Proceso fallido: &quot; +</span>
+<span class="nc" id="L1288">						&quot;Los nombres de las imágenes originales no coinciden con los de las máscaras&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1289">				txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1290">			} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1291">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1292">				e1.printStackTrace();</span>
+<span class="nc" id="L1293">			} catch (IOException e1) {</span>
+<span class="nc" id="L1294">				MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1295">				e1.printStackTrace();</span>
+			}
+<span class="nc" id="L1297">		}</span>
+
+		private void mostrarErrorNumImagenes(String[] originalList,
+				String[] maskList) {
+			
+<span class="nc bnc" id="L1302" title="All 2 branches missed.">			if (originalList.length &gt; maskList.length){</span>
+<span class="nc" id="L1303">				JOptionPane.showMessageDialog(null,</span>
+<span class="nc" id="L1304">						&quot;El número de imágenes originales y máscaras no coinciden.\n&quot;</span>
+<span class="nc" id="L1305">								+ &quot;Faltan máscaras&quot;, &quot;Error&quot;, 1);</span>
+				
+				try {
+<span class="nc" id="L1308">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Proceso fallido: &quot; +</span>
+<span class="nc" id="L1309">							&quot;Faltan máscaras&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1310">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1311">				} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1312">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1313">					e1.printStackTrace();</span>
+<span class="nc" id="L1314">				} catch (IOException e1) {</span>
+<span class="nc" id="L1315">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1316">					e1.printStackTrace();</span>
+				}
+<span class="nc" id="L1318">			}</span>
+			else{
+<span class="nc" id="L1320">				JOptionPane.showMessageDialog(null,</span>
+<span class="nc" id="L1321">						&quot;El número de imágenes originales y máscaras no coinciden.\n&quot;</span>
+<span class="nc" id="L1322">								+ &quot;Faltan originales&quot;, &quot;Error&quot;, 1);</span>
+				
+				try {
+<span class="nc" id="L1325">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;error\&quot;&gt; Proceso fallido: &quot; +</span>
+<span class="nc" id="L1326">							&quot;Faltan imágenes originales&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="nc" id="L1327">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="nc" id="L1328">				} catch (BadLocationException e1) {</span>
+<span class="nc" id="L1329">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1330">					e1.printStackTrace();</span>
+<span class="nc" id="L1331">				} catch (IOException e1) {</span>
+<span class="nc" id="L1332">					MyLogHandler.writeException(e1);</span>
+<span class="nc" id="L1333">					e1.printStackTrace();</span>
+				}
+			}
+<span class="nc" id="L1336">		}		</span>
+	}
+	
+<span class="nc" id="L1339">	private class TableMouseListener extends MouseAdapter{ </span>
+		public void mouseClicked(MouseEvent e){
+			
+			//restaurar imagen original
+<span class="nc" id="L1343">			imgPanel.setImage(copiaEdges.getImage());</span>
+<span class="nc" id="L1344">			imgPanel.repaint();</span>
+			
+			//pintar la selección
+<span class="nc" id="L1347">			int fila = tablaResultados.rowAtPoint(e.getPoint());</span>
+<span class="nc" id="L1348">			Roi roi = fachada.getRoi(fila);</span>
+<span class="nc" id="L1349">			int alpha = 63;</span>
+<span class="nc" id="L1350">			Color c = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);</span>
+<span class="nc" id="L1351">			roi.setFillColor(c);</span>
+<span class="nc" id="L1352">			ImagePlus im = copiaEdges.duplicate();</span>
+<span class="nc" id="L1353">			im.setOverlay(new Overlay(roi));</span>
+<span class="nc" id="L1354">			im = im.flatten();</span>
+<span class="nc" id="L1355">			im.updateAndDraw();</span>
+<span class="nc" id="L1356">			imgPanel.setImage(im.getImage());</span>
+<span class="nc" id="L1357">			imgPanel.repaint();</span>
+			
+<span class="nc" id="L1359">			imgPanel.grabFocus();</span>
+<span class="nc" id="L1360">	    }</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

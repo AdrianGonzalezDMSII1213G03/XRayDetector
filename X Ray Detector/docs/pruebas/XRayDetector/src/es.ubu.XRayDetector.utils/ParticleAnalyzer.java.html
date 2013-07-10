@@ -1,0 +1,1105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ParticleAnalyzer.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.utils</a> &gt; <span class="el_source">ParticleAnalyzer.java</span></div><h1>ParticleAnalyzer.java</h1><pre class="source lang-java linenums">package es.ubu.XRayDetector.utils;
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.LookUpTable;
+import ij.Macro;
+import ij.Prefs;
+import ij.WindowManager;
+import ij.gui.GenericDialog;
+import ij.gui.ImageWindow;
+import ij.gui.Overlay;
+import ij.gui.PolygonRoi;
+import ij.gui.Roi;
+import ij.gui.Wand;
+import ij.macro.Interpreter;
+import ij.measure.Calibration;
+import ij.measure.Measurements;
+import ij.measure.ResultsTable;
+import ij.plugin.Colors;
+import ij.plugin.filter.Analyzer;
+import ij.plugin.filter.PlugInFilter;
+import ij.plugin.frame.RoiManager;
+import ij.process.ByteProcessor;
+import ij.process.ByteStatistics;
+import ij.process.ColorProcessor;
+import ij.process.ColorStatistics;
+import ij.process.FloatProcessor;
+import ij.process.FloatStatistics;
+import ij.process.FloodFiller;
+import ij.process.ImageProcessor;
+import ij.process.ImageStatistics;
+import ij.process.PolygonFiller;
+import ij.process.ShortProcessor;
+import ij.process.ShortStatistics;
+import ij.text.TextWindow;
+import ij.util.Tools;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.image.IndexColorModel;
+import java.util.Properties;
+
+/** Implements ImageJ's Analyze Particles command.
+	&lt;p&gt;
+	&lt;pre&gt;
+	for each line do
+		for each pixel in this line do
+			if the pixel value is &quot;inside&quot; the threshold range then
+				trace the edge to mark the object
+				do the measurement
+				fill the object with a color outside the threshold range
+			else
+				continue the scan
+	&lt;/pre&gt;
+*/
+public class ParticleAnalyzer implements PlugInFilter, Measurements {
+
+	/** Display results in the ImageJ console. */
+	public static final int SHOW_RESULTS = 1;
+	
+	/** Obsolete, replaced by  DISPLAY_SUMMARY */
+	public static final int SHOW_SUMMARY = 2;
+	
+	/** Display image containing outlines of measured particles. */
+	public static final int SHOW_OUTLINES = 4;
+	
+	/** Do not measure particles touching edge of image. */
+	public static final int EXCLUDE_EDGE_PARTICLES = 8;
+	
+	/** Display image containing grayscales masks that identify measured particles. */
+	public static final int SHOW_ROI_MASKS = 16;
+	
+	/** Display a progress bar. */
+	public static final int SHOW_PROGRESS = 32;
+	
+	/** Clear ImageJ console before starting. */
+	public static final int CLEAR_WORKSHEET = 64;
+	
+	/** Record starting coordinates so outline can be recreated later using doWand(x,y). */
+	public static final int RECORD_STARTS = 128;
+
+	/** Display a summary. */
+	public static final int DISPLAY_SUMMARY = 256;
+
+	/** Do not display particle outline image. */
+	public static final int SHOW_NONE = 512;
+
+	/** Flood fill to ignore interior holes. */
+	public static final int INCLUDE_HOLES = 1024;
+	
+	/** Add particles to ROI Manager. */
+	public static final int ADD_TO_MANAGER = 2048;
+
+	/** Display image containing binary masks of measured particles. */
+	public static final int SHOW_MASKS = 4096;
+
+	/** Use 4-connected particle tracing. */
+	public static final int FOUR_CONNECTED = 8192;
+
+	/** Replace original image with masks. */
+	public static final int IN_SITU_SHOW = 16384;
+
+	/** Display particle outlines as an overlay. */
+	public static final int SHOW_OVERLAY_OUTLINES = 32768;
+	
+	/** Display filled particle as an overlay. */
+	public static final int SHOW_OVERLAY_MASKS = 65536;
+
+	static final String OPTIONS = &quot;ap.options&quot;;
+	
+	static final int BYTE=0, SHORT=1, FLOAT=2, RGB=3;
+	static final double DEFAULT_MIN_SIZE = 0.0;
+	static final double DEFAULT_MAX_SIZE = Double.POSITIVE_INFINITY;
+	
+<span class="fc" id="L119">	private static double staticMinSize = 0.0;</span>
+<span class="fc" id="L120">	private static double staticMaxSize = DEFAULT_MAX_SIZE;</span>
+	private static boolean pixelUnits;
+<span class="fc" id="L122">	private static int staticOptions = Prefs.getInt(OPTIONS,CLEAR_WORKSHEET);</span>
+<span class="fc" id="L123">	private static String[] showStrings = {&quot;Nothing&quot;, &quot;Outlines&quot;, &quot;Bare Outlines&quot;, &quot;Ellipses&quot;, &quot;Masks&quot;, &quot;Count Masks&quot;, &quot;Overlay Outlines&quot;, &quot;Overlay Masks&quot;};</span>
+<span class="fc" id="L124">	private static double staticMinCircularity=0.0, staticMaxCircularity=1.0;</span>
+	private static String prevHdr;
+		
+	protected static final int NOTHING=0, OUTLINES=1, BARE_OUTLINES=2, ELLIPSES=3, MASKS=4, ROI_MASKS=5,
+		OVERLAY_OUTLINES=6, OVERLAY_MASKS=7;
+	protected static int staticShowChoice;
+	protected ImagePlus imp;
+	protected ResultsTable rt;
+	protected Analyzer analyzer;
+	protected int slice;
+	protected boolean processStack;
+	protected boolean showResults,excludeEdgeParticles,showSizeDistribution,
+		resetCounter,showProgress, recordStarts, displaySummary, floodFill,
+		addToManager, inSituShow;
+		
+<span class="pc" id="L139">	private String summaryHdr = &quot;Slice\tCount\tTotal Area\tAverage Size\t%Area&quot;;</span>
+	private double level1, level2;
+	private double minSize, maxSize;
+	private double minCircularity, maxCircularity;
+	private int showChoice;
+	private int options;
+	private int measurements;
+	private Calibration calibration;
+	private double fillColor;
+	private ImageProcessor drawIP;
+	private int width,height;
+	private boolean canceled;
+	private ImageStack outlines;
+	private IndexColorModel customLut;
+	private int particleCount;
+<span class="pc" id="L154">	private int maxParticleCount = 0;</span>
+	private TextWindow tw;
+	private Wand wand;
+	private int imageType, imageType2;
+	private boolean roiNeedsImage;
+	private int minX, maxX, minY, maxY;
+	private ImagePlus redirectImp;
+	private ImageProcessor redirectIP;
+	private PolygonFiller pf;
+	private Roi saveRoi;
+	@SuppressWarnings(&quot;unused&quot;)
+	private int beginningCount;
+	private Rectangle r;
+	private ImageProcessor mask;
+	private double totalArea;
+	private FloodFiller ff;
+	private Polygon polygon;
+	private RoiManager roiManager;
+	private static RoiManager staticRoiManager;
+	private static ResultsTable staticResultsTable;
+	private ImagePlus outputImage;
+	private int roiType;
+<span class="pc" id="L176">	private int wandMode = Wand.LEGACY_MODE;</span>
+	private Overlay overlay;
+	boolean blackBackground;
+<span class="fc" id="L179">	private static int defaultFontSize = 9;</span>
+<span class="fc" id="L180">	private static int nextFontSize = defaultFontSize;</span>
+<span class="fc" id="L181">	private static Color defaultFontColor = Color.red;</span>
+<span class="fc" id="L182">	private static Color nextFontColor = defaultFontColor;</span>
+<span class="fc" id="L183">	private static int nextLineWidth = 1;</span>
+<span class="pc" id="L184">	private int fontSize = nextFontSize;</span>
+<span class="pc" id="L185">	private Color fontColor = nextFontColor;</span>
+<span class="pc" id="L186">	private int lineWidth = nextLineWidth;</span>
+
+			
+	/** Constructs a ParticleAnalyzer.
+		@param options	a flag word created by Oring SHOW_RESULTS, EXCLUDE_EDGE_PARTICLES, etc.
+		@param measurements a flag word created by ORing constants defined in the Measurements interface
+		@param rt		a ResultsTable where the measurements will be stored
+		@param minSize	the smallest particle size in pixels
+		@param maxSize	the largest particle size in pixels
+		@param minCirc	minimum circularity
+		@param maxCirc	maximum circularity
+	*/
+<span class="fc" id="L198">	public ParticleAnalyzer(int options, int measurements, ResultsTable rt, double minSize, double maxSize, double minCirc, double maxCirc) {</span>
+<span class="fc" id="L199">		this.options = options;</span>
+<span class="fc" id="L200">		this.measurements = measurements;</span>
+<span class="fc" id="L201">		this.rt = rt;</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (this.rt==null)</span>
+<span class="nc" id="L203">			this.rt = new ResultsTable();</span>
+<span class="fc" id="L204">		this.minSize = minSize;</span>
+<span class="fc" id="L205">		this.maxSize = maxSize;</span>
+<span class="fc" id="L206">		this.minCircularity = minCirc;</span>
+<span class="fc" id="L207">		this.maxCircularity = maxCirc;</span>
+<span class="fc" id="L208">		slice = 1;</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if ((options&amp;SHOW_ROI_MASKS)!=0)</span>
+<span class="nc" id="L210">			showChoice = ROI_MASKS;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if ((options&amp;SHOW_OVERLAY_OUTLINES)!=0)</span>
+<span class="nc" id="L212">			showChoice = OVERLAY_OUTLINES;</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if ((options&amp;SHOW_OVERLAY_MASKS)!=0)</span>
+<span class="nc" id="L214">			showChoice = OVERLAY_MASKS;</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if ((options&amp;SHOW_OUTLINES)!=0)</span>
+<span class="nc" id="L216">			showChoice = OUTLINES;</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if ((options&amp;SHOW_MASKS)!=0)</span>
+<span class="nc" id="L218">			showChoice = MASKS;</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if ((options&amp;SHOW_NONE)!=0)</span>
+<span class="nc" id="L220">			showChoice = NOTHING;</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if ((options&amp;FOUR_CONNECTED)!=0) {</span>
+<span class="nc" id="L222">			wandMode = Wand.FOUR_CONNECTED;</span>
+<span class="nc" id="L223">			options |= INCLUDE_HOLES;</span>
+		}
+<span class="fc" id="L225">		nextFontSize = defaultFontSize;</span>
+<span class="fc" id="L226">		nextFontColor = defaultFontColor;</span>
+<span class="fc" id="L227">		nextLineWidth = 1;</span>
+<span class="fc" id="L228">	}</span>
+	
+	/** Constructs a ParticleAnalyzer using the default min and max circularity values (0 and 1). */
+	public ParticleAnalyzer(int options, int measurements, ResultsTable rt, double minSize, double maxSize) {
+<span class="nc" id="L232">		this(options, measurements, rt, minSize, maxSize, 0.0, 1.0);</span>
+<span class="nc" id="L233">	}</span>
+
+	/** Default constructor */
+<span class="nc" id="L236">	public ParticleAnalyzer() {</span>
+<span class="nc" id="L237">		slice = 1;</span>
+<span class="nc" id="L238">	}</span>
+	
+	public int setup(String arg, ImagePlus imp) {
+<span class="nc" id="L241">		this.imp = imp;</span>
+<span class="nc" id="L242">		IJ.register(ParticleAnalyzer.class);</span>
+		//if (imp==null)
+			//{IJ.noImage();return DONE;}
+<span class="nc bnc" id="L245" title="All 4 branches missed.">		if (imp.getBitDepth()==24 &amp;&amp; !isThresholdedRGB(imp)) {</span>
+<span class="nc" id="L246">			IJ.error(&quot;Particle Analyzer&quot;,</span>
+<span class="nc" id="L247">			&quot;RGB images must be thresholded using\n&quot;</span>
+			+&quot;Image&gt;Adjust&gt;Color Threshold.&quot;);
+<span class="nc" id="L249">			return DONE;</span>
+		}
+//		if (!showDialog())
+//			return DONE;
+<span class="nc" id="L253">		int baseFlags = DOES_ALL+NO_CHANGES+NO_UNDO;</span>
+<span class="nc" id="L254">		int flags = IJ.setupDialog(imp, baseFlags);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		processStack = (flags&amp;DOES_STACKS)!=0;</span>
+<span class="nc" id="L256">		slice = 0;</span>
+<span class="nc" id="L257">		saveRoi = imp.getRoi();</span>
+<span class="nc bnc" id="L258" title="All 6 branches missed.">		if (saveRoi!=null &amp;&amp; saveRoi.getType()!=Roi.RECTANGLE &amp;&amp; saveRoi.isArea())</span>
+<span class="nc" id="L259">			polygon = saveRoi.getPolygon();</span>
+<span class="nc" id="L260">		imp.startTiming();</span>
+<span class="nc" id="L261">		nextFontSize = defaultFontSize;</span>
+<span class="nc" id="L262">		nextFontColor = defaultFontColor;</span>
+<span class="nc" id="L263">		nextLineWidth = 1;</span>
+<span class="nc" id="L264">		return flags;</span>
+	}
+
+	public void run(ImageProcessor ip) {
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (canceled)</span>
+<span class="nc" id="L269">			return;</span>
+<span class="nc" id="L270">		slice++;</span>
+<span class="nc bnc" id="L271" title="All 4 branches missed.">		if (imp.getStackSize()&gt;1 &amp;&amp; processStack)</span>
+<span class="nc" id="L272">			imp.setSlice(slice);</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (imp.getType()==ImagePlus.COLOR_RGB) {</span>
+<span class="nc" id="L274">			ip = (ImageProcessor)imp.getProperty(&quot;Mask&quot;);</span>
+<span class="nc" id="L275">			ip.setThreshold(255, 255, ImageProcessor.NO_LUT_UPDATE);</span>
+		}		
+<span class="nc bnc" id="L277" title="All 2 branches missed.">		if (!analyze(imp, ip))</span>
+<span class="nc" id="L278">			canceled = true;</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (slice==imp.getStackSize()) {</span>
+<span class="nc" id="L280">			imp.updateAndDraw();</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">			if (saveRoi!=null) imp.setRoi(saveRoi);</span>
+		}
+<span class="nc" id="L283">	}</span>
+	
+	/** Displays a modal options dialog. */
+	public boolean showDialog() {
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		Calibration cal = imp!=null?imp.getCalibration():(new Calibration());</span>
+<span class="nc" id="L288">		double unitSquared = cal.pixelWidth*cal.pixelHeight;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">		if (pixelUnits)</span>
+<span class="nc" id="L290">			unitSquared = 1.0;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		if (Macro.getOptions()!=null) {</span>
+<span class="nc" id="L292">			boolean oldMacro = updateMacroOptions();</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			if (oldMacro) unitSquared = 1.0;</span>
+<span class="nc" id="L294">			staticMinSize = 0.0; staticMaxSize = DEFAULT_MAX_SIZE;</span>
+<span class="nc" id="L295">			staticMinCircularity=0.0; staticMaxCircularity=1.0;</span>
+<span class="nc" id="L296">			staticShowChoice = NOTHING;</span>
+		}
+<span class="nc" id="L298">		GenericDialog gd = new GenericDialog(&quot;Analyze Particles&quot;);</span>
+<span class="nc" id="L299">		minSize = staticMinSize;</span>
+<span class="nc" id="L300">		maxSize = staticMaxSize;</span>
+<span class="nc" id="L301">		minCircularity = staticMinCircularity;</span>
+<span class="nc" id="L302">		maxCircularity = staticMaxCircularity;</span>
+<span class="nc" id="L303">		showChoice = staticShowChoice;</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (maxSize==999999) maxSize = DEFAULT_MAX_SIZE;</span>
+<span class="nc" id="L305">		options = staticOptions;</span>
+<span class="nc" id="L306">		String unit = cal.getUnit();</span>
+<span class="nc" id="L307">		boolean scaled = cal.scaled();</span>
+<span class="nc" id="L308">		String units = unit+&quot;^2&quot;;</span>
+<span class="nc" id="L309">		int places = 0;</span>
+<span class="nc" id="L310">		double cmin = minSize*unitSquared;</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		if ((int)cmin!=cmin) places = 2;</span>
+<span class="nc" id="L312">		double cmax = maxSize*unitSquared;</span>
+<span class="nc bnc" id="L313" title="All 4 branches missed.">		if ((int)cmax!=cmax &amp;&amp; cmax!=DEFAULT_MAX_SIZE) places = 2;</span>
+<span class="nc" id="L314">		String minStr = ResultsTable.d2s(cmin,places);</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (minStr.indexOf(&quot;-&quot;)!=-1) {</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">			for (int i=places; i&lt;=6; i++) {</span>
+<span class="nc" id="L317">				minStr = ResultsTable.d2s(cmin, i);</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">				if (minStr.indexOf(&quot;-&quot;)==-1) break;</span>
+			}
+		}
+<span class="nc" id="L321">		String maxStr = ResultsTable.d2s(cmax, places);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (maxStr.indexOf(&quot;-&quot;)!=-1) {</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">			for (int i=places; i&lt;=6; i++) {</span>
+<span class="nc" id="L324">				maxStr = ResultsTable.d2s(cmax, i);</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">				if (maxStr.indexOf(&quot;-&quot;)==-1) break;</span>
+			}
+		}
+<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (scaled)</span>
+<span class="nc" id="L329">			gd.setInsets(5, 0, 0);</span>
+<span class="nc" id="L330">		gd.addStringField(&quot;Size (&quot;+units+&quot;):&quot;, minStr+&quot;-&quot;+maxStr, 12);</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (scaled) {</span>
+<span class="nc" id="L332">			gd.setInsets(0, 40, 5);</span>
+<span class="nc" id="L333">			gd.addCheckbox(&quot;Pixel units&quot;, pixelUnits);</span>
+		}
+<span class="nc" id="L335">		gd.addStringField(&quot;Circularity:&quot;, IJ.d2s(minCircularity)+&quot;-&quot;+IJ.d2s(maxCircularity), 12);</span>
+<span class="nc" id="L336">		gd.addChoice(&quot;Show:&quot;, showStrings, showStrings[showChoice]);</span>
+<span class="nc" id="L337">		String[] labels = new String[8];</span>
+<span class="nc" id="L338">		boolean[] states = new boolean[8];</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		labels[0]=&quot;Display results&quot;; states[0] = (options&amp;SHOW_RESULTS)!=0;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		labels[1]=&quot;Exclude on edges&quot;; states[1]=(options&amp;EXCLUDE_EDGE_PARTICLES)!=0;</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		labels[2]=&quot;Clear results&quot;; states[2]=(options&amp;CLEAR_WORKSHEET)!=0;</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		labels[3]=&quot;Include holes&quot;; states[3]=(options&amp;INCLUDE_HOLES)!=0;</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		labels[4]=&quot;Summarize&quot;; states[4]=(options&amp;DISPLAY_SUMMARY)!=0;</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		labels[5]=&quot;Record starts&quot;; states[5]=(options&amp;RECORD_STARTS)!=0;</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		labels[6]=&quot;Add to Manager&quot;; states[6]=(options&amp;ADD_TO_MANAGER)!=0;</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">		labels[7]=&quot;In_situ Show&quot;; states[7]=(options&amp;IN_SITU_SHOW)!=0;</span>
+<span class="nc" id="L347">		gd.addCheckboxGroup(4, 2, labels, states);</span>
+<span class="nc" id="L348">		gd.addHelp(IJ.URL+&quot;/docs/menus/analyze.html#ap&quot;);</span>
+<span class="nc" id="L349">		gd.showDialog();</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">		if (gd.wasCanceled())</span>
+<span class="nc" id="L351">			return false;</span>
+			
+<span class="nc" id="L353">		String size = gd.getNextString(); // min-max size</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (scaled)</span>
+<span class="nc" id="L355">			pixelUnits = gd.getNextBoolean();</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (pixelUnits)</span>
+<span class="nc" id="L357">			unitSquared = 1.0;</span>
+		else
+<span class="nc" id="L359">			unitSquared = cal.pixelWidth*cal.pixelHeight;</span>
+<span class="nc" id="L360">		String[] minAndMax = Tools.split(size, &quot; -&quot;);</span>
+<span class="nc" id="L361">		double mins = gd.parseDouble(minAndMax[0]);</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		double maxs = minAndMax.length==2?gd.parseDouble(minAndMax[1]):Double.NaN;</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">		minSize = Double.isNaN(mins)?DEFAULT_MIN_SIZE:mins/unitSquared;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		maxSize = Double.isNaN(maxs)?DEFAULT_MAX_SIZE:maxs/unitSquared;</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (minSize&lt;DEFAULT_MIN_SIZE) minSize = DEFAULT_MIN_SIZE;</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (maxSize&lt;minSize) maxSize = DEFAULT_MAX_SIZE;</span>
+<span class="nc" id="L367">		staticMinSize = minSize;</span>
+<span class="nc" id="L368">		staticMaxSize = maxSize;</span>
+		
+<span class="nc" id="L370">		minAndMax = Tools.split(gd.getNextString(), &quot; -&quot;); // min-max circularity</span>
+<span class="nc" id="L371">		double minc = gd.parseDouble(minAndMax[0]);</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		double maxc = minAndMax.length==2?gd.parseDouble(minAndMax[1]):Double.NaN;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		minCircularity = Double.isNaN(minc)?0.0:minc;</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">		maxCircularity = Double.isNaN(maxc)?1.0:maxc;</span>
+<span class="nc bnc" id="L375" title="All 4 branches missed.">		if (minCircularity&lt;0.0 || minCircularity&gt;1.0) minCircularity = 0.0;</span>
+<span class="nc bnc" id="L376" title="All 4 branches missed.">		if (maxCircularity&lt;minCircularity || maxCircularity&gt;1.0) maxCircularity = 1.0;</span>
+<span class="nc bnc" id="L377" title="All 4 branches missed.">		if (minCircularity==1.0 &amp;&amp; maxCircularity==1.0) minCircularity = 0.0;</span>
+<span class="nc" id="L378">		staticMinCircularity = minCircularity;</span>
+<span class="nc" id="L379">		staticMaxCircularity = maxCircularity;</span>
+		
+<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (gd.invalidNumber()) {</span>
+<span class="nc" id="L382">			IJ.error(&quot;Bins invalid.&quot;);</span>
+<span class="nc" id="L383">			canceled = true;</span>
+<span class="nc" id="L384">			return false;</span>
+		}
+<span class="nc" id="L386">		showChoice = gd.getNextChoiceIndex();</span>
+<span class="nc" id="L387">		staticShowChoice = showChoice;</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L389">			options |= SHOW_RESULTS; else options &amp;= ~SHOW_RESULTS;</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L391">			options |= EXCLUDE_EDGE_PARTICLES; else options &amp;= ~EXCLUDE_EDGE_PARTICLES;</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L393">			options |= CLEAR_WORKSHEET; else options &amp;= ~CLEAR_WORKSHEET;</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L395">			options |= INCLUDE_HOLES; else options &amp;= ~INCLUDE_HOLES;</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L397">			options |= DISPLAY_SUMMARY; else options &amp;= ~DISPLAY_SUMMARY;</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L399">			options |= RECORD_STARTS; else options &amp;= ~RECORD_STARTS;</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L401">			options |= ADD_TO_MANAGER; else options &amp;= ~ADD_TO_MANAGER;</span>
+<span class="nc bnc" id="L402" title="All 2 branches missed.">		if (gd.getNextBoolean())</span>
+<span class="nc" id="L403">			options |= IN_SITU_SHOW; else options &amp;= ~IN_SITU_SHOW;</span>
+<span class="nc" id="L404">		staticOptions = options;</span>
+<span class="nc" id="L405">		options |= SHOW_PROGRESS;</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if ((options&amp;DISPLAY_SUMMARY)!=0)</span>
+<span class="nc" id="L407">			Analyzer.setMeasurements(Analyzer.getMeasurements()|AREA);</span>
+<span class="nc" id="L408">		return true;</span>
+	}
+	
+	private boolean isThresholdedRGB(ImagePlus imp) {
+<span class="nc" id="L412">		Object obj = imp.getProperty(&quot;Mask&quot;);</span>
+<span class="nc bnc" id="L413" title="All 4 branches missed.">		if (obj==null || !(obj instanceof ImageProcessor))</span>
+<span class="nc" id="L414">			return false;</span>
+<span class="nc" id="L415">		ImageProcessor mask = (ImageProcessor)obj;</span>
+<span class="nc bnc" id="L416" title="All 4 branches missed.">		return mask.getWidth()==imp.getWidth() &amp;&amp; mask.getHeight()==imp.getHeight();</span>
+	}
+
+	boolean updateMacroOptions() {
+<span class="nc" id="L420">		String options = Macro.getOptions();</span>
+<span class="nc" id="L421">		int index = options.indexOf(&quot;maximum=&quot;);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">		if (index==-1) return false;</span>
+<span class="nc" id="L423">		index +=8;</span>
+<span class="nc" id="L424">		int len = options.length();</span>
+<span class="nc bnc" id="L425" title="All 4 branches missed.">		while (index&lt;len-1 &amp;&amp; options.charAt(index)!=' ')</span>
+<span class="nc" id="L426">			index++;</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		if (index==len-1) return false;</span>
+<span class="nc" id="L428">		int min = (int)Tools.parseDouble(Macro.getValue(options, &quot;minimum&quot;, &quot;1&quot;));</span>
+<span class="nc" id="L429">		int max = (int)Tools.parseDouble(Macro.getValue(options, &quot;maximum&quot;, &quot;999999&quot;));</span>
+<span class="nc" id="L430">		options = &quot;size=&quot;+min+&quot;-&quot;+max+options.substring(index, len);</span>
+<span class="nc" id="L431">		Macro.setOptions(options);</span>
+<span class="nc" id="L432">		return true;</span>
+	}
+
+	/** Performs particle analysis on the specified image. Returns
+		false if there is an error. */
+	public boolean analyze(ImagePlus imp) {
+<span class="fc" id="L438">		return analyze(imp, imp.getProcessor());</span>
+	}
+
+	/** Performs particle analysis on the specified ImagePlus and
+		ImageProcessor. Returns false if there is an error. */
+	public boolean analyze(ImagePlus imp, ImageProcessor ip) {
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">		if (this.imp==null) this.imp = imp;</span>
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">		showResults = (options&amp;SHOW_RESULTS)!=0;</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">		excludeEdgeParticles = (options&amp;EXCLUDE_EDGE_PARTICLES)!=0;</span>
+<span class="pc bpc" id="L447" title="1 of 2 branches missed.">		resetCounter = (options&amp;CLEAR_WORKSHEET)!=0;</span>
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">		showProgress = (options&amp;SHOW_PROGRESS)!=0;</span>
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">		floodFill = (options&amp;INCLUDE_HOLES)==0;</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">		recordStarts = (options&amp;RECORD_STARTS)!=0;</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">		addToManager = (options&amp;ADD_TO_MANAGER)!=0;</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (staticRoiManager!=null) {</span>
+<span class="fc" id="L453">			addToManager = true;</span>
+<span class="fc" id="L454">			roiManager = staticRoiManager;</span>
+<span class="fc" id="L455">			staticRoiManager = null;</span>
+		}
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (staticResultsTable!=null) {</span>
+<span class="nc" id="L458">			rt = staticResultsTable;</span>
+<span class="nc" id="L459">			staticResultsTable = null;</span>
+		}
+<span class="pc bpc" id="L461" title="2 of 4 branches missed.">		displaySummary = (options&amp;DISPLAY_SUMMARY)!=0 ||  (options&amp;SHOW_SUMMARY)!=0;</span>
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">		inSituShow = (options&amp;IN_SITU_SHOW)!=0;</span>
+<span class="fc" id="L463">		outputImage = null;</span>
+<span class="fc" id="L464">		ip.snapshot();</span>
+<span class="fc" id="L465">		ip.setProgressBar(null);</span>
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">		if (Analyzer.isRedirectImage()) {</span>
+<span class="nc" id="L467">			redirectImp = Analyzer.getRedirectImage(imp);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">			if (redirectImp==null) return false;</span>
+<span class="nc" id="L469">			int depth = redirectImp.getStackSize();</span>
+<span class="nc bnc" id="L470" title="All 4 branches missed.">			if (depth&gt;1 &amp;&amp; depth==imp.getStackSize()) {</span>
+<span class="nc" id="L471">				ImageStack redirectStack = redirectImp.getStack();</span>
+<span class="nc" id="L472">				redirectIP = redirectStack.getProcessor(imp.getCurrentSlice());</span>
+<span class="nc" id="L473">			} else</span>
+<span class="nc" id="L474">				redirectIP = redirectImp.getProcessor();</span>
+<span class="pc bpc" id="L475" title="1 of 2 branches missed.">		} else if (imp.getType()==ImagePlus.COLOR_RGB) {</span>
+<span class="nc" id="L476">			ImagePlus original = (ImagePlus)imp.getProperty(&quot;OriginalImage&quot;);</span>
+<span class="nc bnc" id="L477" title="All 6 branches missed.">			if (original!=null &amp;&amp; original.getWidth()==imp.getWidth() &amp;&amp; original.getHeight()==imp.getHeight()) {</span>
+<span class="nc" id="L478">				redirectImp = original;</span>
+<span class="nc" id="L479">				redirectIP = original.getProcessor();</span>
+			}
+		}
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		if (!setThresholdLevels(imp, ip))</span>
+<span class="nc" id="L483">			return false;</span>
+<span class="fc" id="L484">		width = ip.getWidth();</span>
+<span class="fc" id="L485">		height = ip.getHeight();</span>
+<span class="pc bpc" id="L486" title="5 of 6 branches missed.">		if (!(showChoice==NOTHING||showChoice==OVERLAY_OUTLINES||showChoice==OVERLAY_MASKS)) {</span>
+<span class="nc bnc" id="L487" title="All 4 branches missed.">			blackBackground = Prefs.blackBackground &amp;&amp; inSituShow;</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed.">			if (slice==1)</span>
+<span class="nc" id="L489">				outlines = new ImageStack(width, height);</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">			if (showChoice==ROI_MASKS)</span>
+<span class="nc" id="L491">				drawIP = new ShortProcessor(width, height);</span>
+			else
+<span class="nc" id="L493">				drawIP = new ByteProcessor(width, height);</span>
+<span class="nc" id="L494">			drawIP.setLineWidth(lineWidth);</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">			if (showChoice==ROI_MASKS)</span>
+				{} // Place holder for now...
+<span class="nc bnc" id="L497" title="All 4 branches missed.">			else if (showChoice==MASKS&amp;&amp;!blackBackground)</span>
+<span class="nc" id="L498">				drawIP.invertLut();</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">			else if (showChoice==OUTLINES) {</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">				if (!inSituShow) {</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">					if (customLut==null)</span>
+<span class="nc" id="L502">						makeCustomLut();</span>
+<span class="nc" id="L503">					drawIP.setColorModel(customLut);</span>
+				}
+<span class="nc" id="L505">				drawIP.setFont(new Font(&quot;SansSerif&quot;, Font.PLAIN, fontSize));</span>
+<span class="nc bnc" id="L506" title="All 4 branches missed.">				if (fontSize&gt;12 &amp;&amp; inSituShow)</span>
+<span class="nc" id="L507">					drawIP.setAntialiasedText(true);</span>
+			} 
+<span class="nc" id="L509">			outlines.addSlice(null, drawIP);</span>
+
+<span class="nc bnc" id="L511" title="All 4 branches missed.">			if (showChoice==ROI_MASKS || blackBackground) {</span>
+<span class="nc" id="L512">				drawIP.setColor(Color.black);</span>
+<span class="nc" id="L513">				drawIP.fill();</span>
+<span class="nc" id="L514">				drawIP.setColor(Color.white);</span>
+<span class="nc" id="L515">			} else {</span>
+<span class="nc" id="L516">				drawIP.setColor(Color.white);</span>
+<span class="nc" id="L517">				drawIP.fill();</span>
+<span class="nc" id="L518">				drawIP.setColor(Color.black);</span>
+			}
+		}
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		calibration = redirectImp!=null?redirectImp.getCalibration():imp.getCalibration();</span>
+		
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">		if (rt==null) {</span>
+<span class="nc" id="L524">			rt = Analyzer.getResultsTable();</span>
+<span class="nc" id="L525">			analyzer = new Analyzer(imp);</span>
+<span class="nc" id="L526">		} else {</span>
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">			if (measurements==0)</span>
+<span class="nc" id="L528">				measurements = Analyzer.getMeasurements();</span>
+<span class="fc" id="L529">			analyzer = new Analyzer(imp, measurements, rt);</span>
+		}
+<span class="pc bpc" id="L531" title="3 of 4 branches missed.">		if (resetCounter &amp;&amp; slice==1) {</span>
+<span class="nc bnc" id="L532" title="All 2 branches missed.">			if (!Analyzer.resetCounter())</span>
+<span class="nc" id="L533">				return false;</span>
+		}
+<span class="fc" id="L535">		beginningCount = Analyzer.getCounter();</span>
+
+<span class="fc" id="L537">		byte[] pixels = null;</span>
+<span class="pc bpc" id="L538" title="1 of 2 branches missed.">		if (ip instanceof ByteProcessor)</span>
+<span class="fc" id="L539">			pixels = (byte[])ip.getPixels();</span>
+<span class="pc bpc" id="L540" title="1 of 2 branches missed.">		if (r==null) {</span>
+<span class="fc" id="L541">			r = ip.getRoi();</span>
+<span class="fc" id="L542">			mask = ip.getMask();</span>
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">			if (displaySummary) {</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">				if (mask!=null)</span>
+<span class="nc" id="L545">					totalArea = ImageStatistics.getStatistics(ip, AREA, calibration).area;</span>
+				else
+<span class="nc" id="L547">					totalArea = r.width*calibration.pixelWidth*r.height*calibration.pixelHeight;</span>
+			}
+		}
+<span class="fc" id="L550">		minX=r.x; maxX=r.x+r.width; minY=r.y; maxY=r.y+r.height;</span>
+<span class="pc bpc" id="L551" title="3 of 6 branches missed.">		if (r.width&lt;width || r.height&lt;height || mask!=null) {</span>
+<span class="nc bnc" id="L552" title="All 2 branches missed.">			if (!eraseOutsideRoi(ip, r, mask)) return false;</span>
+		}
+		int offset;
+		double value;
+<span class="fc" id="L556">		int inc = Math.max(r.height/25, 1);</span>
+<span class="fc" id="L557">		ImageWindow win = imp.getWindow();</span>
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">		if (win!=null)</span>
+<span class="nc" id="L559">			win.running = true;</span>
+<span class="pc bpc" id="L560" title="1 of 2 branches missed.">		if (measurements==0)</span>
+<span class="nc" id="L561">			measurements = Analyzer.getMeasurements();</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">		if (showChoice==ELLIPSES)</span>
+<span class="nc" id="L563">			measurements |= ELLIPSE;</span>
+<span class="fc" id="L564">		measurements &amp;= ~LIMIT;	 // ignore &quot;Limit to Threshold&quot;</span>
+<span class="pc bpc" id="L565" title="5 of 6 branches missed.">		roiNeedsImage = (measurements&amp;PERIMETER)!=0 || (measurements&amp;SHAPE_DESCRIPTORS)!=0 || (measurements&amp;FERET)!=0;</span>
+<span class="fc" id="L566">		particleCount = 0;</span>
+<span class="fc" id="L567">		wand = new Wand(ip);</span>
+<span class="fc" id="L568">		pf = new PolygonFiller();</span>
+<span class="pc bpc" id="L569" title="1 of 2 branches missed.">		if (floodFill) {</span>
+<span class="fc" id="L570">			ImageProcessor ipf = ip.duplicate();</span>
+<span class="fc" id="L571">			ipf.setValue(fillColor);</span>
+<span class="fc" id="L572">			ff = new FloodFiller(ipf);</span>
+		}
+<span class="pc bpc" id="L574" title="1 of 2 branches missed.">		roiType = Wand.allPoints()?Roi.FREEROI:Roi.TRACED_ROI;</span>
+
+<span class="fc bfc" id="L576" title="All 2 branches covered.">		for (int y=r.y; y&lt;(r.y+r.height); y++) {</span>
+<span class="fc" id="L577">			offset = y*width;</span>
+<span class="fc bfc" id="L578" title="All 2 branches covered.">			for (int x=r.x; x&lt;(r.x+r.width); x++) {</span>
+<span class="pc bpc" id="L579" title="1 of 2 branches missed.">				if (pixels!=null)</span>
+<span class="fc" id="L580">					value = pixels[offset+x]&amp;255;</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">				else if (imageType==SHORT)</span>
+<span class="nc" id="L582">					value = ip.getPixel(x, y);</span>
+				else
+<span class="nc" id="L584">					value = ip.getPixelValue(x, y);</span>
+<span class="pc bpc" id="L585" title="1 of 4 branches missed.">				if (value&gt;=level1 &amp;&amp; value&lt;=level2)</span>
+<span class="fc" id="L586">					analyzeParticle(x, y, imp, ip);</span>
+			}
+<span class="pc bpc" id="L588" title="3 of 4 branches missed.">			if (showProgress &amp;&amp; ((y%inc)==0))</span>
+<span class="nc" id="L589">				IJ.showProgress((double)(y-r.y)/r.height);</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">			if (win!=null)</span>
+<span class="nc bnc" id="L591" title="All 2 branches missed.">				canceled = !win.running;</span>
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">			if (canceled) {</span>
+<span class="nc" id="L593">				Macro.abort();</span>
+<span class="nc" id="L594">				break;</span>
+			}
+		}
+<span class="pc bpc" id="L597" title="1 of 2 branches missed.">		if (showProgress)</span>
+<span class="nc" id="L598">			IJ.showProgress(1.0);</span>
+//		if (showResults &amp;&amp; showResultsWindow)
+//			rt.updateResults();
+<span class="fc" id="L601">		imp.deleteRoi();</span>
+<span class="fc" id="L602">		ip.resetRoi();</span>
+<span class="fc" id="L603">		ip.reset();</span>
+<span class="pc bpc" id="L604" title="3 of 4 branches missed.">		if (displaySummary &amp;&amp; IJ.getInstance()!=null)</span>
+<span class="nc" id="L605">			updateSliceSummary();</span>
+<span class="pc bpc" id="L606" title="2 of 4 branches missed.">		if (addToManager &amp;&amp; roiManager!=null)</span>
+<span class="fc" id="L607">			roiManager.setEditMode(imp, true);</span>
+<span class="fc bfc" id="L608" title="All 2 branches covered.">		maxParticleCount = (particleCount &gt; maxParticleCount) ? particleCount : maxParticleCount;</span>
+		//		if (!canceled)
+//			showResults();
+<span class="fc" id="L611">		return true;</span>
+	}
+	
+	void updateSliceSummary() {
+<span class="nc" id="L615">		int slices = imp.getStackSize();</span>
+<span class="nc" id="L616">		float[] areas = rt.getColumn(ResultsTable.AREA);</span>
+<span class="nc bnc" id="L617" title="All 2 branches missed.">		if (areas==null)</span>
+<span class="nc" id="L618">			areas = new float[0];</span>
+<span class="nc" id="L619">		String label = imp.getTitle();</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">		if (slices&gt;1) {</span>
+<span class="nc" id="L621">			label = imp.getStack().getShortSliceLabel(slice);</span>
+<span class="nc bnc" id="L622" title="All 4 branches missed.">			label = label!=null&amp;&amp;!label.equals(&quot;&quot;)?label:&quot;&quot;+slice;</span>
+		}
+<span class="nc" id="L624">		String aLine = null;</span>
+<span class="nc" id="L625">		double sum = 0.0;</span>
+<span class="nc" id="L626">		int start = areas.length-particleCount;</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">		if (start&lt;0)</span>
+<span class="nc" id="L628">			return;</span>
+<span class="nc bnc" id="L629" title="All 2 branches missed.">		for (int i=start; i&lt;areas.length; i++)</span>
+<span class="nc" id="L630">			sum += areas[i];</span>
+<span class="nc" id="L631">		int places = Analyzer.getPrecision();</span>
+<span class="nc" id="L632">		imp.getCalibration();</span>
+<span class="nc" id="L633">		String total = &quot;\t&quot;+ResultsTable.d2s(sum,places);</span>
+<span class="nc" id="L634">		String average = &quot;\t&quot;+ResultsTable.d2s(sum/particleCount,places);</span>
+<span class="nc" id="L635">		String fraction = &quot;\t&quot;+ResultsTable.d2s(sum*100.0/totalArea,places);</span>
+<span class="nc" id="L636">		aLine = label+&quot;\t&quot;+particleCount+total+average+fraction;</span>
+<span class="nc bnc" id="L637" title="All 2 branches missed.">		aLine = addMeans(aLine, areas.length&gt;0?start:-1);</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">		if (slices==1) {</span>
+<span class="nc" id="L639">			Frame frame = WindowManager.getFrame(&quot;Summary&quot;);</span>
+<span class="nc bnc" id="L640" title="All 6 branches missed.">			if (frame!=null &amp;&amp; (frame instanceof TextWindow) &amp;&amp; summaryHdr.equals(prevHdr))</span>
+<span class="nc" id="L641">				tw = (TextWindow)frame;</span>
+		}
+<span class="nc bnc" id="L643" title="All 2 branches missed.">		if (tw==null) {</span>
+<span class="nc bnc" id="L644" title="All 2 branches missed.">			String title = slices==1?&quot;Summary&quot;:&quot;Summary of &quot;+imp.getTitle();</span>
+<span class="nc" id="L645">			tw = new TextWindow(title, summaryHdr, aLine, 450, 300);</span>
+<span class="nc" id="L646">			prevHdr = summaryHdr;</span>
+<span class="nc" id="L647">		} else</span>
+<span class="nc" id="L648">			tw.append(aLine);</span>
+<span class="nc" id="L649">	}</span>
+
+	String addMeans(String line, int start) {
+<span class="nc bnc" id="L652" title="All 2 branches missed.">		if ((measurements&amp;MEAN)!=0) line=addMean(ResultsTable.MEAN, line, start);</span>
+<span class="nc bnc" id="L653" title="All 2 branches missed.">		if ((measurements&amp;MODE)!=0) line=addMean(ResultsTable.MODE, line, start);</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">		if ((measurements&amp;PERIMETER)!=0)</span>
+<span class="nc" id="L655">			line=addMean(ResultsTable.PERIMETER, line, start);</span>
+<span class="nc bnc" id="L656" title="All 2 branches missed.">		if ((measurements&amp;ELLIPSE)!=0) {</span>
+<span class="nc" id="L657">			line=addMean(ResultsTable.MAJOR, line, start);</span>
+<span class="nc" id="L658">			line=addMean(ResultsTable.MINOR, line, start);</span>
+<span class="nc" id="L659">			line=addMean(ResultsTable.ANGLE, line, start);</span>
+		}
+<span class="nc bnc" id="L661" title="All 2 branches missed.">		if ((measurements&amp;SHAPE_DESCRIPTORS)!=0) {</span>
+<span class="nc" id="L662">			line=addMean(ResultsTable.CIRCULARITY, line, start);</span>
+<span class="nc" id="L663">			line=addMean(ResultsTable.SOLIDITY, line, start);</span>
+		}
+<span class="nc bnc" id="L665" title="All 2 branches missed.">		if ((measurements&amp;FERET)!=0) {</span>
+<span class="nc" id="L666">			line=addMean(ResultsTable.FERET, line, start);</span>
+<span class="nc" id="L667">			line=addMean(ResultsTable.FERET_X, line, start);</span>
+<span class="nc" id="L668">			line=addMean(ResultsTable.FERET_Y, line, start);</span>
+<span class="nc" id="L669">			line=addMean(ResultsTable.FERET_ANGLE, line, start);</span>
+<span class="nc" id="L670">			line=addMean(ResultsTable.MIN_FERET, line, start);</span>
+		}
+<span class="nc bnc" id="L672" title="All 2 branches missed.">		if ((measurements&amp;INTEGRATED_DENSITY)!=0)</span>
+<span class="nc" id="L673">			line=addMean(ResultsTable.INTEGRATED_DENSITY, line, start);</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">		if ((measurements&amp;MEDIAN)!=0)</span>
+<span class="nc" id="L675">			line=addMean(ResultsTable.MEDIAN, line, start);</span>
+<span class="nc bnc" id="L676" title="All 2 branches missed.">		if ((measurements&amp;SKEWNESS)!=0)</span>
+<span class="nc" id="L677">			line=addMean(ResultsTable.SKEWNESS, line, start);</span>
+<span class="nc bnc" id="L678" title="All 2 branches missed.">		if ((measurements&amp;KURTOSIS)!=0)</span>
+<span class="nc" id="L679">			line=addMean(ResultsTable.KURTOSIS, line, start);</span>
+<span class="nc" id="L680">		return line;</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private String addMean(int column, String line, int start) {
+<span class="nc bnc" id="L685" title="All 2 branches missed.">		if (start==-1) {</span>
+<span class="nc" id="L686">			line += &quot;\tNaN&quot;;</span>
+<span class="nc" id="L687">			summaryHdr += &quot;\t&quot;+ResultsTable.getDefaultHeading(column);</span>
+<span class="nc" id="L688">		} else {</span>
+<span class="nc bnc" id="L689" title="All 2 branches missed.">			float[] c = column&gt;=0?rt.getColumn(column):null;</span>
+<span class="nc bnc" id="L690" title="All 2 branches missed.">			if (c!=null) {</span>
+<span class="nc" id="L691">				ImageProcessor ip = new FloatProcessor(c.length, 1, c, null);</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">				if (ip==null) return line;</span>
+<span class="nc" id="L693">				ip.setRoi(start, 0, ip.getWidth()-start, 1);</span>
+<span class="nc" id="L694">				ip = ip.crop();</span>
+<span class="nc" id="L695">				ImageStatistics stats = new FloatStatistics(ip);</span>
+<span class="nc bnc" id="L696" title="All 2 branches missed.">				if (stats==null)</span>
+<span class="nc" id="L697">					return line;</span>
+<span class="nc" id="L698">				line += n(stats.mean);</span>
+<span class="nc" id="L699">			} else</span>
+<span class="nc" id="L700">				line += &quot;\tNaN&quot;;</span>
+<span class="nc" id="L701">			summaryHdr += &quot;\t&quot;+rt.getColumnHeading(column);</span>
+		}
+<span class="nc" id="L703">		return line;</span>
+	}
+
+	String n(double n) {
+		String s;
+<span class="nc bnc" id="L708" title="All 2 branches missed.">		if (Math.round(n)==n)</span>
+<span class="nc" id="L709">			s = ResultsTable.d2s(n,0);</span>
+		else
+<span class="nc" id="L711">			s = ResultsTable.d2s(n, Analyzer.getPrecision());</span>
+<span class="nc" id="L712">		return &quot;\t&quot;+s;</span>
+	}
+
+	boolean eraseOutsideRoi(ImageProcessor ip, Rectangle r, ImageProcessor mask) {
+<span class="nc" id="L716">		int width = ip.getWidth();</span>
+<span class="nc" id="L717">		int height = ip.getHeight();</span>
+<span class="nc" id="L718">		ip.setRoi(r);</span>
+<span class="nc bnc" id="L719" title="All 4 branches missed.">		if (excludeEdgeParticles &amp;&amp; polygon!=null) {</span>
+<span class="nc" id="L720">			ImageStatistics stats = ImageStatistics.getStatistics(ip, MIN_MAX, null);</span>
+<span class="nc bnc" id="L721" title="All 4 branches missed.">			if (fillColor&gt;=stats.min &amp;&amp; fillColor&lt;=stats.max) {</span>
+<span class="nc" id="L722">				double replaceColor = level1-1.0;</span>
+<span class="nc bnc" id="L723" title="All 4 branches missed.">				if (replaceColor&lt;0.0 || replaceColor==fillColor) {</span>
+<span class="nc" id="L724">					replaceColor = level2+1.0;</span>
+<span class="nc bnc" id="L725" title="All 2 branches missed.">					int maxColor = imageType==BYTE?255:65535;</span>
+<span class="nc bnc" id="L726" title="All 4 branches missed.">					if (replaceColor&gt;maxColor || replaceColor==fillColor) {</span>
+<span class="nc" id="L727">						IJ.error(&quot;Particle Analyzer&quot;, &quot;Unable to remove edge particles&quot;);</span>
+<span class="nc" id="L728">						return false;</span>
+					}
+				}
+<span class="nc bnc" id="L731" title="All 2 branches missed.">				for (int y=minY; y&lt;maxY; y++) {</span>
+<span class="nc bnc" id="L732" title="All 2 branches missed.">					for (int x=minX; x&lt;maxX; x++) {</span>
+<span class="nc" id="L733">						int v  = ip.getPixel(x, y);</span>
+<span class="nc bnc" id="L734" title="All 2 branches missed.">						if (v==fillColor) ip.putPixel(x, y, (int)replaceColor);</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L739">		ip.setValue(fillColor);		</span>
+<span class="nc bnc" id="L740" title="All 2 branches missed.">		if (mask!=null) {</span>
+<span class="nc" id="L741">			mask = mask.duplicate();</span>
+<span class="nc" id="L742">			mask.invert();</span>
+<span class="nc" id="L743">			ip.fill(mask);</span>
+		}		
+<span class="nc" id="L745">		ip.setRoi(0, 0, r.x, height);</span>
+<span class="nc" id="L746">		ip.fill();</span>
+<span class="nc" id="L747">		ip.setRoi(r.x, 0, r.width, r.y);</span>
+<span class="nc" id="L748">		ip.fill();</span>
+<span class="nc" id="L749">		ip.setRoi(r.x, r.y+r.height, r.width, height-(r.y+r.height));</span>
+<span class="nc" id="L750">		ip.fill();</span>
+<span class="nc" id="L751">		ip.setRoi(r.x+r.width, 0, width-(r.x+r.width), height);</span>
+<span class="nc" id="L752">		ip.fill();</span>
+<span class="nc" id="L753">		ip.resetRoi();</span>
+		//IJ.log(&quot;erase: &quot;+fillColor+&quot;	&quot;+level1+&quot;	&quot;+level2+&quot;	&quot;+excludeEdgeParticles);
+		//(new ImagePlus(&quot;ip2&quot;, ip.duplicate())).show();
+<span class="nc" id="L756">		return true;</span>
+	}
+
+	boolean setThresholdLevels(ImagePlus imp, ImageProcessor ip) {
+<span class="fc" id="L760">		double t1 = ip.getMinThreshold();</span>
+<span class="fc" id="L761">		double t2 = ip.getMaxThreshold();</span>
+<span class="fc" id="L762">		boolean invertedLut = imp.isInvertedLut();</span>
+<span class="pc bpc" id="L763" title="1 of 2 branches missed.">		if (ip instanceof ShortProcessor)</span>
+<span class="nc" id="L764">			imageType = SHORT;</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">		else if (ip instanceof FloatProcessor)</span>
+<span class="nc" id="L766">			imageType = FLOAT;</span>
+		else
+<span class="fc" id="L768">			imageType = BYTE;</span>
+<span class="pc bpc" id="L769" title="1 of 2 branches missed.">		if (t1==ImageProcessor.NO_THRESHOLD) {</span>
+<span class="fc" id="L770">			ImageStatistics stats = imp.getStatistics();</span>
+<span class="pc bpc" id="L771" title="2 of 4 branches missed.">			if (imageType!=BYTE || (stats.histogram[0]+stats.histogram[255]!=stats.pixelCount)) {</span>
+<span class="nc" id="L772">				IJ.error(&quot;Particle Analyzer&quot;,</span>
+<span class="nc" id="L773">					&quot;A thresholded image or 8-bit binary image is\n&quot;</span>
+					+&quot;required. Threshold levels can be set using\n&quot;
+					+&quot;the Image-&gt;Adjust-&gt;Threshold tool.&quot;);
+<span class="nc" id="L776">				canceled = true;</span>
+<span class="nc" id="L777">				return false;</span>
+			}
+<span class="fc" id="L779">			boolean threshold255 = invertedLut;</span>
+<span class="pc bpc" id="L780" title="1 of 2 branches missed.">			if (Prefs.blackBackground)</span>
+<span class="nc bnc" id="L781" title="All 2 branches missed.">				threshold255 = !threshold255;</span>
+<span class="pc bpc" id="L782" title="1 of 2 branches missed.">			if (threshold255) {</span>
+<span class="fc" id="L783">				level1 = 255;</span>
+<span class="fc" id="L784">				level2 = 255;</span>
+<span class="fc" id="L785">				fillColor = 64;</span>
+<span class="fc" id="L786">			} else {</span>
+<span class="nc" id="L787">				level1 = 0;</span>
+<span class="nc" id="L788">				level2 = 0;</span>
+<span class="nc" id="L789">				fillColor = 192;</span>
+			}
+<span class="nc" id="L791">		} else {</span>
+<span class="nc" id="L792">			level1 = t1;</span>
+<span class="nc" id="L793">			level2 = t2;</span>
+<span class="nc bnc" id="L794" title="All 2 branches missed.">			if (imageType==BYTE) {</span>
+<span class="nc bnc" id="L795" title="All 2 branches missed.">				if (level1&gt;0)</span>
+<span class="nc" id="L796">					fillColor = 0;</span>
+<span class="nc bnc" id="L797" title="All 2 branches missed.">				else if (level2&lt;255)</span>
+<span class="nc" id="L798">					fillColor = 255;</span>
+<span class="nc bnc" id="L799" title="All 2 branches missed.">			} else if (imageType==SHORT) {</span>
+<span class="nc bnc" id="L800" title="All 2 branches missed.">				if (level1&gt;0)</span>
+<span class="nc" id="L801">					fillColor = 0;</span>
+<span class="nc bnc" id="L802" title="All 2 branches missed.">				else if (level2&lt;65535)</span>
+<span class="nc" id="L803">					fillColor = 65535;</span>
+<span class="nc bnc" id="L804" title="All 2 branches missed.">			} else if (imageType==FLOAT)</span>
+<span class="nc" id="L805">					fillColor = -Float.MAX_VALUE;</span>
+			else
+<span class="nc" id="L807">				return false;</span>
+		}
+<span class="fc" id="L809">		imageType2 = imageType;</span>
+<span class="pc bpc" id="L810" title="1 of 2 branches missed.">		if (redirectIP!=null) {</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">			if (redirectIP instanceof ShortProcessor)</span>
+<span class="nc" id="L812">				imageType2 = SHORT;</span>
+<span class="nc bnc" id="L813" title="All 2 branches missed.">			else if (redirectIP instanceof FloatProcessor)</span>
+<span class="nc" id="L814">				imageType2 = FLOAT;</span>
+<span class="nc bnc" id="L815" title="All 2 branches missed.">			else if (redirectIP instanceof ColorProcessor)</span>
+<span class="nc" id="L816">				imageType2 = RGB;</span>
+			else
+<span class="nc" id="L818">				imageType2 = BYTE;</span>
+		}
+<span class="fc" id="L820">		return true;</span>
+	}
+	
+<span class="pc" id="L823">	int counter = 0;</span>
+	
+	void analyzeParticle(int x, int y, ImagePlus imp, ImageProcessor ip) {
+		//Wand wand = new Wand(ip);
+<span class="pc bpc" id="L827" title="1 of 2 branches missed.">		ImageProcessor ip2 = redirectIP!=null?redirectIP:ip;</span>
+<span class="fc" id="L828">		wand.autoOutline(x, y, level1, level2, wandMode);</span>
+<span class="pc bpc" id="L829" title="1 of 2 branches missed.">		if (wand.npoints==0)</span>
+<span class="nc" id="L830">			{IJ.log(&quot;wand error: &quot;+x+&quot; &quot;+y); return;}</span>
+<span class="fc" id="L831">		Roi roi = new PolygonRoi(wand.xpoints, wand.ypoints, wand.npoints, roiType);</span>
+<span class="fc" id="L832">		Rectangle r = roi.getBounds();</span>
+<span class="fc bfc" id="L833" title="All 4 branches covered.">		if (r.width&gt;1 &amp;&amp; r.height&gt;1) {</span>
+<span class="fc" id="L834">			PolygonRoi proi = (PolygonRoi)roi;</span>
+<span class="fc" id="L835">			pf.setPolygon(proi.getXCoordinates(), proi.getYCoordinates(), proi.getNCoordinates());</span>
+<span class="fc" id="L836">			ip2.setMask(pf.getMask(r.width, r.height));</span>
+<span class="pc bpc" id="L837" title="1 of 2 branches missed.">			if (floodFill) ff.particleAnalyzerFill(x, y, level1, level2, ip2.getMask(), r);</span>
+		}
+<span class="fc" id="L839">		ip2.setRoi(r);</span>
+<span class="fc" id="L840">		ip.setValue(fillColor);</span>
+<span class="fc" id="L841">		ImageStatistics stats = getStatistics(ip2, measurements, calibration);</span>
+<span class="fc" id="L842">		boolean include = true;</span>
+<span class="pc bpc" id="L843" title="1 of 2 branches missed.">		if (excludeEdgeParticles) {</span>
+<span class="nc bnc" id="L844" title="All 8 branches missed.">			if (r.x==minX||r.y==minY||r.x+r.width==maxX||r.y+r.height==maxY)</span>
+<span class="nc" id="L845">				include = false;</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">			if (polygon!=null) {</span>
+<span class="nc" id="L847">				Rectangle bounds = roi.getBounds();</span>
+<span class="nc" id="L848">				int x1=bounds.x+wand.xpoints[wand.npoints-1];</span>
+<span class="nc" id="L849">				int y1=bounds.y+wand.ypoints[wand.npoints-1];</span>
+				int x2, y2;
+<span class="nc bnc" id="L851" title="All 2 branches missed.">				for (int i=0; i&lt;wand.npoints; i++) {</span>
+<span class="nc" id="L852">					x2=bounds.x+wand.xpoints[i];</span>
+<span class="nc" id="L853">					y2=bounds.y+wand.ypoints[i];</span>
+<span class="nc bnc" id="L854" title="All 2 branches missed.">					if (!polygon.contains(x2, y2))</span>
+<span class="nc" id="L855">						{include = false; break;}</span>
+<span class="nc bnc" id="L856" title="All 8 branches missed.">					if ((x1==x2 &amp;&amp; ip.getPixel(x1,y1-1)==fillColor) || (y1==y2 &amp;&amp; ip.getPixel(x1-1,y1)==fillColor))</span>
+<span class="nc" id="L857">						{include = false; break;}</span>
+<span class="nc" id="L858">					x1=x2; y1=y2;</span>
+				}
+			}
+		}
+<span class="fc" id="L862">		ImageProcessor mask = ip2.getMask();</span>
+<span class="pc bpc" id="L863" title="2 of 4 branches missed.">		if (minCircularity&gt;0.0 || maxCircularity&lt;1.0) {</span>
+<span class="nc" id="L864">			double perimeter = roi.getLength();</span>
+<span class="nc bnc" id="L865" title="All 2 branches missed.">			double circularity = perimeter==0.0?0.0:4.0*Math.PI*(stats.pixelCount/(perimeter*perimeter));</span>
+<span class="nc bnc" id="L866" title="All 2 branches missed.">			if (circularity&gt;1.0) circularity = 1.0;</span>
+			//IJ.log(circularity+&quot;	&quot;+perimeter+&quot;  &quot;+stats.area);
+<span class="nc bnc" id="L868" title="All 4 branches missed.">			if (circularity&lt;minCircularity || circularity&gt;maxCircularity) include = false;</span>
+		}
+<span class="pc bpc" id="L870" title="1 of 6 branches missed.">		if (stats.pixelCount&gt;=minSize &amp;&amp; stats.pixelCount&lt;=maxSize &amp;&amp; include) {</span>
+<span class="fc" id="L871">			particleCount++;</span>
+<span class="pc bpc" id="L872" title="1 of 2 branches missed.">			if (roiNeedsImage)</span>
+<span class="fc" id="L873">				roi.setImage(imp);</span>
+<span class="fc" id="L874">			stats.xstart=x; stats.ystart=y;</span>
+<span class="fc" id="L875">			saveResults(stats, roi);</span>
+<span class="pc bpc" id="L876" title="1 of 2 branches missed.">			if (showChoice!=NOTHING)</span>
+<span class="nc" id="L877">				drawParticle(drawIP, roi, stats, mask);</span>
+		}
+<span class="pc bpc" id="L879" title="1 of 2 branches missed.">		if (redirectIP!=null)</span>
+<span class="nc" id="L880">			ip.setRoi(r);</span>
+<span class="fc" id="L881">		ip.fill(mask);</span>
+<span class="fc" id="L882">	}</span>
+
+	ImageStatistics getStatistics(ImageProcessor ip, int mOptions, Calibration cal) {
+<span class="pc bpc" id="L885" title="4 of 5 branches missed.">		switch (imageType2) {</span>
+			case BYTE:
+<span class="fc" id="L887">				return new ByteStatistics(ip, mOptions, cal);</span>
+			case SHORT:
+<span class="nc" id="L889">				return new ShortStatistics(ip, mOptions, cal);</span>
+			case FLOAT:
+<span class="nc" id="L891">				return new FloatStatistics(ip, mOptions, cal);</span>
+			case RGB:
+<span class="nc" id="L893">				return new ColorStatistics(ip, mOptions, cal);</span>
+			default:
+<span class="nc" id="L895">				return null;</span>
+		}
+	}
+
+	/** Saves statistics for one particle in a results table. This is
+		a method subclasses may want to override. */
+	protected void saveResults(ImageStatistics stats, Roi roi) {
+<span class="fc" id="L902">		analyzer.saveResults(stats, roi);</span>
+<span class="pc bpc" id="L903" title="1 of 2 branches missed.">		if (recordStarts) {</span>
+<span class="nc" id="L904">			rt.addValue(&quot;XStart&quot;, stats.xstart);</span>
+<span class="nc" id="L905">			rt.addValue(&quot;YStart&quot;, stats.ystart);</span>
+		}
+<span class="pc bpc" id="L907" title="1 of 2 branches missed.">		if (addToManager) {</span>
+<span class="pc bpc" id="L908" title="1 of 2 branches missed.">			if (roiManager==null) {</span>
+<span class="nc bnc" id="L909" title="All 4 branches missed.">				if (Macro.getOptions()!=null &amp;&amp; Interpreter.isBatchMode())</span>
+<span class="nc" id="L910">					roiManager = Interpreter.getBatchModeRoiManager();</span>
+<span class="nc bnc" id="L911" title="All 2 branches missed.">				if (roiManager==null) {</span>
+<span class="nc" id="L912">					Frame frame = WindowManager.getFrame(&quot;ROI Manager&quot;);</span>
+<span class="nc bnc" id="L913" title="All 2 branches missed.">					if (frame==null)</span>
+<span class="nc" id="L914">						IJ.run(&quot;ROI Manager...&quot;);</span>
+<span class="nc" id="L915">					frame = WindowManager.getFrame(&quot;ROI Manager&quot;);</span>
+<span class="nc bnc" id="L916" title="All 4 branches missed.">					if (frame==null || !(frame instanceof RoiManager))</span>
+<span class="nc" id="L917">						{addToManager=false; return;}</span>
+<span class="nc" id="L918">					roiManager = (RoiManager)frame;</span>
+				}
+<span class="nc bnc" id="L920" title="All 2 branches missed.">				if (resetCounter)</span>
+<span class="nc" id="L921">					roiManager.runCommand(&quot;reset&quot;);</span>
+			}
+<span class="pc bpc" id="L923" title="1 of 2 branches missed.">			if (imp.getStackSize()&gt;1)</span>
+<span class="nc" id="L924">				roi.setPosition(imp.getCurrentSlice());</span>
+<span class="pc bpc" id="L925" title="1 of 2 branches missed.">			if (lineWidth!=1)</span>
+<span class="nc" id="L926">				roi.setStrokeWidth(lineWidth);</span>
+<span class="fc" id="L927">			roiManager.add(imp, roi, rt.getCounter());</span>
+		}
+//		if (showResultsWindow &amp;&amp; showResults)
+//			rt.addResults();
+<span class="fc" id="L931">	}</span>
+	
+	/** Draws a selected particle in a separate image.	This is
+		another method subclasses may want to override. */
+	protected void drawParticle(ImageProcessor drawIP, Roi roi,
+	ImageStatistics stats, ImageProcessor mask) {
+<span class="nc bnc" id="L937" title="All 5 branches missed.">		switch (showChoice) {</span>
+<span class="nc" id="L938">			case MASKS: drawFilledParticle(drawIP, roi, mask); break;</span>
+			case OUTLINES: case BARE_OUTLINES: case OVERLAY_OUTLINES: case OVERLAY_MASKS:
+<span class="nc" id="L940">				drawOutline(drawIP, roi, rt.getCounter()); break;</span>
+<span class="nc" id="L941">			case ELLIPSES: drawEllipse(drawIP, stats, rt.getCounter()); break;</span>
+<span class="nc" id="L942">			case ROI_MASKS: drawRoiFilledParticle(drawIP, roi, mask, rt.getCounter()); break;</span>
+			default:
+		}
+<span class="nc" id="L945">	}</span>
+
+	void drawFilledParticle(ImageProcessor ip, Roi roi, ImageProcessor mask) {
+		//IJ.write(roi.getBounds()+&quot; &quot;+mask.length);
+<span class="nc" id="L949">		ip.setRoi(roi.getBounds());</span>
+<span class="nc" id="L950">		ip.fill(mask);</span>
+<span class="nc" id="L951">	}</span>
+
+	void drawOutline(ImageProcessor ip, Roi roi, int count) {
+<span class="nc bnc" id="L954" title="All 4 branches missed.">		if (showChoice==OVERLAY_OUTLINES || showChoice==OVERLAY_MASKS) {</span>
+<span class="nc bnc" id="L955" title="All 2 branches missed.">			if (overlay==null) {</span>
+<span class="nc" id="L956">				overlay = new Overlay();</span>
+<span class="nc" id="L957">				overlay.drawLabels(true);</span>
+<span class="nc" id="L958">				overlay.setLabelFont(new Font(&quot;SansSerif&quot;, Font.PLAIN, fontSize));</span>
+			}
+<span class="nc" id="L960">			Roi roi2 = (Roi)roi.clone();</span>
+<span class="nc" id="L961">			roi2.setStrokeColor(Color.cyan);</span>
+<span class="nc bnc" id="L962" title="All 2 branches missed.">			if (lineWidth!=1)</span>
+<span class="nc" id="L963">				roi2.setStrokeWidth(lineWidth);</span>
+<span class="nc bnc" id="L964" title="All 2 branches missed.">			if (showChoice==OVERLAY_MASKS)</span>
+<span class="nc" id="L965">				roi2.setFillColor(Color.cyan);</span>
+<span class="nc" id="L966">			overlay.add(roi2);</span>
+<span class="nc" id="L967">		} else {</span>
+<span class="nc" id="L968">			Rectangle r = roi.getBounds();</span>
+<span class="nc" id="L969">			int nPoints = ((PolygonRoi)roi).getNCoordinates();</span>
+<span class="nc" id="L970">			int[] xp = ((PolygonRoi)roi).getXCoordinates();</span>
+<span class="nc" id="L971">			int[] yp = ((PolygonRoi)roi).getYCoordinates();</span>
+<span class="nc" id="L972">			int x=r.x, y=r.y;</span>
+<span class="nc bnc" id="L973" title="All 2 branches missed.">			if (!inSituShow)</span>
+<span class="nc" id="L974">				ip.setValue(0.0);</span>
+<span class="nc" id="L975">			ip.moveTo(x+xp[0], y+yp[0]);</span>
+<span class="nc bnc" id="L976" title="All 2 branches missed.">			for (int i=1; i&lt;nPoints; i++)</span>
+<span class="nc" id="L977">				ip.lineTo(x+xp[i], y+yp[i]);</span>
+<span class="nc" id="L978">			ip.lineTo(x+xp[0], y+yp[0]);</span>
+<span class="nc bnc" id="L979" title="All 2 branches missed.">			if (showChoice!=BARE_OUTLINES) {</span>
+<span class="nc" id="L980">				String s = ResultsTable.d2s(count,0);</span>
+<span class="nc" id="L981">				ip.moveTo(r.x+r.width/2-ip.getStringWidth(s)/2, r.y+r.height/2+fontSize/2);</span>
+<span class="nc bnc" id="L982" title="All 2 branches missed.">				if (!inSituShow)</span>
+<span class="nc" id="L983">					ip.setValue(1.0);</span>
+<span class="nc" id="L984">				ip.drawString(s);</span>
+			}
+		}
+<span class="nc" id="L987">	}</span>
+
+	void drawEllipse(ImageProcessor ip, ImageStatistics stats, int count) {
+<span class="nc" id="L990">		stats.drawEllipse(ip);</span>
+<span class="nc" id="L991">	}</span>
+
+	void drawRoiFilledParticle(ImageProcessor ip, Roi roi, ImageProcessor mask, int count) {
+<span class="nc bnc" id="L994" title="All 2 branches missed.">		int grayLevel = (count &lt; 65535) ? count : 65535;</span>
+<span class="nc" id="L995">		ip.setValue((double) grayLevel); </span>
+<span class="nc" id="L996">		ip.setRoi(roi.getBounds());</span>
+<span class="nc" id="L997">		ip.fill(mask);</span>
+<span class="nc" id="L998">	}</span>
+
+/*	
+	void showResults() {
+		int count = rt.getCounter();
+		// if (count==0) return;
+		boolean lastSlice = !processStack||slice==imp.getStackSize();
+		if ((showChoice==OVERLAY_OUTLINES||showChoice==OVERLAY_MASKS) &amp;&amp; slice==1 &amp;&amp; count&gt;0)
+			imp.setOverlay(overlay);
+		else if (outlines!=null &amp;&amp; lastSlice) {
+			String title = imp!=null?imp.getTitle():&quot;Outlines&quot;;
+			String prefix;
+			if (showChoice == MASKS)
+				prefix = &quot;Mask of &quot;;
+			else if (showChoice == ROI_MASKS)
+				prefix = &quot;Count Masks of &quot;;
+			else
+				prefix = &quot;Drawing of &quot;;
+			outlines.update(drawIP);
+			outputImage = new ImagePlus(prefix+title, outlines);
+			outputImage.setCalibration(imp.getCalibration());
+			if (inSituShow) {
+				if (imp.getStackSize()==1)
+					Undo.setup(Undo.TRANSFORM, imp);
+				imp.setStack(null, outputImage.getStack());
+			} else if (!hideOutputImage)
+				outputImage.show();
+		}
+		if (showResults &amp;&amp; !processStack) {
+			if (showResultsWindow) {
+				TextPanel tp = IJ.getTextPanel();
+				if (beginningCount&gt;0 &amp;&amp; tp!=null &amp;&amp; tp.getLineCount()!=count)
+					rt.show(&quot;Results&quot;);
+			}
+			Analyzer.firstParticle = beginningCount;
+			Analyzer.lastParticle = Analyzer.getCounter()-1;
+		} else
+			Analyzer.firstParticle = Analyzer.lastParticle = 0;
+	}
+*/
+	
+	/** Returns the &quot;Outlines&quot;, &quot;Masks&quot;, &quot;Elipses&quot; or &quot;Count Masks&quot; image,
+		or null if &quot;Nothing&quot; is selected in the &quot;Show:&quot; menu. */
+	public ImagePlus getOutputImage() {
+<span class="nc" id="L1042">		return outputImage;</span>
+	}
+
+	/** Set 'hideOutputImage' true to not display the &quot;Show:&quot; image. */
+	public void setHideOutputImage(boolean hideOutputImage) {
+<span class="nc" id="L1047">	}</span>
+
+	/** Sets the size of the font used to label outlines in the next particle analyzer instance. */
+	public static void setFontSize(int size) {
+<span class="nc" id="L1051">		nextFontSize = size;</span>
+<span class="nc" id="L1052">	}</span>
+
+	/** Sets the color (&quot;blue&quot;, &quot;black&quot;, etc.) of the font used to label outlines in the next particle analyzer instance. */
+	public static void setFontColor(String color) {
+<span class="nc" id="L1056">		nextFontColor = Colors.decode(color, defaultFontColor);</span>
+<span class="nc" id="L1057">	}</span>
+
+	/** Sets the outline line width for the next ParticleAnalyzer instance. */
+	public static void setLineWidth(int width) {
+<span class="nc" id="L1061">		nextLineWidth = width;</span>
+<span class="nc" id="L1062">	}</span>
+	
+	/** Sets the RoiManager to be used by the next ParticleAnalyzer 
+		instance. There is a JavaScript example at
+		http://imagej.nih.gov/ij/macros/js/HiddenRoiManager.js
+	*/
+	public static void setRoiManager(RoiManager manager) {
+<span class="fc" id="L1069">		staticRoiManager = manager;</span>
+<span class="fc" id="L1070">	}</span>
+	
+	/** Sets the ResultsTable to be used by the next  
+		ParticleAnalyzer instance.	*/
+	public static void setResultsTable(ResultsTable rt) {
+<span class="nc" id="L1075">		staticResultsTable = rt;</span>
+<span class="nc" id="L1076">	}</span>
+
+	int getColumnID(String name) {
+<span class="nc" id="L1079">		int id = rt.getFreeColumn(name);</span>
+<span class="nc bnc" id="L1080" title="All 2 branches missed.">		if (id==ResultsTable.COLUMN_IN_USE)</span>
+<span class="nc" id="L1081">			id = rt.getColumnIndex(name);</span>
+<span class="nc" id="L1082">		return id;</span>
+	}
+
+	void makeCustomLut() {
+<span class="nc" id="L1086">		IndexColorModel cm = (IndexColorModel)LookUpTable.createGrayscaleColorModel(false);</span>
+<span class="nc" id="L1087">		byte[] reds = new byte[256];</span>
+<span class="nc" id="L1088">		byte[] greens = new byte[256];</span>
+<span class="nc" id="L1089">		byte[] blues = new byte[256];</span>
+<span class="nc" id="L1090">		cm.getReds(reds);</span>
+<span class="nc" id="L1091">		cm.getGreens(greens);</span>
+<span class="nc" id="L1092">		cm.getBlues(blues);</span>
+<span class="nc" id="L1093">		reds[1] =(byte)fontColor.getRed();</span>
+<span class="nc" id="L1094">		greens[1] = (byte)fontColor.getGreen();;</span>
+<span class="nc" id="L1095">		blues[1] = (byte)fontColor.getBlue();;</span>
+<span class="nc" id="L1096">		customLut = new IndexColorModel(8, 256, reds, greens, blues);</span>
+<span class="nc" id="L1097">	}</span>
+
+	/** Called once when ImageJ quits. */
+	public static void savePreferences(Properties prefs) {
+<span class="nc" id="L1101">		prefs.put(OPTIONS, Integer.toString(staticOptions));</span>
+<span class="nc" id="L1102">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>

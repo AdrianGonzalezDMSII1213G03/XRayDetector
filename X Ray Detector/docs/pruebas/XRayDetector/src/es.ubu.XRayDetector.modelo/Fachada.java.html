@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Fachada.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestSuite (09-jun-2013 19:19:13)</a> &gt; <a href="../../index.html" class="el_group">XRayDetector</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">es.ubu.XRayDetector.modelo</a> &gt; <span class="el_source">Fachada.java</span></div><h1>Fachada.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package es.ubu.XRayDetector.modelo;</span>
+
+
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.measure.ResultsTable;
+import ij.plugin.frame.RoiManager;
+import ij.process.ImageProcessor;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JTextPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+
+import weka.classifiers.Classifier;
+import weka.classifiers.meta.Bagging;
+import weka.classifiers.trees.REPTree;
+import weka.core.Instances;
+import es.ubu.XRayDetector.datos.GestorArff;
+import es.ubu.XRayDetector.datos.ImageReader;
+import es.ubu.XRayDetector.modelo.preprocesamiento.Preprocesamiento;
+import es.ubu.XRayDetector.modelo.preprocesamiento.Saliency;
+import es.ubu.XRayDetector.modelo.ventana.VentanaAbstracta;
+import es.ubu.XRayDetector.modelo.ventana.VentanaAleatoria;
+import es.ubu.XRayDetector.modelo.ventana.VentanaDeslizante;
+import es.ubu.XRayDetector.modelo.ventana.VentanaRegiones;
+import es.ubu.XRayDetector.utils.Auto_Local_Threshold;
+import es.ubu.XRayDetector.utils.Graphic;
+import es.ubu.XRayDetector.utils.ParticleAnalyzer;
+import es.ubu.XRayDetector.utils.Propiedades;
+import es.ubu.XRayDetector.utils.Thresholder;
+
+public class Fachada {
+	
+	private int[][] defectMatrix;
+<span class="fc" id="L57">	private static Fachada INSTANCE = null;</span>
+	private ImageReader ir;
+	private Thread[] t;
+	private ImagePlus imagen;
+<span class="fc" id="L61">	private static Propiedades prop;</span>
+	private ArrayList&lt;int[]&gt; listaCoordenadas;
+	private Roi[] arrayRois;
+	private BufferedImage imgBin;
+	private ResultsTable myRT;
+	private DefaultTableModel tableModel;
+<span class="fc" id="L67">	private RuntimeException excepcion = null;</span>
+	
+<span class="fc" id="L69">	private Fachada() {</span>
+<span class="fc" id="L70">		ir = new ImageReader();</span>
+<span class="fc" id="L71">		prop = Propiedades.getInstance();</span>
+<span class="fc" id="L72">	}</span>
+	
+	public ImagePlus getImagen(){
+<span class="fc" id="L75">		return imagen;</span>
+	}
+	
+	public void setImagen(ImagePlus img){
+<span class="fc" id="L79">		imagen = img;</span>
+<span class="fc" id="L80">	}</span>
+	
+	public int getNumThreads(){
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if(t == null){</span>
+<span class="nc" id="L84">			return 0;</span>
+		}
+<span class="nc" id="L86">		return t.length;</span>
+	}
+	
+	public static Fachada getInstance(){	//Singleton
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if(INSTANCE == null){</span>
+<span class="fc" id="L91">			return new Fachada();</span>
+		}
+		else{
+<span class="nc" id="L94">			return INSTANCE;</span>
+		}
+	}
+	
+	@SuppressWarnings(&quot;deprecation&quot;)
+	public void stop(){
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		 for (int ithread = 0; ithread &lt; t.length; ithread++){ </span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">             if(t[ithread].isAlive()){</span>
+<span class="nc" id="L102">            	 t[ithread].stop(); </span>
+             }
+		 }
+<span class="nc" id="L105">	}</span>
+
+	public String cargaImagen(String img){		
+<span class="fc" id="L108">		int i = ir.abrirImagen(img);</span>
+<span class="fc" id="L109">		setImagen(ir.getImagen());</span>
+<span class="fc" id="L110">		return new String(&quot;Imagen abierta correctamente. Bytes por pixel: &quot; + i);</span>
+	}
+	
+	public ImagePlus[] divideImagen(Rectangle selection){
+<span class="fc" id="L114">		int processors = Runtime.getRuntime().availableProcessors();</span>
+<span class="fc" id="L115">		int offset = prop.getTamVentana()/2;</span>
+<span class="fc" id="L116">		ImagePlus[] imagenes = new ImagePlus[processors];</span>
+<span class="fc" id="L117">		ImagePlus img = getImagen();		</span>
+		
+<span class="pc bpc" id="L119" title="1 of 4 branches missed.">		if(selection.height != 0 &amp;&amp; selection.width != 0){	//hay una selección</span>
+<span class="fc" id="L120">			ImageProcessor ip =	img.duplicate().getProcessor();</span>
+<span class="fc" id="L121">			ip.setRoi(selection);</span>
+<span class="fc" id="L122">			ip = ip.crop();</span>
+<span class="fc" id="L123">			BufferedImage croppedImage = ip.getBufferedImage();</span>
+<span class="fc" id="L124">			img = new ImagePlus(&quot;croppedImage&quot;, croppedImage);</span>
+		}
+		
+<span class="fc" id="L127">		int tam = img.getHeight()/processors;</span>
+		
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if(processors == 1){</span>
+<span class="nc" id="L130">			imagenes[0] = img;</span>
+<span class="nc" id="L131">			return imagenes;</span>
+		}
+		else{		
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			for(int i=0; i &lt; processors; i++) {</span>
+<span class="fc" id="L135">				ImageProcessor ip =	img.duplicate().getProcessor();</span>
+				
+<span class="fc bfc" id="L137" title="All 2 branches covered.">				if(i == 0){	//caso de primera división</span>
+<span class="fc" id="L138">					ip.setRoi(0, (i*tam), img.getWidth(), tam + offset);</span>
+<span class="fc" id="L139">				}</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">				else if(i == processors-1){	//caso de la última división</span>
+<span class="fc" id="L141">					ip.setRoi(0, (i*tam) - offset, img.getWidth(), tam + offset);</span>
+<span class="fc" id="L142">				}</span>
+				else{	//caso de divisiones intermedias
+<span class="nc" id="L144">					ip.setRoi(0, (i*tam) - offset, img.getWidth(), tam + (2*offset));</span>
+				}
+	
+<span class="fc" id="L147">				ip = ip.crop();</span>
+<span class="fc" id="L148">				BufferedImage croppedImage = ip.getBufferedImage();</span>
+<span class="fc" id="L149">				imagenes[i] = new ImagePlus(&quot;croppedImage&quot; + i, croppedImage);</span>
+<span class="fc" id="L150">				ip.resetRoi();</span>
+			}
+<span class="fc" id="L152">			return imagenes;</span>
+		}
+	}
+	
+	public ImagePlus[] getSaliency(ImagePlus[] imagenes){
+<span class="fc" id="L157">		ImagePlus[] saliency = new ImagePlus[imagenes.length];</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for(int i=0; i&lt;imagenes.length; i++){</span>
+<span class="fc" id="L159">			Preprocesamiento p = new Saliency(imagenes[i], 1);</span>
+<span class="fc" id="L160">			saliency[i] = new ImagePlus(&quot;&quot;, p.calcular());</span>
+		}
+<span class="fc" id="L162">		return saliency;</span>
+	}
+	
+	public void ejecutaVentana(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
+<span class="fc" id="L166">		int processors = Runtime.getRuntime().availableProcessors();</span>
+<span class="fc" id="L167">		listaCoordenadas = calcularUmbralesLocales(selection);		</span>
+		
+<span class="fc" id="L169">		defectMatrix = new int[getImagen().getWidth()][getImagen().getHeight()];</span>
+		
+<span class="fc" id="L171">		ImagePlus[] imagenes = divideImagen(selection);</span>
+<span class="fc" id="L172">		ImagePlus[] saliency = getSaliency(imagenes);</span>
+<span class="fc" id="L173">		ImagePlus[] convolucion = getImgConvolucion(imagenes, selection, getImagen());</span>
+		
+		//convolucion de saliency
+<span class="fc" id="L176">		Preprocesamiento p = new Saliency(getImagen(), 1);</span>
+<span class="fc" id="L177">		ImagePlus imgSaliency = new ImagePlus(&quot;&quot;, p.calcular());</span>
+<span class="fc" id="L178">		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, selection, imgSaliency);</span>
+		
+<span class="fc" id="L180">		t = new VentanaAbstracta[processors];</span>
+		
+<span class="fc" id="L182">		setMaxProgressBar(imagenes, progressBar);</span>
+<span class="fc" id="L183">		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">    	    	if(!ex.getClass().toString().contains(&quot;ThreadDeath&quot;)){</span>
+<span class="nc" id="L186">	    	    	excepcion = new RuntimeException(ex);</span>
+<span class="nc" id="L187">	    	    	stop();</span>
+    	    	}
+<span class="nc" id="L189">    	    }</span>
+    	};
+				
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		for (int ithread = 0; ithread &lt; t.length; ++ithread){    </span>
+<span class="fc" id="L193">            t[ithread] = new VentanaDeslizante(imagenes[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],</span>
+<span class="fc" id="L194">            		ithread, selection, imgPanel, progressBar, defectMatrix, false);</span>
+<span class="fc" id="L195">            t[ithread].setUncaughtExceptionHandler(h);</span>
+<span class="fc" id="L196">            t[ithread].start();</span>
+        }  
+  
+        try{     
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            for (int ithread = 0; ithread &lt; t.length; ++ithread)  </span>
+<span class="fc" id="L201">                t[ithread].join();  </span>
+<span class="fc" id="L202">        }</span>
+<span class="nc" id="L203">        catch (InterruptedException ie){  </span>
+             
+        }
+<span class="fc" id="L206">        drawEdge(imgPanel);</span>
+<span class="fc" id="L207">	}</span>
+	
+
+	private ImagePlus[] getImgConvolucion(ImagePlus[] imagenes,
+			Rectangle selection, ImagePlus image) {
+		
+<span class="fc" id="L213">		ImagePlus[] conv = new ImagePlus[imagenes.length];</span>
+		
+<span class="pc bpc" id="L215" title="1 of 4 branches missed.">		if(selection.height == 0 &amp;&amp; selection.width == 0){</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">			for(int i=0; i&lt;imagenes.length; i++){</span>
+<span class="fc" id="L217">				conv[i] = imagenes[i].duplicate();</span>
+			}
+<span class="fc" id="L219">		}</span>
+		else{		
+<span class="fc bfc" id="L221" title="All 2 branches covered.">			for(int i=0; i&lt;imagenes.length; i++){</span>
+<span class="fc" id="L222">				int newX = selection.x - (prop.getTamVentana()/2);</span>
+<span class="fc" id="L223">				int newY = selection.y - (prop.getTamVentana()/2);</span>
+<span class="fc" id="L224">				int newHeight = selection.height + prop.getTamVentana();</span>
+<span class="fc" id="L225">				int newWidth = selection.width + prop.getTamVentana();</span>
+				
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">				if(newX &lt; 0){</span>
+<span class="fc" id="L228">					newX = 0;</span>
+				}
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">				if(newY &lt; 0){</span>
+<span class="fc" id="L231">					newY = 0;</span>
+				}
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">				if(newHeight &gt; getImagen().getHeight()){</span>
+<span class="nc" id="L234">					newHeight = selection.height;</span>
+				}
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">				if(newWidth &gt; getImagen().getWidth()){</span>
+<span class="nc" id="L237">					newWidth = selection.width;</span>
+				}
+				
+<span class="fc" id="L240">				ImageProcessor ip =	image.duplicate().getProcessor();</span>
+<span class="fc" id="L241">				ip.setRoi(newX, newY, newWidth, newHeight);</span>
+<span class="fc" id="L242">				ip = ip.crop();</span>
+<span class="fc" id="L243">				BufferedImage croppedImage = ip.getBufferedImage();</span>
+<span class="fc" id="L244">				conv[i] = new ImagePlus(&quot;croppedImage&quot; + i, croppedImage);</span>
+<span class="fc" id="L245">				ip.resetRoi();</span>
+			}
+		}
+<span class="fc" id="L248">		return conv;</span>
+	}
+
+	public void ejecutaEntrenamiento(File arff, String originalDirectory){
+		
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		if(arff != null){	//entrenamos con un arff existente</span>
+			Instances data;
+			try {
+<span class="fc" id="L256">				GestorArff l = new GestorArff();</span>
+<span class="fc" id="L257">				data = l.leerArff(arff.getAbsolutePath());</span>
+<span class="fc" id="L258">			} catch (Exception e) {</span>
+<span class="fc" id="L259">				throw new RuntimeException(e);</span>
+			}
+<span class="fc" id="L261">			createModel(data, &quot;arff_existente&quot;);</span>
+<span class="fc" id="L262">		}</span>
+		else{	//entrenamos con las imágenes	
+<span class="fc" id="L264">			int processors = Runtime.getRuntime().availableProcessors();</span>
+<span class="fc" id="L265">			Rectangle r = new Rectangle(0, 0, 0, 0);</span>
+<span class="fc" id="L266">			ImagePlus[] mascaras = divideImagen(r);</span>
+<span class="fc" id="L267">			cargaImagen(originalDirectory);</span>
+<span class="fc" id="L268">			ImagePlus[] imagenes = divideImagen(r);</span>
+<span class="fc" id="L269">			ImagePlus[] saliency = getSaliency(imagenes);</span>
+<span class="fc" id="L270">			ImagePlus[] convolucion = getImgConvolucion(imagenes, r, getImagen());</span>
+			
+			//convolucion de saliency
+<span class="fc" id="L273">			Preprocesamiento p = new Saliency(getImagen(), 1);</span>
+<span class="fc" id="L274">			ImagePlus imgSaliency = new ImagePlus(&quot;&quot;, p.calcular());</span>
+<span class="fc" id="L275">			ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, r, imgSaliency);</span>
+			
+<span class="fc" id="L277">			t = new VentanaAbstracta[processors];</span>
+			
+<span class="fc" id="L279">			Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+	    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc bnc" id="L281" title="All 2 branches missed.">	    	    	if(!ex.getClass().toString().contains(&quot;ThreadDeath&quot;)){</span>
+<span class="nc" id="L282">		    	    	excepcion = new RuntimeException(ex);</span>
+<span class="nc" id="L283">		    	    	stop();</span>
+	    	    	}
+<span class="nc" id="L285">	    	    }</span>
+	    	};			
+					
+<span class="fc bfc" id="L288" title="All 2 branches covered.">			for (int ithread = 0; ithread &lt; t.length; ++ithread){    </span>
+<span class="fc" id="L289">	            t[ithread] = new VentanaAleatoria(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread], ithread);</span>
+<span class="fc" id="L290">	            ((VentanaAbstracta) t[ithread]).setImagenCompleta(imagenes[ithread]);</span>
+<span class="fc" id="L291">	            t[ithread].setUncaughtExceptionHandler(h);</span>
+<span class="fc" id="L292">	            t[ithread].start();</span>
+	        }  
+	  
+	        try{     
+<span class="fc bfc" id="L296" title="All 2 branches covered.">	            for (int ithread = 0; ithread &lt; t.length; ++ithread)  </span>
+<span class="fc" id="L297">	                t[ithread].join();  </span>
+<span class="fc" id="L298">	        }</span>
+<span class="nc" id="L299">	        catch (InterruptedException ie){  </span>
+	            
+	        }
+	  
+		}
+<span class="fc" id="L304">	}</span>
+	
+
+
+	public void ejecutarEntrenamientoDirectorio(String[] originalDirectory, String[] maskDirectory, JProgressBar barra, JTextPane txtLog, HTMLEditorKit kit, HTMLDocument doc){
+		
+<span class="fc" id="L310">		barra.setMaximum(originalDirectory.length);</span>
+		
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		for(int i=0; i &lt; originalDirectory.length; i++){</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">			if(!originalDirectory[i].contains(&quot;Thumbs.db&quot;)){</span>
+<span class="fc" id="L314">				barra.setMaximum(originalDirectory.length-1);</span>
+			}
+		}
+		
+<span class="fc" id="L318">		barra.setValue(0);</span>
+		
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		for(int i=0; i &lt; originalDirectory.length; i++){</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">			if(!originalDirectory[i].contains(&quot;Thumbs.db&quot;)){</span>
+				
+				try {
+<span class="fc" id="L324">					File f = new File(originalDirectory[i]);</span>
+<span class="fc" id="L325">					kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;normal\&quot;&gt; Analizando imagen: &quot; + f.getName() + &quot;&lt;/p&gt;&quot;, 0, 0, null);</span>
+<span class="fc" id="L326">					txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="fc" id="L327">					f = null;</span>
+<span class="pc" id="L328">				} catch (BadLocationException e) {</span>
+<span class="nc" id="L329">					throw new RuntimeException(e);</span>
+<span class="nc" id="L330">				} catch (IOException e) {</span>
+<span class="nc" id="L331">					throw new RuntimeException(e);</span>
+				}
+				
+<span class="fc" id="L334">				cargaImagen(maskDirectory[i]);</span>
+<span class="fc" id="L335">				int tipoEntrenamiento = prop.getTipoEntrenamiento();</span>
+<span class="pc bpc" id="L336" title="1 of 3 branches missed.">				switch(tipoEntrenamiento){</span>
+				case 0:
+<span class="fc" id="L338">					ejecutaEntrenamiento(null, originalDirectory[i]);</span>
+<span class="fc" id="L339">					break;</span>
+				case 1:
+<span class="fc" id="L341">					ejecutaEntrenamientoDeslizante(originalDirectory[i]);</span>
+					break;
+				}
+				
+<span class="fc" id="L345">				barra.setValue(barra.getValue()+1);</span>
+			}
+		}
+		
+		try {
+<span class="fc" id="L350">			kit.insertHTML(doc, doc.getLength(), &quot;&lt;br&gt;&lt;p class=\&quot;normal\&quot;&gt; Fusionando ficheros ARFF&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="fc" id="L351">			txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="pc" id="L352">		} catch (BadLocationException e1) {</span>
+<span class="nc" id="L353">			throw new RuntimeException();</span>
+<span class="nc" id="L354">		} catch (IOException e) {</span>
+<span class="nc" id="L355">			throw new RuntimeException();</span>
+		}
+<span class="fc" id="L357">		GestorArff l = new GestorArff();</span>
+<span class="fc" id="L358">		l.mergeArffFiles(t.length);</span>
+<span class="fc" id="L359">		Instances data = l.leerArff(prop.getPathArff());</span>
+		
+		try {
+<span class="fc" id="L362">			kit.insertHTML(doc, doc.getLength(), &quot;&lt;p class=\&quot;normal\&quot;&gt; Creando modelo&lt;/p&gt;&lt;br&gt;&quot;, 0, 0, null);</span>
+<span class="fc" id="L363">			txtLog.setCaretPosition(txtLog.getDocument().getLength());</span>
+<span class="pc" id="L364">		} catch (BadLocationException e1) {</span>
+<span class="nc" id="L365">			throw new RuntimeException();</span>
+<span class="nc" id="L366">		} catch (IOException e) {</span>
+<span class="nc" id="L367">			throw new RuntimeException();</span>
+		}
+<span class="fc" id="L369">		createModel(data, String.valueOf(prop.getTamVentana()));</span>
+<span class="fc" id="L370">	}</span>
+	
+	public void ejecutaEntrenamientoDeslizante(String originalDirectory){
+<span class="fc" id="L373">		int processors = Runtime.getRuntime().availableProcessors();	</span>
+<span class="fc" id="L374">		Rectangle r = new Rectangle(0, 0, 0, 0);</span>
+<span class="fc" id="L375">		ImagePlus[] mascaras = divideImagen(r);</span>
+<span class="fc" id="L376">		cargaImagen(originalDirectory);</span>
+<span class="fc" id="L377">		ImagePlus[] imagenes = divideImagen(r);</span>
+<span class="fc" id="L378">		ImagePlus[] saliency = getSaliency(imagenes);</span>
+<span class="fc" id="L379">		ImagePlus[] convolucion = getImgConvolucion(imagenes, r, getImagen());</span>
+		
+		//convolucion de saliency
+<span class="fc" id="L382">		Preprocesamiento p = new Saliency(getImagen(), 1);</span>
+<span class="fc" id="L383">		ImagePlus imgSaliency = new ImagePlus(&quot;&quot;, p.calcular());</span>
+<span class="fc" id="L384">		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, r, imgSaliency);</span>
+		
+<span class="fc" id="L386">		t = new VentanaAbstracta[processors];</span>
+		
+<span class="fc" id="L388">		Thread.UncaughtExceptionHandler h = new Thread.UncaughtExceptionHandler() {</span>
+    	    public void uncaughtException(Thread th, Throwable ex) {
+<span class="nc bnc" id="L390" title="All 2 branches missed.">    	    	if(!ex.getClass().toString().contains(&quot;ThreadDeath&quot;)){</span>
+<span class="nc" id="L391">	    	    	excepcion = new RuntimeException(ex);</span>
+<span class="nc" id="L392">	    	    	stop();</span>
+    	    	}
+<span class="nc" id="L394">    	    }</span>
+    	};
+				
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		for (int ithread = 0; ithread &lt; t.length; ++ithread){    </span>
+<span class="fc" id="L398">            t[ithread] = new VentanaDeslizante(mascaras[ithread], saliency[ithread], convolucion[ithread], convolucionSaliency[ithread],</span>
+<span class="fc" id="L399">            		ithread, r, null, null, defectMatrix, true);</span>
+<span class="fc" id="L400">            ((VentanaAbstracta) t[ithread]).setImagenCompleta(imagenes[ithread]);</span>
+<span class="fc" id="L401">            t[ithread].setUncaughtExceptionHandler(h);</span>
+<span class="fc" id="L402">            t[ithread].start();</span>
+        }  
+  
+        try{     
+<span class="fc bfc" id="L406" title="All 2 branches covered.">            for (int ithread = 0; ithread &lt; t.length; ++ithread)  </span>
+<span class="fc" id="L407">                t[ithread].join();  </span>
+<span class="fc" id="L408">        }</span>
+<span class="nc" id="L409">        catch (InterruptedException ie){  </span>
+             
+        }
+<span class="fc" id="L412">	}</span>
+	
+	public void setMaxProgressBar(ImagePlus[] imgs, JProgressBar barra){
+<span class="fc" id="L415">		int numTotalVentanas = 0;</span>
+		
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		for(int i = 0; i&lt;imgs.length; i++){</span>
+<span class="fc" id="L418">			numTotalVentanas += calcularNumVentanas(imgs[i]);</span>
+		}
+<span class="fc" id="L420">		barra.setMaximum(numTotalVentanas);</span>
+<span class="fc" id="L421">		barra.setValue(0);</span>
+<span class="fc" id="L422">	}</span>
+
+	private int calcularNumVentanas(ImagePlus image) {
+		int altura, anchura, salto;
+<span class="fc" id="L426">		int altoVentana = prop.getTamVentana();</span>
+<span class="fc" id="L427">		salto = (int) (prop.getSalto()*altoVentana);</span>
+<span class="fc" id="L428">		altura = image.getHeight();</span>
+<span class="fc" id="L429">		anchura = image.getWidth();</span>
+<span class="fc" id="L430">		int a = ((anchura-altoVentana)/salto)+1;</span>
+<span class="fc" id="L431">		int b = ((altura-altoVentana)/salto)+1;</span>
+<span class="fc" id="L432">		int res = a*b;</span>
+<span class="fc" id="L433">		return res;</span>
+	}
+	
+	/**
+	 * Creates a model training a classifier using bagging.
+	 * 
+	 * @param data
+	 *            Contains all the instances of the arff
+	 * @param sizeWindow
+	 *            The size of the window
+	 */
+	public void createModel(Instances data, String sizeWindow) {
+
+		// se crea, opciones, setiputformat
+<span class="fc" id="L447">		Classifier cls = null;</span>
+		//String separator = System.getProperty(&quot;file.separator&quot;);
+<span class="fc" id="L449">		String path = prop.getPathModel();</span>
+
+		
+<span class="fc" id="L452">		int opcionClasificacion = prop.getTipoClasificacion();</span>
+		
+<span class="pc bpc" id="L454" title="2 of 3 branches missed.">		switch(opcionClasificacion){</span>
+			case 0:
+				//CLASIFICADOR CLASES NOMINALES (TRUE,FALSE)
+				Classifier base;
+<span class="fc" id="L458">				base = new REPTree();</span>
+<span class="fc" id="L459">				cls = new Bagging();</span>
+<span class="fc" id="L460">				((Bagging) cls).setNumIterations(25);</span>
+<span class="fc" id="L461">				((Bagging) cls).setBagSizePercent(100);</span>
+<span class="fc" id="L462">				((Bagging) cls).setNumExecutionSlots(Runtime.getRuntime().availableProcessors());</span>
+<span class="fc" id="L463">				((Bagging) cls).setClassifier(base);</span>
+<span class="fc" id="L464">				break;</span>
+			case 1:
+				//REGRESIÓN LINEAL (CLASES NUMÉRICAS, 1,0)
+<span class="nc" id="L467">				cls = new REPTree();</span>
+				break;
+		}
+
+<span class="fc" id="L471">		ObjectOutputStream oos = null;</span>
+
+		try {
+<span class="fc" id="L474">			data.setClassIndex(data.numAttributes() - 1);</span>
+<span class="fc" id="L475">			cls.buildClassifier(data);</span>
+
+			/*if (arffName.contains(&quot;mejores&quot;))
+				oos = new ObjectOutputStream(new FileOutputStream((path
+						+ separator + &quot;Modelos&quot; + separator + &quot;Bagging_&quot;
+						+ &quot;mejores_&quot; + sizeWindow + &quot;.model&quot;)));
+
+			if (arffName.contains(&quot;todas&quot;))*/
+<span class="fc" id="L483">				oos = new ObjectOutputStream(new FileOutputStream((path + &quot;todas_&quot; + sizeWindow + &quot;.model&quot;)));</span>
+
+<span class="fc" id="L485">			oos.writeObject(cls);</span>
+<span class="fc" id="L486">			oos.flush();</span>
+<span class="fc" id="L487">			oos.close();</span>
+<span class="pc" id="L488">		} catch (Exception e) {</span>
+<span class="nc" id="L489">			throw new RuntimeException(e);</span>
+		}
+<span class="fc" id="L491">	}</span>
+	
+	public ArrayList&lt;int[]&gt; calcularUmbralesLocales(Rectangle selection){
+<span class="fc" id="L494">		Auto_Local_Threshold alt = new Auto_Local_Threshold();</span>
+<span class="fc" id="L495">		alt.setRadius(15);</span>
+		ImagePlus img;
+		
+<span class="pc bpc" id="L498" title="1 of 4 branches missed.">		if(selection.height != 0 &amp;&amp; selection.width != 0){	//hay una selección</span>
+<span class="fc" id="L499">			ImageProcessor ip =	getImagen().duplicate().getProcessor();</span>
+<span class="fc" id="L500">			int x = selection.x - alt.getRadius();			</span>
+<span class="fc" id="L501">			int y = selection.y - alt.getRadius();			</span>
+<span class="fc" id="L502">			int height = selection.height + (alt.getRadius()*2);</span>
+<span class="fc" id="L503">			int width = selection.width + (alt.getRadius()*2);</span>
+			
+			//Salirse por la izquierda
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">			if(x &lt; 0){</span>
+<span class="fc" id="L507">				x = 0;</span>
+<span class="fc" id="L508">				width = selection.width + alt.getRadius();</span>
+			}
+			//Salirse por arriba
+<span class="pc bpc" id="L511" title="1 of 2 branches missed.">			if(y &lt; 0){</span>
+<span class="fc" id="L512">				y = 0;</span>
+<span class="fc" id="L513">				height = selection.height + alt.getRadius();</span>
+			}
+			//Salirse por abajo
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">			if(y + height &gt; getImagen().getHeight()){</span>
+<span class="nc" id="L517">				height = selection.height + alt.getRadius();</span>
+			}
+			//Salirse por la derecha
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">			if(x + width &gt; getImagen().getWidth()){</span>
+<span class="nc" id="L521">				width = selection.width + alt.getRadius();</span>
+			}
+			
+<span class="fc" id="L524">			Rectangle rec = new Rectangle(x, y, width, height);</span>
+<span class="fc" id="L525">			ip.setRoi(rec);</span>
+			
+<span class="fc" id="L527">			ip = ip.crop();</span>
+<span class="fc" id="L528">			BufferedImage croppedImage = ip.getBufferedImage();</span>
+<span class="fc" id="L529">			img = new ImagePlus(&quot;croppedImage&quot;, croppedImage);</span>
+<span class="fc" id="L530">			alt.setImp(img);</span>
+<span class="fc" id="L531">			alt.run(&quot;MidGrey&quot;);</span>
+<span class="fc" id="L532">			Rectangle r = new Rectangle(alt.getRadius(), alt.getRadius(), selection.width, selection.height);</span>
+<span class="fc" id="L533">			ImagePlus im = alt.getImp();</span>
+<span class="fc" id="L534">			im.setRoi(r);</span>
+<span class="fc" id="L535">			ImageProcessor iproc = im.getProcessor();</span>
+<span class="fc" id="L536">			iproc = iproc.crop();</span>
+<span class="fc" id="L537">			croppedImage = iproc.getBufferedImage();</span>
+<span class="fc" id="L538">			im = new ImagePlus(&quot;croppedImage&quot;, croppedImage);</span>
+<span class="fc" id="L539">			Thresholder th = new Thresholder();</span>
+<span class="fc" id="L540">			th.setImage(im);</span>
+<span class="fc" id="L541">			th.run(&quot;&quot;);</span>
+<span class="fc" id="L542">			getArrayRois(im);</span>
+<span class="fc" id="L543">			return obtenerListaPixelesBlancos(img, selection.x, selection.y, selection.height, selection.width);</span>
+		}
+		else{
+<span class="fc" id="L546">			img = getImagen().duplicate();</span>
+<span class="fc" id="L547">			alt.setImp(img);</span>
+<span class="fc" id="L548">			alt.run(&quot;MidGrey&quot;);</span>
+<span class="fc" id="L549">			Thresholder th = new Thresholder();</span>
+<span class="fc" id="L550">			th.setImage(alt.getImp());</span>
+<span class="fc" id="L551">			th.run(&quot;&quot;);</span>
+<span class="fc" id="L552">			getArrayRois(alt.getImp());</span>
+<span class="fc" id="L553">			return obtenerListaPixelesBlancos(img, 0, 0, img.getHeight(), img.getWidth());</span>
+		}
+	}
+
+	public void getArrayRois(ImagePlus im2) {
+<span class="fc" id="L558">		ImagePlus im = im2.duplicate();</span>
+		
+<span class="fc" id="L560">		int myMinSize = 8; // This is the minimum size of the particles</span>
+<span class="fc" id="L561">		int myMaxSize = 2000; // This is the maximum size of the particles</span>
+<span class="fc" id="L562">		double myMinCirc = 0.00; // This is the minimum circularity of the</span>
+		// particles
+<span class="fc" id="L564">		double myMaxCirc = 1.00; // This is the maximum circularity of the</span>
+		// particles
+
+<span class="fc" id="L567">		int myOptions = 0;</span>
+		
+		// This provides the characteristics of the particle measurements
+		//int myMeasurements = ParticleAnalyzer.AREA+ ParticleAnalyzer.PERIMETER+ParticleAnalyzer.CIRCULARITY+ParticleAnalyzer.ELLIPSE;
+		//int myMeasurements = ParticleAnalyzer.FERET+ParticleAnalyzer.LIMIT;
+		//int myMeasurements =0;
+<span class="fc" id="L573">		int myMeasurements = ParticleAnalyzer.AREA+ ParticleAnalyzer.PERIMETER+ParticleAnalyzer.CIRCULARITY+ParticleAnalyzer.ELLIPSE+ParticleAnalyzer.FERET;</span>
+		
+		/* This variable defines the results provided in the table */
+
+<span class="fc" id="L577">		myRT = new ResultsTable(); // Here we create our empty</span>
+		// results table
+<span class="fc" id="L579">		ParticleAnalyzer pa = new ParticleAnalyzer(myOptions, myMeasurements, myRT, myMinSize, myMaxSize, myMinCirc, myMaxCirc);</span>
+
+<span class="fc" id="L581">		RoiManager manager = new RoiManager(true);</span>
+		
+<span class="fc" id="L583">		ParticleAnalyzer.setRoiManager(manager);</span>
+
+<span class="fc" id="L585">		pa.analyze(im); // This method runs our particle analyzer in our</span>
+		// imageplus imp //&quot;and imageprocessor &quot;ip&quot;
+		
+
+<span class="fc" id="L589">		arrayRois = manager.getRoisAsArray();</span>
+<span class="fc" id="L590">	}</span>
+	
+
+	
+	private ArrayList&lt;int[]&gt; obtenerListaPixelesBlancos(ImagePlus img, int xIni, int yIni, int height, int width) {
+<span class="fc" id="L595">		ArrayList&lt;int[]&gt; listaCoordenadas = new ArrayList&lt;int[]&gt;();</span>
+		
+<span class="fc bfc" id="L597" title="All 2 branches covered.">		for(int j = 0; j&lt;height; j++){</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">			for(int i = 0; i&lt;width; i++){</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">				if(img.getProcessor().getPixel(i, j) == 255){	//pixel blanco</span>
+<span class="fc" id="L600">					listaCoordenadas.add(new int[]{i+xIni,j+yIni});</span>
+				}
+			}
+		}
+<span class="fc" id="L604">		return listaCoordenadas;</span>
+	}
+
+	public void drawEdge(Graphic imgPanel) {
+<span class="fc" id="L608">		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];</span>
+		int[][] defectsMatrixDefinitiva;
+
+<span class="fc" id="L611">		copiarMatrizDefectos(defectsMatrix2);</span>
+
+<span class="fc" id="L613">		binarizarMatriz(defectsMatrix2);</span>
+		
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">		if(prop.getTipoDeteccion() == 0){	//normal</span>
+<span class="fc" id="L616">			defectsMatrixDefinitiva = defectsMatrix2;</span>
+<span class="fc" id="L617">		}</span>
+		else{	//normal + umbrales locales
+<span class="nc" id="L619">			defectsMatrixDefinitiva = obtenerMatrizInterseccion(defectsMatrix2, listaCoordenadas);</span>
+		}		
+
+<span class="fc" id="L622">		BufferedImage bfrdImage = crearMascara(defectsMatrixDefinitiva);</span>
+
+<span class="fc" id="L624">		ImagePlus edgesImage = new ImagePlus(&quot;&quot;, bfrdImage);</span>
+
+<span class="fc" id="L626">		BufferedImage bufferedResult = establecerBordes(edgesImage);</span>
+
+<span class="fc" id="L628">		ImagePlus imagePlusResult = new ImagePlus(&quot;&quot;, bufferedResult);</span>
+<span class="fc" id="L629">		imgPanel.isEnded(true);</span>
+<span class="fc" id="L630">		imgPanel.setImage(imagePlusResult.getImage());</span>
+<span class="fc" id="L631">		imgPanel.repaint();</span>
+		
+<span class="fc" id="L633">		calcularCaracteristicasGeometricas();</span>
+<span class="fc" id="L634">	}</span>
+	
+	//duplicado
+	public void drawEdgeRegiones(Graphic imgPanel) {
+<span class="fc" id="L638">		int[][] defectsMatrix2 = new int[getImagen().getWidth()][getImagen().getHeight()];</span>
+<span class="fc" id="L639">		copiarMatrizDefectos(defectsMatrix2);</span>
+
+<span class="fc" id="L641">		binarizarMatriz(defectsMatrix2);</span>
+
+<span class="fc" id="L643">		BufferedImage bfrdImage = crearMascara(defectsMatrix2);</span>
+
+<span class="fc" id="L645">		ImagePlus edgesImage = new ImagePlus(&quot;&quot;, bfrdImage);</span>
+
+<span class="fc" id="L647">		BufferedImage bufferedResult = establecerBordes(edgesImage);</span>
+
+<span class="fc" id="L649">		ImagePlus imagePlusResult = new ImagePlus(&quot;&quot;, bufferedResult);</span>
+<span class="fc" id="L650">		imgPanel.isEnded(true);</span>
+<span class="fc" id="L651">		imgPanel.setImage(imagePlusResult.getImage());</span>
+<span class="fc" id="L652">		imgPanel.repaint();</span>
+		
+<span class="fc" id="L654">		calcularCaracteristicasGeometricas();</span>
+<span class="fc" id="L655">	}</span>
+
+	private int[][] obtenerMatrizInterseccion(int[][] defectsMatrix,
+			ArrayList&lt;int[]&gt; listaCoordenadas) {
+		
+<span class="nc" id="L660">		int[][] defectsMatrixDefinitiva = new int[getImagen().getWidth()][getImagen().getHeight()];</span>
+		
+<span class="nc" id="L662">		Iterator&lt;int[]&gt; it = listaCoordenadas.iterator();</span>
+<span class="nc bnc" id="L663" title="All 2 branches missed.">		while(it.hasNext()){</span>
+<span class="nc" id="L664">			int[] coord = it.next();</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">			if(defectsMatrix[coord[0]][coord[1]] == 1){</span>
+<span class="nc" id="L666">				defectsMatrixDefinitiva[coord[0]][coord[1]] = 1;</span>
+			}
+		}
+<span class="nc" id="L669">		return defectsMatrixDefinitiva;</span>
+	}
+
+	public BufferedImage establecerBordes(ImagePlus edgesImage) {
+		// Detectar bordes
+<span class="fc" id="L674">		IJ.run(edgesImage, &quot;Find Edges&quot;, &quot;&quot;);</span>
+
+		// Invertir colores
+<span class="fc" id="L677">		IJ.run(edgesImage, &quot;Invert&quot;, &quot;&quot;);</span>
+
+<span class="fc" id="L679">		BufferedImage bufferedEdgesImage = imageToBufferedImage(edgesImage.getImage());</span>
+
+<span class="fc" id="L681">		BufferedImage backgroundImage = imageToBufferedImage(getImagen().getImage());</span>
+
+		// Poner fondo transparente
+<span class="fc" id="L684">		BufferedImage transparentImage = makeColorTransparent(bufferedEdgesImage, Color.white);</span>
+		
+
+		// Superponer las dos imagenes
+<span class="fc" id="L688">		BufferedImage bufferedResult = overlayImages(backgroundImage, transparentImage);</span>
+<span class="fc" id="L689">		return bufferedResult;</span>
+	}
+
+	public BufferedImage crearMascara(int[][] defectsMatrix2) {
+<span class="fc" id="L693">		BufferedImage bfrdImage = new BufferedImage(getImagen().getWidth(),</span>
+<span class="fc" id="L694">				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="fc" id="L695">		imgBin = new BufferedImage(getImagen().getWidth(),</span>
+<span class="fc" id="L696">				getImagen().getHeight(), BufferedImage.TYPE_INT_RGB);</span>
+<span class="fc bfc" id="L697" title="All 2 branches covered.">		for (int i = 0; i &lt; getImagen().getHeight(); i++) {</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">			for (int j = 0; j &lt; getImagen().getWidth(); j++) {</span>
+<span class="fc bfc" id="L699" title="All 2 branches covered.">				if (defectsMatrix2[j][i] == 0){</span>
+					// Color blanco
+<span class="fc" id="L701">					bfrdImage.setRGB(j, i, new Color(255, 255, 255).getRGB());</span>
+<span class="fc" id="L702">					imgBin.setRGB(j, i, Color.WHITE.getRGB());</span>
+				}
+
+<span class="fc bfc" id="L705" title="All 2 branches covered.">				if (defectsMatrix2[j][i] == 1){</span>
+					// Color amarillo
+<span class="fc" id="L707">					bfrdImage.setRGB(j, i, new Color(255, 255, 0).getRGB());</span>
+<span class="fc" id="L708">					imgBin.setRGB(j, i, Color.BLACK.getRGB());</span>
+				}
+			}
+		}
+<span class="fc" id="L712">		return bfrdImage;</span>
+	}
+
+	public void copiarMatrizDefectos(int[][] defectsMatrix2) {
+<span class="fc bfc" id="L716" title="All 2 branches covered.">		for (int i = 0; i &lt; getImagen().getHeight(); i++) {</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">			for (int j = 0; j &lt; getImagen().getWidth(); j++) {</span>
+<span class="fc" id="L718">				defectsMatrix2[j][i] = defectMatrix[j][i];</span>
+			}
+		}
+<span class="fc" id="L721">	}</span>
+
+	public void binarizarMatriz(int[][] defectsMatrix2) {
+<span class="fc bfc" id="L724" title="All 2 branches covered.">		for (int i = 0; i &lt; getImagen().getHeight(); i++) {</span>
+<span class="fc bfc" id="L725" title="All 2 branches covered.">			for (int j = 0; j &lt; getImagen().getWidth(); j++) {</span>
+
+<span class="fc bfc" id="L727" title="All 2 branches covered.">				if (defectMatrix[j][i] &gt; prop.getUmbral()) {</span>
+<span class="fc" id="L728">					defectsMatrix2[j][i] = 1;</span>
+<span class="fc" id="L729">				} else</span>
+<span class="fc" id="L730">					defectsMatrix2[j][i] = 0;</span>
+			}
+		}
+<span class="fc" id="L733">	}</span>
+	
+	/**
+	 * This method converts an image of the BufferedImage to Image.
+	 * 
+	 * @param im
+	 *            Image to converts
+	 * @return bufferedImage
+	 */
+	public BufferedImage imageToBufferedImage(Image im) {
+<span class="fc" id="L743">		BufferedImage bi = new BufferedImage(im.getWidth(null),</span>
+<span class="fc" id="L744">				im.getHeight(null), BufferedImage.TYPE_INT_RGB);</span>
+<span class="fc" id="L745">		Graphics bg = bi.getGraphics();</span>
+<span class="fc" id="L746">		bg.drawImage(im, 0, 0, null);</span>
+<span class="fc" id="L747">		bg.dispose();</span>
+<span class="fc" id="L748">		return bi;</span>
+	}
+
+	/**
+	 * Converts a specified color to transparent.
+	 * 
+	 * @param bufferedImage
+	 *            Image to work with
+	 * @param color
+	 *            Color that wish make transparent
+	 * @return image with that color transparent
+	 */
+	public BufferedImage makeColorTransparent(BufferedImage bufferedImage,
+			Color color) {
+<span class="fc" id="L762">		BufferedImage bufim = new BufferedImage(bufferedImage.getWidth(),</span>
+<span class="fc" id="L763">				bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L764">		Graphics2D g = bufim.createGraphics();</span>
+<span class="fc" id="L765">		g.setComposite(AlphaComposite.Src);</span>
+<span class="fc" id="L766">		g.drawImage(bufferedImage, null, 0, 0);</span>
+<span class="fc" id="L767">		g.dispose();</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">		for (int i = 0; i &lt; bufim.getHeight(); i++) {</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">			for (int j = 0; j &lt; bufim.getWidth(); j++) {</span>
+<span class="fc bfc" id="L770" title="All 2 branches covered.">				if (bufim.getRGB(j, i) == color.getRGB()) {</span>
+<span class="fc" id="L771">					bufim.setRGB(j, i, 0x8F1C1C);</span>
+				}
+			}
+		}
+<span class="fc" id="L775">		return bufim;</span>
+	}
+
+	/**
+	 * This method overlays two images.
+	 * 
+	 * @param bgImage
+	 *            Image that will be the background
+	 * @param fgImage
+	 *            Image that will be the foreground
+	 * @return Image overlayed
+	 */
+	public BufferedImage overlayImages(BufferedImage bgImage,
+			BufferedImage fgImage) {
+<span class="pc bpc" id="L789" title="1 of 2 branches missed.">		if (fgImage.getHeight() &gt; bgImage.getHeight()</span>
+<span class="pc bpc" id="L790" title="1 of 2 branches missed.">				|| fgImage.getWidth() &gt; fgImage.getWidth()) {</span>
+<span class="nc" id="L791">			JOptionPane.showMessageDialog(null,</span>
+<span class="nc" id="L792">					&quot;Foreground Image Is Bigger In One or Both Dimensions&quot;</span>
+							+ &quot;\nCannot proceed with overlay.&quot;
+							+ &quot;\n\n Please use smaller Image for foreground&quot;);
+<span class="nc" id="L795">			return null;</span>
+		}
+<span class="fc" id="L797">		Graphics2D g = bgImage.createGraphics();</span>
+<span class="fc" id="L798">		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,</span>
+<span class="fc" id="L799">				RenderingHints.VALUE_ANTIALIAS_ON);</span>
+<span class="fc" id="L800">		g.drawImage(bgImage, 0, 0, null);</span>
+<span class="fc" id="L801">		g.drawImage(fgImage, 0, 0, null);</span>
+<span class="fc" id="L802">		g.dispose();</span>
+<span class="fc" id="L803">		return bgImage;</span>
+	}
+	
+	public void ejecutaVentanaOpcionRegiones(Rectangle selection, Graphic imgPanel, JProgressBar progressBar){
+<span class="fc" id="L807">		ArrayList&lt;int[]&gt; blancos = calcularUmbralesLocales(selection);</span>
+<span class="fc" id="L808">		int numProcessors = Runtime.getRuntime().availableProcessors();</span>
+		
+<span class="fc" id="L810">		t = new VentanaAbstracta[numProcessors];</span>
+<span class="fc" id="L811">		defectMatrix = new int[getImagen().getWidth()][getImagen().getHeight()];</span>
+<span class="fc" id="L812">		progressBar.setMaximum(blancos.size());</span>
+<span class="fc" id="L813">		progressBar.setValue(0);</span>
+		
+<span class="fc" id="L815">		int tamListas = blancos.size()/numProcessors;</span>
+		
+<span class="fc" id="L817">		ImagePlus[] imagenes = new ImagePlus[1];</span>
+		
+<span class="pc bpc" id="L819" title="1 of 4 branches missed.">		if(selection.height != 0 &amp;&amp; selection.width != 0){	//hay una selección</span>
+<span class="fc" id="L820">			ImageProcessor ip =	getImagen().duplicate().getProcessor();</span>
+<span class="fc" id="L821">			ip.setRoi(selection);</span>
+<span class="fc" id="L822">			ip = ip.crop();</span>
+<span class="fc" id="L823">			BufferedImage croppedImage = ip.getBufferedImage();</span>
+<span class="fc" id="L824">			imagenes[0] = new ImagePlus(&quot;croppedImage&quot;, croppedImage);</span>
+<span class="fc" id="L825">		}</span>
+		else{
+<span class="fc" id="L827">			imagenes[0] = getImagen().duplicate();</span>
+		}		
+		
+<span class="fc" id="L830">		ImagePlus[] saliency = getSaliency(imagenes);</span>
+<span class="fc" id="L831">		ImagePlus[] convolucion = getImgConvolucion(imagenes, selection, getImagen());</span>
+		
+		//convolucion de saliency
+<span class="fc" id="L834">		Preprocesamiento p = new Saliency(getImagen(), 1);</span>
+<span class="fc" id="L835">		ImagePlus imgSaliency = new ImagePlus(&quot;&quot;, p.calcular());</span>
+<span class="fc" id="L836">		ImagePlus[] convolucionSaliency = getImgConvolucion(saliency, selection, imgSaliency);</span>
+		
+<span class="fc bfc" id="L838" title="All 2 branches covered.">		for (int ithread = 0; ithread &lt; t.length; ++ithread){</span>
+<span class="fc" id="L839">			List&lt;int[]&gt; pixeles = new ArrayList&lt;int[]&gt;();</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">			if(ithread == t.length-1){</span>
+<span class="fc" id="L841">				pixeles.addAll(blancos.subList(ithread*tamListas, blancos.size()));</span>
+<span class="fc" id="L842">			}</span>
+			else{
+<span class="fc" id="L844">				pixeles.addAll(blancos.subList(ithread*tamListas, ((ithread+1)*tamListas)-1));</span>
+			}
+			
+<span class="fc" id="L847">            t[ithread] = new VentanaRegiones(imagenes[0], saliency[0], convolucion[0], convolucionSaliency[0],</span>
+<span class="fc" id="L848">            		ithread, selection, imgPanel, progressBar, defectMatrix, pixeles);</span>
+<span class="fc" id="L849">            ((VentanaRegiones)t[ithread]).setArrayRois(arrayRois);</span>
+<span class="fc" id="L850">            t[ithread].start();</span>
+        }  
+  
+        try{     
+<span class="fc bfc" id="L854" title="All 2 branches covered.">            for (int ithread = 0; ithread &lt; t.length; ++ithread)  </span>
+<span class="fc" id="L855">                t[ithread].join();  </span>
+<span class="fc" id="L856">        }</span>
+<span class="nc" id="L857">        catch (InterruptedException ie){  </span>
+             
+        }
+<span class="fc" id="L860">        drawEdgeRegiones(imgPanel);</span>
+<span class="fc" id="L861">	}</span>
+	
+	public void calcularCaracteristicasGeometricas(){
+<span class="fc" id="L864">		Thresholder th = new Thresholder();</span>
+<span class="fc" id="L865">		ImagePlus bin = new ImagePlus(&quot;bin&quot;, imgBin);</span>
+<span class="fc" id="L866">		th.setImage(bin);</span>
+<span class="fc" id="L867">		th.run(&quot;&quot;);</span>
+<span class="fc" id="L868">		getArrayRois(bin);</span>
+		
+<span class="fc" id="L870">		tableModel = new DefaultTableModel(	new Object[][] {}, new String[] {&quot;Regi\u00F3n&quot;, &quot;\u00C1rea&quot;, &quot;Per\u00EDmetro&quot;, &quot;Circularidad&quot;, &quot;Redondez&quot;, &quot;Semieje Mayor&quot;, &quot;Semieje Menor&quot;, &quot;\u00C1ngulo&quot;, &quot;Distancia Feret&quot;}){				</span>
+				private static final long serialVersionUID = 1L;
+				@SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L873">				Class[] columnTypes = new Class[] {Integer.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class};</span>
+				@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+				public Class getColumnClass(int columnIndex) {
+<span class="nc" id="L876">					return columnTypes[columnIndex];</span>
+				}
+				
+				@Override
+				public boolean isCellEditable(int row, int column) {
+<span class="nc" id="L881">					return false;</span>
+				}
+			};
+			
+<span class="fc bfc" id="L885" title="All 2 branches covered.">		for(int i=0; i&lt;arrayRois.length; i++){</span>
+<span class="fc" id="L886">			Object[] fila = {i, myRT.getValueAsDouble(ResultsTable.AREA, i), myRT.getValueAsDouble(ResultsTable.PERIMETER, i), myRT.getValueAsDouble(ResultsTable.CIRCULARITY, i), myRT.getValueAsDouble(ResultsTable.ROUNDNESS, i), myRT.getValueAsDouble(ResultsTable.MAJOR, i), myRT.getValueAsDouble(ResultsTable.MINOR, i), myRT.getValueAsDouble(ResultsTable.ANGLE, i), myRT.getValueAsDouble(ResultsTable.FERET, i)};</span>
+<span class="fc" id="L887">			tableModel.addRow(fila);</span>
+		}
+		
+<span class="fc" id="L890">	}</span>
+	
+	public DefaultTableModel getTableModel(){
+<span class="nc" id="L893">		return tableModel;</span>
+	}
+	
+	public Roi getRoi(int index){
+<span class="nc" id="L897">		return arrayRois[index];</span>
+	}
+	
+	public Roi[] getArrayRoisCompleto(){
+<span class="nc" id="L901">		return arrayRois;</span>
+	}
+	
+	public RuntimeException getExcepcion(){
+<span class="fc" id="L905">		return excepcion;</span>
+	}
+	
+	public void setExcepcion(RuntimeException e){
+<span class="fc" id="L909">		excepcion = e;</span>
+<span class="fc" id="L910">	}</span>
+	
+	public ImagePlus getImageBinarizada(){
+<span class="fc" id="L913">		return new ImagePlus(&quot;i&quot;, imgBin);</span>
+	}
+	
+	public double[] getPrecisionRecall(String path, Rectangle selection){
+<span class="fc" id="L917">		int truePositive = 0, falsePositive = 0, falseNegative = 0;</span>
+<span class="fc" id="L918">		ImagePlus imBin = new ImagePlus(&quot;img&quot;, imgBin);</span>
+<span class="fc" id="L919">		ir.abrirImagen(path);</span>
+<span class="fc" id="L920">		ImagePlus mask = ir.getImagen();</span>
+		int[] pixelBin, pixelMask;
+<span class="fc" id="L922">		double[] resultado = new double[2];</span>
+		
+<span class="fc bfc" id="L924" title="All 2 branches covered.">		for(int y=0; y&lt;selection.height; y++){</span>
+<span class="fc bfc" id="L925" title="All 2 branches covered.">			for(int x=0; x&lt;selection.width; x++){</span>
+<span class="fc" id="L926">				pixelBin = imBin.getPixel(x+selection.x, y+selection.y);</span>
+<span class="fc" id="L927">				pixelMask = mask.getPixel(x+selection.x, y+selection.y);</span>
+			
+<span class="pc bpc" id="L929" title="3 of 6 branches missed.">				if(pixelBin[0] != 255 || pixelBin[1] != 255 || pixelBin[2] != 255){	//bin no es blanco</span>
+<span class="nc bnc" id="L930" title="All 6 branches missed.">					if(pixelMask[0] != 255 || pixelMask[1] != 255 || pixelMask[2] != 255){	//mask no es blanco</span>
+<span class="nc" id="L931">						truePositive++;</span>
+<span class="nc" id="L932">					}</span>
+					else{	//mask es blanco
+<span class="nc" id="L934">						falsePositive++;</span>
+					}
+<span class="nc" id="L936">				}</span>
+				else{	//bin es blanco
+<span class="pc bpc" id="L938" title="3 of 6 branches missed.">					if(pixelMask[0] != 255 || pixelMask[1] != 255 || pixelMask[2] != 255){	//mask no es blanco</span>
+<span class="nc" id="L939">						falseNegative++;</span>
+					}
+				}
+			}
+		}
+		
+		//precision
+		try{
+<span class="fc" id="L947">			resultado[0] = ((double)truePositive/(double)(truePositive+falsePositive));</span>
+<span class="fc" id="L948">		}</span>
+<span class="nc" id="L949">		catch(ArithmeticException e){</span>
+<span class="nc" id="L950">			resultado[0] = Double.NaN;</span>
+		}
+		
+		//recall
+		try{
+<span class="fc" id="L955">			resultado[1] = ((double)truePositive/(double)(truePositive+falseNegative));</span>
+<span class="fc" id="L956">		}</span>
+<span class="nc" id="L957">		catch(ArithmeticException e){</span>
+<span class="nc" id="L958">			resultado[1] = Double.NaN;</span>
+		}
+		
+<span class="fc" id="L961">		return resultado;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>TestSuite (09-jun-2013 19:19:13)</div></body></html>
